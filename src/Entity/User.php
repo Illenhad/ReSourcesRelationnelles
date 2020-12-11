@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
@@ -50,6 +51,16 @@ class User
      * @ORM\Column(type="string", length=255)
      */
     private $department;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $password;
+
+    /**
+     * @Assert\EqualTo(propertyPath="password",message="Votre mot de passe doit être le même que celui que vous confirmez")
+     */
+    private $confirm_password;
 
     public function getId(): ?int
     {
@@ -126,5 +137,37 @@ class User
         $this->department = $department;
 
         return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getConfirmPassword()
+    {
+        return $this->confirm_password;
+    }
+
+    /**
+     * @param mixed $confirm_password
+     */
+    public function setConfirmPassword($confirm_password): void
+    {
+        $this->confirm_password = $confirm_password;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    /**
+     * @param mixed $password
+     */
+    public function setPassword($password): void
+    {
+        $this->password = $password;
     }
 }
