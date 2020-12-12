@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -13,7 +14,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *  * @UniqueEntity("email")
  *
  */
-class User
+class User implements UserInterface
 {
     /**
      * @ORM\Id
@@ -67,6 +68,11 @@ class User
         return $this->id;
     }
 
+    /**
+     * A visual identifier that represents this user.
+     *
+     * @see UserInterface
+     */
     public function getUsername(): ?string
     {
         return $this->username;
@@ -157,6 +163,7 @@ class User
 
     /**
      * @return mixed
+     * @see UserInterface
      */
     public function getPassword()
     {
@@ -169,5 +176,34 @@ class User
     public function setPassword($password): void
     {
         $this->password = $password;
+    }
+
+    #Fonction neccessaire pour ID
+    /**
+     * @see UserInterface
+     */
+    public function getRoles(): array
+    {
+         return array('ROLE_USER');
+    }
+
+    #Fonction neccessaire pour ID
+    /**
+     * @see UserInterface
+     */
+    public function getSalt(): string
+    {
+        // not needed when using the "bcrypt" algorithm in security.yaml
+        return $this->username;
+    }
+
+    #Fonction neccessaire pour ID
+    /**
+     * @see UserInterface
+     */
+    public function eraseCredentials()
+    {
+        // If you store any temporary, sensitive data on the user, clear it here
+        // $this->plainPassword = null;
     }
 }

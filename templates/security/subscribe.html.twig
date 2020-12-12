@@ -3,6 +3,9 @@
 {% block title %}Inscription{% endblock %}
 
 {% block body %}
+    <div id="formulaire">
+    <h1>  Inscrivez vous!  </h1>
+
     {{  form_start(form) }}
     {{ form_row(form.lastname,{
         'attr':{'placeholder':'Nom de famille...' },
@@ -35,5 +38,5 @@
 
     <button class="btn btn-primary"> S'inscrire! </button>
     {{  form_end(form) }}
-
+    </div>
 {% endblock %}
