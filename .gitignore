@@ -53,3 +53,7 @@
 
 # Jetbrains
 .idea/*
+
+# Local variables
+.env.local
+.env.$APP_ENV.local
