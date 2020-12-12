@@ -2,11 +2,65 @@
 
 {% block title %}Inscription{% endblock %}
 
+{% block stylesheets %}
+    <!--Patch for style-->
+    <style>
+        *{font-family: "Gill Sans", sans-serif;}
+        h1 {
+            color:  #2980b9;
+            text-align: center }
+
+        .form{
+            display: block;
+            align-self: center;
+            border: black medium solid;
+            border-radius: 25px;
+            margin-top: 2em;
+            margin-left: auto;
+            margin-right: auto;
+            width: 30em;
+            height: ;
+            padding:2em;
+        }
+        .row{
+            display: flex;
+            justify-content: start;
+            height: 3em;
+            position: relative;
+
+        }
+        label{
+            font-weight: bold;
+            font-size: 1em;
+            margin-left:10px
+        }
+        input{
+            border-radius: 5px;
+            position: sticky;
+            display: block;
+            top: 1.5em ;
+            left:0%;
+            width:auto;
+            margin-left:10px}
+
+        button{
+            border-style: none;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 1em;
+            color: white;
+            background-color: #2980b9;
+            padding:5px
+        }
+    </style>
+{% endblock %}
+
 {% block body %}
-    <div id="formulaire">
+    <div class="form">
     <h1>  Inscrivez vous!  </h1>
 
     {{  form_start(form) }}
+        <div class="row">
     {{ form_row(form.lastname,{
         'attr':{'placeholder':'Nom de famille...' },
         'label':'Nom'
@@ -15,28 +69,39 @@
         'attr':{'placeholder':'Prenom...' },
         'label':'Prenom'
     }) }}
+        </div>
+        <div class="row">
     {{ form_row(form.username,{
         'attr':{'placeholder':'Pseudo...' },
         'label':'Pseudo'
     }) }}
+        </div>
+        <div class="row">
     {{ form_row(form.email,{
         'attr':{'placeholder':'Adresse mail...' },
         'label':'Adresse mail'
     }) }}
+        </div>
+        <div class="row">
     {{ form_row(form.password,{
         'attr':{'placeholder':'Mot de passe...' },
         'label':'Mot de passe'
     }) }}
+        </div>
+            <div class="row">
     {{ form_row(form.confirm_password,{
         'attr':{'placeholder':'Comfirmer votre mot de passe!' },
         'label':'Comfirmation du mot de passe'
     }) }}
+            </div>
+        <div class="row">
     {{ form_row(form.department,{
         'attr':{'placeholder':'Departement' },
         'label':'Departement'
     }) }}
+        </div>
 
-    <button class="btn btn-primary"> S'inscrire! </button>
+    <button> S'inscrire! </button>
     {{  form_end(form) }}
     </div>
 {% endblock %}

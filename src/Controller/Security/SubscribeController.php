@@ -31,6 +31,7 @@ class SubscribeController extends AbstractController
             $entity_manager=$this->getDoctrine()->getManager();
             $entity_manager->persist($user);
             $entity_manager->flush();
+            return $this->redirectToRoute('login');
         }
 
         return $this->render('security/subscribe.html.twig', [

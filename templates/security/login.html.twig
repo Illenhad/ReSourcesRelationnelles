@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Connexion{% endblock %}
+
+{% block stylesheets %}
+    <!--Patch for style-->
+    <style>
+        *{font-family: "Gill Sans", sans-serif;}
+        h1 {
+            color:  #2980b9;
+            text-align: center }
+
+        .form{
+            display: block;
+            align-self: center;
+            border: black medium solid;
+            border-radius: 25px;
+            margin-top: 2em;
+            margin-left: auto;
+            margin-right: auto;
+            width: 30em;
+            height: ;
+            padding:2em;
+        }
+        .row{
+            display: flex;
+            justify-content: start;
+            height: 3em;
+            position: relative;
+
+        }
+        label{
+            font-weight: bold;
+            font-size: 1em;
+            margin-left:10px
+        }
+        input{
+            border-radius: 5px;
+            position: sticky;
+            display: block;
+            top: 1.5em ;
+            left:0%;
+            width:auto;
+            margin-left:10px}
+
+        button{
+            border-style: none;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 1em;
+            color: white;
+            background-color: #2980b9;
+            padding:5px
+        }
+    </style>
+{% endblock %}
+
+
+{% block body %}
+Future Page de Login
+{% endblock %}
