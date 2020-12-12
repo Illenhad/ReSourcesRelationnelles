@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
@@ -50,6 +51,12 @@ class User
      * @ORM\Column(type="string", length=255)
      */
     private $department;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Role", inversedBy="users")
+     * @ORM\JoinColumn(name="role_id", referencedColumnName="id", nullable=false)
+     */
+    private $role;
 
     public function getId(): ?int
     {
@@ -104,12 +111,12 @@ class User
         return $this;
     }
 
-    public function getDateLastConnection(): ?\DateTimeInterface
+    public function getDateLastConnection(): ?DateTimeInterface
     {
         return $this->dateLastConnection;
     }
 
-    public function setDateLastConnection(\DateTimeInterface $dateLastConnection): self
+    public function setDateLastConnection(DateTimeInterface $dateLastConnection): self
     {
         $this->dateLastConnection = $dateLastConnection;
 
@@ -127,4 +134,21 @@ class User
 
         return $this;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getRole()
+    {
+        return $this->role;
+    }
+
+    /**
+     * @param mixed $role
+     */
+    public function setRole($role): void
+    {
+        $this->role = $role;
+    }
+
 }
