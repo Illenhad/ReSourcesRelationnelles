@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Connexion{% endblock %}
+{% block title %}Log in!{% endblock %}
 
 {% block stylesheets %}
     <!--Patch for style-->
@@ -19,7 +19,6 @@
             margin-left: auto;
             margin-right: auto;
             width: 30em;
-            height: ;
             padding:2em;
         }
         .row{
@@ -27,35 +26,93 @@
             justify-content: start;
             height: 3em;
             position: relative;
-
+            margin:10px;
         }
-        label{
+
+        .remember{
+            height: 3em;
+            position: relative;
+            margin:10px;
+        }
+
+        .forgotPass{
+            text-align: right;
+            display: block;
+        }
+
+        .row label{
             font-weight: bold;
             font-size: 1em;
             margin-left:10px
         }
-        input{
-            border-radius: 5px;
-            position: sticky;
+        .row input, .row select{
+            border-radius: 3px;
             display: block;
+            position: absolute;
             top: 1.5em ;
-            left:0%;
-            width:auto;
+            height: 1.5em;
+            width: 20em;
             margin-left:10px}
+        .alert{color: crimson}
 
         button{
             border-style: none;
-            border-radius: 5px;
+            border-radius: 3px;
             font-weight: bold;
             font-size: 1em;
             color: white;
             background-color: #2980b9;
-            padding:5px
+            padding:5px;
+            height: 2em;
         }
+        .link{text-decoration: none}
     </style>
 {% endblock %}
 
-
 {% block body %}
-Future Page de Login
+<div class="form">
+<form method="post">
+    {% if error %}
+        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+    {% endif %}
+
+    {% if app.user %}
+        <div class="mb-3">
+            You are logged in as {{ app.user.username }}, <a href="{{ path('logout') }}">Logout</a>
+        </div>
+    {% else %}
+
+    <h1 class="h3 mb-3 font-weight-normal">Connexion</h1>
+    <div class="row">
+    <label for="inputUsername">Username</label>
+    <input type="text" value="{{ last_username }}" name="username" id="inputUsername" class="form-control" required autofocus>
+    </div>
+    <div class="row">
+    <label for="inputPassword">Password</label>
+    <input type="password" name="password" id="inputPassword" class="form-control" required>
+    </div>
+    <input type="hidden" name="_csrf_token"
+           value="{{ csrf_token('authenticate') }}"
+    >
+    <div class="forgotPass">
+        <!-- TODO Form forgot password -->
+        <a class="link" href="{{ path('subscribe') }}"> Mot de passe oublié? </a>
+    </div>
+
+    <div class="remember">
+        <label>
+            <input type="checkbox" name="_remember_me">  Se souvenir de moi
+        </label>
+    </div>
+    <div class="row">
+    Pas encore connecté ?<a class="link" href="{{ path('subscribe') }}"> Inscription </a>
+    </div>
+    <div class="row">
+    <button class="btn btn-lg btn-primary" type="submit">
+        Se connecter
+    </button>
+    </div>
+</form>
+</div>
+    {% endif %}
 {% endblock %}

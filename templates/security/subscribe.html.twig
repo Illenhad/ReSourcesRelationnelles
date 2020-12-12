@@ -4,6 +4,7 @@
 
 {% block stylesheets %}
     <!--Patch for style-->
+    <!--TODO True Style-->
     <style>
         *{font-family: "Gill Sans", sans-serif;}
         h1 {
@@ -19,7 +20,6 @@
             margin-left: auto;
             margin-right: auto;
             width: 30em;
-            height: ;
             padding:2em;
         }
         .row{
@@ -27,30 +27,32 @@
             justify-content: start;
             height: 3em;
             position: relative;
-
+            margin:10px;
         }
         label{
             font-weight: bold;
             font-size: 1em;
             margin-left:10px
         }
-        input{
-            border-radius: 5px;
-            position: sticky;
+        input, select{
+            border-radius: 3px;
             display: block;
+            position: absolute;
             top: 1.5em ;
-            left:0%;
-            width:auto;
+            height: 1.5em;
+            width: 20em;
             margin-left:10px}
+        .alert{color: crimson}
 
         button{
             border-style: none;
-            border-radius: 5px;
+            border-radius: 3px;
             font-weight: bold;
             font-size: 1em;
             color: white;
             background-color: #2980b9;
-            padding:5px
+            padding:5px;
+            height: 2em;
         }
     </style>
 {% endblock %}
@@ -60,48 +62,42 @@
     <h1>  Inscrivez vous!  </h1>
 
     {{  form_start(form) }}
-        <div class="row">
-    {{ form_row(form.lastname,{
-        'attr':{'placeholder':'Nom de famille...' },
-        'label':'Nom'
-    }) }}
-    {{ form_row(form.firstname,{
-        'attr':{'placeholder':'Prenom...' },
-        'label':'Prenom'
-    }) }}
-        </div>
-        <div class="row">
-    {{ form_row(form.username,{
-        'attr':{'placeholder':'Pseudo...' },
-        'label':'Pseudo'
-    }) }}
-        </div>
-        <div class="row">
-    {{ form_row(form.email,{
-        'attr':{'placeholder':'Adresse mail...' },
-        'label':'Adresse mail'
-    }) }}
-        </div>
-        <div class="row">
-    {{ form_row(form.password,{
-        'attr':{'placeholder':'Mot de passe...' },
-        'label':'Mot de passe'
-    }) }}
-        </div>
-            <div class="row">
-    {{ form_row(form.confirm_password,{
-        'attr':{'placeholder':'Comfirmer votre mot de passe!' },
-        'label':'Comfirmation du mot de passe'
-    }) }}
-            </div>
-        <div class="row">
-    {{ form_row(form.department,{
-        'attr':{'placeholder':'Departement' },
-        'label':'Departement'
-    }) }}
-        </div>
 
-    <button> S'inscrire! </button>
-    {{  form_end(form) }}
+        {% if not form.vars.valid %}
+            <ul class="alert alert-danger">
+                {# on affiche en premier les erreurs globales (cas classiques) #}
+                {% for error in form.vars.errors %}
+                    <li>{{error.message}}</li>
+                {% endfor %}
+                {# ainsi que les erreurs concernant chaque champs #}
+                {% for child in form.children %}
+                    {# si le champ à des erreur #}
+                    {% if child.vars.errors is defined %}
+                        {% for error in child.vars.errors %}
+                            <li> {{error.message}} </li> {# on ajoute le label du champ devant l'erreur pour plus de précisions. #}
+                        {% endfor %}
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        {% for field in form %}
+            <!-- Deal with hiden field token-->
+            {% if form_label(field) != form_label(form._token) %}
+                <div class="row">
+
+                    {{ form_label(field) }}
+                    {{ form_widget(field) }}
+                </div>
+            {% endif %}
+        {%  endfor %}
+
+        <div class="row">
+            Déjà inscrit ?<a class="link" href="{{ path('login') }}"> Connexion </a>
+        </div>
+        <div class="row">
+            <button> S'inscrire! </button>
+        </div>
+        {{  form_end(form) }}
     </div>
 {% endblock %}
