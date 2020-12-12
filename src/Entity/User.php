@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use DateTime;
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -58,6 +59,11 @@ class User
      */
     private $role;
 
+    public function __construct()
+    {
+        $this->dateLastConnection = new DateTime('NOW');
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -111,9 +117,9 @@ class User
         return $this;
     }
 
-    public function getDateLastConnection(): ?DateTimeInterface
+    public function getDateLastConnection(): string
     {
-        return $this->dateLastConnection;
+        return $this->dateLastConnection->format("d M Y H:i:s");
     }
 
     public function setDateLastConnection(DateTimeInterface $dateLastConnection): self

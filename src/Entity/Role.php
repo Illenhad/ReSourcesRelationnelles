@@ -60,4 +60,9 @@ class Role
         $this->users = $users;
     }
 
+    public function __toString(): string
+    {
+        return $this->label;
+    }
+
 }
