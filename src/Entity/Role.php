@@ -22,6 +22,11 @@ class Role
      */
     private $label;
 
+    /**
+     * @ORM\OneToMany(targetEntity="User", mappedBy="role")
+     */
+    private $users;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -38,4 +43,26 @@ class Role
 
         return $this;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getUsers()
+    {
+        return $this->users;
+    }
+
+    /**
+     * @param mixed $users
+     */
+    public function setUsers($users): void
+    {
+        $this->users = $users;
+    }
+
+    public function __toString(): string
+    {
+        return $this->label;
+    }
+
 }

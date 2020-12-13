@@ -22,6 +22,11 @@ class Department
      */
     private $label;
 
+    /**
+     * @ORM\Column(type="string", length=5)
+     */
+    private $dept_num;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -35,6 +40,18 @@ class Department
     public function setLabel(string $label): self
     {
         $this->label = $label;
+
+        return $this;
+    }
+
+    public function getDeptNum(): ?string
+    {
+        return $this->dept_num;
+    }
+
+    public function setDeptNum(string $dept_num): self
+    {
+        $this->dept_num = $dept_num;
 
         return $this;
     }

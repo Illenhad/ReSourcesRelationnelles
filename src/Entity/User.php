@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use DateTime;
+use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -54,6 +56,12 @@ class User implements UserInterface
      */
     private $department;
 
+      /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Role", inversedBy="users")
+     * @ORM\JoinColumn(name="role_id", referencedColumnName="id", nullable=false)
+     */
+    private $role;
+  
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\Length(min="8",minMessage="Votre mot de passe doit comporter au moins 8 caractères")
@@ -64,6 +72,12 @@ class User implements UserInterface
      * @Assert\EqualTo(propertyPath="password",message="Votre mot de passe doit être le même que celui que vous confirmez")
      */
     private $confirm_password;
+
+
+    public function __construct()
+    {
+        $this->dateLastConnection = new DateTime('NOW');
+    }
 
     public function getId(): ?int
     {
@@ -123,12 +137,12 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getDateLastConnection(): ?\DateTimeInterface
+    public function getDateLastConnection(): string
     {
-        return $this->dateLastConnection;
+        return $this->dateLastConnection->format("d M Y H:i:s");
     }
 
-    public function setDateLastConnection(\DateTimeInterface $dateLastConnection): self
+    public function setDateLastConnection(DateTimeInterface $dateLastConnection): self
     {
         $this->dateLastConnection = $dateLastConnection;
 
@@ -184,15 +198,6 @@ class User implements UserInterface
     /**
      * @see UserInterface
      */
-    public function getRoles(): array
-    {
-         return array('ROLE_USER');
-    }
-
-    #Fonction neccessaire pour ID
-    /**
-     * @see UserInterface
-     */
     public function getSalt(): string
     {
         // not needed when using the "bcrypt" algorithm in security.yaml
@@ -208,4 +213,22 @@ class User implements UserInterface
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
     }
+  
+      #Fonction neccessaire pour ID
+    /**
+     * @see UserInterface
+     */
+    public function getRole()
+    {
+        return $this->role;
+    }
+
+    /**
+     * @param mixed $role
+     */
+    public function setRole($role): void
+    {
+        $this->role = $role;
+    }
+
 }
