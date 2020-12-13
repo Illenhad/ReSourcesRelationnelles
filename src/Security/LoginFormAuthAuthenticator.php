@@ -98,7 +98,7 @@ class LoginFormAuthAuthenticator extends AbstractFormLoginAuthenticator implemen
         }
 
         // For example : return new RedirectResponse($this->urlGenerator->generate('some_route'));
-        #TODO Clean redirect
+        #TODO Clean redirect(need homepage)
         return new RedirectResponse($this->urlGenerator->generate('login'));
     }
 

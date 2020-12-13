@@ -15,8 +15,7 @@ class SubscribeType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        #TODO: add role
-        #TODO gestion DB departement
+        #TODO gestion entity departement (need link User/dep)
         $builder
             ->add('lastname',TextType::class,[
                 'attr'=>['placeholder'=>'Nom de famille...' ],

@@ -4,69 +4,7 @@
 
 {% block stylesheets %}
     <!--Patch for style-->
-    <style>
-        *{font-family: "Gill Sans", sans-serif;}
-        h1 {
-            color:  #2980b9;
-            text-align: center }
-
-        .form{
-            display: block;
-            align-self: center;
-            border: black medium solid;
-            border-radius: 25px;
-            margin-top: 2em;
-            margin-left: auto;
-            margin-right: auto;
-            width: 30em;
-            padding:2em;
-        }
-        .row{
-            display: flex;
-            justify-content: start;
-            height: 3em;
-            position: relative;
-            margin:10px;
-        }
-
-        .remember{
-            height: 3em;
-            position: relative;
-            margin:10px;
-        }
-
-        .forgotPass{
-            text-align: right;
-            display: block;
-        }
-
-        .row label{
-            font-weight: bold;
-            font-size: 1em;
-            margin-left:10px
-        }
-        .row input, .row select{
-            border-radius: 3px;
-            display: block;
-            position: absolute;
-            top: 1.5em ;
-            height: 1.5em;
-            width: 20em;
-            margin-left:10px}
-        .alert{color: crimson}
-
-        button{
-            border-style: none;
-            border-radius: 3px;
-            font-weight: bold;
-            font-size: 1em;
-            color: white;
-            background-color: #2980b9;
-            padding:5px;
-            height: 2em;
-        }
-        .link{text-decoration: none}
-    </style>
+    <link href="{{ asset('logFormStyle.css')}}" rel="stylesheet">
 {% endblock %}
 
 {% block body %}
@@ -77,12 +15,13 @@
     {% endif %}
 
     {% if app.user %}
+    <!-- Check si connecté-->
         <div class="mb-3">
-            You are logged in as {{ app.user.username }}, <a href="{{ path('logout') }}">Logout</a>
+            Vous êtes déjà connecté avec le compte :  {{ app.user.username }}, <a href="{{ path('logout') }}">Se déconnecter</a>
         </div>
     {% else %}
 
-    <h1 class="h3 mb-3 font-weight-normal">Connexion</h1>
+    <h1 >Connexion</h1>
     <div class="row">
     <label for="inputUsername">Username</label>
     <input type="text" value="{{ last_username }}" name="username" id="inputUsername" class="form-control" required autofocus>
@@ -104,7 +43,7 @@
             <input type="checkbox" name="_remember_me">  Se souvenir de moi
         </label>
     </div>
-    <div class="row">
+    <div class="row1">
     Pas encore connecté ?<a class="link" href="{{ path('subscribe') }}"> Inscription </a>
     </div>
     <div class="row">
