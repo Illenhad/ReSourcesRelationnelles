@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Log in!{% endblock %}
+
+{% block stylesheets %}
+    <!--Patch for style-->
+    <link href="{{ asset('logFormStyle.css')}}" rel="stylesheet">
+{% endblock %}
+
+{% block body %}
+<div class="form">
+<form method="post">
+    {% if error %}
+        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+    {% endif %}
+
+    {% if app.user %}
+    <!-- Check si connecté-->
+        <div class="mb-3">
+            Vous êtes déjà connecté avec le compte :  {{ app.user.username }}, <a href="{{ path('logout') }}">Se déconnecter</a>
+        </div>
+    {% else %}
+
+    <h1 >Connexion</h1>
+    <div class="row">
+    <label for="inputUsername">Username</label>
+    <input type="text" value="{{ last_username }}" name="username" id="inputUsername" class="form-control" required autofocus>
+    </div>
+    <div class="row">
+    <label for="inputPassword">Password</label>
+    <input type="password" name="password" id="inputPassword" class="form-control" required>
+    </div>
+    <input type="hidden" name="_csrf_token"
+           value="{{ csrf_token('authenticate') }}"
+    >
+    <div class="forgotPass">
+        <!-- TODO Form forgot password -->
+        <a class="link" href="{{ path('subscribe') }}"> Mot de passe oublié? </a>
+    </div>
+
+    <div class="remember">
+        <label>
+            <input type="checkbox" name="_remember_me">  Se souvenir de moi
+        </label>
+    </div>
+    <div class="row1">
+    Pas encore connecté ?<a class="link" href="{{ path('subscribe') }}"> Inscription </a>
+    </div>
+    <div class="row">
+    <button class="btn btn-lg btn-primary" type="submit">
+        Se connecter
+    </button>
+    </div>
+</form>
+</div>
+    {% endif %}
+{% endblock %}
