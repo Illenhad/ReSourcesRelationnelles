@@ -23,9 +23,19 @@ class Department
     private $label;
 
     /**
-     * @ORM\Column(type="string", length=5)
+     * Correspond aux deux premiers chiffres du code postal.
+     *
+     * @ORM\Column(type="string", length=3)
+     *
+     * @var string
      */
-    private $dept_num;
+    private $number;
+
+    /**
+     * @ORM\OneToMany(targetEntity="User", mappedBy="department")
+     */
+    private $users;
+
 
     public function getId(): ?int
     {
@@ -44,15 +54,44 @@ class Department
         return $this;
     }
 
-    public function getDeptNum(): ?string
+    /**
+     * @return string
+     */
+    public function getNumber(): string
     {
-        return $this->dept_num;
+        return $this->number;
     }
 
-    public function setDeptNum(string $dept_num): self
+    /**
+     * @param string $number
+     *
+     * @return self
+     */
+    public function setNumber(string $number): self
     {
-        $this->dept_num = $dept_num;
+        $this->number = $number;
 
         return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUsers()
+    {
+        return $this->users;
+    }
+
+    /**
+     * @param mixed $users
+     */
+    public function setUsers($users): void
+    {
+        $this->users = $users;
+    }
+
+    public function __toString(): string
+    {
+        return $this->label;
     }
 }
