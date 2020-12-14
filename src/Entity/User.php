@@ -56,14 +56,14 @@ class User implements UserInterface
      */
     private $department;
 
-      /**
+    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Role", inversedBy="users")
      * @ORM\JoinColumn(name="role_id", referencedColumnName="id", nullable=false)
      */
-    private $role;
-  
+    private $roles;
+
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=True)
      * @Assert\Length(min="8",minMessage="Votre mot de passe doit comporter au moins 8 caractères")
      */
     private $password;
@@ -195,6 +195,7 @@ class User implements UserInterface
     }
 
     #Fonction neccessaire pour ID
+
     /**
      * @see UserInterface
      */
@@ -205,6 +206,7 @@ class User implements UserInterface
     }
 
     #Fonction neccessaire pour ID
+
     /**
      * @see UserInterface
      */
@@ -213,22 +215,23 @@ class User implements UserInterface
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
     }
-  
-      #Fonction neccessaire pour ID
+
+    #Fonction neccessaire pour ID
+
     /**
      * @see UserInterface
      */
-    public function getRole()
+    public function getRoles()
     {
-        return $this->role;
+        return $this->roles;
     }
 
     /**
-     * @param mixed $role
+     * @param mixed $roles
      */
-    public function setRole($role): void
+    public function setRoles($roles): void
     {
-        $this->role = $role;
+        $this->roles = $roles;
     }
 
 }
