@@ -187,11 +187,14 @@ class User implements UserInterface
     }
 
     /**
-     * @param mixed $password
+     * @param string $password
+     * @return $this
      */
-    public function setPassword($password): void
+    public function setPassword(string $password): self
     {
         $this->password = $password;
+
+        return $this;
     }
 
     #Fonction neccessaire pour ID
@@ -228,14 +231,13 @@ class User implements UserInterface
 
     /**
      * @param mixed $roles
+     *
+     * @return $this
      */
-    public function setRoles($roles): void
+    public function setRoles($roles): self
     {
         $this->roles = $roles;
-    }
 
-    public function getRoles()
-    {
-        // TODO: Implement getRoles() method.
+        return $this;
     }
 }

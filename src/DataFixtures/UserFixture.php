@@ -25,7 +25,9 @@ class UserFixture extends Fixture implements DependentFixtureInterface
                 ->setEmail($faker->freeEmail)
                 ->setDepartment($faker->numberBetween(1, 101))
                 ->setDateLastConnection($faker->dateTimeBetween('-60 days', 'now', null))
-                ->setRole($this->getReference('ROLE_USER'));
+                ->setRole($this->getReference('ROLE_USER'))
+                ->setPassword("12345678")
+            ;
             $manager->persist($user);
         }
 
@@ -36,7 +38,9 @@ class UserFixture extends Fixture implements DependentFixtureInterface
             ->setEmail('beaugossedu62@hotmail.fr')
             ->setDepartment(62)
             ->setDateLastConnection(new \DateTime('now'))
-            ->setRole($this->getReference('ROLE_MODERATEUR'));
+            ->setRole($this->getReference('ROLE_MODERATEUR'))
+            ->setPassword("12345678")
+        ;
         $manager->persist($user);
 
         $user
@@ -46,7 +50,9 @@ class UserFixture extends Fixture implements DependentFixtureInterface
             ->setEmail('mamienova@gmail.fr')
             ->setDepartment(75)
             ->setDateLastConnection(new \DateTime('now'))
-            ->setRole($this->getReference('ROLE_MODERATEUR'));
+            ->setRole($this->getReference('ROLE_MODERATEUR'))
+            ->setPassword("12345678")
+        ;
         $manager->persist($user);
 
         $user
@@ -56,7 +62,9 @@ class UserFixture extends Fixture implements DependentFixtureInterface
             ->setEmail('jeanne@cafe.fr')
             ->setDepartment(59)
             ->setDateLastConnection(new \DateTime('now'))
-            ->setRole($this->getReference('ROLE_ADMIN'));
+            ->setRole($this->getReference('ROLE_ADMIN'))
+            ->setPassword("12345678")
+        ;
         $manager->persist($user);
 
         $user
@@ -66,7 +74,9 @@ class UserFixture extends Fixture implements DependentFixtureInterface
             ->setEmail('jeanmichel.leboss@gmail.fr')
             ->setDepartment(59)
             ->setDateLastConnection(new \DateTime('now'))
-            ->setRole($this->getReference('ROLE_SUPER_ADMIN'));
+            ->setRole($this->getReference('ROLE_SUPER_ADMIN'))
+            ->setPassword("12345678")
+        ;
         $manager->persist($user);
 
         $manager->flush();
