@@ -2,6 +2,8 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Role;
+use App\Entity\User;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
@@ -61,9 +63,10 @@ class DashboardController extends AbstractDashboardController
     public function configureMenuItems(): iterable
     {
         return [
-            MenuItem::linktoDashboard('Accueil', 'fa fa-home'),
-            MenuItem::section('Utilisateurs', 'fa fa-users'),
-            // TODO: Ajouter la gestion des utilisateurs
+//            MenuItem::linktoDashboard('Accueil', 'fa fa-home'),
+            MenuItem::section('Gestion des utilisateurs', 'fa fa-users-cog'),
+            MenuItem::linkToCrud('Utilisateurs', 'fa fa-users', User::class),
+            MenuItem::linkToCrud('Rôles', 'fa fa-user-tag', Role::class),
             MenuItem::section('Ressources', 'fa fa-book'),
             // TODO: Ajouter la gestion des ressources
             MenuItem::section('Statistiques', 'fa fa-chart-pie')
