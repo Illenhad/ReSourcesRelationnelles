@@ -52,7 +52,8 @@ class User implements UserInterface
     private $dateLastConnection;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\ManyToOne(targetEntity="App\Entity\Department", inversedBy="users")
+     * @ORM\JoinColumn(name="department_id", referencedColumnName="id", nullable=false)
      */
     private $department;
 
@@ -149,12 +150,12 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getDepartment(): ?string
+    public function getDepartment(): Department
     {
         return $this->department;
     }
 
-    public function setDepartment(string $department): self
+    public function setDepartment(Department $department): self
     {
         $this->department = $department;
 
@@ -187,11 +188,14 @@ class User implements UserInterface
     }
 
     /**
-     * @param mixed $password
+     * @param string $password
+     * @return $this
      */
-    public function setPassword($password): void
+    public function setPassword(string $password): self
     {
         $this->password = $password;
+
+        return $this;
     }
 
     #Fonction neccessaire pour ID
@@ -228,10 +232,13 @@ class User implements UserInterface
 
     /**
      * @param mixed $roles
+     *
+     * @return $this
      */
-    public function setRoles($roles): void
+    public function setRoles($roles): self
     {
         $this->roles = $roles;
-    }
 
+        return $this;
+    }
 }

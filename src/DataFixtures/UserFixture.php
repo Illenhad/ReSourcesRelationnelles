@@ -23,9 +23,11 @@ class UserFixture extends Fixture implements DependentFixtureInterface
                 ->setLastname($faker->lastName)
                 ->setUsername($faker->userName)
                 ->setEmail($faker->freeEmail)
-                ->setDepartment($faker->numberBetween(1, 101))
+                ->setDepartment($this->getReference('Ain'))
                 ->setDateLastConnection($faker->dateTimeBetween('-60 days', 'now', null))
-                ->setRole($this->getReference('ROLE_USER'));
+                ->setRole($this->getReference('ROLE_USER'))
+                ->setPassword("12345678")
+            ;
             $manager->persist($user);
         }
 
@@ -34,9 +36,11 @@ class UserFixture extends Fixture implements DependentFixtureInterface
             ->setLastname('Delarose')
             ->setUsername('beaugossedu62')
             ->setEmail('beaugossedu62@hotmail.fr')
-            ->setDepartment(62)
+            ->setDepartment($this->getReference('Ain'))
             ->setDateLastConnection(new \DateTime('now'))
-            ->setRole($this->getReference('ROLE_MODERATEUR'));
+            ->setRole($this->getReference('ROLE_MODERATEUR'))
+            ->setPassword("12345678")
+        ;
         $manager->persist($user);
 
         $user
@@ -44,9 +48,11 @@ class UserFixture extends Fixture implements DependentFixtureInterface
             ->setLastname('Dumont')
             ->setUsername('mamienova')
             ->setEmail('mamienova@gmail.fr')
-            ->setDepartment(75)
+            ->setDepartment($this->getReference('Ain'))
             ->setDateLastConnection(new \DateTime('now'))
-            ->setRole($this->getReference('ROLE_MODERATEUR'));
+            ->setRole($this->getReference('ROLE_MODERATEUR'))
+            ->setPassword("12345678")
+        ;
         $manager->persist($user);
 
         $user
@@ -54,9 +60,11 @@ class UserFixture extends Fixture implements DependentFixtureInterface
             ->setLastname('Faitlecafe')
             ->setUsername('jeaaaanne')
             ->setEmail('jeanne@cafe.fr')
-            ->setDepartment(59)
+            ->setDepartment($this->getReference('Ain'))
             ->setDateLastConnection(new \DateTime('now'))
-            ->setRole($this->getReference('ROLE_ADMIN'));
+            ->setRole($this->getReference('ROLE_ADMIN'))
+            ->setPassword("12345678")
+        ;
         $manager->persist($user);
 
         $user
@@ -64,9 +72,11 @@ class UserFixture extends Fixture implements DependentFixtureInterface
             ->setLastname('Lebosse')
             ->setUsername('bigboss')
             ->setEmail('jeanmichel.leboss@gmail.fr')
-            ->setDepartment(59)
+            ->setDepartment($this->getReference('Ain'))
             ->setDateLastConnection(new \DateTime('now'))
-            ->setRole($this->getReference('ROLE_SUPER_ADMIN'));
+            ->setRole($this->getReference('ROLE_SUPER_ADMIN'))
+            ->setPassword("12345678")
+        ;
         $manager->persist($user);
 
         $manager->flush();

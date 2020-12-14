@@ -121,8 +121,9 @@ class DepartmentFixture extends Fixture
             $department = new Department();
             $department
                 ->setLabel($value)
-                ->setDeptNum($key);
+                ->setNumber($key);
             $manager->persist($department);
+            $this->addReference($department->getLabel(), $department);
         }
         $manager->flush();
     }

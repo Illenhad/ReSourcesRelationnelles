@@ -19,6 +19,21 @@ class ResourceRepository extends ServiceEntityRepository
         parent::__construct($registry, Resource::class);
     }
 
+    /**
+     * Cette méthode retourne les ressources qui ne necessite pas d'être authentifié.
+     *
+     * @return Resource[]
+     */
+    public function findPublic($dateCreationSorting = 'DESC')
+    {
+        return $this->findBy(
+            ["public" => 1],
+            [
+                "dateCreation" => $dateCreationSorting,
+            ]
+        );
+    }
+
     // /**
     //  * @return Resource[] Returns an array of Resource objects
     //  */
