@@ -231,4 +231,8 @@ class User implements UserInterface
         $this->role = $role;
     }
 
+    public function getRoles()
+    {
+        // TODO: Implement getRoles() method.
+    }
 }
