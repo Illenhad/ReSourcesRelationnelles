@@ -2,6 +2,12 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\ActionType;
+use App\Entity\Category;
+use App\Entity\Department;
+use App\Entity\ManagementType;
+use App\Entity\RelationshipType;
+use App\Entity\Resource;
 use App\Entity\Role;
 use App\Entity\User;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
@@ -57,18 +63,25 @@ class DashboardController extends AbstractDashboardController
     public function configureDashboard(): Dashboard
     {
         return Dashboard::new()
-            ->setTitle('(RE)Sources Relationnelles');
+            ->setTitle('[RE]Sources<br//>Relationnelles')
+            ->renderContentMaximized(true);
     }
 
     public function configureMenuItems(): iterable
     {
         return [
-//            MenuItem::linktoDashboard('Accueil', 'fa fa-home'),
-            MenuItem::section('Gestion des utilisateurs', 'fa fa-users-cog'),
+            MenuItem::linktoDashboard('Accueil', 'fa fa-home'),
+            MenuItem::section('Administration', 'fa fa-users-cog'),
             MenuItem::linkToCrud('Utilisateurs', 'fa fa-users', User::class),
             MenuItem::linkToCrud('Rôles', 'fa fa-user-tag', Role::class),
+            MenuItem::linkToCrud('Départements', 'fa fa-map-marker-alt', Department::class),
             MenuItem::section('Ressources', 'fa fa-book'),
             // TODO: Ajouter la gestion des ressources
+            MenuItem::linkToCrud('Ressources', 'fa fa-book-open', Resource::class),
+            MenuItem::linkToCrud('Catégorie', 'fa fa-bookmark', Category::class),
+            MenuItem::linkToCrud('Type de relations', 'fa fa-people-arrows', RelationshipType::class),
+            MenuItem::linkToCrud('Type de gestion', 'fa fa-star', ManagementType::class),
+            MenuItem::linkToCrud('Type d\'actions', 'fa fa-hand-point-up', ActionType::class),
             MenuItem::section('Statistiques', 'fa fa-chart-pie')
             // TODO: Ajouter la gestion des statistiques
         ];

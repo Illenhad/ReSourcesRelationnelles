@@ -2,23 +2,23 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\Category;
+use App\Entity\ManagementType;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
-class CategoryCrudController extends AbstractCrudController
+class ManagementTypeCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string
     {
-        return Category::class;
+        return ManagementType::class;
     }
 
     public function configureFields(string $pageName): iterable
     {
         return [
             IdField::new('id')->hideOnForm(),
-            TextField::new('label')
+            TextField::new('label'),
         ];
     }
 }
