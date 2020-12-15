@@ -57,6 +57,7 @@ class Resource
      */
     private $resourceModerations;
 
+
     public function getId(): ?int
     {
         return $this->id;
@@ -174,5 +175,5 @@ class Resource
         $this->resourceModerations = $resourceModerations;
     }
 
-    
+
 }

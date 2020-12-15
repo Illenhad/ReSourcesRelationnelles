@@ -21,6 +21,7 @@ class ResourceFixture extends Fixture
                 ->setPublic($faker->boolean(40))
                 ->setDateCreation($faker->dateTimeBetween('-6 months', 'now', null));
             $manager->persist($resource);
+            $this->addReference("resource" . $i, $resource);
         }
 
         $manager->flush();

@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\AgeCategory;
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
@@ -42,6 +43,9 @@ class UserFixture extends Fixture implements DependentFixtureInterface
             ->setPassword("12345678")
         ;
         $manager->persist($user);
+        $this->addReference("Louis", $user);
+
+        $user = new User();
 
         $user
             ->setFirstname('Jacqueline')
@@ -49,11 +53,14 @@ class UserFixture extends Fixture implements DependentFixtureInterface
             ->setUsername('mamienova')
             ->setEmail('mamienova@gmail.fr')
             ->setDepartment($this->getReference('Ain'))
+            ->setAgeCategory($this->getReference('junior'))
             ->setDateLastConnection(new \DateTime('now'))
             ->setRoles($this->getReference('ROLE_MODERATEUR'))
             ->setPassword("12345678")
         ;
         $manager->persist($user);
+
+        $user = new User();
 
         $user
             ->setFirstname('Jeanne')
@@ -66,6 +73,8 @@ class UserFixture extends Fixture implements DependentFixtureInterface
             ->setPassword("12345678")
         ;
         $manager->persist($user);
+
+        $user = new User();
 
         $user
             ->setFirstname('Jean-Michel')
@@ -85,7 +94,8 @@ class UserFixture extends Fixture implements DependentFixtureInterface
     public function getDependencies()
     {
         return [
-            RoleFixture::class
+            RoleFixture::class,
+            AgeCategoryFixture::class,
         ];
     }
 }

@@ -19,6 +19,34 @@ class UserRepository extends ServiceEntityRepository
         parent::__construct($registry, User::class);
     }
 
+    public function findJunior()
+    {
+        return $this->findBy(
+            ["ageCategory" => 1]
+        );
+    }
+
+    public function findAdult()
+    {
+        return $this->findBy(
+            ["ageCategory" => 2]
+        );
+    }
+
+    public function findSenior()
+    {
+        return $this->findBy(
+            ["ageCategory" => 3]
+        );
+    }
+
+    public function findMaster()
+    {
+        return $this->findBy(
+            ["ageCategory" => 4]
+        );
+    }
+
     // /**
     //  * @return User[] Returns an array of User objects
     //  */

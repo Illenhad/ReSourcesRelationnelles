@@ -6,6 +6,8 @@ use App\Repository\UserRepository;
 use DateTime;
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\ManyToOne;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -73,6 +75,12 @@ class User implements UserInterface
      * @Assert\EqualTo(propertyPath="password",message="Votre mot de passe doit être le même que celui que vous confirmez")
      */
     private $confirm_password;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\AgeCategory", inversedBy="users")
+     * @ORM\JoinColumn(name="age_category_id", referencedColumnName="id")
+     */
+    private $ageCategory;
 
     /**
      * @ORM\OneToMany(targetEntity="RelShareGroupUser", mappedBy="user")
@@ -278,6 +286,26 @@ class User implements UserInterface
     {
         $this->roles = $roles;
 
+        return $this;
+
+
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAgeCategory()
+    {
+        return $this->ageCategory;
+    }
+
+    /**
+     * @param mixed $ageCategory
+     * @return User
+     */
+    public function setAgeCategory($ageCategory)
+    {
+        $this->ageCategory = $ageCategory;
         return $this;
     }
 
