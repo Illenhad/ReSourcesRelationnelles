@@ -44,6 +44,11 @@ class Comment
      */
     private $resource;
 
+    /**
+     * @ORM\OneToMany(targetEntity="RelModerationUserComment", mappedBy="resourceComment")
+     */
+    private $commentModeration;
+
 
     public function getId(): ?int
     {
@@ -148,6 +153,22 @@ class Comment
     public function setResource($resource): void
     {
         $this->resource = $resource;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCommentModeration()
+    {
+        return $this->commentModeration;
+    }
+
+    /**
+     * @param mixed $commentModeration
+     */
+    public function setCommentModeration($commentModeration): void
+    {
+        $this->commentModeration = $commentModeration;
     }
 
 

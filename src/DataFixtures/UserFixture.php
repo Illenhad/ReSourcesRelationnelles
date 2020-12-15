@@ -16,8 +16,8 @@ class UserFixture extends Fixture implements DependentFixtureInterface
         $faker = Factory::create('fr_FR');
 
         for ($i = 0; $i <100; $i++ ) {
-            $user = new User();
-            $user
+            $userFaker = new User();
+            $userFaker
                 ->setFirstname($faker->firstName)
                 ->setLastname($faker->lastName)
                 ->setUsername($faker->userName)
@@ -26,8 +26,10 @@ class UserFixture extends Fixture implements DependentFixtureInterface
                 ->setDateLastConnection($faker->dateTimeBetween('-60 days', 'now', null))
                 ->setRoles($this->getReference('ROLE_USER'))
                 ->setPassword("12345678");
-            $manager->persist($user);
+            $manager->persist($userFaker);
         }
+
+        $user = new User();
 
         $user
             ->setFirstname('Louis')

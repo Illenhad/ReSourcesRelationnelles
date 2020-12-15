@@ -94,6 +94,26 @@ class User implements UserInterface
      */
     private $comments;
 
+    /**
+     * @ORM\OneToMany(targetEntity="RelModerationUser", mappedBy="user")
+     */
+    private $userModerations;
+
+    /**
+     * @ORM\OneToMany(targetEntity="RelModerationUser", mappedBy="moderator")
+     */
+    private $moderatorModerations;
+
+    /**
+     * @ORM\OneToMany(targetEntity="RelModerationUserComment", mappedBy="moderator")
+     */
+    private $commentModerations;
+
+    /**
+     * @ORM\OneToMany(targetEntity="RelModerationUserResource", mappedBy="moderator")
+     */
+    private $resourceModerations;
+
     public function __construct()
     {
         $this->dateLastConnection = new DateTime('NOW');
@@ -323,6 +343,70 @@ class User implements UserInterface
     public function setComments($comments): void
     {
         $this->comments = $comments;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUserModerations()
+    {
+        return $this->userModerations;
+    }
+
+    /**
+     * @param mixed $userModerations
+     */
+    public function setUserModerations($userModerations): void
+    {
+        $this->userModerations = $userModerations;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getModeratorModerations()
+    {
+        return $this->moderatorModerations;
+    }
+
+    /**
+     * @param mixed $moderatorModerations
+     */
+    public function setModeratorModerations($moderatorModerations): void
+    {
+        $this->moderatorModerations = $moderatorModerations;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCommentModerations()
+    {
+        return $this->commentModerations;
+    }
+
+    /**
+     * @param mixed $commentModerations
+     */
+    public function setCommentModerations($commentModerations): void
+    {
+        $this->commentModerations = $commentModerations;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getResourceModerations()
+    {
+        return $this->resourceModerations;
+    }
+
+    /**
+     * @param mixed $resourceModerations
+     */
+    public function setResourceModerations($resourceModerations): void
+    {
+        $this->resourceModerations = $resourceModerations;
     }
 
 
