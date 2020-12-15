@@ -74,6 +74,25 @@ class User implements UserInterface
      */
     private $confirm_password;
 
+    /**
+     * @ORM\OneToMany(targetEntity="RelShareGroupUser", mappedBy="user")
+     */
+    private $shareGroups;
+
+    /**
+     * @ORM\OneToMany(targetEntity="RelUserManagementResource", mappedBy="user")
+     */
+    private $resourceManagements;
+
+    /**
+     * @ORM\OneToMany(targetEntity="RelUserActionResource", mappedBy="user")
+     */
+    private $resourceActions;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Comment", mappedBy="user")
+     */
+    private $comments;
 
     public function __construct()
     {
@@ -241,4 +260,70 @@ class User implements UserInterface
 
         return $this;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getShareGroups()
+    {
+        return $this->shareGroups;
+    }
+
+    /**
+     * @param mixed $shareGroups
+     */
+    public function setShareGroups($shareGroups): void
+    {
+        $this->shareGroups = $shareGroups;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getResourceManagements()
+    {
+        return $this->resourceManagements;
+    }
+
+    /**
+     * @param mixed $resourceManagements
+     */
+    public function setResourceManagements($resourceManagements): void
+    {
+        $this->resourceManagements = $resourceManagements;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getResourceActions()
+    {
+        return $this->resourceActions;
+    }
+
+    /**
+     * @param mixed $resourceActions
+     */
+    public function setResourceActions($resourceActions): void
+    {
+        $this->resourceActions = $resourceActions;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getComments()
+    {
+        return $this->comments;
+    }
+
+    /**
+     * @param mixed $comments
+     */
+    public function setComments($comments): void
+    {
+        $this->comments = $comments;
+    }
+
+
 }

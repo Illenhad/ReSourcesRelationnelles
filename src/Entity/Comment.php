@@ -32,6 +32,19 @@ class Comment
      */
     private $valuation;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="comments")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
+     */
+    private $user;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Resource", inversedBy="comments")
+     * @ORM\JoinColumn(name="resource_id", referencedColumnName="id", nullable=false)
+     */
+    private $resource;
+
+
     public function getId(): ?int
     {
         return $this->id;
@@ -72,4 +85,70 @@ class Comment
 
         return $this;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getCommentParent()
+    {
+        return $this->commentParent;
+    }
+
+    /**
+     * @param mixed $commentParent
+     */
+    public function setCommentParent($commentParent): void
+    {
+        $this->commentParent = $commentParent;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getResponses()
+    {
+        return $this->responses;
+    }
+
+    /**
+     * @param mixed $responses
+     */
+    public function setResponses($responses): void
+    {
+        $this->responses = $responses;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param mixed $user
+     */
+    public function setUser($user): void
+    {
+        $this->user = $user;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getResource()
+    {
+        return $this->resource;
+    }
+
+    /**
+     * @param mixed $resource
+     */
+    public function setResource($resource): void
+    {
+        $this->resource = $resource;
+    }
+
+
 }

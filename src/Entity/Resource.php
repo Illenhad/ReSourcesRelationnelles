@@ -37,6 +37,21 @@ class Resource
      */
     private $dateCreation;
 
+    /**
+     * @ORM\OneToMany(targetEntity="RelUserManagementResource", mappedBy="resource")
+     */
+    private $userManagement;
+
+    /**
+     * @ORM\OneToMany(targetEntity="RelUserActionResource", mappedBy="resource")
+     */
+    private $userActions;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Comment", mappedBy="resource")
+     */
+    private $comments;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -90,4 +105,53 @@ class Resource
         $this->dateCreation = $dateCreation;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getUserManagement()
+    {
+        return $this->userManagement;
+    }
+
+    /**
+     * @param mixed $userManagement
+     */
+    public function setUserManagement($userManagement): void
+    {
+        $this->userManagement = $userManagement;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUserActions()
+    {
+        return $this->userActions;
+    }
+
+    /**
+     * @param mixed $userActions
+     */
+    public function setUserActions($userActions): void
+    {
+        $this->userActions = $userActions;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getComments()
+    {
+        return $this->comments;
+    }
+
+    /**
+     * @param mixed $comments
+     */
+    public function setComments($comments): void
+    {
+        $this->comments = $comments;
+    }
+
+    
 }

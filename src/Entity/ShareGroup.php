@@ -27,6 +27,11 @@ class ShareGroup
      */
     private $comment;
 
+    /**
+     * @ORM\OneToMany(targetEntity="RelShareGroupUser", mappedBy="shareGroup")
+     */
+    private $users;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -55,4 +60,21 @@ class ShareGroup
 
         return $this;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getUsers()
+    {
+        return $this->users;
+    }
+
+    /**
+     * @param mixed $users
+     */
+    public function setUsers($users): void
+    {
+        $this->users = $users;
+    }
+
 }

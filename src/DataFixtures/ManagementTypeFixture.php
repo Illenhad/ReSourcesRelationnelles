@@ -8,11 +8,17 @@ use Doctrine\Persistence\ObjectManager;
 
 class ManagementTypeFixture extends Fixture
 {
-    private static $tabManagementType = [
+    /**private static $tabManagementType = [
         1 => 'Validation',
         2 => 'Suspension',
         3 => 'Modification',
         4 => 'Suppression'
+    ];*/
+
+    private static $tabManagementType = [
+        1 => 'Favoris',
+        2 => 'Mis de côté',
+        3 => 'Exploité'
     ];
 
     public function load(ObjectManager $manager)

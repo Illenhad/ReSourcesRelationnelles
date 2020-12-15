@@ -3,7 +3,6 @@
 namespace App\DataFixtures;
 
 use App\Entity\User;
-use Symfony\Component\Validator\Constraints\DateTime;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
@@ -15,9 +14,9 @@ class UserFixture extends Fixture implements DependentFixtureInterface
     public function load(ObjectManager $manager)
     {
         $faker = Factory::create('fr_FR');
-        $user = new User();
 
         for ($i = 0; $i <100; $i++ ) {
+            $user = new User();
             $user
                 ->setFirstname($faker->firstName)
                 ->setLastname($faker->lastName)
@@ -25,9 +24,8 @@ class UserFixture extends Fixture implements DependentFixtureInterface
                 ->setEmail($faker->freeEmail)
                 ->setDepartment($this->getReference('Ain'))
                 ->setDateLastConnection($faker->dateTimeBetween('-60 days', 'now', null))
-                ->setRole($this->getReference('ROLE_USER'))
-                ->setPassword("12345678")
-            ;
+                ->setRoles($this->getReference('ROLE_USER'))
+                ->setPassword("12345678");
             $manager->persist($user);
         }
 
@@ -38,7 +36,7 @@ class UserFixture extends Fixture implements DependentFixtureInterface
             ->setEmail('beaugossedu62@hotmail.fr')
             ->setDepartment($this->getReference('Ain'))
             ->setDateLastConnection(new \DateTime('now'))
-            ->setRole($this->getReference('ROLE_MODERATEUR'))
+            ->setRoles($this->getReference('ROLE_MODERATEUR'))
             ->setPassword("12345678")
         ;
         $manager->persist($user);
@@ -50,7 +48,7 @@ class UserFixture extends Fixture implements DependentFixtureInterface
             ->setEmail('mamienova@gmail.fr')
             ->setDepartment($this->getReference('Ain'))
             ->setDateLastConnection(new \DateTime('now'))
-            ->setRole($this->getReference('ROLE_MODERATEUR'))
+            ->setRoles($this->getReference('ROLE_MODERATEUR'))
             ->setPassword("12345678")
         ;
         $manager->persist($user);
@@ -62,7 +60,7 @@ class UserFixture extends Fixture implements DependentFixtureInterface
             ->setEmail('jeanne@cafe.fr')
             ->setDepartment($this->getReference('Ain'))
             ->setDateLastConnection(new \DateTime('now'))
-            ->setRole($this->getReference('ROLE_ADMIN'))
+            ->setRoles($this->getReference('ROLE_ADMIN'))
             ->setPassword("12345678")
         ;
         $manager->persist($user);
@@ -74,7 +72,7 @@ class UserFixture extends Fixture implements DependentFixtureInterface
             ->setEmail('jeanmichel.leboss@gmail.fr')
             ->setDepartment($this->getReference('Ain'))
             ->setDateLastConnection(new \DateTime('now'))
-            ->setRole($this->getReference('ROLE_SUPER_ADMIN'))
+            ->setRoles($this->getReference('ROLE_SUPER_ADMIN'))
             ->setPassword("12345678")
         ;
         $manager->persist($user);

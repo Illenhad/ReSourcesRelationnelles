@@ -2,13 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\ManagementTypeRepository;
+use App\Repository\ActionTypeRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=ManagementTypeRepository::class)
+ * @ORM\Entity(repositoryClass=ActionTypeRepository::class)
  */
-class ManagementType
+class ActionType
 {
     /**
      * @ORM\Id
@@ -23,9 +23,9 @@ class ManagementType
     private $label;
 
     /**
-     * @ORM\OneToMany(targetEntity="RelUserManagementResource", mappedBy="managementType")
+     * @ORM\OneToMany(targetEntity="RelUserActionResource", mappedBy="actionType")
      */
-    private $resourcesUsers;
+    private $resourceUsers;
 
     public function getId(): ?int
     {
@@ -47,17 +47,17 @@ class ManagementType
     /**
      * @return mixed
      */
-    public function getResourcesUsers()
+    public function getResourceUsers()
     {
-        return $this->resourcesUsers;
+        return $this->resourceUsers;
     }
 
     /**
-     * @param mixed $resourcesUsers
+     * @param mixed $resourceUsers
      */
-    public function setResourcesUsers($resourcesUsers): void
+    public function setResourceUsers($resourceUsers): void
     {
-        $this->resourcesUsers = $resourcesUsers;
+        $this->resourceUsers = $resourceUsers;
     }
 
 
