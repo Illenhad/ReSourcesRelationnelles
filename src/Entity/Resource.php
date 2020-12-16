@@ -3,7 +3,10 @@
 namespace App\Entity;
 
 use App\Repository\ResourceRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\ManyToOne;
 
 /**
  * @ORM\Entity(repositoryClass=ResourceRepository::class)
@@ -47,10 +50,6 @@ class Resource
      */
     private $userActions;
 
-    /**
-     * @ORM\OneToMany(targetEntity="Comment", mappedBy="resource")
-     */
-    private $comments;
 
     /**
      * @ORM\OneToMany(targetEntity="RelModerationUserResource", mappedBy="resource")
@@ -62,9 +61,32 @@ class Resource
      * @ORM\ManyToOne(targetEntity="App\Entity\AgeCategory", inversedBy="resources")
      * @ORM\JoinColumn(name="age_category_id", referencedColumnName="id")
      */
-
     private $ageCategory;
 
+    /**
+     * @ManyToOne(targetEntity="App\Entity\User", inversedBy="resources")
+     * @JoinColumn(name="product_id", referencedColumnName="id")
+     */
+    private $user;
+    // ...
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="resource")
+     */
+    private $comments;
+
+    /**
+     * @ManyToOne(targetEntity="App\Entity\ResourceType", inversedBy="resources")
+     * @JoinColumn(name="resource_type_id", referencedColumnName="id")
+     *
+     * @var ResourceType
+     */
+    private $resourceType;
+
+    public function __construct()
+    {
+        $this->comments = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -198,6 +220,42 @@ class Resource
     public function setAgeCategory($ageCategory)
     {
         $this->ageCategory = $ageCategory;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param mixed $user
+     * @return Resource
+     */
+    public function setUser($user)
+    {
+        $this->user = $user;
+        return $this;
+    }
+
+    /**
+     * @return ResourceType
+     */
+    public function getResourceType(): ResourceType
+    {
+        return $this->resourceType;
+    }
+
+    /**
+     * @param ResourceType $resourceType
+     * @return Resource
+     */
+    public function setResourceType(ResourceType $resourceType): Resource
+    {
+        $this->resourceType = $resourceType;
         return $this;
     }
 

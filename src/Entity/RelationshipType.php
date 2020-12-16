@@ -27,15 +27,22 @@ class RelationshipType
         return $this->id;
     }
 
-    public function getLabel(): ?string
+    /**
+     * @return mixed
+     */
+    public function getLabel()
     {
         return $this->label;
     }
 
-    public function setLabel(string $label): self
+    /**
+     * @param mixed $label
+     * @return RelationshipType
+     */
+    public function setLabel($label)
     {
         $this->label = $label;
-
         return $this;
     }
+
 }

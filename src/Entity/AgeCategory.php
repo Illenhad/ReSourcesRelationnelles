@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\OneToMany;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass=AgeCategory::class)
  */
 class AgeCategory
 {

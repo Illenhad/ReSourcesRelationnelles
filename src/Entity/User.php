@@ -5,9 +5,11 @@ namespace App\Entity;
 use App\Repository\UserRepository;
 use DateTime;
 use DateTimeInterface;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
+use Doctrine\ORM\Mapping\OneToMany;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -122,9 +124,19 @@ class User implements UserInterface
      */
     private $resourceModerations;
 
+
+    /**
+     * @OneToMany(targetEntity="App\Entity\Resource", mappedBy="user")
+     *
+     * @var Resource
+     */
+    private $resources ;
+    // ...
+
     public function __construct()
     {
         $this->dateLastConnection = new DateTime('NOW');
+        $this->resources = new ArrayCollection();
     }
 
     public function getId(): ?int

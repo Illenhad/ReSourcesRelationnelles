@@ -3,7 +3,9 @@
 namespace App\Entity;
 
 use App\Repository\CommentRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\OneToMany;
 
 /**
  * @ORM\Entity(repositoryClass=CommentRepository::class)
@@ -49,6 +51,15 @@ class Comment
      */
     private $commentModeration;
 
+    /**
+     * @OneToMany(targetEntity="App\Entity\Answer", mappedBy="comment")
+     */
+    private $answers;
+
+    public function __construct()
+    {
+        $this->answers = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -173,6 +184,24 @@ class Comment
     public function setCommentModeration($commentModeration): void
     {
         $this->commentModeration = $commentModeration;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getAnswers(): ArrayCollection
+    {
+        return $this->answers;
+    }
+
+    /**
+     * @param ArrayCollection $answers
+     * @return Comment
+     */
+    public function setAnswers(ArrayCollection $answers): Comment
+    {
+        $this->answers = $answers;
+        return $this;
     }
 
 

@@ -20,7 +20,7 @@ class ResourceRepository extends ServiceEntityRepository
     }
 
     /**
-     * Cette méthode retourne les ressources qui ne necessite pas d'être authentifié.
+     * Cette méthode retourne les ressources qui ne necessitent  pas d'être authentifié.
      *
      * @return Resource[]
      */
