@@ -33,10 +33,18 @@ class AgeCategory
      */
     private $users;
 
+    /**
+     *
+     * @OneToMany(targetEntity="App\Entity\Resource", mappedBy="ageCategory")
+     */
+    private $resources;
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
+        $this->resources = new ArrayCollection();
     }
+
 
     /**
      * @return mixed

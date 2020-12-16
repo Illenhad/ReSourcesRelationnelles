@@ -58,6 +58,14 @@ class Resource
     private $resourceModerations;
 
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\AgeCategory", inversedBy="resources")
+     * @ORM\JoinColumn(name="age_category_id", referencedColumnName="id")
+     */
+
+    private $ageCategory;
+
+
     public function getId(): ?int
     {
         return $this->id;
@@ -173,6 +181,24 @@ class Resource
     public function setResourceModerations($resourceModerations): void
     {
         $this->resourceModerations = $resourceModerations;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAgeCategory()
+    {
+        return $this->ageCategory;
+    }
+
+    /**
+     * @param mixed $ageCategory
+     * @return Resource
+     */
+    public function setAgeCategory($ageCategory)
+    {
+        $this->ageCategory = $ageCategory;
+        return $this;
     }
 
 
