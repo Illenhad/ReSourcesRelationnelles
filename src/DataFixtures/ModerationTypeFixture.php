@@ -8,18 +8,21 @@ use Doctrine\Persistence\ObjectManager;
 
 class ModerationTypeFixture extends Fixture
 {
-    private static $tabModerationType = [
+    public static $tabModerationType = [
         1 => 'Modification',
         2 => 'Suspension'
     ];
 
     public function load(ObjectManager $manager)
     {
+        $i = 0;
 
         foreach (self::$tabModerationType as $moderationType) {
+            $i++;
             $moderationTypeEntity = new ModerationType();
             $moderationTypeEntity->setLabel($moderationType);
             $manager->persist($moderationTypeEntity);
+            $this->addReference($moderationType, $moderationTypeEntity);
         }
 
         $manager->flush();

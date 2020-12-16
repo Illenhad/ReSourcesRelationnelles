@@ -9,11 +9,14 @@ use Faker\Factory;
 
 class ResourceFixture extends Fixture
 {
+    public static $numberOfResource;
+
     public function load(ObjectManager $manager)
     {
         $faker = Factory::create('fr_FR');
+        self::$numberOfResource = 150;
 
-        for ($i = 0; $i < 150; $i++) {
+        for ($i = 1; $i <= 150; $i++) {
             $resource  = new Resource();
             $resource
                 ->setTitle($faker->words(3, true))
@@ -21,7 +24,7 @@ class ResourceFixture extends Fixture
                 ->setPublic($faker->boolean(40))
                 ->setDateCreation($faker->dateTimeBetween('-6 months', 'now', null));
             $manager->persist($resource);
-            $this->addReference("resource" . $i, $resource);
+            $this->addReference('resource'.$i, $resource);
         }
 
         $manager->flush();

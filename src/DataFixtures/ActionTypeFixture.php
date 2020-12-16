@@ -10,11 +10,12 @@ use Doctrine\Persistence\ObjectManager;
 class ActionTypeFixture extends Fixture
 {
     private static $tabActionType = [
-        1 => 'Consultation',
-        2 => 'Validation',
-        3 => 'Suspension',
-        4 => 'Modification',
-        5 => 'Suppression'
+        1 => 'Création',
+        2 => 'Consultation',
+        3 => 'Validation',
+        4 => 'Suspension',
+        5 => 'Modification',
+        6 => 'Suppression'
     ];
 
     public function load(ObjectManager $manager)

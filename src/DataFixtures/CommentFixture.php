@@ -21,8 +21,8 @@ class CommentFixture extends Fixture implements DependentFixtureInterface
                 ->setTitle($faker->word())
                 ->setContent($faker->sentences(2, true))
                 ->setValuation($faker->numberBetween(1, 5))
-                ->setUser($this->getReference("Louis"))
-                ->setResource($this->getReference("resource1"))
+                ->setUser($this->getReference('user'.$faker->numberBetween(1, UserFixture::$numberOfUsers)))
+                ->setResource($this->getReference('resource'.$faker->numberBetween(1, ResourceFixture::$numberOfResource)))
             ;
             $manager->persist($comment);
         }

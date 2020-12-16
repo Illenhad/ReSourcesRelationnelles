@@ -8,7 +8,7 @@ use Doctrine\Persistence\ObjectManager;
 
 class DepartmentFixture extends Fixture
 {
-    private static $tabDept = [
+    public static $tabDept = [
         '01' => 'Ain',
         '02' => 'Aisne',
         '03' => 'Allier',
@@ -114,17 +114,24 @@ class DepartmentFixture extends Fixture
         '976' => 'Mayotte'
     ];
 
+    //public static $tabDeptEntity = [];
+
     public function load(ObjectManager $manager)
     {
+        $i = 0;
 
         foreach (self::$tabDept as $key => $value) {
+            $i++;
             $department = new Department();
             $department
                 ->setLabel($value)
                 ->setNumber($key);
             $manager->persist($department);
-            $this->addReference($department->getLabel(), $department);
+            $this->addReference('department'.$i, $department);
+            //self::$tabDeptEntity[$i] = $department;
         }
+
+
         $manager->flush();
     }
 

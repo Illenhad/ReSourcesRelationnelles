@@ -10,47 +10,26 @@ use Doctrine\Persistence\ObjectManager;
 class AgeCategoryFixture extends Fixture
 {
 
-    private static $tabAge = [
-        1 => "0-18",
-        2 => "18-35",
-        3 => "35-55",
-        4 => "55 +"
+    public static $tabAge = [
+        1 => "petit nenfant à croquer (0-18)", //0-18 junior
+        2 => "jeun's qui parcourt le monde (18-35)", //18-35 adulte
+        3 => "personne plus vraiment très fraiche (35-55)", //35-55 senior
+        4 => "p'tits vieux tout moisi (55+)" //55+ master
     ];
 
     public function load(ObjectManager $manager)
     {
+        $i = 0;
 
+        foreach (self::$tabAge as $age) {
+            $i++;
+            $ageCategory = new AgeCategory();
+            $ageCategory->setLabel($age);
+            $manager->persist($ageCategory);
+            $this->addReference('age'.$i, $ageCategory);
+        }
 
-        $label = "junior";
-        $ageCategory = new AgeCategory();
-        $ageCategory->setLabel($label);
-        $this->addReference("junior", $ageCategory);
-
-
-        $manager->persist($ageCategory);
-
-
-        $label = "adult";
-        $ageCategory = new AgeCategory();
-        $ageCategory->setLabel($label);
-
-
-        $manager->persist($ageCategory);
-
-
-        $label = "senior";
-        $ageCategory = new AgeCategory();
-        $ageCategory->setLabel($label);
-
-
-        $manager->persist($ageCategory);
-
-
-        $label = "master";
-        $ageCategory = new AgeCategory();
-        $ageCategory->setLabel($label);
-
-        $manager->persist($ageCategory);
         $manager->flush();
+
     }
 }
