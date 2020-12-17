@@ -20,7 +20,7 @@ class RelUserManagementResourceRepository extends ServiceEntityRepository
     }
 
     // /**
-    //  * @return RelUserManagementResource[] Returns an array of RelUserManagementResource objects
+    //  * @return RelUserManagementResourceFixture[] Returns an array of RelUserManagementResourceFixture objects
     //  */
     /*
     public function findByExampleField($value)
@@ -37,7 +37,7 @@ class RelUserManagementResourceRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?RelUserManagementResource
+    public function findOneBySomeField($value): ?RelUserManagementResourceFixture
     {
         return $this->createQueryBuilder('r')
             ->andWhere('r.exampleField = :val')
