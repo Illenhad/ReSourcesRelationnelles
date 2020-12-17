@@ -8,14 +8,8 @@ use Doctrine\Persistence\ObjectManager;
 
 class ManagementTypeFixture extends Fixture
 {
-    /**private static $tabManagementType = [
-        1 => 'Validation',
-        2 => 'Suspension',
-        3 => 'Modification',
-        4 => 'Suppression'
-    ];*/
 
-    private static $tabManagementType = [
+    public static $tabManagementType = [
         1 => 'Favoris',
         2 => 'Mis de côté',
         3 => 'Exploité'
@@ -23,10 +17,14 @@ class ManagementTypeFixture extends Fixture
 
     public function load(ObjectManager $manager)
     {
+        $i = 0;
+
         foreach (self::$tabManagementType as $managementType) {
+            $i++;
             $managementTypeEntity = new ManagementType();
             $managementTypeEntity->setLabel($managementType);
             $manager->persist($managementTypeEntity);
+            $this->addReference('managementType'.$i, $managementTypeEntity);
         }
 
         $manager->flush();

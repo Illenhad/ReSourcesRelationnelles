@@ -9,7 +9,7 @@ use Doctrine\Persistence\ObjectManager;
 
 class ActionTypeFixture extends Fixture
 {
-    private static $tabActionType = [
+    public static $tabActionType = [
         1 => 'Création',
         2 => 'Consultation',
         3 => 'Validation',
@@ -20,11 +20,14 @@ class ActionTypeFixture extends Fixture
 
     public function load(ObjectManager $manager)
     {
+        $i = 0;
 
         foreach (self::$tabActionType as $actionType) {
+            $i++;
             $actionTypeEntity = new ActionType();
             $actionTypeEntity->setLabel($actionType);
             $manager->persist($actionTypeEntity);
+            $this->addReference('actionType'.$i, $actionTypeEntity);
         }
 
         $manager->flush();

@@ -10,7 +10,8 @@ class ModerationTypeFixture extends Fixture
 {
     public static $tabModerationType = [
         1 => 'Modification',
-        2 => 'Suspension'
+        2 => 'Suspension',
+        3 => 'Annulation suspension'
     ];
 
     public function load(ObjectManager $manager)
