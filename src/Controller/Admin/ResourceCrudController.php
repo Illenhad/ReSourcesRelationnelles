@@ -28,7 +28,7 @@ class ResourceCrudController extends AbstractCrudController
             DateField::new('dateCreation'),
             AssociationField::new('userManagement'),
             AssociationField::new('userActions'),
-            AssociationField::new('comments'),
+            AssociationField::new('comments'), // TODO: Masquer à la création
         ];
     }
 }

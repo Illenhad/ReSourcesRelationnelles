@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\CommentRepository;
+use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\OneToMany;
@@ -60,6 +61,14 @@ class Comment
      * @ORM\Column(type="date")
      */
     private $commentDate;
+    /**
+     * @var mixed
+     */
+    private $commentParent;
+    /**
+     * @var mixed
+     */
+    private $responses;
 
     public function __construct()
     {
@@ -209,17 +218,21 @@ class Comment
         return $this;
     }
 
-    public function getCommentDate(): ?\DateTimeInterface
+    public function getCommentDate(): ?DateTimeInterface
     {
         return $this->commentDate;
     }
 
-    public function setCommentDate(\DateTimeInterface $commentDate): self
+    public function setCommentDate(DateTimeInterface $commentDate): self
     {
         $this->commentDate = $commentDate;
 
         return $this;
     }
 
+    public function __toString()
+    {
+        return $this->title;
+    }
 
 }

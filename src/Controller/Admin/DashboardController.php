@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\ActionType;
+use App\Entity\AgeCategory;
 use App\Entity\Category;
 use App\Entity\Department;
 use App\Entity\ManagementType;
@@ -10,6 +11,9 @@ use App\Entity\RelationshipType;
 use App\Entity\Resource;
 use App\Entity\Role;
 use App\Entity\User;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
@@ -67,22 +71,46 @@ class DashboardController extends AbstractDashboardController
             ->renderContentMaximized(true);
     }
 
+    public function configureActions(): Actions
+    {
+        return parent::configureActions()
+            ->update(
+                Crud::PAGE_INDEX,
+                Action::EDIT,
+                function (Action $action) {
+                    return $action
+                        ->setIcon('fa fa-pencil')
+                        ->setLabel(false)
+                        ->setCssClass("btn btn-warning");
+                })
+            ->update(
+                Crud::PAGE_INDEX,
+                Action::DELETE,
+                function (Action $action) {
+                    return $action
+                        ->setIcon('fa fa-trash')
+                        ->setLabel(false)
+                        ->setCssClass("btn btn-danger");
+                });
+    }
+
     public function configureMenuItems(): iterable
     {
         return [
             MenuItem::linktoDashboard('Accueil', 'fa fa-home'),
             MenuItem::section('Administration', 'fa fa-users-cog'),
             MenuItem::linkToCrud('Utilisateurs', 'fa fa-users', User::class),
+            MenuItem::linkToCrud('Catégories d\'ages', 'fa fa-hourglass', AgeCategory::class), // TODO: corriger
             MenuItem::linkToCrud('Rôles', 'fa fa-user-tag', Role::class),
             MenuItem::linkToCrud('Départements', 'fa fa-map-marker-alt', Department::class),
             MenuItem::section('Ressources', 'fa fa-book'),
-            // TODO: Ajouter la gestion des ressources
             MenuItem::linkToCrud('Ressources', 'fa fa-book-open', Resource::class),
             MenuItem::linkToCrud('Catégorie', 'fa fa-bookmark', Category::class),
             MenuItem::linkToCrud('Type de relations', 'fa fa-people-arrows', RelationshipType::class),
             MenuItem::linkToCrud('Type de gestion', 'fa fa-star', ManagementType::class),
             MenuItem::linkToCrud('Type d\'actions', 'fa fa-hand-point-up', ActionType::class),
-            MenuItem::section('Statistiques', 'fa fa-chart-pie')
+            MenuItem::section('Statistiques', 'fa fa-chart-pie'),
+            //MenuItem::linktoRoute('Utilisateurs', 'fa fa-chart-pie', 'users-stats')
             // TODO: Ajouter la gestion des statistiques
         ];
     }

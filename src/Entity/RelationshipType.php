@@ -23,7 +23,7 @@ class RelationshipType
     private $label;
 
     /**
-     * @ORM\OneToMany(targetEntity="Resource", mappedBy="$relationShipType")
+     * @ORM\OneToMany(targetEntity="Resource", mappedBy="$relationshipType")
      */
     private $resources;
 

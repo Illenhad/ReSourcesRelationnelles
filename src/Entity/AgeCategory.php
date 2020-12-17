@@ -3,13 +3,13 @@
 
 namespace App\Entity;
 
-
+use App\Repository\AgeCategoryRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\OneToMany;
 
 /**
- * @ORM\Entity(repositoryClass=AgeCategory::class)
+ * @ORM\Entity(repositoryClass=AgeCategoryRepository::class)
  */
 class AgeCategory
 {

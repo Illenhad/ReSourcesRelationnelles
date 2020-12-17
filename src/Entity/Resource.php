@@ -84,7 +84,7 @@ class Resource
     private $resourceType;
 
     /**
-     * @ManyToOne(targetEntity="App\Entity\RelationShipType", inversedBy="resources")
+     * @ManyToOne(targetEntity="App\Entity\RelationshipType", inversedBy="resources")
      * @JoinColumn(name="relation_ship_type_id", referencedColumnName="id")
      *
      * @var RelationshipType
