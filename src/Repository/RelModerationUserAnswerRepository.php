@@ -2,25 +2,25 @@
 
 namespace App\Repository;
 
-use App\Entity\RelModerationUserComment;
+use App\Entity\RelModerationUserAnswer;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @method RelModerationUserComment|null find($id, $lockMode = null, $lockVersion = null)
- * @method RelModerationUserComment|null findOneBy(array $criteria, array $orderBy = null)
- * @method RelModerationUserComment[]    findAll()
- * @method RelModerationUserComment[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method RelModerationUserAnswer|null find($id, $lockMode = null, $lockVersion = null)
+ * @method RelModerationUserAnswer|null findOneBy(array $criteria, array $orderBy = null)
+ * @method RelModerationUserAnswer[]    findAll()
+ * @method RelModerationUserAnswer[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class RelModerationUserCommentRepository extends ServiceEntityRepository
+class RelModerationUserAnswerRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, RelModerationUserComment::class);
+        parent::__construct($registry, RelModerationUserAnswer::class);
     }
 
     // /**
-    //  * @return RelModerationUserCommentFixture[] Returns an array of RelModerationUserCommentFixture objects
+    //  * @return RelModerationUserAnswer[] Returns an array of RelModerationUserAnswer objects
     //  */
     /*
     public function findByExampleField($value)
@@ -37,7 +37,7 @@ class RelModerationUserCommentRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?RelModerationUserCommentFixture
+    public function findOneBySomeField($value): ?RelModerationUserAnswer
     {
         return $this->createQueryBuilder('r')
             ->andWhere('r.exampleField = :val')

@@ -124,6 +124,11 @@ class User implements UserInterface
      */
     private $resourceModerations;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Answer", mappedBy="user")
+     */
+    private $answers;
+
 
     /**
      * @OneToMany(targetEntity="App\Entity\Resource", mappedBy="user")
@@ -132,6 +137,21 @@ class User implements UserInterface
      */
     private $resources ;
     // ...
+
+    /**
+     * @ORM\OneToMany(targetEntity="RelSharedResourceUser", mappedBy="sharerUser")
+     */
+    private $sharerUsers;
+
+    /**
+     * @ORM\OneToMany(targetEntity="RelSharedResourceUser", mappedBy="sharedWithUser")
+     */
+    private $sharedWithUsers;
+
+    /**
+     * @ORM\OneToMany(targetEntity="RelModerationUserAnswer", mappedBy="moderator")
+     */
+    private $answerModerations;
 
     public function __construct()
     {
@@ -447,6 +467,96 @@ class User implements UserInterface
     public function setResourceModerations($resourceModerations): void
     {
         $this->resourceModerations = $resourceModerations;
+    }
+
+    /**
+     * @return Resource
+     */
+    public function getResources(): Resource
+    {
+        return $this->resources;
+    }
+
+    /**
+     * @param Resource $resources
+     * @return User
+     */
+    public function setResources(Resource $resources): User
+    {
+        $this->resources = $resources;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSharerUsers()
+    {
+        return $this->sharerUsers;
+    }
+
+    /**
+     * @param mixed $sharerUsers
+     * @return User
+     */
+    public function setSharerUsers($sharerUsers)
+    {
+        $this->sharerUsers = $sharerUsers;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSharedWithUsers()
+    {
+        return $this->sharedWithUsers;
+    }
+
+    /**
+     * @param mixed $sharedWithUsers
+     * @return User
+     */
+    public function setSharedWithUsers($sharedWithUsers)
+    {
+        $this->sharedWithUsers = $sharedWithUsers;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAnswerModerations()
+    {
+        return $this->answerModerations;
+    }
+
+    /**
+     * @param mixed $answerModerations
+     * @return User
+     */
+    public function setAnswerModerations($answerModerations)
+    {
+        $this->answerModerations = $answerModerations;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAnswers()
+    {
+        return $this->answers;
+    }
+
+    /**
+     * @param mixed $answers
+     * @return User
+     */
+    public function setAnswers($answers)
+    {
+        $this->answers = $answers;
+        return $this;
     }
 
 

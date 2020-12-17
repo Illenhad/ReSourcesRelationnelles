@@ -15,19 +15,10 @@ class RelModerationUserFixture extends Fixture implements DependentFixtureInterf
     {
         $faker = Factory::create('fr_FR');
 
-        for ($i = 0; $i < 15; $i++) {
+        for ($i = 0; $i < 20; $i++) {
             $relModerationUser = new RelModerationUser();
-            $relModerationUser->setModerationType($this->getReference('Modification'));
-            $relModerationUser->setModerationDate($faker->dateTimeBetween('-30 days', 'now'));
-            $relModerationUser->setUser($this->getReference('user'.$faker->numberBetween(1, UserFixture::$numberOfUsers)));
-            $relModerationUser->setModerator($this->getReference(UserFixture::$userModerator[$faker->numberBetween(0, count(UserFixture::$userModerator) - 1)]));
-            $manager->persist($relModerationUser);
-        }
-
-        for ($i = 0; $i < 5; $i++) {
-            $relModerationUser = new RelModerationUser();
-            $relModerationUser->setModerationType($this->getReference('Suspension'));
-            $relModerationUser->setModerationDate(new \dateTime('now'));
+            $relModerationUser->setModerationType($this->getReference('moderationType'.$faker->numberBetween(1, count(ModerationTypeFixture::$tabModerationType))));
+            $relModerationUser->setModerationDate($faker->dateTimeBetween('-60 days', 'now'));
             $relModerationUser->setUser($this->getReference('user'.$faker->numberBetween(1, UserFixture::$numberOfUsers)));
             $relModerationUser->setModerator($this->getReference(UserFixture::$userModerator[$faker->numberBetween(0, count(UserFixture::$userModerator) - 1)]));
             $manager->persist($relModerationUser);

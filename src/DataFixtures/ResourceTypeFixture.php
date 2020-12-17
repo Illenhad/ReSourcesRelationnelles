@@ -8,7 +8,7 @@ use Doctrine\Persistence\ObjectManager;
 
 class ResourceTypeFixture extends Fixture
 {
-    private static $tabResourceType = [
+    public static $tabResourceType = [
         1 => 'Activité / Jeu à réaliser',
         2 => 'Article',
         3 => 'Carte Défi',
@@ -21,11 +21,14 @@ class ResourceTypeFixture extends Fixture
 
     public function load(ObjectManager $manager)
     {
+        $i = 0;
 
         foreach (self::$tabResourceType as $resourceType) {
+            $i++;
             $resourceTypeEntity = new ResourceType();
             $resourceTypeEntity->setLabel($resourceType);
             $manager->persist($resourceTypeEntity);
+            $this->addReference('resourceType'.$i, $resourceTypeEntity);
         }
 
         $manager->flush();

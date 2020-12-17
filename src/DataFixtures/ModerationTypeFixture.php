@@ -22,7 +22,7 @@ class ModerationTypeFixture extends Fixture
             $moderationTypeEntity = new ModerationType();
             $moderationTypeEntity->setLabel($moderationType);
             $manager->persist($moderationTypeEntity);
-            $this->addReference($moderationType, $moderationTypeEntity);
+            $this->addReference('moderationType'.$i, $moderationTypeEntity);
         }
 
         $manager->flush();

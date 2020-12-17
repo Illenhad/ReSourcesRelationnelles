@@ -2,13 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\RelModerationUserCommentRepository;
+use App\Repository\RelModerationUserAnswerRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=RelModerationUserCommentRepository::class)
+ * @ORM\Entity(repositoryClass=RelModerationUserAnswerRepository::class)
  */
-class RelModerationUserComment
+class RelModerationUserAnswer
 {
     /**
      * @ORM\Id
@@ -28,22 +28,22 @@ class RelModerationUserComment
     private $comment;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="commentModerations")
-     * @ORM\JoinColumn(name="moderator_id", referencedColumnName="id", nullable=false)
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="answerModerations")
+     * @ORM\JoinColumn(name="moderator_id", referencedColumnName="id")
      */
     private $moderator;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Comment", inversedBy="commentModerations")
-     * @ORM\JoinColumn(name="comment_id", referencedColumnName="id", nullable=false)
-     */
-    private $resourceComment;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\ModerationType", inversedBy="commentModerations")
-     * @ORM\JoinColumn(name="moderation_type_id", referencedColumnName="id", nullable=false)
+     * @ORM\ManyToOne(targetEntity="App\Entity\ModerationType", inversedBy="answerModerations")
+     * @ORM\JoinColumn(name="moderation_id", referencedColumnName="id")
      */
     private $moderationType;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Answer", inversedBy="answerModerations")
+     * @ORM\JoinColumn(name="answer_id", referencedColumnName="id")
+     */
+    private $answer;
 
     public function getId(): ?int
     {
@@ -84,29 +84,11 @@ class RelModerationUserComment
 
     /**
      * @param mixed $moderator
-     * @return RelModerationUserComment
+     * @return RelModerationUserAnswer
      */
     public function setModerator($moderator)
     {
         $this->moderator = $moderator;
-        return $this;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getResourceComment()
-    {
-        return $this->resourceComment;
-    }
-
-    /**
-     * @param mixed $resourceComment
-     * @return RelModerationUserComment
-     */
-    public function setResourceComment($resourceComment)
-    {
-        $this->resourceComment = $resourceComment;
         return $this;
     }
 
@@ -120,11 +102,29 @@ class RelModerationUserComment
 
     /**
      * @param mixed $moderationType
-     * @return RelModerationUserComment
+     * @return RelModerationUserAnswer
      */
     public function setModerationType($moderationType)
     {
         $this->moderationType = $moderationType;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAnswer()
+    {
+        return $this->answer;
+    }
+
+    /**
+     * @param mixed $answer
+     * @return RelModerationUserAnswer
+     */
+    public function setAnswer($answer)
+    {
+        $this->answer = $answer;
         return $this;
     }
 

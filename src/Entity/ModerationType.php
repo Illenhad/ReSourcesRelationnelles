@@ -37,6 +37,11 @@ class ModerationType
      */
     private $resourceModeration;
 
+    /**
+     * @ORM\OneToMany(targetEntity="RelModerationUserAnswer", mappedBy="moderationType")
+     */
+    private $answerModerations;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -100,6 +105,24 @@ class ModerationType
     public function setResourceModeration($resourceModeration): void
     {
         $this->resourceModeration = $resourceModeration;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAnswerModerations()
+    {
+        return $this->answerModerations;
+    }
+
+    /**
+     * @param mixed $answerModerations
+     * @return ModerationType
+     */
+    public function setAnswerModerations($answerModerations)
+    {
+        $this->answerModerations = $answerModerations;
+        return $this;
     }
 
 

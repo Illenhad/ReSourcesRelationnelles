@@ -22,6 +22,11 @@ class RelationshipType
      */
     private $label;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Resource", mappedBy="$relationShipType")
+     */
+    private $resources;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -44,5 +49,24 @@ class RelationshipType
         $this->label = $label;
         return $this;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getResources()
+    {
+        return $this->resources;
+    }
+
+    /**
+     * @param mixed $resources
+     * @return RelationshipType
+     */
+    public function setResources($resources)
+    {
+        $this->resources = $resources;
+        return $this;
+    }
+
 
 }

@@ -22,6 +22,11 @@ class Category
      */
     private $label;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Resource", mappedBy="category")
+     */
+    private $resources;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -38,4 +43,24 @@ class Category
 
         return $this;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getResources()
+    {
+        return $this->resources;
+    }
+
+    /**
+     * @param mixed $resources
+     * @return Category
+     */
+    public function setResources($resources)
+    {
+        $this->resources = $resources;
+        return $this;
+    }
+
+
 }

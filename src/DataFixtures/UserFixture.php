@@ -18,7 +18,7 @@ class UserFixture extends Fixture implements DependentFixtureInterface
     public function load(ObjectManager $manager)
     {
         $faker = Factory::create('fr_FR');
-        self::$numberOfUsers = 100;
+        self::$numberOfUsers = 50;
 
         for ($i = 1; $i <= self::$numberOfUsers; $i++ ) {
             $user = new User();

@@ -65,7 +65,7 @@ class Resource
 
     /**
      * @ManyToOne(targetEntity="App\Entity\User", inversedBy="resources")
-     * @JoinColumn(name="product_id", referencedColumnName="id")
+     * @JoinColumn(name="user_id", referencedColumnName="id")
      */
     private $user;
     // ...
@@ -82,6 +82,27 @@ class Resource
      * @var ResourceType
      */
     private $resourceType;
+
+    /**
+     * @ManyToOne(targetEntity="App\Entity\RelationShipType", inversedBy="resources")
+     * @JoinColumn(name="relation_ship_type_id", referencedColumnName="id")
+     *
+     * @var RelationshipType
+     */
+    private $relationShip;
+
+    /**
+     * @ManyToOne(targetEntity="App\Entity\Category", inversedBy="resources")
+     * @JoinColumn(name="category_id", referencedColumnName="id")
+     *
+     * @var Category
+     */
+    private $category;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\RelSharedResourceUser", mappedBy="resource")
+     */
+    private $sharedResources;
 
     public function __construct()
     {
@@ -256,6 +277,60 @@ class Resource
     public function setResourceType(ResourceType $resourceType): Resource
     {
         $this->resourceType = $resourceType;
+        return $this;
+    }
+
+    /**
+     * @return RelationshipType
+     */
+    public function getRelationShip(): RelationshipType
+    {
+        return $this->relationShip;
+    }
+
+    /**
+     * @param RelationshipType $relationShip
+     * @return Resource
+     */
+    public function setRelationShip(RelationshipType $relationShip): Resource
+    {
+        $this->relationShip = $relationShip;
+        return $this;
+    }
+
+    /**
+     * @return Category
+     */
+    public function getCategory(): Category
+    {
+        return $this->category;
+    }
+
+    /**
+     * @param Category $category
+     * @return Resource
+     */
+    public function setCategory(Category $category): Resource
+    {
+        $this->category = $category;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSharedResources()
+    {
+        return $this->sharedResources;
+    }
+
+    /**
+     * @param mixed $sharedResources
+     * @return Resource
+     */
+    public function setSharedResources($sharedResources)
+    {
+        $this->sharedResources = $sharedResources;
         return $this;
     }
 

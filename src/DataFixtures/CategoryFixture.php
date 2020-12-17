@@ -8,7 +8,7 @@ use Doctrine\Persistence\ObjectManager;
 
 class CategoryFixture extends Fixture
 {
-    private static $tabCategory = [
+    public static $tabCategory = [
         1 => 'Communication',
         2 => 'Cultures',
         3 => 'Développement personnel',
@@ -26,11 +26,14 @@ class CategoryFixture extends Fixture
 
     public function load(ObjectManager $manager)
     {
+        $i = 0;
 
         foreach (self::$tabCategory as $category) {
+            $i++;
             $categoryEntity = new Category();
             $categoryEntity->setLabel($category);
             $manager->persist($categoryEntity);
+            $this->addReference('category'.$i, $categoryEntity);
         }
 
         $manager->flush();

@@ -56,6 +56,11 @@ class Comment
      */
     private $answers;
 
+    /**
+     * @ORM\Column(type="date")
+     */
+    private $commentDate;
+
     public function __construct()
     {
         $this->answers = new ArrayCollection();
@@ -201,6 +206,18 @@ class Comment
     public function setAnswers(ArrayCollection $answers): Comment
     {
         $this->answers = $answers;
+        return $this;
+    }
+
+    public function getCommentDate(): ?\DateTimeInterface
+    {
+        return $this->commentDate;
+    }
+
+    public function setCommentDate(\DateTimeInterface $commentDate): self
+    {
+        $this->commentDate = $commentDate;
+
         return $this;
     }
 

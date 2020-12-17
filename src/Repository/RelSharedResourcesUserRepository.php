@@ -2,25 +2,25 @@
 
 namespace App\Repository;
 
-use App\Entity\RelModerationUserComment;
+use App\Entity\RelSharedResourceUser;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @method RelModerationUserComment|null find($id, $lockMode = null, $lockVersion = null)
- * @method RelModerationUserComment|null findOneBy(array $criteria, array $orderBy = null)
- * @method RelModerationUserComment[]    findAll()
- * @method RelModerationUserComment[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method RelSharedResourceUser|null find($id, $lockMode = null, $lockVersion = null)
+ * @method RelSharedResourceUser|null findOneBy(array $criteria, array $orderBy = null)
+ * @method RelSharedResourceUser[]    findAll()
+ * @method RelSharedResourceUser[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class RelModerationUserCommentRepository extends ServiceEntityRepository
+class RelSharedResourcesUserRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, RelModerationUserComment::class);
+        parent::__construct($registry, RelSharedResourceUser::class);
     }
 
     // /**
-    //  * @return RelModerationUserCommentFixture[] Returns an array of RelModerationUserCommentFixture objects
+    //  * @return RelSharedResourceUser[] Returns an array of RelSharedResourceUser objects
     //  */
     /*
     public function findByExampleField($value)
@@ -37,7 +37,7 @@ class RelModerationUserCommentRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?RelModerationUserCommentFixture
+    public function findOneBySomeField($value): ?RelSharedResourceUser
     {
         return $this->createQueryBuilder('r')
             ->andWhere('r.exampleField = :val')

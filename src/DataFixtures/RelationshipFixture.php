@@ -8,7 +8,7 @@ use Doctrine\Persistence\ObjectManager;
 
 class RelationshipFixture extends Fixture
 {
-    private static $tabRelationship = [
+    public static $tabRelationship = [
         1 => 'Soi',
         2 => 'Conjoints',
         3 => 'Famille - enfants',
@@ -21,11 +21,14 @@ class RelationshipFixture extends Fixture
 
     public function load(ObjectManager $manager)
     {
+        $i = 0;
 
         foreach (self::$tabRelationship as $relationship) {
+            $i++;
             $relationshipEntity = new RelationshipType();
             $relationshipEntity->setLabel($relationship);
             $manager->persist($relationshipEntity);
+            $this->addReference('relationShip'.$i, $relationshipEntity);
         }
 
         $manager->flush();
