@@ -6,9 +6,8 @@ use App\Repository\UserRepository;
 use DateTime;
 use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\Mapping\JoinColumn;
-use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\OneToMany;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -58,12 +57,14 @@ class User implements UserInterface
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Department", inversedBy="users")
      * @ORM\JoinColumn(name="department_id", referencedColumnName="id", nullable=false)
+     * @var Collection
      */
     private $department;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Role", inversedBy="users")
      * @ORM\JoinColumn(name="role_id", referencedColumnName="id", nullable=false)
+     * @var Collection
      */
     private $roles;
 
@@ -229,7 +230,10 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getDepartment(): Department
+    /**
+     * @return mixed
+     */
+    public function getDepartment()
     {
         return $this->department;
     }

@@ -20,13 +20,14 @@ class UserCrudController extends AbstractCrudController
     {
         return [
             IdField::new('id')->hideOnForm(),
-            TextField::new('username'),
-            TextField::new('firstname'),
-            TextField::new('lastname'),
+            TextField::new('username')->setLabel('Identifiant'),
+            TextField::new('firstname')->setLabel('Prénom'),
+            TextField::new('lastname')->setLabel('Nom'),
             EmailField::new('email'),
-            TextField::new('dateLastConnection')->hideOnForm(),
-            AssociationField::new('roles'),
-            AssociationField::new('department')
+            TextField::new('dateLastConnection')->setLabel('Dernière connexion')->hideOnForm(),
+            AssociationField::new('roles')->setLabel('Rôle'),
+            AssociationField::new('department')->setLabel('Lieu'),
+            AssociationField::new('ageCategory')->setLabel('Catégorie d\'age'),
         ];
     }
 }

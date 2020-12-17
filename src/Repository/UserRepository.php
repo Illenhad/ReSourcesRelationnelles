@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -47,32 +48,60 @@ class UserRepository extends ServiceEntityRepository
         );
     }
 
-    // /**
-    //  * @return User[] Returns an array of User objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @return User[] Returns an array of User objects
+     */
+    public function countByRoles(): array
     {
         return $this->createQueryBuilder('u')
-            ->andWhere('u.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('u.id', 'ASC')
-            ->setMaxResults(10)
+            ->select('count(u.id) as nbr')
+            ->groupBy('u.roles')
+            ->orderBy('u.roles')
             ->getQuery()
             ->getResult()
         ;
     }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?User
+    /**
+     * @return User[] Returns an array of User objects
+     */
+    public function countByAgeCategory(): array
     {
         return $this->createQueryBuilder('u')
-            ->andWhere('u.exampleField = :val')
-            ->setParameter('val', $value)
+            ->select('count(u.id) as nbr')
+            ->groupBy('u.ageCategory')
+            ->orderBy('u.ageCategory')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+    /**
+     * @param $value
+     * @return User[] Returns an array of User objects
+     * @throws NonUniqueResultException
+     */
+    public function countByDpt($value): array
+    {
+        return $this->createQueryBuilder('u')
+            ->select('count(u.id) as nbr')
+            ->where('u.department = :val')
+            ->setParameter(':val', $value)
             ->getQuery()
             ->getOneOrNullResult()
-        ;
+            ;
     }
-    */
+
+    /**
+     * @return array
+     */
+    public function groupByDate()
+    {
+        return $this->createQueryBuilder('u')
+            ->select('count(u.id) as nbr')
+            ->groupBy('u.dateLastConnection')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
 }

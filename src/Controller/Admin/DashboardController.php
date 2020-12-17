@@ -81,7 +81,7 @@ class DashboardController extends AbstractDashboardController
                     return $action
                         ->setIcon('fa fa-pencil')
                         ->setLabel(false)
-                        ->setCssClass("btn btn-warning");
+                        ->addCssClass("btn btn-secondary");
                 })
             ->update(
                 Crud::PAGE_INDEX,
@@ -90,7 +90,10 @@ class DashboardController extends AbstractDashboardController
                     return $action
                         ->setIcon('fa fa-trash')
                         ->setLabel(false)
-                        ->setCssClass("btn btn-danger");
+                        ->addCssClass("btn btn-danger text-light")
+                        ->setHtmlAttributes([
+                            'style'
+                        ]);
                 });
     }
 
@@ -110,7 +113,7 @@ class DashboardController extends AbstractDashboardController
             MenuItem::linkToCrud('Type de gestion', 'fa fa-star', ManagementType::class),
             MenuItem::linkToCrud('Type d\'actions', 'fa fa-hand-point-up', ActionType::class),
             MenuItem::section('Statistiques', 'fa fa-chart-pie'),
-            //MenuItem::linktoRoute('Utilisateurs', 'fa fa-chart-pie', 'users-stats')
+            MenuItem::linktoRoute('Utilisateurs', 'fa fa-chart-pie', 'users-stats')
             // TODO: Ajouter la gestion des statistiques
         ];
     }

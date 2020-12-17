@@ -1,0 +1,89 @@
+{# @var ea \EasyCorp\Bundle\EasyAdminBundle\Context\AdminContext #}
+{% extends '@EasyAdmin/page/content.html.twig' %}
+{% block javascript %}
+
+{% endblock %}
+{# TODO: Changer le titre du dashboard #}
+{% block page_title 'Statistiques' %}
+{% block page_content %}
+
+{#    {{ dump(test) }}#}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    <div class="row">
+        <div class="col-md-2">
+            <div class="card text-white bg-success m-3">
+                <div class="card-header text-white">Nombre de citoyens inscrits</div>
+                <div class="card-body">
+                    <p class="card-text h1 text-white text-center">{{ users_count_roles[0] }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr/>
+    <div class="row ">
+        <div class="col-md-6">
+            <canvas id="usersPerDpt"></canvas>
+            <h5 class="text-center">Utilisateurs par départements</h5>
+        </div>
+        <div class="col-md-3">
+            <canvas id="usersPerRole"></canvas>
+            <h5 class="text-center mt-4">Utilisateurs par rôles</h5>
+        </div>
+        <div class="col-md-3">
+            <canvas id="usersPerAgeCat"></canvas>
+            <h5 class="text-center mt-4">Utilisateurs par catégorie d'ages</h5>
+        </div>
+
+    </div>
+    <div class="row mt-4">
+
+    </div>
+
+    <script>
+        {# TODO: à externaliser #}
+        const defaultBackgroundColor = [
+            'rgb(214,35,68)',
+            'rgb(54,162,235)',
+            'rgba(255, 206, 86, 1)',
+            'rgba(75, 192, 192, 1)',
+            'rgba(153, 102, 255, 1)',
+            'rgba(255, 159, 64, 1)'
+        ];
+
+        function genChart(element, title, type, labels, datas, backgroundColor = defaultBackgroundColor) {
+            new Chart(document.getElementById(element).getContext('2d'), {
+                type: type,
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: title,
+                        backgroundColor: backgroundColor,
+                        data: datas
+                    }]
+                }
+            });
+        }
+    </script>
+    <script>
+        genChart(
+            'usersPerRole',
+            null,
+            'doughnut',
+                {{ roles_labels|json_encode|raw }},
+                {{ users_count_roles|json_encode|raw }})
+        genChart(
+            'usersPerAgeCat',
+            'Utilisateurs',
+            'doughnut',
+                {{ age_cat_labels|json_encode|raw }},
+                {{ users_count_age|json_encode|raw }})
+        genChart(
+            'usersPerDpt',
+            'Utilisateurs',
+            'bar',
+                {{ dpt_num|json_encode|raw }},
+                {{ users_count_dpt|json_encode|raw }},
+            'rgba(65,200,111,0.8)')
+    </script>
+
+{% endblock %}

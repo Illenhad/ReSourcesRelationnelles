@@ -2,11 +2,11 @@
 
 namespace App\Entity;
 
-use App\Repository\DepartmentRepository;
+use App\Repository\DepartementRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=DepartmentRepository::class)
+ * @ORM\Entity(repositoryClass=DepartementRepository::class)
  */
 class Department
 {
@@ -35,7 +35,6 @@ class Department
      * @ORM\OneToMany(targetEntity="User", mappedBy="department")
      */
     private $users;
-
 
     public function getId(): ?int
     {
