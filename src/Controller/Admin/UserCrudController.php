@@ -28,6 +28,7 @@ class UserCrudController extends AbstractCrudController
             AssociationField::new('roles')->setLabel('Rôle'),
             AssociationField::new('department')->setLabel('Lieu'),
             AssociationField::new('ageCategory')->setLabel('Catégorie d\'age'),
+            TextField::new('password')->hideOnIndex()
         ];
     }
 }

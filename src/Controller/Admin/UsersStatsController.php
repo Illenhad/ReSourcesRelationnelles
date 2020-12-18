@@ -6,7 +6,9 @@ use App\Repository\AgeCategoryRepository;
 use App\Repository\DepartementRepository;
 use App\Repository\RoleRepository;
 use App\Repository\UserRepository;
+use DateTime;
 use Doctrine\ORM\NonUniqueResultException;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -54,6 +56,7 @@ class UsersStatsController extends AbstractController
      * @var DepartementRepository
      */
     private $departementRepository;
+    private $year;
 
 
     public function __construct(RoleRepository $roleRepository,
@@ -65,12 +68,14 @@ class UsersStatsController extends AbstractController
         $this->userRepository = $userRepository;
         $this->ageCategoryRepository = $ageCategoryRepository;
         $this->departementRepository = $departementRepository;
+        $this->year = '2020';
 
         $this->initVariables();
     }
 
     /**
      * @Route("/users-stats", name="users-stats")
+     * @throws Exception
      */
     public function index(): Response
     {
@@ -81,10 +86,69 @@ class UsersStatsController extends AbstractController
             'age_cat_labels' => $this->age_cat_labels,
             'dpt_num' => $this->dpt_num,
             'users_count_dpt' => $this->users_count_dpt,
-            'test' => $this->userRepository->groupByDate()
+            'year' => $this->year,
+            'register_per_month' => $this->countUserPerMonth($this->year)
         ]);
     }
 
+    /**
+     * Count user by year and month creation date
+     *
+     * @return array
+     * @throws Exception
+     */
+    private function countUserPerYear(): array
+    {
+        $userPerYear = array();
+
+        foreach ($this->userRepository->findAll() as $user) {
+            $date = new DateTime($user->getDateLastConnection());
+            $date = $date->format('Y');
+
+            (isset($userPerYear[$date])) ? $userPerYear[$date]++ : $userPerYear[$date] = 0;
+        }
+
+        return $userPerYear;
+    }
+
+    /**
+     * Number of registrations per month, according to the past year in parameter
+     *
+     * @param $year : Year
+     * @return array
+     * @throws Exception
+     */
+    private function countUserPerMonth($year): array
+    {
+        //TODO : A refaire
+        $userPerMonth = array();
+
+        foreach (range(1, 12) as $item)
+        {
+            $userPerMonth[$item] = 0;
+        }
+
+        foreach ($this->userRepository->findAll() as $user)
+        {
+            $date = new DateTime($user->getDateLastConnection());
+            if ($date->format('Y') === $year && $user->getRoles() == 'ROLE_USER')
+            {
+                $userPerMonth[$date->format('m')]++;
+            }
+        }
+
+        $arr = [];
+        foreach ($userPerMonth as $value)
+        {
+            array_push($arr, $value);
+        }
+
+        return $arr;
+    }
+
+    /**
+     * Initialize dataset
+     */
     private function initVariables()
     {
         foreach ($this->roleRepository->findAll() as $role) {
