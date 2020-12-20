@@ -6,8 +6,8 @@
 {# TODO: Changer le titre du dashboard #}
 {% block page_title 'Statistiques' %}
 {% block page_content %}
-
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+
     <div class="row">
         <div class="col-md-2">
             <div class="card border-success border-top-0 border-bottom-0 border-right-0 h-100 py-2 shadow-sm"
@@ -21,30 +21,67 @@
     </div>
     <hr/>
     <div class="row">
-        <div class="col-md-7">
-            <canvas id="registerPerMonth"></canvas>
-            <h5 class="text-center mt-4">Inscriptions pour l'année {{ year }}</h5>
-        </div>
-        <div class="col-md-5">
-            <div class="row">
-                <div class="col-md-6 ">
-                    <canvas id="usersPerRole"></canvas>
-                    <h5 class="text-center mt-4">Utilisateurs par rôles</h5>
+        <div class="col-md-7 p-4 card shadow-sm">
+            <nav>
+                <div class="nav nav-pills" id="nav-tab" role="tablist">
+                    <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-register"
+                       role="tab" aria-controls="nav-year" aria-selected="true">Par années</a>
+                    <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-dept" role="tab"
+                       aria-controls="nav-department" aria-selected="false">Par départements</a>
                 </div>
-                <div class="col-md-6 ">
-                    <canvas id="usersPerAgeCat"></canvas>
-                    <h5 class="text-center mt-4">Utilisateurs par ages</h5>
+            </nav>
+
+            <div class="tab-content pt-2" id="nav-tabContent">
+                <div class="tab-pane fade show active" id="nav-register" role="tabpanel" aria-labelledby="nav-year-tab">
+
+                    <nav>
+                        <div class="nav nav-pills" id="nav-tab-year" role="tablist">
+                            {% for year in register_per_year|keys %}
+                                <a class="nav-item nav-link {% if loop.first %}active{% endif %}" id="nav-home-tab" data-toggle="tab" href="#nav-registerIn{{ year }}"
+                                   role="tab" aria-controls="nav-year" aria-selected="true">{{ year }}</a>
+                            {% endfor %}
+                        </div>
+                    </nav>
+
+                    <div class="tab-content pt-2" id="nav-tabContent">
+                        {% for year in register_per_year|keys %}
+                        <div class="tab-pane fade show {% if loop.first %}active{% endif %}" id="nav-registerIn{{ year }}" role="tabpanel" aria-labelledby="nav-year-tab">
+                            <canvas id="registerIn{{ year }}"></canvas>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="tab-pane fade pt-4" id="nav-dept" role="tabpanel" aria-labelledby="nav-department-tab">
+                    <canvas id="usersPerDpt"></canvas>
                 </div>
             </div>
 
         </div>
+        <div class="col">
+            <div class="row">
+                <div>
+                    <div class="card ml-2 p-2 shadow-sm">
+                        <canvas id="usersPerRole"></canvas>
+                        <h5 class="text-center mt-4">Utilisateurs par rôles</h5>
+                    </div>
+                </div>
+                <div>
+                    <div class="card ml-2 p-2 shadow-sm">
+                        <canvas id="usersPerAgeCat"></canvas>
+                        <h5 class="text-center mt-4">Utilisateurs par ages</h5>
+                    </div>
+                </div>
+
+            </div>
+        </div>
     </div>
     <div class="row ">
         <div class="col">
-            <canvas id="usersPerDpt"></canvas>
-            <h5 class="text-center">Utilisateurs par départements</h5>
+
         </div>
     </div>
+
+
     <script>
         {# TODO: JS a externaliser #}
         const defaultBackgroundColor = [
@@ -66,12 +103,15 @@
                         backgroundColor: backgroundColor,
                         data: datas
                     }]
+                },
+                options: {
+                    legend: {
+                        display: false
+                    }
                 }
             });
         }
-    </script>
 
-    <script>
         genChart(
             'usersPerRole',
             null,
@@ -90,14 +130,16 @@
             'bar',
                 {{ dpt_num|json_encode|raw }},
                 {{ users_count_dpt|json_encode|raw }},
-            'rgba(65,200,111,0.8)')
+            '#28a745')
+        {% for year, registerYear in register_per_year %}
         genChart(
-            'registerPerMonth',
+            'registerIn{{ year }}',
             'Inscriptions',
             'line',
             [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
-                {{ register_per_month|json_encode|raw }},
-            'rgba(75, 192, 192, 0.8)')
+                {{ registerYear|json_encode|raw }},
+            '#28a745')
+        {% endfor %}
     </script>
 
 {% endblock %}

@@ -57,6 +57,10 @@ class UsersStatsController extends AbstractController
      */
     private $departementRepository;
     private $year;
+    /**
+     * @var array
+     */
+    private $test;
 
 
     public function __construct(RoleRepository $roleRepository,
@@ -70,6 +74,15 @@ class UsersStatsController extends AbstractController
         $this->departementRepository = $departementRepository;
         $this->year = '2020';
 
+        $this->test = [];
+
+
+
+//        foreach ($years as $year){
+//            array_push($this->test[$year], $this->countUserPerMonth($year));
+//        }
+
+
         $this->initVariables();
     }
 
@@ -79,6 +92,8 @@ class UsersStatsController extends AbstractController
      */
     public function index(): Response
     {
+        
+        
         return $this->render("bundles/EasyAdminBundle/page/users_stats.html.twig", [
             'roles_labels' => $this->roles_labels,
             'users_count_roles' => $this->users_count_roles,
@@ -87,28 +102,28 @@ class UsersStatsController extends AbstractController
             'dpt_num' => $this->dpt_num,
             'users_count_dpt' => $this->users_count_dpt,
             'year' => $this->year,
-            'register_per_month' => $this->countUserPerMonth($this->year)
+            'register_per_year' => $this->countUserPerYear()
         ]);
     }
 
     /**
-     * Count user by year and month creation date
-     *
      * @return array
-     * @throws Exception
      */
     private function countUserPerYear(): array
     {
-        $userPerYear = array();
+        $user_per_years = array();
 
-        foreach ($this->userRepository->findAll() as $user) {
-            $date = new DateTime($user->getDateLastConnection());
-            $date = $date->format('Y');
-
-            (isset($userPerYear[$date])) ? $userPerYear[$date]++ : $userPerYear[$date] = 0;
+        foreach (range((new DateTime())->format('Y'), 2018) as $year)
+        {
+            $user_per_years[$year] = 0;
+            try {
+                $user_per_years[$year] = $this->countUserPerMonth((string)$year);
+            } catch (Exception $e) {
+            }
         }
-
-        return $userPerYear;
+        
+        return $user_per_years;
+            
     }
 
     /**
@@ -168,6 +183,7 @@ class UsersStatsController extends AbstractController
         }
 
         foreach ($this->departementRepository->findAll() as $dpt) {
+            // TODO: A refaire
             array_push($this->dpt_num, $dpt->getNumber());
             try {
                 array_push($this->users_count_dpt, $this->userRepository->countByDpt($dpt->getId())['nbr']);
@@ -175,6 +191,8 @@ class UsersStatsController extends AbstractController
                 array_push($this->users_count_dpt, 0);
             }
         }
+
+
 
     }
 }
