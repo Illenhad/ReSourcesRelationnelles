@@ -8,6 +8,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\EmailField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 
 class UserCrudController extends AbstractCrudController
 {
@@ -28,7 +29,14 @@ class UserCrudController extends AbstractCrudController
             AssociationField::new('roles')->setLabel('Rôle'),
             AssociationField::new('department')->setLabel('Lieu'),
             AssociationField::new('ageCategory')->setLabel('Catégorie d\'age'),
-            TextField::new('password')->hideOnIndex()
+            TextField::new('password')
+                ->hideOnIndex()
+                ->setFormType(PasswordType::class)
+                ->setLabel('Mot de passe'),
+            TextField::new('confirm_password')
+                ->hideOnIndex()
+                ->setFormType(PasswordType::class)
+                ->setLabel('Confirmation mot de passe'),
         ];
     }
 }
