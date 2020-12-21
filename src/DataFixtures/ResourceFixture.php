@@ -23,12 +23,14 @@ class ResourceFixture extends Fixture implements DependentFixtureInterface
                 ->setTitle($faker->words(3, true))
                 ->setLink($faker->url)
                 ->setPublic($faker->boolean(40))
-                ->setDateCreation($faker->dateTimeBetween('-2 years', 'now', null));
-            $resource->setUser($this->getReference('user'.$faker->numberBetween(1, UserFixture::$numberOfUsers)));
-            $resource->setAgeCategory($this->getReference('age'.$faker->numberBetween(1, count(AgeCategoryFixture::$tabAge))));
-            $resource->setCategory($this->getReference('category'.$faker->numberBetween(1, count(CategoryFixture::$tabCategory))));
-            $resource->setResourceType($this->getReference(('resourceType'.$faker->numberBetween(1, count(ResourceTypeFixture::$tabResourceType)))));
-            $resource->setRelationShip($this->getReference('relationShip'.$faker->numberBetween(1, count(RelationshipFixture::$tabRelationship))));
+                ->setDateCreation($faker->dateTimeBetween('-2 years', 'now', null))
+                ->setUser($this->getReference('user'.$faker->numberBetween(1, UserFixture::$numberOfUsers)))
+                ->setDescription($faker->words(5, true))
+                ->setAgeCategory($this->getReference('ageCategory'.$faker->numberBetween(1, count(AgeCategoryFixture::$tabAge))))
+                ->setCategory($this->getReference('category'.$faker->numberBetween(1, count(CategoryFixture::$tabCategory))))
+                ->setResourceType($this->getReference(('resourceType'.$faker->numberBetween(1, count(ResourceTypeFixture::$tabResourceType)))))
+                ->setRelationShip($this->getReference('relationShip'.$faker->numberBetween(1, count(RelationshipFixture::$tabRelationship))))
+            ;
             $manager->persist($resource);
             $this->addReference('resource'.$i, $resource);
         }
@@ -42,6 +44,7 @@ class ResourceFixture extends Fixture implements DependentFixtureInterface
             UserFixture::class,
             AgeCategoryFixture::class,
             CategoryFixture::class,
+            ResourceTypeFixture::class,
             RelationshipFixture::class,
         ];
     }

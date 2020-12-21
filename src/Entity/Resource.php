@@ -37,6 +37,13 @@ class Resource
      *
      * @var string
      */
+    private $description;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     *
+     * @var string
+     */
     private $link;
 
     /**
@@ -307,6 +314,18 @@ class Resource
     public function setSharedResources(Collection $sharedResources): self
     {
         $this->sharedResources = $sharedResources;
+
+        return $this;
+    }
+
+    public function getDescription(): string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(string $description): self
+    {
+        $this->description = $description;
 
         return $this;
     }
