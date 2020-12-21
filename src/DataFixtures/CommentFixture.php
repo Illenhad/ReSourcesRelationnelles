@@ -17,7 +17,7 @@ class CommentFixture extends Fixture implements DependentFixtureInterface
         $faker = Factory::create('fr_FR');
         self::$numberOfComments = 100;
 
-        for ($i = 1; $i <= self::$numberOfComments; $i++) {
+        for ($i = 1; $i <= self::$numberOfComments; ++$i) {
             $comment = new Comment();
             $comment
                 ->setTitle($faker->word())

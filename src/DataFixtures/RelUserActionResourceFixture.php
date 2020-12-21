@@ -3,7 +3,6 @@
 namespace App\DataFixtures;
 
 use App\Entity\RelUserActionResource;
-use App\Entity\Resource;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
@@ -15,7 +14,7 @@ class RelUserActionResourceFixture extends Fixture implements DependentFixtureIn
     {
         $faker = Factory::create('fr_FR');
 
-        for ($i = 1; $i <= 100; $i++) {
+        for ($i = 1; $i <= 100; ++$i) {
             $relUserActionResource = new RelUserActionResource();
             $relUserActionResource->setResource($this->getReference('resource'.$faker->numberBetween(1, ResourceFixture::$numberOfResources)));
             $relUserActionResource->setUser($this->getReference('user'.$faker->numberBetween(1, UserFixture::$numberOfUsers)));
@@ -32,7 +31,7 @@ class RelUserActionResourceFixture extends Fixture implements DependentFixtureIn
         return [
             ActionTypeFixture::class,
             UserFixture::class,
-            ResourceFixture::class
+            ResourceFixture::class,
         ];
     }
 }

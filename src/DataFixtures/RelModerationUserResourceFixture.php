@@ -14,7 +14,7 @@ class RelModerationUserResourceFixture extends Fixture implements DependentFixtu
     {
         $faker = Factory::create('fr_FR');
 
-        for ($i = 1; $i <= 15; $i++) {
+        for ($i = 1; $i <= 15; ++$i) {
             $relModerationUserResource = new RelModerationUserResource();
             $relModerationUserResource->setModerationDate($faker->dateTimeBetween('-50 days', 'now'));
             $relModerationUserResource->setModerator($this->getReference(UserFixture::$userModerator[$faker->numberBetween(0, count(UserFixture::$userModerator) - 1)]));
@@ -25,7 +25,6 @@ class RelModerationUserResourceFixture extends Fixture implements DependentFixtu
         }
 
         $manager->flush();
-
     }
 
     public function getDependencies()
@@ -33,7 +32,7 @@ class RelModerationUserResourceFixture extends Fixture implements DependentFixtu
         return [
             UserFixture::class,
             ResourceFixture::class,
-            ModerationTypeFixture::class
+            ModerationTypeFixture::class,
         ];
     }
 }

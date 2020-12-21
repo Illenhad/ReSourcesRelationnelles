@@ -16,7 +16,7 @@ class RelationshipFixture extends Fixture
         5 => 'Famille - fratrie',
         6 => 'Professionnel - collègues',
         7 => 'Professionnel - collaborateurs',
-        8 => 'Professionnel - manager'
+        8 => 'Professionnel - manager',
         ];
 
     public function load(ObjectManager $manager)
@@ -24,7 +24,7 @@ class RelationshipFixture extends Fixture
         $i = 0;
 
         foreach (self::$tabRelationship as $relationship) {
-            $i++;
+            ++$i;
             $relationshipEntity = new RelationshipType();
             $relationshipEntity->setLabel($relationship);
             $manager->persist($relationshipEntity);

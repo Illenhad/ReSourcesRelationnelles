@@ -2,7 +2,6 @@
 
 namespace App\DataFixtures;
 
-use App\Entity\RelationshipType;
 use App\Entity\Resource;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
@@ -18,7 +17,7 @@ class ResourceFixture extends Fixture implements DependentFixtureInterface
         $faker = Factory::create('fr_FR');
         self::$numberOfResources = 15;
 
-        for ($i = 1; $i <= 150; $i++) {
+        for ($i = 1; $i <= 150; ++$i) {
             $resource = new Resource();
             $resource
                 ->setTitle($faker->words(3, true))
@@ -43,7 +42,7 @@ class ResourceFixture extends Fixture implements DependentFixtureInterface
             UserFixture::class,
             AgeCategoryFixture::class,
             CategoryFixture::class,
-            RelationshipFixture::class
+            RelationshipFixture::class,
         ];
     }
 }

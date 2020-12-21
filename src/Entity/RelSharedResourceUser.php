@@ -16,6 +16,8 @@ class RelSharedResourceUser
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     *
+     * @var int
      */
     private $id;
 
@@ -39,68 +41,48 @@ class RelSharedResourceUser
      * @ManyToOne(targetEntity="App\Entity\Resource", inversedBy="sharedResources")
      * @JoinColumn(name="resource_id", referencedColumnName="id")
      *
-     * @var Resource
+     * @var resource
      */
     private $resource;
 
-    public function getId(): ?int
+    public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * @return User
-     */
     public function getSharerUser(): User
     {
         return $this->sharerUser;
     }
 
-    /**
-     * @param User $sharerUser
-     * @return RelSharedResourceUser
-     */
     public function setSharerUser(User $sharerUser): RelSharedResourceUser
     {
         $this->sharerUser = $sharerUser;
+
         return $this;
     }
 
-    /**
-     * @return User
-     */
     public function getSharedWithUser(): User
     {
         return $this->sharedWithUser;
     }
 
-    /**
-     * @param User $sharedWithUser
-     * @return RelSharedResourceUser
-     */
     public function setSharedWithUser(User $sharedWithUser): RelSharedResourceUser
     {
         $this->sharedWithUser = $sharedWithUser;
+
         return $this;
     }
 
-    /**
-     * @return Resource
-     */
-    public function getResource(): Resource
+    public function getResource(): resource
     {
         return $this->resource;
     }
 
-    /**
-     * @param Resource $resource
-     * @return RelSharedResourceUser
-     */
-    public function setResource(Resource $resource): RelSharedResourceUser
+    public function setResource(resource $resource): RelSharedResourceUser
     {
         $this->resource = $resource;
+
         return $this;
     }
-
-
 }

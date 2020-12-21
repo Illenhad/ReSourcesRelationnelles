@@ -3,7 +3,6 @@
 namespace App\DataFixtures;
 
 use App\Entity\ActionType;
-use App\Entity\ManagementType;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 
@@ -15,7 +14,7 @@ class ActionTypeFixture extends Fixture
         3 => 'Validation',
         4 => 'Suspension',
         5 => 'Modification',
-        6 => 'Suppression'
+        6 => 'Suppression',
     ];
 
     public function load(ObjectManager $manager)
@@ -23,7 +22,7 @@ class ActionTypeFixture extends Fixture
         $i = 0;
 
         foreach (self::$tabActionType as $actionType) {
-            $i++;
+            ++$i;
             $actionTypeEntity = new ActionType();
             $actionTypeEntity->setLabel($actionType);
             $manager->persist($actionTypeEntity);

@@ -23,28 +23,28 @@ class UserRepository extends ServiceEntityRepository
     public function findJunior()
     {
         return $this->findBy(
-            ["ageCategory" => 1]
+            ['ageCategory' => 1]
         );
     }
 
     public function findAdult()
     {
         return $this->findBy(
-            ["ageCategory" => 2]
+            ['ageCategory' => 2]
         );
     }
 
     public function findSenior()
     {
         return $this->findBy(
-            ["ageCategory" => 3]
+            ['ageCategory' => 3]
         );
     }
 
     public function findMaster()
     {
         return $this->findBy(
-            ["ageCategory" => 4]
+            ['ageCategory' => 4]
         );
     }
 
@@ -78,7 +78,9 @@ class UserRepository extends ServiceEntityRepository
 
     /**
      * @param $value
+     *
      * @return User[] Returns an array of User objects
+     *
      * @throws NonUniqueResultException
      */
     public function countByDpt($value): array

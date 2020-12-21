@@ -14,79 +14,73 @@ class RelUserManagementResource
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     *
+     * @var int
      */
     private $id;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="resourceManagements")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
+     *
+     * @var User
      */
     private $user;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Resource", inversedBy="userManagement")
      * @ORM\JoinColumn(name="resource_id", referencedColumnName="id", nullable=false)
+     *
+     * @var resource
      */
     private $resource;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\ManagementType", inversedBy="resourcesUsers")
      * @ORM\JoinColumn(name="management_type_id", referencedColumnName="id", nullable=false)
+     *
+     * @var ManagementType
      */
     private $managementType;
 
-    public function getId(): ?int
+    public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getUser()
+    public function getUser(): User
     {
         return $this->user;
     }
 
-    /**
-     * @param mixed $user
-     */
-    public function setUser($user): void
+    public function setUser(User $user): RelUserManagementResource
     {
         $this->user = $user;
+
+        return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getResource()
+    public function getResource(): Resource
     {
         return $this->resource;
     }
 
-    /**
-     * @param mixed $resource
-     */
-    public function setResource($resource): void
+    public function setResource(Resource $resource): RelUserManagementResource
     {
         $this->resource = $resource;
+
+        return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getManagementType()
+    public function getManagementType(): ManagementType
     {
         return $this->managementType;
     }
 
-    /**
-     * @param mixed $managementType
-     */
-    public function setManagementType($managementType): void
+    public function setManagementType(ManagementType $managementType): RelUserManagementResource
     {
         $this->managementType = $managementType;
+
+        return $this;
     }
-
-
 }

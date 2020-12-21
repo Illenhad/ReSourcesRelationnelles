@@ -29,7 +29,7 @@ class DepartmentFixture extends Fixture
         '18' => 'Cher',
         '19' => 'Corrèze',
         '2A' => 'Corse du Sud',
-        '2B' =>'Haute Corse',
+        '2B' => 'Haute Corse',
         '21' => 'Côte d\'Or',
         '22' => 'Côtes d\'Armor',
         '23' => 'Creuse',
@@ -111,7 +111,7 @@ class DepartmentFixture extends Fixture
         '973' => 'Guyane',
         '974' => 'Réunion',
         '975' => 'Saint Pierre et Miquelon',
-        '976' => 'Mayotte'
+        '976' => 'Mayotte',
     ];
 
     //public static $tabDeptEntity = [];
@@ -121,7 +121,7 @@ class DepartmentFixture extends Fixture
         $i = 0;
 
         foreach (self::$tabDept as $key => $value) {
-            $i++;
+            ++$i;
             $department = new Department();
             $department
                 ->setLabel($value)
@@ -131,9 +131,6 @@ class DepartmentFixture extends Fixture
             //self::$tabDeptEntity[$i] = $department;
         }
 
-
         $manager->flush();
     }
-
-
 }

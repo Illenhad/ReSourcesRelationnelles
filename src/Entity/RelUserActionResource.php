@@ -14,96 +14,92 @@ class RelUserActionResource
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     *
+     * @var int
      */
     private $id;
 
     /**
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="datetime")
+     *
+     * @var \DateTimeInterface
      */
     private $actionDate;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="resourceActions")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
+     *
+     * @var User
      */
     private $user;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Resource", inversedBy="userActions")
      * @ORM\JoinColumn(name="resource_id", referencedColumnName="id", nullable=false)
+     *
+     * @var resource
      */
     private $resource;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\ActionType", inversedBy="resourceUsers")
      * @ORM\JoinColumn(name="action_type_id", referencedColumnName="id", nullable=false)
+     *
+     * @var ActionType
      */
     private $actionType;
 
-    public function getId(): ?int
+    public function getId(): int
     {
         return $this->id;
     }
 
-    public function getActionDate(): ?\DateTimeInterface
+    public function getActionDate(): \DateTimeInterface
     {
         return $this->actionDate;
     }
 
-    public function setActionDate(\DateTimeInterface $actionDate): self
+    public function setActionDate(\DateTimeInterface $actionDate): RelUserActionResource
     {
         $this->actionDate = $actionDate;
 
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getUser()
+    public function getUser(): User
     {
         return $this->user;
     }
 
-    /**
-     * @param mixed $user
-     */
-    public function setUser($user): void
+    public function setUser(User $user): RelUserActionResource
     {
         $this->user = $user;
+
+        return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getResource()
+    public function getResource(): Resource
     {
         return $this->resource;
     }
 
-    /**
-     * @param mixed $resource
-     */
-    public function setResource($resource): void
+    public function setResource(Resource $resource): RelUserActionResource
     {
         $this->resource = $resource;
+
+        return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getActionType()
+    public function getActionType(): ActionType
     {
         return $this->actionType;
     }
 
-    /**
-     * @param mixed $actionType
-     */
-    public function setActionType($actionType): void
+    public function setActionType(ActionType $actionType): RelUserActionResource
     {
         $this->actionType = $actionType;
+
+        return $this;
     }
-
-
 }

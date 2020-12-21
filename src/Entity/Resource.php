@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
+use phpDocumentor\Reflection\Types\Collection;
 
 /**
  * @ORM\Entity(repositoryClass=ResourceRepository::class)
@@ -17,61 +18,80 @@ class Resource
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     *
+     * @var int
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     *
+     * @var string
      */
     private $title;
 
     /**
      * @ORM\Column(type="string", length=255)
+     *
+     * @var string
      */
     private $link;
 
     /**
      * @ORM\Column(type="boolean")
+     *
+     * @var bool
      */
     private $public;
 
     /**
      * @ORM\Column(type="datetime")
+     *
+     * @var \DateTimeInterface
      */
     private $dateCreation;
 
     /**
      * @ORM\OneToMany(targetEntity="RelUserManagementResource", mappedBy="resource")
+     *
+     * @var Collection
      */
-    private $userManagement;
+    private $userManagements;
 
     /**
      * @ORM\OneToMany(targetEntity="RelUserActionResource", mappedBy="resource")
+     *
+     * @var Collection
      */
     private $userActions;
 
-
     /**
      * @ORM\OneToMany(targetEntity="RelModerationUserResource", mappedBy="resource")
+     *
+     * @var Collection
      */
     private $resourceModerations;
-
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\AgeCategory", inversedBy="resources")
      * @ORM\JoinColumn(name="age_category_id", referencedColumnName="id")
+     *
+     * @var AgeCategory
      */
     private $ageCategory;
 
     /**
      * @ManyToOne(targetEntity="App\Entity\User", inversedBy="resources")
      * @JoinColumn(name="user_id", referencedColumnName="id")
+     *
+     * @var User
      */
     private $user;
-    // ...
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="resource")
+     *
+     * @var Collection
      */
     private $comments;
 
@@ -101,20 +121,26 @@ class Resource
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\RelSharedResourceUser", mappedBy="resource")
+     *
+     * @var Collection
      */
     private $sharedResources;
 
     public function __construct()
     {
         $this->comments = new ArrayCollection();
+        $this->userManagements = new ArrayCollection();
+        $this->userActions = new ArrayCollection();
+        $this->resourceModerations = new ArrayCollection();
+        $this->sharedResources = new ArrayCollection();
     }
 
-    public function getId(): ?int
+    public function getId(): int
     {
         return $this->id;
     }
 
-    public function getTitle(): ?string
+    public function getTitle(): string
     {
         return $this->title;
     }
@@ -126,7 +152,7 @@ class Resource
         return $this;
     }
 
-    public function getLink(): ?string
+    public function getLink(): string
     {
         return $this->link;
     }
@@ -138,7 +164,7 @@ class Resource
         return $this;
     }
 
-    public function getPublic(): ?bool
+    public function isPublic(): bool
     {
         return $this->public;
     }
@@ -150,189 +176,135 @@ class Resource
         return $this;
     }
 
-
-    public function getDateCreation()
+    public function getDateCreation(): \DateTimeInterface
     {
         return $this->dateCreation;
     }
 
-
-    public function setDateCreation($dateCreation): void
+    public function setDateCreation(\DateTimeInterface $dateCreation): self
     {
         $this->dateCreation = $dateCreation;
+
+        return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getUserManagement()
+    public function getUserManagements(): Collection
     {
-        return $this->userManagement;
+        return $this->userManagements;
     }
 
-    /**
-     * @param mixed $userManagement
-     */
-    public function setUserManagement($userManagement): void
+    public function setUserManagements(Collection $userManagements): self
     {
-        $this->userManagement = $userManagement;
+        $this->userManagements = $userManagements;
+
+        return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getUserActions()
+    public function getUserActions(): Collection
     {
         return $this->userActions;
     }
 
-    /**
-     * @param mixed $userActions
-     */
-    public function setUserActions($userActions): void
+    public function setUserActions(Collection $userActions): self
     {
         $this->userActions = $userActions;
+
+        return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getComments()
-    {
-        return $this->comments;
-    }
-
-    /**
-     * @param mixed $comments
-     */
-    public function setComments($comments): void
-    {
-        $this->comments = $comments;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getResourceModerations()
+    public function getResourceModerations(): Collection
     {
         return $this->resourceModerations;
     }
 
-    /**
-     * @param mixed $resourceModerations
-     */
-    public function setResourceModerations($resourceModerations): void
+    public function setResourceModerations(Collection $resourceModerations): self
     {
         $this->resourceModerations = $resourceModerations;
+
+        return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getAgeCategory()
+    public function getAgeCategory(): AgeCategory
     {
         return $this->ageCategory;
     }
 
-    /**
-     * @param mixed $ageCategory
-     * @return Resource
-     */
-    public function setAgeCategory($ageCategory)
+    public function setAgeCategory(AgeCategory $ageCategory): self
     {
         $this->ageCategory = $ageCategory;
+
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getUser()
+    public function getUser(): User
     {
         return $this->user;
     }
 
-    /**
-     * @param mixed $user
-     * @return Resource
-     */
-    public function setUser($user)
+    public function setUser(User $user): self
     {
         $this->user = $user;
+
         return $this;
     }
 
-    /**
-     * @return ResourceType
-     */
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    public function setComments(Collection $comments): self
+    {
+        $this->comments = $comments;
+
+        return $this;
+    }
+
     public function getResourceType(): ResourceType
     {
         return $this->resourceType;
     }
 
-    /**
-     * @param ResourceType $resourceType
-     * @return Resource
-     */
-    public function setResourceType(ResourceType $resourceType): Resource
+    public function setResourceType(ResourceType $resourceType): self
     {
         $this->resourceType = $resourceType;
+
         return $this;
     }
 
-    /**
-     * @return RelationshipType
-     */
     public function getRelationShip(): RelationshipType
     {
         return $this->relationShip;
     }
 
-    /**
-     * @param RelationshipType $relationShip
-     * @return Resource
-     */
-    public function setRelationShip(RelationshipType $relationShip): Resource
+    public function setRelationShip(RelationshipType $relationShip): self
     {
         $this->relationShip = $relationShip;
+
         return $this;
     }
 
-    /**
-     * @return Category
-     */
     public function getCategory(): Category
     {
         return $this->category;
     }
 
-    /**
-     * @param Category $category
-     * @return Resource
-     */
-    public function setCategory(Category $category): Resource
+    public function setCategory(Category $category): self
     {
         $this->category = $category;
+
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getSharedResources()
+    public function getSharedResources(): Collection
     {
         return $this->sharedResources;
     }
 
-    /**
-     * @param mixed $sharedResources
-     * @return Resource
-     */
-    public function setSharedResources($sharedResources)
+    public function setSharedResources(Collection $sharedResources): self
     {
         $this->sharedResources = $sharedResources;
+
         return $this;
     }
-
-
 }

@@ -2,8 +2,6 @@
 
 namespace App\DataFixtures;
 
-use App\Entity\AgeCategory;
-use App\Entity\Department;
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
@@ -20,7 +18,7 @@ class UserFixture extends Fixture implements DependentFixtureInterface
         $faker = Factory::create('fr_FR');
         self::$numberOfUsers = 50;
 
-        for ($i = 1; $i <= self::$numberOfUsers; $i++ ) {
+        for ($i = 1; $i <= self::$numberOfUsers; ++$i) {
             $user = new User();
             $user
                 ->setFirstname($faker->firstName)
@@ -31,7 +29,7 @@ class UserFixture extends Fixture implements DependentFixtureInterface
                 ->setAgeCategory($this->getReference('age'.$faker->numberBetween(1, count(AgeCategoryFixture::$tabAge))))
                 ->setDateLastConnection($faker->dateTimeBetween('-60 days', 'now', null))
                 ->setRoles($this->getReference('ROLE_USER'))
-                ->setPassword("12345678");
+                ->setPassword('12345678');
             $manager->persist($user);
             $this->addReference('user'.$i, $user);
         }
@@ -48,10 +46,10 @@ class UserFixture extends Fixture implements DependentFixtureInterface
             ->setAgeCategory($this->getReference('age'.$faker->numberBetween(1, count(AgeCategoryFixture::$tabAge))))
             ->setDateLastConnection(new \DateTime('now'))
             ->setRoles($this->getReference('ROLE_MODERATEUR'))
-            ->setPassword("12345678")
+            ->setPassword('12345678')
         ;
         $manager->persist($user);
-        self::$numberOfUsers++;
+        ++self::$numberOfUsers;
         $this->addReference('user'.self::$numberOfUsers, $user);
         array_push($tabModerator, 'user'.self::$numberOfUsers);
 
@@ -65,10 +63,10 @@ class UserFixture extends Fixture implements DependentFixtureInterface
             ->setAgeCategory($this->getReference('age'.$faker->numberBetween(1, count(AgeCategoryFixture::$tabAge))))
             ->setDateLastConnection(new \DateTime('now'))
             ->setRoles($this->getReference('ROLE_MODERATEUR'))
-            ->setPassword("12345678")
+            ->setPassword('12345678')
         ;
         $manager->persist($user);
-        self::$numberOfUsers++;
+        ++self::$numberOfUsers;
         $this->addReference('user'.self::$numberOfUsers, $user);
         array_push($tabModerator, 'user'.self::$numberOfUsers);
 
@@ -82,10 +80,10 @@ class UserFixture extends Fixture implements DependentFixtureInterface
             ->setAgeCategory($this->getReference('age'.$faker->numberBetween(1, count(AgeCategoryFixture::$tabAge))))
             ->setDateLastConnection(new \DateTime('now'))
             ->setRoles($this->getReference('ROLE_ADMIN'))
-            ->setPassword("12345678")
+            ->setPassword('12345678')
         ;
         $manager->persist($user);
-        self::$numberOfUsers++;
+        ++self::$numberOfUsers;
         $this->addReference('user'.self::$numberOfUsers, $user);
         array_push($tabModerator, 'user'.self::$numberOfUsers);
 
@@ -99,17 +97,16 @@ class UserFixture extends Fixture implements DependentFixtureInterface
             ->setAgeCategory($this->getReference('age'.$faker->numberBetween(1, count(AgeCategoryFixture::$tabAge))))
             ->setDateLastConnection(new \DateTime('now'))
             ->setRoles($this->getReference('ROLE_SUPER_ADMIN'))
-            ->setPassword("12345678")
+            ->setPassword('12345678')
         ;
         $manager->persist($user);
-        self::$numberOfUsers++;
+        ++self::$numberOfUsers;
         $this->addReference('user'.self::$numberOfUsers, $user);
         array_push($tabModerator, 'user'.self::$numberOfUsers);
 
         self::$userModerator = $tabModerator;
 
         $manager->flush();
-
     }
 
     public function getDependencies()

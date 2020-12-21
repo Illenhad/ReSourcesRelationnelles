@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\CommentRepository;
 use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\OneToMany;
 
@@ -17,151 +18,121 @@ class Comment
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     *
+     * @var int
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     *
+     * @var string
      */
     private $title;
 
     /**
      * @ORM\Column(type="string", length=255)
+     *
+     * @var string
      */
     private $content;
 
     /**
      * @ORM\Column(type="string", length=255)
+     *
+     * @var string
      */
     private $valuation;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="comments")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
+     *
+     * @var User
      */
     private $user;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Resource", inversedBy="comments")
      * @ORM\JoinColumn(name="resource_id", referencedColumnName="id", nullable=false)
+     *
+     * @var
      */
     private $resource;
 
     /**
      * @ORM\OneToMany(targetEntity="RelModerationUserComment", mappedBy="resourceComment")
+     *
+     * @var Collection
      */
-    private $commentModeration;
+    private $commentModerations;
 
     /**
      * @OneToMany(targetEntity="App\Entity\Answer", mappedBy="comment")
+     *
+     * @var Collection
      */
     private $answers;
 
     /**
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="datetime")
+     *
+     * @var DateTimeInterface
      */
     private $commentDate;
-    /**
-     * @var mixed
-     */
-    private $commentParent;
-    /**
-     * @var mixed
-     */
-    private $responses;
 
     public function __construct()
     {
         $this->answers = new ArrayCollection();
     }
 
-    public function getId(): ?int
+    public function getId(): int
     {
         return $this->id;
     }
 
-    public function getTitle(): ?string
+    public function getTitle(): string
     {
         return $this->title;
     }
 
-    public function setTitle(string $title): self
+    public function setTitle(string $title): Comment
     {
         $this->title = $title;
 
         return $this;
     }
 
-    public function getContent(): ?string
+    public function getContent(): string
     {
         return $this->content;
     }
 
-    public function setContent(string $content): self
+    public function setContent(string $content): Comment
     {
         $this->content = $content;
 
         return $this;
     }
 
-    public function getValuation(): ?string
+    public function getValuation(): string
     {
         return $this->valuation;
     }
 
-    public function setValuation(string $valuation): self
+    public function setValuation(string $valuation): Comment
     {
         $this->valuation = $valuation;
 
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getCommentParent()
-    {
-        return $this->commentParent;
-    }
-
-    /**
-     * @param mixed $commentParent
-     */
-    public function setCommentParent($commentParent): void
-    {
-        $this->commentParent = $commentParent;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getResponses()
-    {
-        return $this->responses;
-    }
-
-    /**
-     * @param mixed $responses
-     */
-    public function setResponses($responses): void
-    {
-        $this->responses = $responses;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getUser()
+    public function getUser(): User
     {
         return $this->user;
     }
 
-    /**
-     * @param mixed $user
-     *
-     * @return self
-     */
-    public function setUser($user): self
+    public function setUser(User $user): Comment
     {
         $this->user = $user;
 
@@ -178,61 +149,49 @@ class Comment
 
     /**
      * @param mixed $resource
+     *
+     * @return Comment
      */
-    public function setResource($resource): void
+    public function setResource($resource)
     {
         $this->resource = $resource;
+
+        return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getCommentModeration()
+    public function getCommentModerations(): Collection
     {
-        return $this->commentModeration;
+        return $this->commentModerations;
     }
 
-    /**
-     * @param mixed $commentModeration
-     */
-    public function setCommentModeration($commentModeration): void
+    public function setCommentModerations(Collection $commentModerations): Comment
     {
-        $this->commentModeration = $commentModeration;
+        $this->commentModerations = $commentModerations;
+
+        return $this;
     }
 
-    /**
-     * @return ArrayCollection
-     */
-    public function getAnswers(): ArrayCollection
+    public function getAnswers(): Collection
     {
         return $this->answers;
     }
 
-    /**
-     * @param ArrayCollection $answers
-     * @return Comment
-     */
-    public function setAnswers(ArrayCollection $answers): Comment
+    public function setAnswers(Collection $answers): Comment
     {
         $this->answers = $answers;
+
         return $this;
     }
 
-    public function getCommentDate(): ?DateTimeInterface
+    public function getCommentDate(): DateTimeInterface
     {
         return $this->commentDate;
     }
 
-    public function setCommentDate(DateTimeInterface $commentDate): self
+    public function setCommentDate(DateTimeInterface $commentDate): Comment
     {
         $this->commentDate = $commentDate;
 
         return $this;
     }
-
-    public function __toString()
-    {
-        return $this->title;
-    }
-
 }

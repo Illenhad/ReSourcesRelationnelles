@@ -8,7 +8,6 @@ use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\Mapping\OneToMany;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -17,7 +16,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity(repositoryClass=UserRepository::class)
  *  * @UniqueEntity("username")
  *  * @UniqueEntity("email")
- *
  */
 class User implements UserInterface
 {
@@ -25,132 +23,174 @@ class User implements UserInterface
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     *
+     * @var int
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     *
+     * @var string
      */
     private $username;
 
     /**
      * @ORM\Column(type="string", length=255)
+     *
+     * @var string
      */
     private $firstname;
 
     /**
      * @ORM\Column(type="string", length=255)
+     *
+     * @var string
      */
     private $lastname;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\Email()
+     * @Assert\Email
+     *
+     * @var string
      */
     private $email;
 
     /**
      * @ORM\Column(type="datetime")
+     *
+     * @var DateTimeInterface
      */
     private $dateLastConnection;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Department", inversedBy="users")
      * @ORM\JoinColumn(name="department_id", referencedColumnName="id", nullable=false)
-     * @var Collection
+     *
+     * @var Department
      */
     private $department;
 
     /**
+     * Should be convert to ManyToMany.
+     *
      * @ORM\ManyToOne(targetEntity="App\Entity\Role", inversedBy="users")
      * @ORM\JoinColumn(name="role_id", referencedColumnName="id", nullable=false)
+     *
      * @var Collection
      */
     private $roles;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=True)
-     * @Assert\Length(min="8",minMessage="Votre mot de passe doit comporter au moins 8 caractères")
+     * @Assert\Length(min="8", minMessage="Votre mot de passe doit comporter au moins 8 caractères.")
+     *
+     * @var string
      */
     private $password;
 
     /**
-     * @Assert\EqualTo(propertyPath="password",message="Votre mot de passe doit être le même que celui que vous confirmez")
+     * @Assert\EqualTo(propertyPath="password", message="Votre mot de passe doit être le même que celui que vous confirmez")
      */
-    private $confirm_password;
+    private $confirmPassword;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\AgeCategory", inversedBy="users")
      * @ORM\JoinColumn(name="age_category_id", referencedColumnName="id")
+     *
+     * @var AgeCategory
      */
     private $ageCategory;
 
     /**
      * @ORM\OneToMany(targetEntity="RelShareGroupUser", mappedBy="user")
+     *
+     * @var Collection
      */
     private $shareGroups;
 
     /**
      * @ORM\OneToMany(targetEntity="RelUserManagementResource", mappedBy="user")
+     *
+     * @var Collection
      */
     private $resourceManagements;
 
     /**
      * @ORM\OneToMany(targetEntity="RelUserActionResource", mappedBy="user")
+     *
+     * @var Collection
      */
     private $resourceActions;
 
     /**
      * @ORM\OneToMany(targetEntity="Comment", mappedBy="user")
+     *
+     * @var Collection
      */
     private $comments;
 
     /**
      * @ORM\OneToMany(targetEntity="RelModerationUser", mappedBy="user")
+     *
+     * @var Collection
      */
     private $userModerations;
 
     /**
      * @ORM\OneToMany(targetEntity="RelModerationUser", mappedBy="moderator")
+     *
+     * @var Collection
      */
     private $moderatorModerations;
 
     /**
      * @ORM\OneToMany(targetEntity="RelModerationUserComment", mappedBy="moderator")
+     *
+     * @var Collection
      */
     private $commentModerations;
 
     /**
      * @ORM\OneToMany(targetEntity="RelModerationUserResource", mappedBy="moderator")
+     *
+     * @var Collection
      */
     private $resourceModerations;
 
     /**
      * @ORM\OneToMany(targetEntity="Answer", mappedBy="user")
+     *
+     * @var Collection
      */
     private $answers;
 
-
     /**
-     * @OneToMany(targetEntity="App\Entity\Resource", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="App\Entity\Resource", mappedBy="user")
      *
-     * @var Resource
+     * @var Collection
      */
-    private $resources ;
-    // ...
+    private $resources;
 
     /**
      * @ORM\OneToMany(targetEntity="RelSharedResourceUser", mappedBy="sharerUser")
+     *
+     * @var Collection
      */
     private $sharerUsers;
 
     /**
      * @ORM\OneToMany(targetEntity="RelSharedResourceUser", mappedBy="sharedWithUser")
+     *
+     * @var Collection
      */
     private $sharedWithUsers;
 
     /**
      * @ORM\OneToMany(targetEntity="RelModerationUserAnswer", mappedBy="moderator")
+     *
+     * @var Collection
      */
     private $answerModerations;
 
@@ -160,7 +200,7 @@ class User implements UserInterface
         $this->resources = new ArrayCollection();
     }
 
-    public function getId(): ?int
+    public function getId(): int
     {
         return $this->id;
     }
@@ -220,7 +260,7 @@ class User implements UserInterface
 
     public function getDateLastConnection(): string
     {
-        return $this->dateLastConnection->format("d M Y H:i:s");
+        return $this->dateLastConnection->format('d M Y H:i:s');
     }
 
     public function setDateLastConnection(DateTimeInterface $dateLastConnection): self
@@ -250,19 +290,20 @@ class User implements UserInterface
      */
     public function getConfirmPassword()
     {
-        return $this->confirm_password;
+        return $this->confirmPassword;
     }
 
     /**
-     * @param mixed $confirm_password
+     * @param mixed $confirmPassword
      */
-    public function setConfirmPassword($confirm_password): void
+    public function setConfirmPassword($confirmPassword): void
     {
-        $this->confirm_password = $confirm_password;
+        $this->confirmPassword = $confirmPassword;
     }
 
     /**
      * @return mixed
+     *
      * @see UserInterface
      */
     public function getPassword()
@@ -271,7 +312,6 @@ class User implements UserInterface
     }
 
     /**
-     * @param string $password
      * @return $this
      */
     public function setPassword(string $password): self
@@ -281,7 +321,7 @@ class User implements UserInterface
         return $this;
     }
 
-    #Fonction neccessaire pour ID
+    //Fonction neccessaire pour ID
 
     /**
      * @see UserInterface
@@ -292,7 +332,7 @@ class User implements UserInterface
         return $this->username;
     }
 
-    #Fonction neccessaire pour ID
+    //Fonction neccessaire pour ID
 
     /**
      * @see UserInterface
@@ -303,7 +343,7 @@ class User implements UserInterface
         // $this->plainPassword = null;
     }
 
-    #Fonction neccessaire pour ID
+    //Fonction neccessaire pour ID
 
     /**
      * @see UserInterface
@@ -323,8 +363,6 @@ class User implements UserInterface
         $this->roles = $roles;
 
         return $this;
-
-
     }
 
     /**
@@ -337,11 +375,13 @@ class User implements UserInterface
 
     /**
      * @param mixed $ageCategory
+     *
      * @return User
      */
     public function setAgeCategory($ageCategory)
     {
         $this->ageCategory = $ageCategory;
+
         return $this;
     }
 
@@ -473,21 +513,15 @@ class User implements UserInterface
         $this->resourceModerations = $resourceModerations;
     }
 
-    /**
-     * @return Resource
-     */
     public function getResources(): Resource
     {
         return $this->resources;
     }
 
-    /**
-     * @param Resource $resources
-     * @return User
-     */
     public function setResources(Resource $resources): User
     {
         $this->resources = $resources;
+
         return $this;
     }
 
@@ -501,11 +535,13 @@ class User implements UserInterface
 
     /**
      * @param mixed $sharerUsers
+     *
      * @return User
      */
     public function setSharerUsers($sharerUsers)
     {
         $this->sharerUsers = $sharerUsers;
+
         return $this;
     }
 
@@ -519,11 +555,13 @@ class User implements UserInterface
 
     /**
      * @param mixed $sharedWithUsers
+     *
      * @return User
      */
     public function setSharedWithUsers($sharedWithUsers)
     {
         $this->sharedWithUsers = $sharedWithUsers;
+
         return $this;
     }
 
@@ -537,11 +575,13 @@ class User implements UserInterface
 
     /**
      * @param mixed $answerModerations
+     *
      * @return User
      */
     public function setAnswerModerations($answerModerations)
     {
         $this->answerModerations = $answerModerations;
+
         return $this;
     }
 
@@ -555,13 +595,13 @@ class User implements UserInterface
 
     /**
      * @param mixed $answers
+     *
      * @return User
      */
     public function setAnswers($answers)
     {
         $this->answers = $answers;
+
         return $this;
     }
-
-
 }

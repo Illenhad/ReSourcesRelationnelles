@@ -2,7 +2,6 @@
 
 namespace App\DataFixtures;
 
-use App\Entity\ManagementType;
 use App\Entity\RelUserManagementResource;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
@@ -15,7 +14,7 @@ class RelUserManagementResourceFixture extends Fixture implements DependentFixtu
     {
         $faker = Factory::create('fr_FR');
 
-        for ($i = 1; $i <= 200; $i++) {
+        for ($i = 1; $i <= 200; ++$i) {
             $relUserManagementResource = new RelUserManagementResource();
             $relUserManagementResource->setUser($this->getReference('user'.$faker->numberBetween(1, UserFixture::$numberOfUsers)));
             $relUserManagementResource->setResource($this->getReference('resource'.$faker->numberBetween(1, ResourceFixture::$numberOfResources)));
@@ -31,7 +30,7 @@ class RelUserManagementResourceFixture extends Fixture implements DependentFixtu
         return [
             UserFixture::class,
             ResourceFixture::class,
-            ManagementTypeFixture::class
+            ManagementTypeFixture::class,
         ];
     }
 }

@@ -16,7 +16,7 @@ class ResourceTypeFixture extends Fixture
         5 => 'Exercice / Atelier',
         6 => 'Fiche de lecture',
         7 => 'Jeu en ligne',
-        8 => 'Vidéo'
+        8 => 'Vidéo',
     ];
 
     public function load(ObjectManager $manager)
@@ -24,7 +24,7 @@ class ResourceTypeFixture extends Fixture
         $i = 0;
 
         foreach (self::$tabResourceType as $resourceType) {
-            $i++;
+            ++$i;
             $resourceTypeEntity = new ResourceType();
             $resourceTypeEntity->setLabel($resourceType);
             $manager->persist($resourceTypeEntity);

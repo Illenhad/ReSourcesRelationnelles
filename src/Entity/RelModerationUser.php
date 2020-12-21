@@ -14,113 +14,111 @@ class RelModerationUser
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     *
+     * @var int
      */
     private $id;
 
     /**
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="datetime")
+     *
+     * @var \DateTimeInterface
      */
     private $moderationDate;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     *
+     * @var Comment
      */
     private $comment;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="userModerations")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
+     *
+     * @var User
      */
     private $user;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="moderatorModerations")
      * @ORM\JoinColumn(name="moderator_id", referencedColumnName="id", nullable=false)
+     *
+     * @var User
      */
     private $moderator;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="userModerations")
      * @ORM\JoinColumn(name="moderation_type_id", referencedColumnName="id", nullable=false)
+     *
+     * @var ModerationType
      */
     private $moderationType;
 
-    public function getId(): ?int
+    public function getId(): int
     {
         return $this->id;
     }
 
-    public function getModerationDate(): ?\DateTimeInterface
+    public function getModerationDate(): \DateTimeInterface
     {
         return $this->moderationDate;
     }
 
-    public function setModerationDate(\DateTimeInterface $moderationDate): self
+    public function setModerationDate(\DateTimeInterface $moderationDate): RelModerationUser
     {
         $this->moderationDate = $moderationDate;
 
         return $this;
     }
 
-    public function getComment(): ?string
+    public function getComment(): Comment
     {
         return $this->comment;
     }
 
-    public function setComment(?string $comment): self
+    public function setComment(Comment $comment): RelModerationUser
     {
         $this->comment = $comment;
 
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getUser()
+    public function getUser(): User
     {
         return $this->user;
     }
 
-    /**
-     * @param mixed $user
-     */
-    public function setUser($user): void
+    public function setUser(User $user): RelModerationUser
     {
         $this->user = $user;
+
+        return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getModerator()
+    public function getModerator(): User
     {
         return $this->moderator;
     }
 
-    /**
-     * @param mixed $moderator
-     */
-    public function setModerator($moderator): void
+    public function setModerator(User $moderator): RelModerationUser
     {
         $this->moderator = $moderator;
+
+        return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getModerationType()
+    public function getModerationType(): ModerationType
     {
         return $this->moderationType;
     }
 
-    /**
-     * @param mixed $moderationType
-     */
-    public function setModerationType($moderationType): void
+    public function setModerationType(ModerationType $moderationType): RelModerationUser
     {
         $this->moderationType = $moderationType;
+
+        return $this;
     }
-
-
 }

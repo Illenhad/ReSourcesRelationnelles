@@ -4,8 +4,8 @@ namespace App\Entity;
 
 use App\Repository\ResourceTypeRepository;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\Mapping\OneToMany;
 
 /**
  * @ORM\Entity(repositoryClass=ResourceTypeRepository::class)
@@ -16,41 +16,55 @@ class ResourceType
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     *
+     * @var int
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     *
+     * @var string
      */
     private $label;
 
     /**
-     * One product has many features. This is the inverse side.
-     * @OneToMany(targetEntity="App\Entity\Resource", mappedBy="ResourceType")
+     * @ORM\OneToMany(targetEntity="App\Entity\Resource", mappedBy="ResourceType")
      *
-     * @var Resource
+     * @var Collection
      */
-
     private $resources;
 
-
-    public function __construct() {
+    public function __construct()
+    {
         $this->resources = new ArrayCollection();
     }
 
-    public function getId(): ?int
+    public function getId(): int
     {
         return $this->id;
     }
 
-    public function getLabel(): ?string
+    public function getLabel(): string
     {
         return $this->label;
     }
 
-    public function setLabel(string $label): self
+    public function setLabel(string $label): ResourceType
     {
         $this->label = $label;
+
+        return $this;
+    }
+
+    public function getResources(): Collection
+    {
+        return $this->resources;
+    }
+
+    public function setResources(Collection $resources): ResourceType
+    {
+        $this->resources = $resources;
 
         return $this;
     }
