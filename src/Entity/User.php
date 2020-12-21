@@ -8,7 +8,6 @@ use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\Mapping\OneToMany;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -24,32 +23,44 @@ class User implements UserInterface
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     *
+     * @var int
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     *
+     * @var string
      */
     private $username;
 
     /**
      * @ORM\Column(type="string", length=255)
+     *
+     * @var string
      */
     private $firstname;
 
     /**
      * @ORM\Column(type="string", length=255)
+     *
+     * @var string
      */
     private $lastname;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\Email()
+     * @Assert\Email
+     *
+     * @var string
      */
     private $email;
 
     /**
      * @ORM\Column(type="datetime")
+     *
+     * @var DateTimeInterface
      */
     private $dateLastConnection;
 
@@ -57,11 +68,13 @@ class User implements UserInterface
      * @ORM\ManyToOne(targetEntity="App\Entity\Department", inversedBy="users")
      * @ORM\JoinColumn(name="department_id", referencedColumnName="id", nullable=false)
      *
-     * @var Collection
+     * @var Department
      */
     private $department;
 
     /**
+     * Should be convert to ManyToMany.
+     *
      * @ORM\ManyToOne(targetEntity="App\Entity\Role", inversedBy="users")
      * @ORM\JoinColumn(name="role_id", referencedColumnName="id", nullable=false)
      *
@@ -71,86 +84,113 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255, nullable=True)
-     * @Assert\Length(min="8",minMessage="Votre mot de passe doit comporter au moins 8 caractères")
+     * @Assert\Length(min="8", minMessage="Votre mot de passe doit comporter au moins 8 caractères.")
+     *
+     * @var string
      */
     private $password;
 
     /**
-     * @Assert\EqualTo(propertyPath="password",message="Votre mot de passe doit être le même que celui que vous confirmez")
+     * @Assert\EqualTo(propertyPath="password", message="Votre mot de passe doit être le même que celui que vous confirmez")
      */
-    private $confirm_password;
+    private $confirmPassword;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\AgeCategory", inversedBy="users")
      * @ORM\JoinColumn(name="age_category_id", referencedColumnName="id")
+     *
+     * @var AgeCategory
      */
     private $ageCategory;
 
     /**
      * @ORM\OneToMany(targetEntity="RelShareGroupUser", mappedBy="user")
+     *
+     * @var Collection
      */
     private $shareGroups;
 
     /**
      * @ORM\OneToMany(targetEntity="RelUserManagementResource", mappedBy="user")
+     *
+     * @var Collection
      */
     private $resourceManagements;
 
     /**
      * @ORM\OneToMany(targetEntity="RelUserActionResource", mappedBy="user")
+     *
+     * @var Collection
      */
     private $resourceActions;
 
     /**
      * @ORM\OneToMany(targetEntity="Comment", mappedBy="user")
+     *
+     * @var Collection
      */
     private $comments;
 
     /**
      * @ORM\OneToMany(targetEntity="RelModerationUser", mappedBy="user")
+     *
+     * @var Collection
      */
     private $userModerations;
 
     /**
      * @ORM\OneToMany(targetEntity="RelModerationUser", mappedBy="moderator")
+     *
+     * @var Collection
      */
     private $moderatorModerations;
 
     /**
      * @ORM\OneToMany(targetEntity="RelModerationUserComment", mappedBy="moderator")
+     *
+     * @var Collection
      */
     private $commentModerations;
 
     /**
      * @ORM\OneToMany(targetEntity="RelModerationUserResource", mappedBy="moderator")
+     *
+     * @var Collection
      */
     private $resourceModerations;
 
     /**
      * @ORM\OneToMany(targetEntity="Answer", mappedBy="user")
+     *
+     * @var Collection
      */
     private $answers;
 
     /**
-     * @OneToMany(targetEntity="App\Entity\Resource", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="App\Entity\Resource", mappedBy="user")
      *
-     * @var resource
+     * @var Collection
      */
     private $resources;
-    // ...
 
     /**
      * @ORM\OneToMany(targetEntity="RelSharedResourceUser", mappedBy="sharerUser")
+     *
+     * @var Collection
      */
     private $sharerUsers;
 
     /**
      * @ORM\OneToMany(targetEntity="RelSharedResourceUser", mappedBy="sharedWithUser")
+     *
+     * @var Collection
      */
     private $sharedWithUsers;
 
     /**
      * @ORM\OneToMany(targetEntity="RelModerationUserAnswer", mappedBy="moderator")
+     *
+     * @var Collection
      */
     private $answerModerations;
 
@@ -160,7 +200,7 @@ class User implements UserInterface
         $this->resources = new ArrayCollection();
     }
 
-    public function getId(): ?int
+    public function getId(): int
     {
         return $this->id;
     }
@@ -250,15 +290,15 @@ class User implements UserInterface
      */
     public function getConfirmPassword()
     {
-        return $this->confirm_password;
+        return $this->confirmPassword;
     }
 
     /**
-     * @param mixed $confirm_password
+     * @param mixed $confirmPassword
      */
-    public function setConfirmPassword($confirm_password): void
+    public function setConfirmPassword($confirmPassword): void
     {
-        $this->confirm_password = $confirm_password;
+        $this->confirmPassword = $confirmPassword;
     }
 
     /**

@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
@@ -15,6 +17,8 @@ class Answer
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     *
+     * @var int
      */
     private $id;
 
@@ -28,11 +32,15 @@ class Answer
 
     /**
      * @ORM\OneToMany(targetEntity="RelModerationUserAnswer", mappedBy="answer")
+     *
+     * @var Collection
      */
-    private $answerModerations;
+    private $relModerationUserAnswers;
 
     /**
      * @ORM\Column(type="string", length=255)
+     *
+     * @var string
      */
     private $content;
 
@@ -45,28 +53,20 @@ class Answer
     private $user;
 
     /**
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="datetime")
+     *
+     * @var \DateTimeInterface
      */
     private $answerDate;
 
-    /**
-     * @return mixed
-     */
-    public function getId()
+    public function __construct()
     {
-        return $this->id;
+        $this->relModerationUserAnswers = new ArrayCollection();
     }
 
-    /**
-     * @param mixed $id
-     *
-     * @return Answer
-     */
-    public function setId($id)
+    public function getId(): int
     {
-        $this->id = $id;
-
-        return $this;
+        return $this->id;
     }
 
     public function getComment(): Comment
@@ -81,34 +81,26 @@ class Answer
         return $this;
     }
 
-    public function getContent(): ?string
+    public function getRelModerationUserAnswers(): Collection
     {
-        return $this->content;
+        return $this->relModerationUserAnswers;
     }
 
-    public function setContent(string $content): self
+    public function setRelModerationUserAnswers(Collection $relModerationUserAnswers): Answer
     {
-        $this->content = $content;
+        $this->relModerationUserAnswers = $relModerationUserAnswers;
 
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getAnswerModerations()
+    public function getContent(): string
     {
-        return $this->answerModerations;
+        return $this->content;
     }
 
-    /**
-     * @param mixed $answerModerations
-     *
-     * @return Answer
-     */
-    public function setAnswerModerations($answerModerations)
+    public function setContent(string $content): Answer
     {
-        $this->answerModerations = $answerModerations;
+        $this->content = $content;
 
         return $this;
     }
@@ -125,12 +117,12 @@ class Answer
         return $this;
     }
 
-    public function getAnswerDate(): ?\DateTimeInterface
+    public function getAnswerDate(): \DateTimeInterface
     {
         return $this->answerDate;
     }
 
-    public function setAnswerDate(\DateTimeInterface $answerDate): self
+    public function setAnswerDate(\DateTimeInterface $answerDate): Answer
     {
         $this->answerDate = $answerDate;
 

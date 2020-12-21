@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ModerationTypeRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -14,113 +16,113 @@ class ModerationType
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     *
+     * @var int
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     *
+     * @var string
      */
     private $label;
 
     /**
      * @ORM\OneToMany(targetEntity="RelModerationUser", mappedBy="moderationType")
+     *
+     * @var Collection
      */
     private $userModerations;
 
     /**
      * @ORM\OneToMany(targetEntity="RelModerationUserComment", mappedBy="moderationType")
+     *
+     * @var Collection
      */
     private $commentModerations;
 
     /**
      * @ORM\OneToMany(targetEntity="RelModerationUserResource", mappedBy="moderationType")
+     *
+     * @var Collection
      */
-    private $resourceModeration;
+    private $resourceModerations;
 
     /**
      * @ORM\OneToMany(targetEntity="RelModerationUserAnswer", mappedBy="moderationType")
+     *
+     * @var Collection
      */
     private $answerModerations;
 
-    public function getId(): ?int
+    public function __construct()
+    {
+        $this->userModerations = new ArrayCollection();
+        $this->commentModerations = new ArrayCollection();
+        $this->resourceModerations = new ArrayCollection();
+        $this->answerModerations = new ArrayCollection();
+    }
+
+    public function getId(): int
     {
         return $this->id;
     }
 
-    public function getLabel(): ?string
+    public function getLabel(): string
     {
         return $this->label;
     }
 
-    public function setLabel(string $label): self
+    public function setLabel(string $label): ModerationType
     {
         $this->label = $label;
 
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getUserModerations()
+    public function getUserModerations(): Collection
     {
         return $this->userModerations;
     }
 
-    /**
-     * @param mixed $userModerations
-     */
-    public function setUserModerations($userModerations): void
+    public function setUserModerations(Collection $userModerations): ModerationType
     {
         $this->userModerations = $userModerations;
+
+        return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getCommentModerations()
+    public function getCommentModerations(): Collection
     {
         return $this->commentModerations;
     }
 
-    /**
-     * @param mixed $commentModerations
-     */
-    public function setCommentModerations($commentModerations): void
+    public function setCommentModerations(Collection $commentModerations): ModerationType
     {
         $this->commentModerations = $commentModerations;
+
+        return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getResourceModeration()
+    public function getResourceModerations(): Collection
     {
-        return $this->resourceModeration;
+        return $this->resourceModerations;
     }
 
-    /**
-     * @param mixed $resourceModeration
-     */
-    public function setResourceModeration($resourceModeration): void
+    public function setResourceModerations(Collection $resourceModerations): ModerationType
     {
-        $this->resourceModeration = $resourceModeration;
+        $this->resourceModerations = $resourceModerations;
+
+        return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getAnswerModerations()
+    public function getAnswerModerations(): Collection
     {
         return $this->answerModerations;
     }
 
-    /**
-     * @param mixed $answerModerations
-     *
-     * @return ModerationType
-     */
-    public function setAnswerModerations($answerModerations)
+    public function setAnswerModerations(Collection $answerModerations): ModerationType
     {
         $this->answerModerations = $answerModerations;
 

@@ -16,6 +16,8 @@ class RelSharedResourceUser
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     *
+     * @var int
      */
     private $id;
 
@@ -43,7 +45,7 @@ class RelSharedResourceUser
      */
     private $resource;
 
-    public function getId(): ?int
+    public function getId(): int
     {
         return $this->id;
     }
@@ -72,12 +74,12 @@ class RelSharedResourceUser
         return $this;
     }
 
-    public function getResource(): Resource
+    public function getResource(): resource
     {
         return $this->resource;
     }
 
-    public function setResource(Resource $resource): RelSharedResourceUser
+    public function setResource(resource $resource): RelSharedResourceUser
     {
         $this->resource = $resource;
 
