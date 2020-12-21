@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ResourceRepository;
+use DateTime;
+use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\JoinColumn;
@@ -47,7 +49,7 @@ class Resource
     /**
      * @ORM\Column(type="datetime")
      *
-     * @var \DateTimeInterface
+     * @var DateTimeInterface
      */
     private $dateCreation;
 
@@ -133,6 +135,7 @@ class Resource
         $this->userActions = new ArrayCollection();
         $this->resourceModerations = new ArrayCollection();
         $this->sharedResources = new ArrayCollection();
+        $this->dateCreation = new DateTime('NOW');
     }
 
     public function getId(): int
@@ -176,12 +179,12 @@ class Resource
         return $this;
     }
 
-    public function getDateCreation(): \DateTimeInterface
+    public function getDateCreation(): string
     {
-        return $this->dateCreation;
+        return $this->dateCreation->format('d M Y H:i:s');
     }
 
-    public function setDateCreation(\DateTimeInterface $dateCreation): self
+    public function setDateCreation(DateTimeInterface $dateCreation): self
     {
         $this->dateCreation = $dateCreation;
 
@@ -224,7 +227,7 @@ class Resource
         return $this;
     }
 
-    public function getAgeCategory(): AgeCategory
+    public function getAgeCategory()
     {
         return $this->ageCategory;
     }
@@ -236,7 +239,7 @@ class Resource
         return $this;
     }
 
-    public function getUser(): User
+    public function getUser()
     {
         return $this->user;
     }
@@ -248,7 +251,7 @@ class Resource
         return $this;
     }
 
-    public function getComments(): Collection
+    public function getComments()
     {
         return $this->comments;
     }
@@ -260,7 +263,7 @@ class Resource
         return $this;
     }
 
-    public function getResourceType(): ResourceType
+    public function getResourceType()
     {
         return $this->resourceType;
     }
@@ -272,7 +275,7 @@ class Resource
         return $this;
     }
 
-    public function getRelationShip(): RelationshipType
+    public function getRelationShip()
     {
         return $this->relationShip;
     }
@@ -284,7 +287,7 @@ class Resource
         return $this;
     }
 
-    public function getCategory(): Category
+    public function getCategory()
     {
         return $this->category;
     }

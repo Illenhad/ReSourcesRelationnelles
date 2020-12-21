@@ -513,7 +513,7 @@ class User implements UserInterface
         $this->resourceModerations = $resourceModerations;
     }
 
-    public function getResources(): Resource
+    public function getResources()
     {
         return $this->resources;
     }
@@ -603,5 +603,10 @@ class User implements UserInterface
         $this->answers = $answers;
 
         return $this;
+    }
+
+    public function __toString(): string
+    {
+        return $this->username;
     }
 }
