@@ -15,7 +15,6 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class UsersStatsController extends AbstractController
 {
-
     /**
      * @var RoleRepository
      */
@@ -62,7 +61,6 @@ class UsersStatsController extends AbstractController
      */
     private $test;
 
-
     public function __construct(RoleRepository $roleRepository,
                                 UserRepository $userRepository,
                                 AgeCategoryRepository $ageCategoryRepository,
@@ -76,25 +74,21 @@ class UsersStatsController extends AbstractController
 
         $this->test = [];
 
-
-
 //        foreach ($years as $year){
 //            array_push($this->test[$year], $this->countUserPerMonth($year));
 //        }
-
 
         $this->initVariables();
     }
 
     /**
      * @Route("/users-stats", name="users-stats")
+     *
      * @throws Exception
      */
     public function index(): Response
     {
-        
-        
-        return $this->render("bundles/EasyAdminBundle/page/users_stats.html.twig", [
+        return $this->render('bundles/EasyAdminBundle/page/users_stats.html.twig', [
             'roles_labels' => $this->roles_labels,
             'users_count_roles' => $this->users_count_roles,
             'users_count_age' => $this->users_count_age,
@@ -102,59 +96,50 @@ class UsersStatsController extends AbstractController
             'dpt_num' => $this->dpt_num,
             'users_count_dpt' => $this->users_count_dpt,
             'year' => $this->year,
-            'register_per_year' => $this->countUserPerYear()
+            'register_per_year' => $this->countUserPerYear(),
         ]);
     }
 
-    /**
-     * @return array
-     */
     private function countUserPerYear(): array
     {
-        $user_per_years = array();
+        $user_per_years = [];
 
-        foreach (range((new DateTime())->format('Y'), 2018) as $year)
-        {
+        foreach (range((new DateTime())->format('Y'), 2018) as $year) {
             $user_per_years[$year] = 0;
             try {
-                $user_per_years[$year] = $this->countUserPerMonth((string)$year);
+                $user_per_years[$year] = $this->countUserPerMonth((string) $year);
             } catch (Exception $e) {
             }
         }
-        
+
         return $user_per_years;
-            
     }
 
     /**
-     * Number of registrations per month, according to the past year in parameter
+     * Number of registrations per month, according to the past year in parameter.
      *
      * @param $year : Year
-     * @return array
+     *
      * @throws Exception
      */
     private function countUserPerMonth($year): array
     {
         //TODO : A refaire
-        $userPerMonth = array();
+        $userPerMonth = [];
 
-        foreach (range(1, 12) as $item)
-        {
+        foreach (range(1, 12) as $item) {
             $userPerMonth[$item] = 0;
         }
 
-        foreach ($this->userRepository->findAll() as $user)
-        {
+        foreach ($this->userRepository->findAll() as $user) {
             $date = new DateTime($user->getDateLastConnection());
-            if ($date->format('Y') === $year && $user->getRoles() == 'ROLE_USER')
-            {
-                $userPerMonth[$date->format('m')]++;
+            if ($date->format('Y') === $year && 'ROLE_USER' == $user->getRoles()) {
+                ++$userPerMonth[$date->format('m')];
             }
         }
 
         $arr = [];
-        foreach ($userPerMonth as $value)
-        {
+        foreach ($userPerMonth as $value) {
             array_push($arr, $value);
         }
 
@@ -162,7 +147,7 @@ class UsersStatsController extends AbstractController
     }
 
     /**
-     * Initialize dataset
+     * Initialize dataset.
      */
     private function initVariables()
     {
@@ -191,8 +176,5 @@ class UsersStatsController extends AbstractController
                 array_push($this->users_count_dpt, 0);
             }
         }
-
-
-
     }
 }

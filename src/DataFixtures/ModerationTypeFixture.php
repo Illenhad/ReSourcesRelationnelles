@@ -11,7 +11,7 @@ class ModerationTypeFixture extends Fixture
     public static $tabModerationType = [
         1 => 'Modification',
         2 => 'Suspension',
-        3 => 'Annulation suspension'
+        3 => 'Annulation suspension',
     ];
 
     public function load(ObjectManager $manager)
@@ -19,7 +19,7 @@ class ModerationTypeFixture extends Fixture
         $i = 0;
 
         foreach (self::$tabModerationType as $moderationType) {
-            $i++;
+            ++$i;
             $moderationTypeEntity = new ModerationType();
             $moderationTypeEntity->setLabel($moderationType);
             $manager->persist($moderationTypeEntity);

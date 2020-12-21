@@ -59,6 +59,4 @@ class ManagementType
     {
         $this->resourcesUsers = $resourcesUsers;
     }
-
-
 }

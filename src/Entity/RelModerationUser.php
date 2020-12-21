@@ -121,6 +121,4 @@ class RelModerationUser
     {
         $this->moderationType = $moderationType;
     }
-
-
 }

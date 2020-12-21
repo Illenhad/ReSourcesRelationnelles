@@ -104,6 +104,4 @@ class RelUserActionResource
     {
         $this->actionType = $actionType;
     }
-
-
 }

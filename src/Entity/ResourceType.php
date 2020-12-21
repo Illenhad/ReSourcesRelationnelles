@@ -26,15 +26,15 @@ class ResourceType
 
     /**
      * One product has many features. This is the inverse side.
+     *
      * @OneToMany(targetEntity="App\Entity\Resource", mappedBy="ResourceType")
      *
-     * @var Resource
+     * @var resource
      */
-
     private $resources;
 
-
-    public function __construct() {
+    public function __construct()
+    {
         $this->resources = new ArrayCollection();
     }
 

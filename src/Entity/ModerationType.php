@@ -117,13 +117,13 @@ class ModerationType
 
     /**
      * @param mixed $answerModerations
+     *
      * @return ModerationType
      */
     public function setAnswerModerations($answerModerations)
     {
         $this->answerModerations = $answerModerations;
+
         return $this;
     }
-
-
 }

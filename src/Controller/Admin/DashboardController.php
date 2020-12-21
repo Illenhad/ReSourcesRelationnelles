@@ -43,14 +43,14 @@ class DashboardController extends AbstractDashboardController
             ['title' => 'Utilisateur(s) connecté(s)', 'value' => 85, 'class' => 'bg-success'],
             ['title' => 'Modérateur(s) connecté(s)', 'value' => 12, 'class' => 'bg-primary'],
             ['title' => 'Ressource(s) en attente de validation', 'value' => 204, 'class' => 'bg-dark'],
-            ['title' => 'Ressource(s) à vérifier', 'value' => 72, 'class' => 'bg-dark']
+            ['title' => 'Ressource(s) à vérifier', 'value' => 72, 'class' => 'bg-dark'],
         ];
         $this->last_ress = [
             ['id' => 597, 'name' => 'Les bienfaits de la méditation', 'user' => 'kevindu62', 'date' => '12-12-2020 20h30'],
             ['id' => 596, 'name' => 'La permaculture pour les nuls', 'user' => 'bgtuning', 'date' => '12-12-2020 20h29'],
             ['id' => 595, 'name' => 'La croche, tu décroches !', 'user' => 'amandinedu38', 'date' => '12-12-2020 20h25'],
             ['id' => 594, 'name' => 'Reconnaitre l\'intolérance au lactose', 'user' => 'lavachekiri', 'date' => '12-12-2020 20h10'],
-            ['id' => 592, 'name' => 'Je suis le meilleurs', 'user' => 'michaelvandetta', 'date' => '12-12-2020 19h59']
+            ['id' => 592, 'name' => 'Je suis le meilleurs', 'user' => 'michaelvandetta', 'date' => '12-12-2020 19h59'],
         ];
     }
 
@@ -61,7 +61,7 @@ class DashboardController extends AbstractDashboardController
     {
         return $this->render('bundles/EasyAdminBundle/welcome.html.twig', [
             'stats_prop' => $this->stats_prop,
-            'last_ress' => $this->last_ress
+            'last_ress' => $this->last_ress,
         ]);
     }
 
@@ -87,7 +87,7 @@ class DashboardController extends AbstractDashboardController
                     return $action
                         ->setIcon('fa fa-pencil')
                         ->setLabel(false)
-                        ->addCssClass("btn btn-secondary");
+                        ->addCssClass('btn btn-secondary');
                 })
             ->update(
                 Crud::PAGE_INDEX,
@@ -96,9 +96,9 @@ class DashboardController extends AbstractDashboardController
                     return $action
                         ->setIcon('fa fa-trash')
                         ->setLabel(false)
-                        ->addCssClass("btn btn-danger text-light")
+                        ->addCssClass('btn btn-danger text-light')
                         ->setHtmlAttributes([
-                            'style'
+                            'style',
                         ]);
                 });
     }
@@ -119,7 +119,7 @@ class DashboardController extends AbstractDashboardController
             MenuItem::linkToCrud('Type de gestion', 'fa fa-star', ManagementType::class),
             MenuItem::linkToCrud('Type d\'actions', 'fa fa-hand-point-up', ActionType::class),
             MenuItem::section('Statistiques', 'fa fa-chart-pie'),
-            MenuItem::linktoRoute('Utilisateurs', 'fa fa-chart-pie', 'users-stats')
+            MenuItem::linktoRoute('Utilisateurs', 'fa fa-chart-pie', 'users-stats'),
             // TODO: Ajouter la gestion des statistiques
         ];
     }

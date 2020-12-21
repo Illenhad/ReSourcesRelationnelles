@@ -54,13 +54,13 @@ class Category
 
     /**
      * @param mixed $resources
+     *
      * @return Category
      */
     public function setResources($resources)
     {
         $this->resources = $resources;
+
         return $this;
     }
-
-
 }

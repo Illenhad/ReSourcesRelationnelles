@@ -64,5 +64,4 @@ class Role
     {
         return $this->label;
     }
-
 }

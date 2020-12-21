@@ -59,6 +59,4 @@ class ActionType
     {
         $this->resourceUsers = $resourceUsers;
     }
-
-
 }

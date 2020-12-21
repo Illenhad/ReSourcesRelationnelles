@@ -10,12 +10,11 @@ use Faker\Factory;
 
 class RelModerationUserFixture extends Fixture implements DependentFixtureInterface
 {
-
     public function load(ObjectManager $manager)
     {
         $faker = Factory::create('fr_FR');
 
-        for ($i = 0; $i < 20; $i++) {
+        for ($i = 0; $i < 20; ++$i) {
             $relModerationUser = new RelModerationUser();
             $relModerationUser->setModerationType($this->getReference('moderationType'.$faker->numberBetween(1, count(ModerationTypeFixture::$tabModerationType))));
             $relModerationUser->setModerationDate($faker->dateTimeBetween('-60 days', 'now'));
@@ -31,7 +30,7 @@ class RelModerationUserFixture extends Fixture implements DependentFixtureInterf
     {
         return [
             ModerationTypeFixture::class,
-            UserFixture::class
+            UserFixture::class,
         ];
     }
 }

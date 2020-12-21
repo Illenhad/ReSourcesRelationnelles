@@ -2,7 +2,6 @@
 
 namespace App\DataFixtures;
 
-use App\Entity\Answer;
 use App\Entity\RelModerationUserAnswer;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
@@ -15,7 +14,7 @@ class RelModerationUserAnswerFixture extends Fixture implements DependentFixture
     {
         $faker = Factory::create('fr_FR');
 
-        for ($i = 1; $i <= 20; $i++) {
+        for ($i = 1; $i <= 20; ++$i) {
             $relModerationUserAnswer = new RelModerationUserAnswer();
             $relModerationUserAnswer
                 ->setComment('C\'est vraiment pas très gentil ce qu\'il a dit !')
@@ -35,7 +34,7 @@ class RelModerationUserAnswerFixture extends Fixture implements DependentFixture
         return [
             ModerationTypeFixture::class,
             UserFixture::class,
-            AnswerFixture::class
+            AnswerFixture::class,
         ];
     }
 }

@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Entity;
 
 use App\Repository\AgeCategoryRepository;
@@ -28,13 +27,11 @@ class AgeCategory
     private $label;
 
     /**
-     *
      * @OneToMany(targetEntity="App\Entity\User", mappedBy="ageCategory")
      */
     private $users;
 
     /**
-     *
      * @OneToMany(targetEntity="App\Entity\Resource", mappedBy="ageCategory")
      */
     private $resources;
@@ -45,7 +42,6 @@ class AgeCategory
         $this->resources = new ArrayCollection();
     }
 
-
     /**
      * @return mixed
      */
@@ -54,22 +50,15 @@ class AgeCategory
         return $this->id;
     }
 
-
-    /**
-     * @return string
-     */
     public function getLabel(): string
     {
         return $this->label;
     }
 
-    /**
-     * @param string $label
-     * @return AgeCategory
-     */
     public function setLabel(string $label): AgeCategory
     {
         $this->label = $label;
+
         return $this;
     }
 
@@ -77,5 +66,4 @@ class AgeCategory
     {
         return $this->label;
     }
-
 }

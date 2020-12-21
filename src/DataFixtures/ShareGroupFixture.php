@@ -16,7 +16,7 @@ class ShareGroupFixture extends Fixture
         $faker = Factory::create('fr_FR');
         self::$numberOfShareGroup = 20;
 
-        for ($i = 1; $i <= self::$numberOfShareGroup ; $i++) {
+        for ($i = 1; $i <= self::$numberOfShareGroup; ++$i) {
             $shareGroup = new ShareGroup();
             $shareGroup
                 ->setLabel($faker->words(3, true))

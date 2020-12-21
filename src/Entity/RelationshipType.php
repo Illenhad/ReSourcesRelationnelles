@@ -42,11 +42,13 @@ class RelationshipType
 
     /**
      * @param mixed $label
+     *
      * @return RelationshipType
      */
     public function setLabel($label)
     {
         $this->label = $label;
+
         return $this;
     }
 
@@ -60,13 +62,13 @@ class RelationshipType
 
     /**
      * @param mixed $resources
+     *
      * @return RelationshipType
      */
     public function setResources($resources)
     {
         $this->resources = $resources;
+
         return $this;
     }
-
-
 }

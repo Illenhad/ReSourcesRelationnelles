@@ -82,5 +82,4 @@ class RelShareGroupUser
     {
         $this->user = $user;
     }
-
 }

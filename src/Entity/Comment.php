@@ -158,8 +158,6 @@ class Comment
 
     /**
      * @param mixed $user
-     *
-     * @return self
      */
     public function setUser($user): self
     {
@@ -200,21 +198,15 @@ class Comment
         $this->commentModeration = $commentModeration;
     }
 
-    /**
-     * @return ArrayCollection
-     */
     public function getAnswers(): ArrayCollection
     {
         return $this->answers;
     }
 
-    /**
-     * @param ArrayCollection $answers
-     * @return Comment
-     */
     public function setAnswers(ArrayCollection $answers): Comment
     {
         $this->answers = $answers;
+
         return $this;
     }
 
@@ -234,5 +226,4 @@ class Comment
     {
         return $this->title;
     }
-
 }

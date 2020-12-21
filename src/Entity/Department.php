@@ -53,19 +53,11 @@ class Department
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getNumber(): string
     {
         return $this->number;
     }
 
-    /**
-     * @param string $number
-     *
-     * @return self
-     */
     public function setNumber(string $number): self
     {
         $this->number = $number;

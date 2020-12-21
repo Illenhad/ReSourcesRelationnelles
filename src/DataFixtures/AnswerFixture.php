@@ -17,7 +17,7 @@ class AnswerFixture extends Fixture implements DependentFixtureInterface
         $faker = Factory::create('fr_FR');
         self::$numberOfAnswers = 150;
 
-        for ($i = 1; $i <= self::$numberOfAnswers; $i++) {
+        for ($i = 1; $i <= self::$numberOfAnswers; ++$i) {
             $answer = new Answer();
             $answer
                 ->setComment($this->getReference('comment'.$faker->numberBetween(1, CommentFixture::$numberOfComments)))
@@ -35,7 +35,7 @@ class AnswerFixture extends Fixture implements DependentFixtureInterface
     {
         return [
             UserFixture::class,
-            CommentFixture::class
+            CommentFixture::class,
         ];
     }
 }

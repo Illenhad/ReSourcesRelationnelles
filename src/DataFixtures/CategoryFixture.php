@@ -21,7 +21,7 @@ class CategoryFixture extends Fixture
         10 => 'Santé physique',
         11 => 'Santé psychique',
         12 => 'Spiritualité',
-        13 => 'Vie affective'
+        13 => 'Vie affective',
     ];
 
     public function load(ObjectManager $manager)
@@ -29,7 +29,7 @@ class CategoryFixture extends Fixture
         $i = 0;
 
         foreach (self::$tabCategory as $category) {
-            $i++;
+            ++$i;
             $categoryEntity = new Category();
             $categoryEntity->setLabel($category);
             $manager->persist($categoryEntity);

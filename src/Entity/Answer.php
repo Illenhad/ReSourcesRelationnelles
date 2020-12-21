@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Entity;
-
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\JoinColumn;
@@ -20,10 +18,10 @@ class Answer
      */
     private $id;
 
-
     /**
      * @ManyToOne(targetEntity="App\Entity\Comment", inversedBy="answers")
      * @JoinColumn(name="comment_id", referencedColumnName="id")
+     *
      * @var Comment
      */
     private $comment;
@@ -41,6 +39,7 @@ class Answer
     /**
      * @ManyToOne(targetEntity="App\Entity\User", inversedBy="answers")
      * @JoinColumn(name="usert_id", referencedColumnName="id")
+     *
      * @var User
      */
     private $user;
@@ -60,29 +59,25 @@ class Answer
 
     /**
      * @param mixed $id
+     *
      * @return Answer
      */
     public function setId($id)
     {
         $this->id = $id;
+
         return $this;
     }
 
-    /**
-     * @return Comment
-     */
     public function getComment(): Comment
     {
         return $this->comment;
     }
 
-    /**
-     * @param Comment $comment
-     * @return Answer
-     */
     public function setComment(Comment $comment): Answer
     {
         $this->comment = $comment;
+
         return $this;
     }
 
@@ -108,29 +103,25 @@ class Answer
 
     /**
      * @param mixed $answerModerations
+     *
      * @return Answer
      */
     public function setAnswerModerations($answerModerations)
     {
         $this->answerModerations = $answerModerations;
+
         return $this;
     }
 
-    /**
-     * @return User
-     */
     public function getUser(): User
     {
         return $this->user;
     }
 
-    /**
-     * @param User $user
-     * @return Answer
-     */
     public function setUser(User $user): Answer
     {
         $this->user = $user;
+
         return $this;
     }
 
@@ -145,7 +136,4 @@ class Answer
 
         return $this;
     }
-
-
-
 }

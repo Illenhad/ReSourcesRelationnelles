@@ -87,6 +87,4 @@ class RelUserManagementResource
     {
         $this->managementType = $managementType;
     }
-
-
 }

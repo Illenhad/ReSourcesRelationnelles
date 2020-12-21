@@ -84,11 +84,13 @@ class RelModerationUserComment
 
     /**
      * @param mixed $moderator
+     *
      * @return RelModerationUserComment
      */
     public function setModerator($moderator)
     {
         $this->moderator = $moderator;
+
         return $this;
     }
 
@@ -102,11 +104,13 @@ class RelModerationUserComment
 
     /**
      * @param mixed $resourceComment
+     *
      * @return RelModerationUserComment
      */
     public function setResourceComment($resourceComment)
     {
         $this->resourceComment = $resourceComment;
+
         return $this;
     }
 
@@ -120,13 +124,13 @@ class RelModerationUserComment
 
     /**
      * @param mixed $moderationType
+     *
      * @return RelModerationUserComment
      */
     public function setModerationType($moderationType)
     {
         $this->moderationType = $moderationType;
+
         return $this;
     }
-
-
 }

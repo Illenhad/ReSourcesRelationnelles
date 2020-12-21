@@ -17,7 +17,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity(repositoryClass=UserRepository::class)
  *  * @UniqueEntity("username")
  *  * @UniqueEntity("email")
- *
  */
 class User implements UserInterface
 {
@@ -57,6 +56,7 @@ class User implements UserInterface
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Department", inversedBy="users")
      * @ORM\JoinColumn(name="department_id", referencedColumnName="id", nullable=false)
+     *
      * @var Collection
      */
     private $department;
@@ -64,6 +64,7 @@ class User implements UserInterface
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Role", inversedBy="users")
      * @ORM\JoinColumn(name="role_id", referencedColumnName="id", nullable=false)
+     *
      * @var Collection
      */
     private $roles;
@@ -130,13 +131,12 @@ class User implements UserInterface
      */
     private $answers;
 
-
     /**
      * @OneToMany(targetEntity="App\Entity\Resource", mappedBy="user")
      *
-     * @var Resource
+     * @var resource
      */
-    private $resources ;
+    private $resources;
     // ...
 
     /**
@@ -220,7 +220,7 @@ class User implements UserInterface
 
     public function getDateLastConnection(): string
     {
-        return $this->dateLastConnection->format("d M Y H:i:s");
+        return $this->dateLastConnection->format('d M Y H:i:s');
     }
 
     public function setDateLastConnection(DateTimeInterface $dateLastConnection): self
@@ -263,6 +263,7 @@ class User implements UserInterface
 
     /**
      * @return mixed
+     *
      * @see UserInterface
      */
     public function getPassword()
@@ -271,7 +272,6 @@ class User implements UserInterface
     }
 
     /**
-     * @param string $password
      * @return $this
      */
     public function setPassword(string $password): self
@@ -281,7 +281,7 @@ class User implements UserInterface
         return $this;
     }
 
-    #Fonction neccessaire pour ID
+    //Fonction neccessaire pour ID
 
     /**
      * @see UserInterface
@@ -292,7 +292,7 @@ class User implements UserInterface
         return $this->username;
     }
 
-    #Fonction neccessaire pour ID
+    //Fonction neccessaire pour ID
 
     /**
      * @see UserInterface
@@ -303,7 +303,7 @@ class User implements UserInterface
         // $this->plainPassword = null;
     }
 
-    #Fonction neccessaire pour ID
+    //Fonction neccessaire pour ID
 
     /**
      * @see UserInterface
@@ -323,8 +323,6 @@ class User implements UserInterface
         $this->roles = $roles;
 
         return $this;
-
-
     }
 
     /**
@@ -337,11 +335,13 @@ class User implements UserInterface
 
     /**
      * @param mixed $ageCategory
+     *
      * @return User
      */
     public function setAgeCategory($ageCategory)
     {
         $this->ageCategory = $ageCategory;
+
         return $this;
     }
 
@@ -473,21 +473,15 @@ class User implements UserInterface
         $this->resourceModerations = $resourceModerations;
     }
 
-    /**
-     * @return Resource
-     */
     public function getResources(): Resource
     {
         return $this->resources;
     }
 
-    /**
-     * @param Resource $resources
-     * @return User
-     */
     public function setResources(Resource $resources): User
     {
         $this->resources = $resources;
+
         return $this;
     }
 
@@ -501,11 +495,13 @@ class User implements UserInterface
 
     /**
      * @param mixed $sharerUsers
+     *
      * @return User
      */
     public function setSharerUsers($sharerUsers)
     {
         $this->sharerUsers = $sharerUsers;
+
         return $this;
     }
 
@@ -519,11 +515,13 @@ class User implements UserInterface
 
     /**
      * @param mixed $sharedWithUsers
+     *
      * @return User
      */
     public function setSharedWithUsers($sharedWithUsers)
     {
         $this->sharedWithUsers = $sharedWithUsers;
+
         return $this;
     }
 
@@ -537,11 +535,13 @@ class User implements UserInterface
 
     /**
      * @param mixed $answerModerations
+     *
      * @return User
      */
     public function setAnswerModerations($answerModerations)
     {
         $this->answerModerations = $answerModerations;
+
         return $this;
     }
 
@@ -555,13 +555,13 @@ class User implements UserInterface
 
     /**
      * @param mixed $answers
+     *
      * @return User
      */
     public function setAnswers($answers)
     {
         $this->answers = $answers;
+
         return $this;
     }
-
-
 }

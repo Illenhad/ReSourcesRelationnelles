@@ -3,7 +3,6 @@
 namespace App\DataFixtures;
 
 use App\Entity\RelSharedResourceUser;
-use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
@@ -15,7 +14,7 @@ class RelSharedResourceUserFixture extends Fixture implements DependentFixtureIn
     {
         $faker = Factory::create('fr_FR');
 
-        for ($i = 1; $i <= 250; $i++) {
+        for ($i = 1; $i <= 250; ++$i) {
             $relSharedResourceUser = new RelSharedResourceUser();
             $relSharedResourceUser->setResource($this->getReference('resource'.$faker->numberBetween(1, ResourceFixture::$numberOfResources)));
             $relSharedResourceUser->setSharerUser($this->getReference('user'.$faker->numberBetween(1, UserFixture::$numberOfUsers)));
@@ -28,11 +27,9 @@ class RelSharedResourceUserFixture extends Fixture implements DependentFixtureIn
 
     public function getDependencies()
     {
-
         return [
             UserFixture::class,
-            ResourceFixture::class
+            ResourceFixture::class,
         ];
-
     }
 }

@@ -20,7 +20,6 @@ use Symfony\Component\Security\Guard\Authenticator\AbstractFormLoginAuthenticato
 use Symfony\Component\Security\Guard\PasswordAuthenticatedInterface;
 use Symfony\Component\Security\Http\Util\TargetPathTrait;
 
-
 class LoginFormAuthAuthenticator extends AbstractFormLoginAuthenticator implements PasswordAuthenticatedInterface
 {
     use TargetPathTrait;
@@ -98,7 +97,7 @@ class LoginFormAuthAuthenticator extends AbstractFormLoginAuthenticator implemen
         }
 
         // For example : return new RedirectResponse($this->urlGenerator->generate('some_route'));
-        #TODO Clean redirect(need homepage)
+        //TODO Clean redirect(need homepage)
         return new RedirectResponse($this->urlGenerator->generate('login'));
     }
 

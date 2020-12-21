@@ -14,7 +14,7 @@ class RelShareGroupUserFixture extends Fixture implements DependentFixtureInterf
     {
         $faker = Factory::create('fr_FR');
 
-        for ($i = 1; $i <= 100; $i++) {
+        for ($i = 1; $i <= 100; ++$i) {
             $relShareGroupUser = new RelShareGroupUser();
             $relShareGroupUser->setUser($this->getReference('user'.$faker->numberBetween(1, UserFixture::$numberOfUsers)));
             $relShareGroupUser->setCreator(false);
@@ -22,7 +22,7 @@ class RelShareGroupUserFixture extends Fixture implements DependentFixtureInterf
             $manager->persist($relShareGroupUser);
         }
 
-        for ($i = 1; $i <= ShareGroupFixture::$numberOfShareGroup; $i++) {
+        for ($i = 1; $i <= ShareGroupFixture::$numberOfShareGroup; ++$i) {
             $relShareGroupUser = new RelShareGroupUser();
             $relShareGroupUser->setUser($this->getReference('user'.$faker->numberBetween(1, UserFixture::$numberOfUsers)));
             $relShareGroupUser->setCreator(true);
@@ -37,7 +37,7 @@ class RelShareGroupUserFixture extends Fixture implements DependentFixtureInterf
     {
         return [
             UserFixture::class,
-            ShareGroupFixture::class
+            ShareGroupFixture::class,
         ];
     }
 }

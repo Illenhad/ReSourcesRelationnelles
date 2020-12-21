@@ -76,5 +76,4 @@ class ShareGroup
     {
         $this->users = $users;
     }
-
 }

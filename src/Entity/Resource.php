@@ -50,12 +50,10 @@ class Resource
      */
     private $userActions;
 
-
     /**
      * @ORM\OneToMany(targetEntity="RelModerationUserResource", mappedBy="resource")
      */
     private $resourceModerations;
-
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\AgeCategory", inversedBy="resources")
@@ -150,12 +148,10 @@ class Resource
         return $this;
     }
 
-
     public function getDateCreation()
     {
         return $this->dateCreation;
     }
-
 
     public function setDateCreation($dateCreation): void
     {
@@ -236,11 +232,13 @@ class Resource
 
     /**
      * @param mixed $ageCategory
-     * @return Resource
+     *
+     * @return resource
      */
     public function setAgeCategory($ageCategory)
     {
         $this->ageCategory = $ageCategory;
+
         return $this;
     }
 
@@ -254,65 +252,49 @@ class Resource
 
     /**
      * @param mixed $user
-     * @return Resource
+     *
+     * @return resource
      */
     public function setUser($user)
     {
         $this->user = $user;
+
         return $this;
     }
 
-    /**
-     * @return ResourceType
-     */
     public function getResourceType(): ResourceType
     {
         return $this->resourceType;
     }
 
-    /**
-     * @param ResourceType $resourceType
-     * @return Resource
-     */
     public function setResourceType(ResourceType $resourceType): Resource
     {
         $this->resourceType = $resourceType;
+
         return $this;
     }
 
-    /**
-     * @return RelationshipType
-     */
     public function getRelationShip(): RelationshipType
     {
         return $this->relationShip;
     }
 
-    /**
-     * @param RelationshipType $relationShip
-     * @return Resource
-     */
     public function setRelationShip(RelationshipType $relationShip): Resource
     {
         $this->relationShip = $relationShip;
+
         return $this;
     }
 
-    /**
-     * @return Category
-     */
     public function getCategory(): Category
     {
         return $this->category;
     }
 
-    /**
-     * @param Category $category
-     * @return Resource
-     */
     public function setCategory(Category $category): Resource
     {
         $this->category = $category;
+
         return $this;
     }
 
@@ -326,13 +308,13 @@ class Resource
 
     /**
      * @param mixed $sharedResources
-     * @return Resource
+     *
+     * @return resource
      */
     public function setSharedResources($sharedResources)
     {
         $this->sharedResources = $sharedResources;
+
         return $this;
     }
-
-
 }
