@@ -73,14 +73,12 @@ class User implements UserInterface
     private $department;
 
     /**
-     * Should be convert to ManyToMany.
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\Role", inversedBy="users")
      * @ORM\JoinColumn(name="role_id", referencedColumnName="id", nullable=false)
-     *
-     * @var Collection
      */
-    private $roles;
+    private $role;
+
 
     /**
      * @ORM\Column(type="string", length=255, nullable=True)
@@ -193,6 +191,11 @@ class User implements UserInterface
      * @var Collection
      */
     private $answerModerations;
+
+    /**
+     * @ORM\Column(type="string", length=50, nullable=true)
+     */
+    private $token_recup;
 
     public function __construct()
     {
@@ -348,22 +351,32 @@ class User implements UserInterface
     /**
      * @see UserInterface
      */
-    public function getRoles()
+    public function getRoles(): array
     {
-        return $this->roles;
+        $roles = [];
+        $roles[0] = $this->getRole()->getLabel();
+        return $roles;
     }
 
     /**
-     * @param mixed $roles
-     *
-     * @return $this
+     * @return mixed
      */
-    public function setRoles($roles): self
+    public function getRole()
     {
-        $this->roles = $roles;
+        return $this->role;
+    }
 
+    /**
+     * @param mixed $role
+     * @return User
+     */
+    public function setRole($role)
+    {
+        $this->role = $role;
         return $this;
     }
+
+
 
     /**
      * @return mixed
@@ -608,5 +621,17 @@ class User implements UserInterface
     public function __toString(): string
     {
         return $this->username;
+    }
+
+    public function getTokenRecup(): ?string
+    {
+        return $this->token_recup;
+    }
+
+    public function setTokenRecup(?string $token_recup): self
+    {
+        $this->token_recup = $token_recup;
+
+        return $this;
     }
 }

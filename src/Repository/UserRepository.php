@@ -55,8 +55,8 @@ class UserRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('u')
             ->select('count(u.id) as nbr')
-            ->groupBy('u.roles')
-            ->orderBy('u.roles')
+            ->groupBy('u.role')
+            ->orderBy('u.role')
             ->getQuery()
             ->getResult()
         ;

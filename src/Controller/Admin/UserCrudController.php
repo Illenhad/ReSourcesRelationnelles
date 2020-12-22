@@ -33,7 +33,7 @@ class UserCrudController extends AbstractCrudController
             TextField::new('lastname')->setLabel('Nom'),
             EmailField::new('email'),
             TextField::new('dateLastConnection')->setLabel('Dernière connexion')->hideOnForm(),
-            AssociationField::new('roles')->setLabel('Rôle'),
+            AssociationField::new('role')->setLabel('Rôle'),
             AssociationField::new('department')->setLabel('Lieu'),
             AssociationField::new('ageCategory')->setLabel('Catégorie d\'age'),
             TextField::new('password')
