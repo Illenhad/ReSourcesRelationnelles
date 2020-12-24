@@ -14,10 +14,10 @@ class RelModerationUserFixture extends Fixture implements DependentFixtureInterf
     {
         $faker = Factory::create('fr_FR');
 
-        for ($i = 0; $i < 20; ++$i) {
+        for ($i = 0; $i < 200; ++$i) {
             $relModerationUser = new RelModerationUser();
             $relModerationUser->setModerationType($this->getReference('moderationType'.$faker->numberBetween(1, count(ModerationTypeFixture::$tabModerationType))));
-            $relModerationUser->setModerationDate($faker->dateTimeBetween('-60 days', 'now'));
+            $relModerationUser->setModerationDate($faker->dateTimeBetween('-2 years', 'now'));
             $relModerationUser->setUser($this->getReference('user'.$faker->numberBetween(1, UserFixture::$numberOfUsers)));
             $relModerationUser->setModerator($this->getReference(UserFixture::$userModerator[$faker->numberBetween(0, count(UserFixture::$userModerator) - 1)]));
             $manager->persist($relModerationUser);

@@ -14,13 +14,13 @@ class RelModerationUserAnswerFixture extends Fixture implements DependentFixture
     {
         $faker = Factory::create('fr_FR');
 
-        for ($i = 1; $i <= 20; ++$i) {
+        for ($i = 1; $i <= 100; ++$i) {
             $relModerationUserAnswer = new RelModerationUserAnswer();
             $relModerationUserAnswer
                 ->setComment('C\'est vraiment pas très gentil ce qu\'il a dit !')
                 ->setModerationType($this->getReference('moderationType'.$faker->numberBetween(1, count(ModerationTypeFixture::$tabModerationType))))
                 ->setModerator($this->getReference(UserFixture::$userModerator[$faker->numberBetween(0, count(UserFixture::$userModerator) - 1)]))
-                ->setModerationDate($faker->dateTimeBetween('-6 months', 'now'))
+                ->setModerationDate($faker->dateTimeBetween('-2 years', 'now'))
                 ->setAnswer($this->getReference('answer'.$faker->numberBetween(1, AnswerFixture::$numberOfAnswers)))
             ;
             $manager->persist($relModerationUserAnswer);

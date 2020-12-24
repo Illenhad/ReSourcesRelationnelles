@@ -14,9 +14,9 @@ class RelModerationUserResourceFixture extends Fixture implements DependentFixtu
     {
         $faker = Factory::create('fr_FR');
 
-        for ($i = 1; $i <= 15; ++$i) {
+        for ($i = 1; $i <= 150; ++$i) {
             $relModerationUserResource = new RelModerationUserResource();
-            $relModerationUserResource->setModerationDate($faker->dateTimeBetween('-50 days', 'now'));
+            $relModerationUserResource->setModerationDate($faker->dateTimeBetween('-2 years', 'now'));
             $relModerationUserResource->setModerator($this->getReference(UserFixture::$userModerator[$faker->numberBetween(0, count(UserFixture::$userModerator) - 1)]));
             $relModerationUserResource->setModerationType($this->getReference('moderationType'.$faker->numberBetween(1, count(ModerationTypeFixture::$tabModerationType))));
             $relModerationUserResource->setComment('Cette resource est nulle');

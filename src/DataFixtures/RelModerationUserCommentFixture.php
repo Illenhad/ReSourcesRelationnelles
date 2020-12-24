@@ -14,10 +14,10 @@ class RelModerationUserCommentFixture extends Fixture implements DependentFixtur
     {
         $faker = Factory::create('fr_FR');
 
-        for ($i = 1; $i <= 15; ++$i) {
+        for ($i = 1; $i <= 150; ++$i) {
             $relModerationUserComment = new RelModerationUserComment();
             $relModerationUserComment
-                ->setModerationDate($faker->dateTimeBetween('-50 days', 'now'))
+                ->setModerationDate($faker->dateTimeBetween('-2 years', 'now'))
                 ->setModerator($this->getReference(UserFixture::$userModerator[$faker->numberBetween(0, count(UserFixture::$userModerator) - 1)]))
                 ->setModerationType($this->getReference('moderationType'.$faker->numberBetween(1, count(ModerationTypeFixture::$tabModerationType))))
                 ->setResourceComment($this->getReference('comment'.$faker->numberBetween(1, CommentFixture::$numberOfComments)));

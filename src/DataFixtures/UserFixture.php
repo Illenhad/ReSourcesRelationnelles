@@ -7,16 +7,23 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class UserFixture extends Fixture implements DependentFixtureInterface
 {
     public static $numberOfUsers;
     public static $userModerator;
+    private $passwordEncoder;
+
+    public function __construct(UserPasswordEncoderInterface $passwordEncoder)
+    {
+        $this->passwordEncoder = $passwordEncoder;
+    }
 
     public function load(ObjectManager $manager)
     {
         $faker = Factory::create('fr_FR');
-        self::$numberOfUsers = 50;
+        self::$numberOfUsers = 200;
 
         for ($i = 1; $i <= self::$numberOfUsers; ++$i) {
             $user = new User();
@@ -27,9 +34,9 @@ class UserFixture extends Fixture implements DependentFixtureInterface
                 ->setEmail($faker->freeEmail)
                 ->setDepartment($this->getReference('department'.$faker->numberBetween(1, count(DepartmentFixture::$tabDept))))
                 ->setAgeCategory($this->getReference('age'.$faker->numberBetween(1, count(AgeCategoryFixture::$tabAge))))
-                ->setDateLastConnection($faker->dateTimeBetween('-60 days', 'now', null))
+                ->setDateLastConnection($faker->dateTimeBetween('-90 days', 'now', null))
                 ->setRole($this->getReference('ROLE_USER'))
-                ->setPassword('12345678');
+                ->setPassword($this->passwordEncoder->encodePassword($user, '12345678'));
             $manager->persist($user);
             $this->addReference('user'.$i, $user);
         }
@@ -46,7 +53,7 @@ class UserFixture extends Fixture implements DependentFixtureInterface
             ->setAgeCategory($this->getReference('age'.$faker->numberBetween(1, count(AgeCategoryFixture::$tabAge))))
             ->setDateLastConnection(new \DateTime('now'))
             ->setRole($this->getReference('ROLE_MODERATEUR'))
-            ->setPassword('12345678')
+            ->setPassword($this->passwordEncoder->encodePassword($user, 'admin'))
         ;
         $manager->persist($user);
         ++self::$numberOfUsers;
@@ -63,7 +70,7 @@ class UserFixture extends Fixture implements DependentFixtureInterface
             ->setAgeCategory($this->getReference('age'.$faker->numberBetween(1, count(AgeCategoryFixture::$tabAge))))
             ->setDateLastConnection(new \DateTime('now'))
             ->setRole($this->getReference('ROLE_MODERATEUR'))
-            ->setPassword('12345678')
+            ->setPassword($this->passwordEncoder->encodePassword($user, 'admin'))
         ;
         $manager->persist($user);
         ++self::$numberOfUsers;
@@ -80,7 +87,7 @@ class UserFixture extends Fixture implements DependentFixtureInterface
             ->setAgeCategory($this->getReference('age'.$faker->numberBetween(1, count(AgeCategoryFixture::$tabAge))))
             ->setDateLastConnection(new \DateTime('now'))
             ->setRole($this->getReference('ROLE_ADMIN'))
-            ->setPassword('12345678')
+            ->setPassword($this->passwordEncoder->encodePassword($user, 'admin'))
         ;
         $manager->persist($user);
         ++self::$numberOfUsers;
@@ -97,7 +104,7 @@ class UserFixture extends Fixture implements DependentFixtureInterface
             ->setAgeCategory($this->getReference('age'.$faker->numberBetween(1, count(AgeCategoryFixture::$tabAge))))
             ->setDateLastConnection(new \DateTime('now'))
             ->setRole($this->getReference('ROLE_SUPER_ADMIN'))
-            ->setPassword('12345678')
+            ->setPassword($this->passwordEncoder->encodePassword($user, 'admin'))
         ;
         $manager->persist($user);
         ++self::$numberOfUsers;

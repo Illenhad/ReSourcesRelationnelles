@@ -15,7 +15,7 @@ class CommentFixture extends Fixture implements DependentFixtureInterface
     public function load(ObjectManager $manager)
     {
         $faker = Factory::create('fr_FR');
-        self::$numberOfComments = 100;
+        self::$numberOfComments = 200;
 
         for ($i = 1; $i <= self::$numberOfComments; ++$i) {
             $comment = new Comment();
@@ -26,7 +26,7 @@ class CommentFixture extends Fixture implements DependentFixtureInterface
                 ->setUser($this->getReference('user'.$faker->numberBetween(1, UserFixture::$numberOfUsers)))
                 ->setResource($this->getReference('resource'.$faker->numberBetween(1, ResourceFixture::$numberOfResources)))
             ;
-            $comment->setCommentDate($faker->dateTimeBetween('-6 months', 'now'));
+            $comment->setCommentDate($faker->dateTimeBetween('-2 years', 'now'));
             $manager->persist($comment);
             $this->addReference('comment'.$i, $comment);
         }

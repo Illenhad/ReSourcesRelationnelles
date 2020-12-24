@@ -17,13 +17,13 @@ class ResourceFixture extends Fixture implements DependentFixtureInterface
         $faker = Factory::create('fr_FR');
         self::$numberOfResources = 15;
 
-        for ($i = 1; $i <= 150; ++$i) {
+        for ($i = 1; $i <= 500; ++$i) {
             $resource = new Resource();
             $resource
                 ->setTitle($faker->words(3, true))
                 ->setLink($faker->url)
                 ->setPublic($faker->boolean(40))
-                ->setDateCreation($faker->dateTimeBetween('-6 months', 'now', null));
+                ->setDateCreation($faker->dateTimeBetween('-2 years', 'now', null));
             $resource->setUser($this->getReference('user'.$faker->numberBetween(1, UserFixture::$numberOfUsers)));
             $resource->setAgeCategory($this->getReference('age'.$faker->numberBetween(1, count(AgeCategoryFixture::$tabAge))));
             $resource->setCategory($this->getReference('category'.$faker->numberBetween(1, count(CategoryFixture::$tabCategory))));

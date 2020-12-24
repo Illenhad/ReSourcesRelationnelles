@@ -14,7 +14,7 @@ class ShareGroupFixture extends Fixture
     public function load(ObjectManager $manager)
     {
         $faker = Factory::create('fr_FR');
-        self::$numberOfShareGroup = 20;
+        self::$numberOfShareGroup = 50;
 
         for ($i = 1; $i <= self::$numberOfShareGroup; ++$i) {
             $shareGroup = new ShareGroup();

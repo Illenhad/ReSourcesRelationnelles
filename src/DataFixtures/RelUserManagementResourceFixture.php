@@ -14,7 +14,7 @@ class RelUserManagementResourceFixture extends Fixture implements DependentFixtu
     {
         $faker = Factory::create('fr_FR');
 
-        for ($i = 1; $i <= 200; ++$i) {
+        for ($i = 1; $i <= 1000; ++$i) {
             $relUserManagementResource = new RelUserManagementResource();
             $relUserManagementResource->setUser($this->getReference('user'.$faker->numberBetween(1, UserFixture::$numberOfUsers)));
             $relUserManagementResource->setResource($this->getReference('resource'.$faker->numberBetween(1, ResourceFixture::$numberOfResources)));
