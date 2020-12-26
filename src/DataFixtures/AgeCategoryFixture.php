@@ -24,7 +24,7 @@ class AgeCategoryFixture extends Fixture
             $ageCategory = new AgeCategory();
             $ageCategory->setLabel($age);
             $manager->persist($ageCategory);
-            $this->addReference('age'.$i, $ageCategory);
+            $this->addReference('ageCategory'.$i, $ageCategory);
         }
 
         $manager->flush();

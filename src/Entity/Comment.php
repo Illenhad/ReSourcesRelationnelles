@@ -56,7 +56,7 @@ class Comment
      * @ORM\ManyToOne(targetEntity="App\Entity\Resource", inversedBy="comments")
      * @ORM\JoinColumn(name="resource_id", referencedColumnName="id", nullable=false)
      *
-     * @var
+     * @var Collection
      */
     private $resource;
 

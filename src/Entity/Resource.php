@@ -3,13 +3,14 @@
 namespace App\Entity;
 
 use App\Repository\ResourceRepository;
+use Cocur\Slugify\Slugify;
 use DateTime;
 use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
-use phpDocumentor\Reflection\Types\Collection;
 
 /**
  * @ORM\Entity(repositoryClass=ResourceRepository::class)
@@ -37,6 +38,13 @@ class Resource
      *
      * @var string
      */
+    private $description;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     *
+     * @var string
+     */
     private $link;
 
     /**
@@ -49,7 +57,7 @@ class Resource
     /**
      * @ORM\Column(type="datetime")
      *
-     * @var DateTimeInterface
+     * @var \DateTimeInterface
      */
     private $dateCreation;
 
@@ -128,6 +136,11 @@ class Resource
      */
     private $sharedResources;
 
+    public function getSlug(): string
+    {
+        return (new Slugify())->slugify($this->title);
+    }
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
@@ -179,12 +192,17 @@ class Resource
         return $this;
     }
 
-    public function getDateCreation(): string
+    public function getDateCreation(): \DateTimeInterface
+    {
+        return $this->dateCreation;
+    }
+
+    public function getFormatedDateCreation(): string
     {
         return $this->dateCreation->format('d M Y H:i:s');
     }
 
-    public function setDateCreation(DateTimeInterface $dateCreation): self
+    public function setDateCreation(\DateTimeInterface $dateCreation): self
     {
         $this->dateCreation = $dateCreation;
 
@@ -227,7 +245,7 @@ class Resource
         return $this;
     }
 
-    public function getAgeCategory()
+    public function getAgeCategory(): AgeCategory
     {
         return $this->ageCategory;
     }
@@ -239,7 +257,7 @@ class Resource
         return $this;
     }
 
-    public function getUser()
+    public function getUser(): User
     {
         return $this->user;
     }
@@ -251,7 +269,7 @@ class Resource
         return $this;
     }
 
-    public function getComments()
+    public function getComments(): Collection
     {
         return $this->comments;
     }
@@ -263,7 +281,7 @@ class Resource
         return $this;
     }
 
-    public function getResourceType()
+    public function getResourceType(): ResourceType
     {
         return $this->resourceType;
     }
@@ -275,7 +293,7 @@ class Resource
         return $this;
     }
 
-    public function getRelationShip()
+    public function getRelationShip(): RelationshipType
     {
         return $this->relationShip;
     }
@@ -287,7 +305,7 @@ class Resource
         return $this;
     }
 
-    public function getCategory()
+    public function getCategory(): Category
     {
         return $this->category;
     }
@@ -307,6 +325,18 @@ class Resource
     public function setSharedResources(Collection $sharedResources): self
     {
         $this->sharedResources = $sharedResources;
+
+        return $this;
+    }
+
+    public function getDescription(): string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(string $description): self
+    {
+        $this->description = $description;
 
         return $this;
     }

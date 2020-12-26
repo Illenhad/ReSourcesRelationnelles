@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Resource;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -19,19 +20,33 @@ class ResourceRepository extends ServiceEntityRepository
         parent::__construct($registry, Resource::class);
     }
 
+//    /**
+//     * Cette méthode retourne les ressources qui ne necessitent  pas d'être authentifié.
+//     *
+//     * @return resource[]
+//     */
+//    public function findPublic($dateCreationSorting = 'DESC')
+//    {
+//        return $this->findBy(
+//            ['public' => 1],
+//            [
+//                'dateCreation' => $dateCreationSorting,
+//            ]
+//        );
+//    }
+
     /**
      * Cette méthode retourne les ressources qui ne necessitent  pas d'être authentifié.
      *
-     * @return resource[]
+     * @param string $dateCreationSorting
      */
-    public function findPublic($dateCreationSorting = 'DESC')
+    public function findPublicQuery($dateCreationSorting = 'DESC'): Query
     {
-        return $this->findBy(
-            ['public' => 1],
-            [
-                'dateCreation' => $dateCreationSorting,
-            ]
-        );
+        return ($this->createQueryBuilder('r'))
+            ->where('r.public = 1')
+            ->orderBy('r.dateCreation', $dateCreationSorting)
+            ->getQuery()
+        ;
     }
 
     // /**
