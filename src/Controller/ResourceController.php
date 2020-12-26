@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\Resource;
 use App\Repository\ResourceRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -11,16 +10,15 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/resource")
+ * @Route("/resources")
  */
 class ResourceController extends AbstractController
 {
+    public const ROUTE_PREFIX = 'resources';
+
     /**
      * @Route("")
      *
-     * @param Request $request
-     * @param ResourceRepository $resourceRepository
-     * @param PaginatorInterface $paginator
      * @return Response
      */
     public function index(Request $request, ResourceRepository $resourceRepository, PaginatorInterface $paginator)
@@ -31,10 +29,23 @@ class ResourceController extends AbstractController
             9
         );
 
-        return $this->render('resources/index.html.twig',
+        return $this->render(self::ROUTE_PREFIX.'/index.html.twig',
             [
                 'resources' => $resources,
             ]
         );
+    }
+
+    /**
+     * @Route("/{slug}-{id}", requirements={"slug": "[a-z0-9\-]*"})
+     */
+    public function show(string $slug, int $id, ResourceRepository $resourceRepository): Response
+    {
+        $resource = $resourceRepository->find($id);
+
+        return $this->render(self::ROUTE_PREFIX.'/show.html.twig', [
+            'resource' => $resource,
+            'current_menu' => 'resources',
+        ]);
     }
 }
