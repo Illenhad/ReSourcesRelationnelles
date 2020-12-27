@@ -8,11 +8,13 @@
             color: ghostwhite;
             background-color: dodgerblue;
             border-color: ghostwhite;
+            text-decoration: none;
         }
     </style>
 {% endblock %}
 
 {% block body %}
+
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <div class="container-fluid">
@@ -51,10 +53,97 @@
                 </div>
             {% endfor %}
         </div>
-        <div class="pagination">
+        <div class="pagination text-center">
             {{ knp_pagination_render(resources) }}
         </div>
     </div>
+
+    <footer class="bg-primary text-white text-center text-lg-start">
+
+        <div class="container p-4">
+
+            <div class="row">
+                <!--Grid column-->
+                <div class="col-lg-6 col-md-12 mb-4 mb-md-0">
+                    <h5 class="text-uppercase">A propos</h5>
+
+                    <p>
+                        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iste atque ea quis
+                        molestias. Fugiat pariatur maxime quis culpa corporis vitae repudiandae aliquam
+                        voluptatem veniam, est atque cumque eum delectus sint!
+
+                    </p>
+                </div>
+
+
+                <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                    <h5 class="text-uppercase">Liens utiles</h5>
+
+                    <ul class="list-unstyled mb-0">
+                        <li>
+                            <a href="https://solidarites-sante.gouv.fr/" class="text-white">Site du gouvernement </a>
+                        </li>
+                        <li>
+
+                            <a href="https://gouvernement-et-citoyens.consultation.etalab.gouv.fr/" class="text-white">Participation
+                                citoyenne</a>
+                        </li>
+
+                    </ul>
+                </div>
+
+                <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+
+                    <h5 class="text-uppercase">Suivez-nous</h5>
+
+                    <div class="container">
+                        <div class="row">
+
+                            <div class="col">
+                                <a href="https://www.facebook.com/MinSoliSante">
+                                    <img src="https://img.icons8.com/color/48/000000/facebook-new.png"/>
+                                </a>
+                            </div>
+
+                            <div class="col">
+                                <a href="https://twitter.com/MinSoliSante?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor">
+                                    <img src="https://img.icons8.com/fluent/48/000000/twitter.png"/>
+                                </a>
+                            </div>
+
+                            <div class="col ">
+                                <a href="https://www.linkedin.com/company/minist%C3%A8re-des-solidarites-de-la-sant%C3%A9/">
+                                    <img src="https://img.icons8.com/fluent/48/000000/linkedin.png"/>
+                                </a>
+                            </div>
+                            <div class="col ">
+                                <a href="https://www.instagram.com/explore/locations/584326962/ministere-des-solidarites-et-de-la-sante/?hl=fr">
+                                    <img src="https://img.icons8.com/fluent/48/000000/instagram-new.png"/>
+                                </a>
+                            </div>
+                            <div class="col ">
+                                <a href="https://www.youtube.com/channel/UCApzB6X-04YRPq9SZ0WfEsg">
+                                    <img src="https://img.icons8.com/color/48/000000/youtube.png"/>
+                                </a>
+                            </div>
+                            <div class="col ">
+                                <a href="https://www.snapchat.com/add/gouvernementFR">
+                                    <img src="https://img.icons8.com/fluent/48/000000/snapchat.png"/>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
+            © 2020 Copyright
+            <a class="text-white"
+               href="https://les-semi-croustillants.atlassian.net/jira/software/projects/SP/boards/3">Les Semis
+                Croustillants</a>
+        </div>
+    </footer>
 {% endblock %}
 
 
