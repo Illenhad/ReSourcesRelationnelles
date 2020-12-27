@@ -8,6 +8,7 @@
         <h5> Liste des commentaires </h5>
         {% for comment in resource.comments %}
             <div>
+
                 <i>{{ comment.content }}</i>
             </div>
             <div><b>Author : </b>{{ comment.user.username }}</div>

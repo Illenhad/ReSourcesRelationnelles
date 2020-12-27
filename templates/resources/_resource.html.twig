@@ -1,7 +1,8 @@
+<div class="card-header  text-left " style="color:dodgerblue"> Le {{ resource.dateCreation|date("d.m.Y à h:m") }} </div>
 <div class="card mb-4">
     <div class="text-center">
         <div class="container-fluid">
-{#            <img src="{{ asset('image/arbre.jpg') }}" alt="" width="100%">#}
+            {# <img src="{{ asset('image/arbre.jpg') }}" alt="" width="100%"> #}
             <img src="https://source.unsplash.com/random" alt="" width="100%">
         </div>
     </div>
@@ -15,9 +16,11 @@
         <div class="form-row text-center">
             <a href="{{ path('app_resource_show', {id: resource.id, slug: resource.slug}) }}"
                class="btn btn-primary "> Consulter la ressource</a>
+
         </div>
     </div>
 
-        <div class="card-footer  text-left " style="color:dodgerblue">  Auteur {{ resource.user }} </div>
-    </div>
+    <div class="card-footer  text-left " style="color:dodgerblue"> Auteur {{ resource.user }}  </div>
+    <div class="card-footer  text-left " style="color:dodgerblue"> commentaires {{ resource.comments | length }}  </div>
+</div>
 

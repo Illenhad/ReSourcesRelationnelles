@@ -43,7 +43,7 @@ class ResourceRepository extends ServiceEntityRepository
      *
      * @param string $dateCreationSorting
      */
-    public function findPublicQuery($dateCreationSorting = 'DESC'): Query
+    public function findPublicQuery($dateCreationSorting = 'ASC'): Query
     {
         return ($this->createQueryBuilder('r'))
             ->where('r.public = 1')

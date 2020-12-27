@@ -6,6 +6,7 @@ use App\Entity\ActionType;
 use App\Entity\RelUserActionResource;
 use App\Entity\Resource;
 use App\Form\ResourceType;
+use App\Entity\Comment;
 use App\Repository\ResourceRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ObjectManager;
@@ -40,7 +41,7 @@ class ResourceController extends AbstractController
     public function index(Request $request, ResourceRepository $resourceRepository, PaginatorInterface $paginator)
     {
         $resources = $paginator->paginate(
-            $resourceRepository->findPublicQuery('ASC'),
+            $resourceRepository->findPublicQuery('DESC'),
             $request->query->getInt('page', 1),
             9
         );
@@ -139,5 +140,23 @@ class ResourceController extends AbstractController
         } else {
             return $this->redirectToRoute('login');
         }
+    }
+
+    /**
+     * @Route("/{slug}", name="resource")
+     */
+    public function showComments($slug)
+    {
+        $resource = $this->getDoctrine()->getRepository(Resource::class)->findOneBy(['slug' => $slug]);
+
+        $comments = $this->getDoctrine()->getRepository(Comment::class)->findBy([
+            'resources' => $resource,
+        ], ['created_at' => 'desc']);
+
+        if (!$resource) {
+            throw $this->createNotFoundException('L\'article n\'existe pas');
+        }
+
+        return $this->render('show.html.twig', compact('resource', 'comments'));
     }
 }
