@@ -73,12 +73,10 @@ class User implements UserInterface
     private $department;
 
     /**
-     *
      * @ORM\ManyToOne(targetEntity="App\Entity\Role", inversedBy="users")
      * @ORM\JoinColumn(name="role_id", referencedColumnName="id", nullable=false)
      */
     private $role;
-
 
     /**
      * @ORM\Column(type="string", length=255, nullable=True)
@@ -365,6 +363,7 @@ class User implements UserInterface
     {
         $roles = [];
         $roles[0] = $this->getRole()->getLabel();
+
         return $roles;
     }
 
@@ -378,15 +377,15 @@ class User implements UserInterface
 
     /**
      * @param mixed $role
+     *
      * @return User
      */
-    public function setRole($role)
+    public function setRoles($role)
     {
         $this->role = $role;
+
         return $this;
     }
-
-
 
     /**
      * @return mixed

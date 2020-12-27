@@ -1,6 +1,20 @@
+{% extends 'base.html.twig' %}
+
 {% block body %}
-    <h1> {{ resource.title }}</h1>
 
+{{ resource.title }}
     {{ resource.description }}
+    <div>
+        <h5> Liste des commentaires </h5>
+        {% for comment in resource.comments %}
+            <div>
+                <i>{{ comment.content }}</i>
+            </div>
+            <div><b>Author : </b>{{ comment.user.username }}</div>
+            <a href="" > Répondre </a>
+            <br>
+        {% endfor %}
 
+
+    </div>
 {% endblock %}
