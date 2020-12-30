@@ -2,6 +2,7 @@
 
 namespace App\Form;
 
+use App\Entity\AgeCategory;
 use App\Entity\Department;
 use App\Entity\User;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -36,6 +37,11 @@ class SubscribeType extends AbstractType
             ->add('confirm_password',PasswordType::class,[
                 'attr'=>['placeholder'=>'Comfirmer votre mot de passe!' ],
                 'label'=>'Comfirmation du mot de passe'])
+            ->add('age_category', EntityType::class, [
+                'class' => AgeCategory::class,
+                'choice_label' => function($ageCat){ return $ageCat->getLabel();},
+                'choice_value' => 'label',
+                'label'=>'Catégorie d\'âge'])
             ->add('department',EntityType::class, [
                 'class' => Department::class,
                 'choice_label' => function($dep){ return $dep->getnumber()." | ".$dep->getLabel();},

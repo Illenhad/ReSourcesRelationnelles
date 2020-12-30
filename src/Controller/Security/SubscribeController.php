@@ -31,8 +31,6 @@ class SubscribeController extends AbstractController
             $user->setPassword($hash);
 
             //definition du role
-            $role = new Role();
-            $role->
             $role = $this->getDoctrine()
                 ->getRepository(Role::class)
                 ->findOneBy(['label'=>'ROLE_USER']);
