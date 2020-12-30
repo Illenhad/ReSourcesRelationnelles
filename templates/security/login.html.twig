@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Log in!{% endblock %}
+{% block title %}Connexion{% endblock %}
 
 {% block stylesheets %}
     <!--Patch for style-->
@@ -10,8 +10,10 @@
 {% block body %}
 <div class="form">
 <form method="post">
-    {% if error %}
-        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+    {% if error is defined %}
+        {% if error %}
+            <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+        {% endif %}
     {% endif %}
 
     {% if app.user %}
@@ -24,7 +26,7 @@
     <h1 >Connexion</h1>
     <div class="row">
     <label for="inputUsername">Username</label>
-    <input type="text" value="{{ last_username }}" name="username" id="inputUsername" class="form-control" required autofocus>
+    <input type="text" value="" name="username" id="inputUsername" class="form-control" required autofocus>
     </div>
     <div class="row">
     <label for="inputPassword">Password</label>

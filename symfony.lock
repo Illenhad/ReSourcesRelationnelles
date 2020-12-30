@@ -129,6 +129,9 @@
             ".php_cs.dist"
         ]
     },
+    "friendsofphp/proxy-manager-lts": {
+        "version": "v1.0.1"
+    },
     "fzaninotto/faker": {
         "version": "v1.9.2"
     },
@@ -146,9 +149,6 @@
     },
     "nikic/php-parser": {
         "version": "v4.10.3"
-    },
-    "ocramius/proxy-manager": {
-        "version": "2.10.0"
     },
     "php-cs-fixer/diff": {
         "version": "v1.3.1"

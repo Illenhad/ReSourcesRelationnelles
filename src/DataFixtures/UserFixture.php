@@ -35,8 +35,8 @@ class UserFixture extends Fixture implements DependentFixtureInterface
                 ->setDepartment($this->getReference('department'.$faker->numberBetween(1, count(DepartmentFixture::$tabDept))))
                 ->setAgeCategory($this->getReference('ageCategory'.$faker->numberBetween(1, count(AgeCategoryFixture::$tabAge))))
                 ->setDateLastConnection($faker->dateTimeBetween('-60 days', 'now', null))
-                ->setRoles($this->getReference('ROLE_USER'))
-                ->setPassword('12345678');
+                ->setRole($this->getReference('ROLE_USER'))
+                ->setPassword($this->passwordEncoder->encodePassword($user, '12345678'));
             $manager->persist($user);
             $this->addReference('user'.$i, $user);
         }
@@ -52,7 +52,7 @@ class UserFixture extends Fixture implements DependentFixtureInterface
             ->setDepartment($this->getReference('department'.$faker->numberBetween(1, count(DepartmentFixture::$tabDept))))
             ->setAgeCategory($this->getReference('ageCategory'.$faker->numberBetween(1, count(AgeCategoryFixture::$tabAge))))
             ->setDateLastConnection(new \DateTime('now'))
-            ->setRoles($this->getReference('ROLE_MODERATEUR'))
+            ->setRole($this->getReference('ROLE_MODERATEUR'))
             ->setPassword($this->passwordEncoder->encodePassword($user, 'admin'))
         ;
         $manager->persist($user);
@@ -69,7 +69,7 @@ class UserFixture extends Fixture implements DependentFixtureInterface
             ->setDepartment($this->getReference('department'.$faker->numberBetween(1, count(DepartmentFixture::$tabDept))))
             ->setAgeCategory($this->getReference('ageCategory'.$faker->numberBetween(1, count(AgeCategoryFixture::$tabAge))))
             ->setDateLastConnection(new \DateTime('now'))
-            ->setRoles($this->getReference('ROLE_MODERATEUR'))
+            ->setRole($this->getReference('ROLE_MODERATEUR'))
             ->setPassword($this->passwordEncoder->encodePassword($user, 'admin'))
         ;
         $manager->persist($user);
@@ -86,7 +86,7 @@ class UserFixture extends Fixture implements DependentFixtureInterface
             ->setDepartment($this->getReference('department'.$faker->numberBetween(1, count(DepartmentFixture::$tabDept))))
             ->setAgeCategory($this->getReference('ageCategory'.$faker->numberBetween(1, count(AgeCategoryFixture::$tabAge))))
             ->setDateLastConnection(new \DateTime('now'))
-            ->setRoles($this->getReference('ROLE_ADMIN'))
+            ->setRole($this->getReference('ROLE_ADMIN'))
             ->setPassword($this->passwordEncoder->encodePassword($user, 'admin'))
         ;
         $manager->persist($user);
@@ -103,7 +103,7 @@ class UserFixture extends Fixture implements DependentFixtureInterface
             ->setDepartment($this->getReference('department'.$faker->numberBetween(1, count(DepartmentFixture::$tabDept))))
             ->setAgeCategory($this->getReference('ageCategory'.$faker->numberBetween(1, count(AgeCategoryFixture::$tabAge))))
             ->setDateLastConnection(new \DateTime('now'))
-            ->setRoles($this->getReference('ROLE_SUPER_ADMIN'))
+            ->setRole($this->getReference('ROLE_SUPER_ADMIN'))
             ->setPassword($this->passwordEncoder->encodePassword($user, 'admin'))
         ;
         $manager->persist($user);
