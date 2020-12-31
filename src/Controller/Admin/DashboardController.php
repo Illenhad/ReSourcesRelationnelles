@@ -13,7 +13,6 @@ use App\Entity\Role;
 use App\Entity\User;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
-use EasyCorp\Bundle\EasyAdminBundle\Config\Assets;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
@@ -65,10 +64,10 @@ class DashboardController extends AbstractDashboardController
         ]);
     }
 
-    public function configureAssets(): Assets
-    {
-        return Assets::new()->addCssFile('css/admin/main.css');
-    }
+//    public function configureAssets(): Assets
+//    {
+//        return Assets::new()->addCssFile('css/admin/main.css');
+//    }
 
     public function configureDashboard(): Dashboard
     {

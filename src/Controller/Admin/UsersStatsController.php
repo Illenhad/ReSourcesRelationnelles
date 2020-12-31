@@ -71,13 +71,7 @@ class UsersStatsController extends AbstractController
         $this->ageCategoryRepository = $ageCategoryRepository;
         $this->departementRepository = $departementRepository;
         $this->year = '2020';
-
         $this->test = [];
-
-//        foreach ($years as $year){
-//            array_push($this->test[$year], $this->countUserPerMonth($year));
-//        }
-
         $this->initVariables();
     }
 
@@ -103,47 +97,23 @@ class UsersStatsController extends AbstractController
     private function countUserPerYear(): array
     {
         $user_per_years = [];
-
+        $all_users = $this->userRepository->findAll();
         foreach (range((new DateTime())->format('Y'), 2018) as $year) {
-            $user_per_years[$year] = 0;
+            foreach (range(1, 12) as $m) {
+                $user_per_years[$year][] = 0;
+            }
+        }
+
+        foreach ($all_users as $user) {
+            $date = new DateTime($user->getDateLastConnection());
             try {
-                $user_per_years[$year] = $this->countUserPerMonth((string) $year);
+                ++$user_per_years[$date->format('Y')][$date->format('m')];
             } catch (Exception $e) {
+                $user_per_years[$date->format('Y')][$date->format('m')] = 0;
             }
         }
 
         return $user_per_years;
-    }
-
-    /**
-     * Number of registrations per month, according to the past year in parameter.
-     *
-     * @param $year : Year
-     *
-     * @throws Exception
-     */
-    private function countUserPerMonth($year): array
-    {
-        //TODO : A refaire
-        $userPerMonth = [];
-
-        foreach (range(1, 12) as $item) {
-            $userPerMonth[$item] = 0;
-        }
-
-        foreach ($this->userRepository->findAll() as $user) {
-            $date = new DateTime($user->getDateLastConnection());
-            if ($date->format('Y') === $year && 'ROLE_USER' == $user->getRoles()) {
-                ++$userPerMonth[$date->format('m')];
-            }
-        }
-
-        $arr = [];
-        foreach ($userPerMonth as $value) {
-            array_push($arr, $value);
-        }
-
-        return $arr;
     }
 
     /**

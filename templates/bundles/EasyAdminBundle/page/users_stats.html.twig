@@ -1,25 +1,48 @@
 {# @var ea \EasyCorp\Bundle\EasyAdminBundle\Context\AdminContext #}
 {% extends '@EasyAdmin/page/content.html.twig' %}
-{% block javascript %}
 
-{% endblock %}
-{# TODO: Changer le titre du dashboard #}
-{% block page_title 'Statistiques' %}
+{% block page_title 'Statistiques utilisateurs' %}
 {% block page_content %}
+
+    {#  Stats style  #}
+    <link rel="stylesheet" href="{{ asset('css/admin/statistics.css') }}">
+
+    {#  import Chart.js  #}
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 
+    {#  Card info  #}
     <div class="row">
         <div class="col-md-2">
             <div class="card border-success border-top-0 border-bottom-0 border-right-0 h-100 py-2 shadow-sm"
-                 style="border-left: 5px solid;"> {# TODO: CSS a externaliser #}
+                 style="border-left: 5px solid;">
                 <div class="card-body  ">
                     <h5 class="text-success">Nombre de citoyens</h5>
                     <p class="card-text h1 ">{{ users_count_roles[0] }}</p>
                 </div>
             </div>
         </div>
+        <div class="col-md-2">
+            <div class="card border-{% if users_count_roles[1] >= 10 %}success{% elseif users_count_roles[1] >= 5 %}warning{% else %}danger{% endif %} border-top-0 border-bottom-0 border-right-0 h-100 py-2 shadow-sm"
+                 style="border-left: 5px solid;">
+                <div class="card-body  ">
+                    <h5 class="text-success">Nombre de modérateurs</h5>
+                    <p class="card-text h1 ">{{ users_count_roles[1] }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="card border-{% if users_count_roles[2] + users_count_roles[3] >= 10 %}success{% elseif users_count_roles[2] + users_count_roles[3] >= 5 %}warning{% else %}danger{% endif %} border-top-0 border-bottom-0 border-right-0 h-100 py-2 shadow-sm"
+                 style="border-left: 5px solid;">
+                <div class="card-body  ">
+                    <h5 class="text-success">Nombre d'administrateurs</h5>
+                    <p class="card-text h1 ">{{ users_count_roles[2] + users_count_roles[3] }}</p>
+                </div>
+            </div>
+        </div>
     </div>
     <hr/>
+
+    {#  Graph  #}
     <div class="row">
         <div class="col-md-7 p-4 card shadow-sm">
             <nav>
@@ -37,7 +60,8 @@
                     <nav>
                         <div class="nav nav-pills" id="nav-tab-year" role="tablist">
                             {% for year in register_per_year|keys %}
-                                <a class="nav-item nav-link {% if loop.first %}active{% endif %}" id="nav-home-tab" data-toggle="tab" href="#nav-registerIn{{ year }}"
+                                <a class="nav-item nav-link {% if loop.first %}active{% endif %}" id="nav-home-tab"
+                                   data-toggle="tab" href="#nav-registerIn{{ year }}"
                                    role="tab" aria-controls="nav-year" aria-selected="true">{{ year }}</a>
                             {% endfor %}
                         </div>
@@ -45,9 +69,10 @@
 
                     <div class="tab-content pt-2" id="nav-tabContent">
                         {% for year in register_per_year|keys %}
-                        <div class="tab-pane fade show {% if loop.first %}active{% endif %}" id="nav-registerIn{{ year }}" role="tabpanel" aria-labelledby="nav-year-tab">
-                            <canvas id="registerIn{{ year }}"></canvas>
-                        </div>
+                            <div class="tab-pane fade show {% if loop.first %}active{% endif %}"
+                                 id="nav-registerIn{{ year }}" role="tabpanel" aria-labelledby="nav-year-tab">
+                                <canvas id="registerIn{{ year }}"></canvas>
+                            </div>
                         {% endfor %}
                     </div>
                 </div>
@@ -73,11 +98,6 @@
                 </div>
 
             </div>
-        </div>
-    </div>
-    <div class="row ">
-        <div class="col">
-
         </div>
     </div>
 
