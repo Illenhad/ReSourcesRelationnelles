@@ -109,7 +109,7 @@ class DashboardController extends AbstractDashboardController
             MenuItem::linktoDashboard('Accueil', 'fa fa-home'),
             MenuItem::section('Administration', 'fa fa-users-cog'),
             MenuItem::linkToCrud('Utilisateurs', 'fa fa-users', User::class),
-            MenuItem::linkToCrud('Catégories d\'ages', 'fa fa-hourglass', AgeCategory::class), // TODO: corriger
+            MenuItem::linkToCrud('Catégories d\'ages', 'fa fa-hourglass', AgeCategory::class),
             MenuItem::linkToCrud('Rôles', 'fa fa-user-tag', Role::class),
             MenuItem::linkToCrud('Départements', 'fa fa-map-marker-alt', Department::class),
             MenuItem::section('Ressources', 'fa fa-book'),
