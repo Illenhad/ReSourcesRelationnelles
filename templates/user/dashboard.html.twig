@@ -9,12 +9,58 @@
 {% block body %}
     <div class="container mt-5">
         <div class="row justify-content-center">
-            <div class="col-4 border border-dark">
+            <div class="col-4 div-personal-info">
                 <div class="h2 text-center">Informations personnelles</div>
-                <div>{{ app.user.username }}</div>
+                <div class="input-group mb-3 mt-5">
+                    <div class="input-group-prepend col-4">
+                        <span class="input-group-text col-12">Nom</span>
+                    </div>
+                    <div class="form-control">{{ app.user.lastname }}</div>
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend col-4">
+                        <span class="input-group-text col-12">Prénom</span>
+                    </div>
+                    <div class="form-control">{{ app.user.firstname }}</div>
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend col-4">
+                        <span class="input-group-text col-12">Pseudonyme</span>
+                    </div>
+                    <div class="form-control">{{ app.user.username }}</div>
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend col-4">
+                        <span class="input-group-text col-12">Email</span>
+                    </div>
+                    <div class="form-control">{{ app.user.email }}</div>
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend col-4">
+                        <span class="input-group-text col-12">Département</span>
+                    </div>
+                    <div class="form-control">{{ app.user.department }}</div>
+                </div>
+                <div class="input-group mb-5">
+                    <div class="input-group-prepend col-4">
+                        <span class="input-group-text col-12">Catégorie d'âge</span>
+                    </div>
+                    <div class="form-control">{{ app.user.agecategory }}</div>
+                </div>
+                <div class="row mb-3 justify-content-around">
+                    <div class="col-5 text-center">
+                        <button class="btn">Modifier</button>
+                    </div>
+                    <div class="col-7 text-center">
+                        <button class="btn">Changer mot de passe</button>
+                    </div>
+                </div>
+
             </div>
             <div class="col-1"></div>
-            <div class="col-4 bg-info">hello</div>
+            <div class="col-4 div-personal-info">
+                <div class="h2 text-center">Tableau de bord</div>
+            </div>
         </div>
     </div>
 {% endblock %}
