@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a16696f96fe4e6ce32541b9d25c7e35a",
+    "content-hash": "20bdd53c950f5cd3aeba9bd308f88629",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -1668,16 +1668,16 @@
         },
         {
             "name": "easycorp/easyadmin-bundle",
-            "version": "v3.2.0",
+            "version": "v3.1.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EasyCorp/EasyAdminBundle.git",
-                "reference": "8344c559b3650972cbf5f78ffad89b8dd687d94f"
+                "reference": "77728bc54306b71b55872967368829176ac9ec5e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EasyCorp/EasyAdminBundle/zipball/8344c559b3650972cbf5f78ffad89b8dd687d94f",
-                "reference": "8344c559b3650972cbf5f78ffad89b8dd687d94f",
+                "url": "https://api.github.com/repos/EasyCorp/EasyAdminBundle/zipball/77728bc54306b71b55872967368829176ac9ec5e",
+                "reference": "77728bc54306b71b55872967368829176ac9ec5e",
                 "shasum": ""
             },
             "require": {
@@ -1750,7 +1750,7 @@
             ],
             "support": {
                 "issues": "https://github.com/EasyCorp/EasyAdminBundle/issues",
-                "source": "https://github.com/EasyCorp/EasyAdminBundle/tree/v3.2.0"
+                "source": "https://github.com/EasyCorp/EasyAdminBundle/tree/v3.1.10"
             },
             "funding": [
                 {
@@ -1758,20 +1758,20 @@
                     "type": "github"
                 }
             ],
-            "time": "2020-12-22T19:28:50+00:00"
+            "time": "2020-12-14T19:18:39+00:00"
         },
         {
             "name": "egulias/email-validator",
-            "version": "2.1.24",
+            "version": "2.1.25",
             "source": {
                 "type": "git",
                 "url": "https://github.com/egulias/EmailValidator.git",
-                "reference": "ca90a3291eee1538cd48ff25163240695bd95448"
+                "reference": "0dbf5d78455d4d6a41d186da50adc1122ec066f4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/egulias/EmailValidator/zipball/ca90a3291eee1538cd48ff25163240695bd95448",
-                "reference": "ca90a3291eee1538cd48ff25163240695bd95448",
+                "url": "https://api.github.com/repos/egulias/EmailValidator/zipball/0dbf5d78455d4d6a41d186da50adc1122ec066f4",
+                "reference": "0dbf5d78455d4d6a41d186da50adc1122ec066f4",
                 "shasum": ""
             },
             "require": {
@@ -1818,7 +1818,7 @@
             ],
             "support": {
                 "issues": "https://github.com/egulias/EmailValidator/issues",
-                "source": "https://github.com/egulias/EmailValidator/tree/2.1.24"
+                "source": "https://github.com/egulias/EmailValidator/tree/2.1.25"
             },
             "funding": [
                 {
@@ -1826,7 +1826,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2020-11-14T15:56:27+00:00"
+            "time": "2020-12-29T14:50:06+00:00"
         },
         {
             "name": "friendsofphp/php-cs-fixer",
