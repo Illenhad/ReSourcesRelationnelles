@@ -11,6 +11,13 @@
         <div class="row justify-content-center">
             <div class="col-4 div-personal-info">
                 <div class="h2 text-center">Informations personnelles</div>
+
+                {% for message in app.flashes('success') %}
+                    <div class="alert alert-success mt-4 text-center">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+
                 <div class="input-group mb-3 mt-5">
                     <div class="input-group-prepend col-4">
                         <span class="input-group-text col-12">Nom</span>
@@ -49,13 +56,12 @@
                 </div>
                 <div class="row mb-3 justify-content-around">
                     <div class="col-5 text-center">
-                        <button class="btn">Modifier</button>
+                        <a href="{{ path('user_dashboard_edit_user') }}" class="btn btn-perso">Modifier</a>
                     </div>
                     <div class="col-7 text-center">
-                        <button class="btn">Changer mot de passe</button>
+                        <a href="{{ path('forgotPassword') }}" class="btn btn-perso">Changer mot de passe</a>
                     </div>
                 </div>
-
             </div>
             <div class="col-1"></div>
             <div class="col-4 div-personal-info">

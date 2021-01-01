@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title 'Informations personnelles' %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/user_space.css') }}" type="text/css">
+{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-5 div-personal-info">
+                <div class="h2 text-center mb-5">Modifier les informations personnelles</div>
+                {{ form_start(form) }}
+
+                {% for field in form %}
+                    {% if form_label(field) != form_label(form._token) %}
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend col-4">
+                                <span class="input-group-text col-12">{{ form_label(field) }}</span>
+                            </div>
+                            <div class="col-8">{{ form_widget(field, {'attr': {'class': 'form-control'}}) }}</div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+
+                <div class="row mb-3 mt-5 justify-content-around">
+                    <div class="col-6 text-center">
+                        <button class="btn btn-success">Enregistrer</button>
+                    </div>
+                    <div class="col-6 text-center">
+                        <a href="{{ path('user_dashboard') }}" class="btn btn-danger">Annuler</a>
+                    </div>
+                </div>
+
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
