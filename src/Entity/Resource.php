@@ -151,7 +151,7 @@ class Resource
         $this->dateCreation = new DateTime('NOW');
     }
 
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -245,7 +245,7 @@ class Resource
         return $this;
     }
 
-    public function getAgeCategory(): AgeCategory
+    public function getAgeCategory(): ?AgeCategory
     {
         return $this->ageCategory;
     }
@@ -257,7 +257,7 @@ class Resource
         return $this;
     }
 
-    public function getUser(): User
+    public function getUser(): ?User
     {
         return $this->user;
     }
@@ -281,7 +281,7 @@ class Resource
         return $this;
     }
 
-    public function getResourceType(): ResourceType
+    public function getResourceType(): ?ResourceType
     {
         return $this->resourceType;
     }
@@ -293,7 +293,7 @@ class Resource
         return $this;
     }
 
-    public function getRelationShip(): RelationshipType
+    public function getRelationShip(): ?RelationshipType
     {
         return $this->relationShip;
     }
@@ -305,7 +305,7 @@ class Resource
         return $this;
     }
 
-    public function getCategory(): Category
+    public function getCategory(): ?Category
     {
         return $this->category;
     }

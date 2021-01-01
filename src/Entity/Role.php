@@ -40,7 +40,7 @@ class Role
         $this->users = new ArrayCollection();
     }
 
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
