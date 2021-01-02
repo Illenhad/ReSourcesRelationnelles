@@ -2,6 +2,7 @@
 
 namespace App\Controller\User;
 
+use App\Entity\ManagementType;
 use App\Form\EditPersonalInformationType;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ObjectManager;
@@ -9,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Model\UserDashBoardModel;
 
 class DashboardController extends AbstractController {
 
@@ -31,7 +33,25 @@ class DashboardController extends AbstractController {
         $user = $this->getUser();
 
         if (isset($user)) {
-            return $this->render('user/dashboard.html.twig');
+
+            $model = new UserDashBoardModel();
+            $favoris = $model->getNumberOfResourceByManagementType($this->manager, 1, $user);
+            $putAside = $model->getNumberOfResourceByManagementType($this->manager, 2, $user);
+            $exploited = $model->getNumberOfResourceByManagementType($this->manager, 3, $user);
+            $shared = $model->getNumberOfSharedResource($this->manager, $user);
+            $consulted = $model->getNumberOfResourceByActionType($this->manager,2, $user);
+            $created = $model->getNumberOfResourceByActionType($this->manager, 1, $user);
+            $commented = $model->getNumberOfComments($this->manager, $user);
+
+            return $this->render('user/dashboard.html.twig', [
+                'favoris' => $favoris,
+                'putAside' => $putAside,
+                'exploited' => $exploited,
+                'shared' => $shared,
+                'consulted' =>$consulted,
+                'created' => $created,
+                'commented' => $commented
+            ]);
         } else {
             return $this->redirectToRoute('login');
         }

@@ -65,7 +65,57 @@
             </div>
             <div class="col-1"></div>
             <div class="col-4 div-personal-info">
-                <div class="h2 text-center">Ressources</div>
+                <div class="h2 text-center mb-5">Ressources</div>
+                <div class="row justify-content-around mb-4">
+                    <a href="#" class="card card-linked col-5">
+                        <div class="card-body text-center">
+                            <div class="card-title">Favoris</div>
+                            <div class="card-text">{{ favoris }}</div>
+                        </div>
+                    </a>
+                    <a href="#" class="card card-linked col-5">
+                        <div class="card-body text-center">
+                            <div class="card-title">Mises de côté</div>
+                            <div class="card-text">{{ putAside }}</div>
+                        </div>
+                    </a>
+                </div>
+                <div class="row justify-content-around mb-3">
+                    <a href="#" class="card card-linked col-5">
+                        <div class="card-body text-center">
+                            <div class="card-title">Exploitées</div>
+                            <div class="card-text">{{ exploited }}</div>
+                        </div>
+                    </a>
+                    <a href="#" class="card card-linked col-5">
+                        <div class="card-body text-center">
+                            <div class="card-title">Partagées</div>
+                            <div class="card-text">{{ shared }}</div>
+                        </div>
+                    </a>
+                </div>
+                <div class="row justify-content-around mb-3">
+                    <a href="#" class="card card-linked col-5">
+                        <div class="card-body text-center">
+                            <div class="card-title">Consultées</div>
+                            <div class="card-text">{{ consulted }}</div>
+                        </div>
+                    </a>
+                    <a href="#" class="card card-linked col-5">
+                        <div class="card-body text-center">
+                            <div class="card-title">Créées</div>
+                            <div class="card-text">{{ created }}</div>
+                        </div>
+                    </a>
+                </div>
+                <div class="row justify-content-around center mb-3">
+                    <div class="card card-not-linked col-5">
+                        <div class="card-body text-center">
+                            <div class="card-title">Commentaires</div>
+                            <div class="card-text">{{ commented }}</div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
