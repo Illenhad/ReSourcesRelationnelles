@@ -2,7 +2,6 @@
 
 namespace App\Controller\User;
 
-use App\Entity\ManagementType;
 use App\Form\EditPersonalInformationType;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ObjectManager;
@@ -79,6 +78,49 @@ class DashboardController extends AbstractController {
             return $this->render('user/edit_personal_info.html.twig', [
                 'user' => $user,
                 'form' => $form->createView()
+            ]);
+        } else {
+            return $this->redirectToRoute('login');
+        }
+    }
+
+    /**
+     * @param string $resourceGestion
+     * @return Response
+     * @Route("user_dashboard/resource/{resourceGestion}", name="user_resource")
+     */
+    public function userResources(string $resourceGestion): Response {
+        $user = $this->getUser();
+
+        if (isset($user)) {
+            $model = new UserDashBoardModel();
+
+            switch ($resourceGestion) {
+                case 'favoris':
+                    $resources = $model->getResourcesByManagementType($this->manager, 1, $user);
+                    break;
+                case 'putAside':
+                    $resources = $model->getResourcesByManagementType($this->manager, 2, $user);
+                    break;
+                case 'exploited':
+                    $resources = $model->getResourcesByManagementType($this->manager, 3, $user);
+                    break;
+                case 'shared':
+                    $resources = $model->getSharedResources($this->manager, $user);
+                    break;
+                case 'consulted':
+                    $resources = $model->getResourcesByActionType($this->manager, 2, $user);
+                    break;
+                case 'created':
+                    $resources = $model->getResourcesByActionType($this->manager, 1, $user);
+                    break;
+                default:
+                    $resources = [];
+            }
+
+            return $this->render('user/user_resource.html.twig', [
+                'resources' => $resources,
+                'resourceGestion' => $resourceGestion
             ]);
         } else {
             return $this->redirectToRoute('login');

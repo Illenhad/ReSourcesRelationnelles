@@ -16,6 +16,11 @@
     color: white;
 }
 
+.btn-selected {
+    background-color: rgb(255, 188, 90);
+    color: white;
+}
+
 .card-not-linked {
     background-color: rgb(255, 188, 90);
 }
@@ -28,3 +33,6 @@
     color: black;
 }
 
+.tab-header {
+    background-color: rgb(255, 188, 90);
+}

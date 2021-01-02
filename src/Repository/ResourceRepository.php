@@ -2,8 +2,11 @@
 
 namespace App\Repository;
 
+use App\Entity\ManagementType;
 use App\Entity\Resource;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
 

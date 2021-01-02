@@ -20,13 +20,13 @@
 
                 <div class="input-group mb-3 mt-5">
                     <div class="input-group-prepend col-4">
-                        <span class="input-group-text col-12">Nom</span>
+                        <span class="input-group-text col-12">Prénom</span>
                     </div>
                     <div class="form-control">{{ app.user.lastname }}</div>
                 </div>
                 <div class="input-group mb-3">
                     <div class="input-group-prepend col-4">
-                        <span class="input-group-text col-12">Prénom</span>
+                        <span class="input-group-text col-12">Nom</span>
                     </div>
                     <div class="form-control">{{ app.user.firstname }}</div>
                 </div>
@@ -67,13 +67,14 @@
             <div class="col-4 div-personal-info">
                 <div class="h2 text-center mb-5">Ressources</div>
                 <div class="row justify-content-around mb-4">
-                    <a href="#" class="card card-linked col-5">
+                    <a href="{{ path('user_resource', {resourceGestion: 'favoris'}) }}"
+                       class="card card-linked col-5">
                         <div class="card-body text-center">
                             <div class="card-title">Favoris</div>
                             <div class="card-text">{{ favoris }}</div>
                         </div>
                     </a>
-                    <a href="#" class="card card-linked col-5">
+                    <a href="{{ path('user_resource', {resourceGestion: 'putAside'}) }}" class="card card-linked col-5">
                         <div class="card-body text-center">
                             <div class="card-title">Mises de côté</div>
                             <div class="card-text">{{ putAside }}</div>
@@ -81,13 +82,13 @@
                     </a>
                 </div>
                 <div class="row justify-content-around mb-3">
-                    <a href="#" class="card card-linked col-5">
+                    <a href="{{ path('user_resource', {resourceGestion: 'exploited'}) }}" class="card card-linked col-5">
                         <div class="card-body text-center">
                             <div class="card-title">Exploitées</div>
                             <div class="card-text">{{ exploited }}</div>
                         </div>
                     </a>
-                    <a href="#" class="card card-linked col-5">
+                    <a href="{{ path('user_resource', {resourceGestion: 'shared'}) }}" class="card card-linked col-5">
                         <div class="card-body text-center">
                             <div class="card-title">Partagées</div>
                             <div class="card-text">{{ shared }}</div>
@@ -95,13 +96,13 @@
                     </a>
                 </div>
                 <div class="row justify-content-around mb-3">
-                    <a href="#" class="card card-linked col-5">
+                    <a href="{{ path('user_resource', {resourceGestion: 'consulted'}) }}" class="card card-linked col-5">
                         <div class="card-body text-center">
                             <div class="card-title">Consultées</div>
                             <div class="card-text">{{ consulted }}</div>
                         </div>
                     </a>
-                    <a href="#" class="card card-linked col-5">
+                    <a href="{{ path('user_resource', {resourceGestion: 'created'}) }}" class="card card-linked col-5">
                         <div class="card-body text-center">
                             <div class="card-title">Créées</div>
                             <div class="card-text">{{ created }}</div>

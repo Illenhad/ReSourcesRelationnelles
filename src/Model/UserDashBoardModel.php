@@ -59,6 +59,11 @@ class UserDashBoardModel {
         return $query->getScalarResult()[0][1];
     }
 
+    /**
+     * @param EntityManagerInterface $manager
+     * @param User $user
+     * @return mixed
+     */
     public function getNumberOfComments(EntityManagerInterface $manager, User $user) {
         $query = $manager->createQuery(
             'SELECT COUNT(r) FROM App\Entity\Comment r
@@ -66,5 +71,57 @@ class UserDashBoardModel {
         )
             ->setParameter('user', $user);
         return $query->getScalarResult()[0][1];
+    }
+
+    /**
+     * @param EntityManagerInterface $manager
+     * @param int $managementTypeId
+     * @param User $user
+     * @return int|mixed|string
+     */
+    public function getResourcesByManagementType(EntityManagerInterface $manager, int $managementTypeId, User $user) {
+        $managementType = $manager->getRepository(ManagementType::class)->find($managementTypeId);
+        $query = $manager->createQuery(
+            'SELECT t FROM App\Entity\RelUserManagementResource t
+            WHERE t.user = :user
+            AND t.managementType = :managementType'
+        )
+            ->setParameter('user', $user)
+            ->setParameter('managementType', $managementType);
+        return $this->putResourcesInTab($query->getResult());
+    }
+
+    /**
+     * @param EntityManagerInterface $manager
+     * @param User $user
+     * @return array
+     */
+    public function getSharedResources(EntityManagerInterface $manager, User $user) {
+        $query = $manager->createQuery(
+            'SELECT t FROM App\Entity\RelSharedResourceUser t
+                WHERE t.sharedWithUser = :user'
+        )
+            ->setParameter('user', $user);
+        return $this->putResourcesInTab($query->getResult());
+    }
+
+    public function getResourcesByActionType(EntityManagerInterface $manager, int $actionTypeId, User $user) {
+        $actionType = $manager->getRepository(ActionType::class)->find($actionTypeId);
+        $query = $manager->createQuery(
+            'SELECT t FROM App\Entity\RelUserActionResource t
+                WHERE t.user = :user
+                AND t.actionType = :actionType'
+        )
+            ->setParameter('user', $user)
+            ->setParameter('actionType', $actionType);
+        return $this->putResourcesInTab($query->getResult());
+    }
+
+    private function putResourcesInTab($result) {
+        $resources = [];
+        for ($i = 0; $i < count($result); $i++) {
+            $resources[$i] = $result[$i]->getResource();
+        }
+        return $resources;
     }
 }
