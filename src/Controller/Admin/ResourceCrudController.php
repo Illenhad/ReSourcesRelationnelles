@@ -24,6 +24,7 @@ class ResourceCrudController extends AbstractCrudController
             IdField::new('id')->hideOnForm(),
             TextField::new('title'),
             TextEditorField::new('link'),
+            TextEditorField::new('description'),
             BooleanField::new('public'),
             DateField::new('dateCreation')->setFormat('dd/MM/yyyy H:mm')->hideOnForm(),
             AssociationField::new('ageCategory'),
