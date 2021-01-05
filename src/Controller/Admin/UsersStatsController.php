@@ -98,7 +98,7 @@ class UsersStatsController extends AbstractController
     {
         $user_per_years = [];
         $all_users = $this->userRepository->findAll();
-        foreach (range((new DateTime())->format('Y'), 2018) as $year) {
+        foreach (range((new DateTime())->format('Y'), 2019) as $year) {
             foreach (range(1, 12) as $m) {
                 $user_per_years[$year][] = 0;
             }
@@ -107,9 +107,9 @@ class UsersStatsController extends AbstractController
         foreach ($all_users as $user) {
             $date = new DateTime($user->getDateLastConnection());
             try {
-                ++$user_per_years[$date->format('Y')][$date->format('m')];
+                ++$user_per_years[$date->format('Y')][$date->format('m') - 1];
             } catch (Exception $e) {
-                $user_per_years[$date->format('Y')][$date->format('m')] = 0;
+                $user_per_years[$date->format('Y')][$date->format('m') - 1] = 0;
             }
         }
 

@@ -22,3 +22,9 @@
 a {
   color: var(--color-primary);
 }
+
+/**/
+.custom-control-input:checked~.custom-control-label:before {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+}

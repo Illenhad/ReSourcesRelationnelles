@@ -45,19 +45,20 @@
     {#  Graph  #}
     <div class="row">
         <div class="col-md-7 p-4 card shadow-sm">
-            <nav>
+            <nav class="navbar justify-content-between">
                 <div class="nav nav-pills" id="nav-tab" role="tablist">
                     <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-register"
                        role="tab" aria-controls="nav-year" aria-selected="true">Par années</a>
                     <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-dept" role="tab"
                        aria-controls="nav-department" aria-selected="false">Par départements</a>
                 </div>
+                <a class="btn btn-info">CSV</a>
             </nav>
 
             <div class="tab-content pt-2" id="nav-tabContent">
                 <div class="tab-pane fade show active" id="nav-register" role="tabpanel" aria-labelledby="nav-year-tab">
 
-                    <nav>
+                    <nav class="navbar justify-content-between">
                         <div class="nav nav-pills" id="nav-tab-year" role="tablist">
                             {% for year in register_per_year|keys %}
                                 <a class="nav-item nav-link {% if loop.first %}active{% endif %}" id="nav-home-tab"
@@ -87,13 +88,15 @@
                 <div>
                     <div class="card ml-2 p-2 shadow-sm">
                         <canvas id="usersPerRole"></canvas>
-                        <h5 class="text-center mt-4">Utilisateurs par rôles</h5>
+                        <hr>
+                        <h5 class="text-center">Utilisateurs par rôles</h5>
                     </div>
                 </div>
                 <div>
                     <div class="card ml-2 p-2 shadow-sm">
                         <canvas id="usersPerAgeCat"></canvas>
-                        <h5 class="text-center mt-4">Utilisateurs par ages</h5>
+                        <hr>
+                        <h5 class="text-center">Utilisateurs par ages</h5>
                     </div>
                 </div>
 
@@ -101,64 +104,29 @@
         </div>
     </div>
 
-
+    <script src="{{ asset('js/gen_chart.js') }}"></script>
     <script>
-        {# TODO: JS a externaliser #}
-        const defaultBackgroundColor = [
-            'rgb(214,35,68)',
-            'rgb(54,162,235)',
-            'rgba(255, 206, 86, 1)',
-            'rgba(75, 192, 192, 1)',
-            'rgba(153, 102, 255, 1)',
-            'rgba(255, 159, 64, 1)'
-        ];
-
-        function genChart(element, title, type, labels, datas, backgroundColor = defaultBackgroundColor) {
-            new Chart(document.getElementById(element).getContext('2d'), {
-                type: type,
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        label: title,
-                        backgroundColor: backgroundColor,
-                        data: datas
-                    }]
-                },
-                options: {
-                    legend: {
-                        display: false
-                    }
-                }
-            });
-        }
-
-        genChart(
+        genPieChart(
             'usersPerRole',
             null,
-            'doughnut',
                 {{ roles_labels|json_encode|raw }},
                 {{ users_count_roles|json_encode|raw }})
-        genChart(
+        genPieChart(
             'usersPerAgeCat',
             'Utilisateurs',
-            'doughnut',
                 {{ age_cat_labels|json_encode|raw }},
                 {{ users_count_age|json_encode|raw }})
-        genChart(
+        genBarChart(
             'usersPerDpt',
             'Utilisateurs',
-            'bar',
                 {{ dpt_num|json_encode|raw }},
-                {{ users_count_dpt|json_encode|raw }},
-            '#28a745')
+                {{ users_count_dpt|json_encode|raw }})
         {% for year, registerYear in register_per_year %}
-        genChart(
+        genLineChart(
             'registerIn{{ year }}',
             'Inscriptions',
-            'line',
             [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
-                {{ registerYear|json_encode|raw }},
-            '#28a745')
+                {{ registerYear|json_encode|raw }})
         {% endfor %}
     </script>
 

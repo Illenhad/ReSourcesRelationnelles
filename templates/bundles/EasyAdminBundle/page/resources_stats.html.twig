@@ -1,0 +1,119 @@
+{# @var ea \EasyCorp\Bundle\EasyAdminBundle\Context\AdminContext #}
+{% extends '@EasyAdmin/page/content.html.twig' %}
+
+{% block page_title 'Statistiques ressources' %}
+{% block page_content %}
+
+    {# Stats style #}
+    <link rel="stylesheet" href="{{ asset('css/admin/statistics.css') }}">
+
+    {# import Chart.js #}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+
+    {# Card info #}
+    <div class="row">
+        <div class="col-md-2">
+            <div class="card border-success border-top-0 border-bottom-0 border-right-0 h-100 py-2 shadow-sm"
+                 style="border-left: 5px solid;">
+                <div class="card-body  ">
+                    <h5 class="text-success">Nombre de ressources</h5>
+                    <p class="card-text h1 ">{{ resources|length }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="card border-success border-top-0 border-bottom-0 border-right-0 h-100 py-2 shadow-sm"
+                 style="border-left: 5px solid;">
+                <div class="card-body  ">
+                    <h5 class="text-success">Nombre de ressources publique</h5>
+                    <p class="card-text h1 ">{{ resources_public }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <hr/>
+
+    {# Graph #}
+    <div class="row">
+        <div class="col-md-7 p-4 card shadow-sm">
+            <nav class="navbar justify-content-between">
+                <div class="nav nav-pills" id="nav-tab" role="tablist">
+                    {% for year in resources_per_year|keys %}
+                        <a class="nav-item nav-link {% if loop.first %}active{% endif %}" id="nav-home-tab"
+                           data-toggle="tab" href="#nav-resourcesIn{{ year }}"
+                           role="tab" aria-controls="nav-year" aria-selected="true">{{ year }}</a>
+                    {% endfor %}
+                </div>
+                <a class="btn btn-info">CSV</a>
+            </nav>
+
+            <div class="tab-content pt-2" id="nav-tabContent">
+                {% for year in resources_per_year|keys %}
+                    <div class="tab-pane fade show {% if loop.first %}active{% endif %}"
+                         id="nav-resourcesIn{{ year }}" role="tabpanel" aria-labelledby="nav-year-tab">
+                        <canvas id="resourcesIn{{ year }}"></canvas>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="col">
+            <div class="row">
+                <div class="card ml-2 p-2 shadow-sm">
+                    <canvas id="resourcePerType"></canvas>
+                    <hr>
+                    <h5 class="text-center">Ressources par types</h5>
+                </div>
+                <div class="card ml-2 p-2 shadow-sm">
+                    <canvas id="resourcePerCategory"></canvas>
+                    <hr>
+                    <h5 class="text-center">Ressources par catégories</h5>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="card ml-2 p-2 shadow-sm">
+                    <canvas id="resourcePerAgeCategory"></canvas>
+                    <hr>
+                    <h5 class="text-center">Ressources par catégories d'ages</h5>
+                </div>
+                <div class="card ml-2 p-2 shadow-sm">
+                    <canvas id="resourcePerRelationshipType"></canvas>
+                    <hr/>
+                    <h5 class="text-center">Ressources par type de relations</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ asset('js/gen_chart.js') }}"></script>
+    <script>
+        genPieChart(
+            'resourcePerType',
+            null,
+                {{ resources_per_type|keys|json_encode|raw }},
+            [{% for value in resources_per_type %}{{ value }},{% endfor %}])
+        genPieChart(
+            'resourcePerCategory',
+            null,
+                {{ resources_per_category|keys|json_encode|raw }},
+            [{% for value in resources_per_category %}{{ value }},{% endfor %}])
+        genPieChart(
+            'resourcePerAgeCategory',
+            null,
+                {{ resources_per_age_category|keys|json_encode|raw }},
+            [{% for value in resources_per_age_category %}{{ value }},{% endfor %}])
+        genPieChart(
+            'resourcePerRelationshipType',
+            null,
+                {{ resources_per_relationship_type|keys|json_encode|raw }},
+            [{% for value in resources_per_relationship_type %}{{ value }},{% endfor %}])
+        {% for year, resourceYear in resources_per_year %}
+        genLineChart(
+            'resourcesIn{{ year }}',
+            null,
+            [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+                {{ resourceYear|json_encode|raw }})
+        {% endfor %}
+    </script>
+
+{% endblock %}
