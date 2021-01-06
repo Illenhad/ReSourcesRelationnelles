@@ -1,0 +1,71 @@
+{% extends 'base.html.twig' %}
+
+{% block title 'Ajouter/modifier une ressource' %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/user_space.css') }}" type="text/css">
+{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="h2 text-center">
+                {% if type == 'creation' %}
+                Créer une ressource
+                {% else %}
+                Modifier une ressource
+                {% endif %}
+            </div>
+            <div class="div-personal-info col-10 mb-3 mt-3 row align-items-center">
+                <div class="col-sm-8 mb-5">
+                    {{ form_start(form) }}
+                    <div class="form-group mt-3">
+                        <label>{{ form_label(form.title) }}</label>
+                        <div>{{ form_widget(form.title, {'attr': {'class': 'form-control'}}) }}</div>
+                    </div>
+                    <div class="form-group">
+                        <label>{{ form_label(form.description) }}</label>
+                        <div>{{ form_widget(form.description, {'attr': {'class': 'form-control field-description'}}) }}</div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label>{{ form_label(form.link) }}</label>
+                        <div>{{ form_widget(form.link, {'attr': {'class': 'form-control'}}) }}</div>
+                    </div>
+                    <div class="custom-control custom-checkbox">
+                        <label class="custom-control-label" >{{ form_label(form.public) }}</label>
+                        <div>{{ form_widget(form.public, {'attr': {'class': 'custom-control-input'}}) }}</div>
+                    </div>
+                    <div class="form-group">
+                        <label>{{ form_label(form.ageCategory) }}</label>
+                        <div>{{ form_widget(form.ageCategory, {'attr': {'class': 'form-control'}}) }}</div>
+                    </div>
+                    <div class="form-group">
+                        <label>{{ form_label(form.resourceType) }}</label>
+                        <div>{{ form_widget(form.resourceType, {'attr': {'class': 'form-control'}}) }}</div>
+                    </div>
+                    <div class="form-group">
+                        <label>{{ form_label(form.relationShip) }}</label>
+                        <div>{{ form_widget(form.relationShip, {'attr': {'class': 'form-control'}}) }}</div>
+                    </div>
+                    <div class="form-group">
+                        <label>{{ form_label(form.category) }}</label>
+                        <div>{{ form_widget(form.category, {'attr': {'class': 'form-control'}}) }}</div>
+                    </div>
+                </div>
+                <div class="row justify-content-around mb-3">
+                    <button class="btn btn-success col-3">
+                        {% if type == 'creation' %}
+                            Créer
+                        {% else %}
+                            Modifier
+                        {% endif %}
+                    </button>
+                    <a href="{{ path('user_resource', {resourceGestion: 'created'}) }}" class="btn btn-danger col-3">Annuler</a>
+                </div>
+            </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}

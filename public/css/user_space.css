@@ -36,3 +36,8 @@
 .tab-header {
     background-color: rgb(255, 188, 90);
 }
+
+/*form resource*/
+.field-description {
+    height: 20em;
+}

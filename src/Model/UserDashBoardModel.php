@@ -44,6 +44,9 @@ class UserDashBoardModel
     }
 
     /**
+     * @param EntityManagerInterface $manager
+     * @param int $actionTypeId
+     * @param User $user
      * @return mixed
      */
     public function getNumberOfResourceByActionType(EntityManagerInterface $manager, int $actionTypeId, User $user)
@@ -61,6 +64,8 @@ class UserDashBoardModel
     }
 
     /**
+     * @param EntityManagerInterface $manager
+     * @param User $user
      * @return mixed
      */
     public function getNumberOfComments(EntityManagerInterface $manager, User $user)

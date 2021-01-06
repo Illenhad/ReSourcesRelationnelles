@@ -160,7 +160,7 @@ class DashboardController extends AbstractController
             }
 
             return $this->render('user/change_password.html.twig', [
-                'form' => $form->createView(),
+                'form' => $form->createView()
             ]);
         } else {
             return $this->redirectToRoute('login');
