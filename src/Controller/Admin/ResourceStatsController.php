@@ -48,9 +48,10 @@ class ResourceStatsController extends AbstractController
         $nbr = 0;
         $all_resources = $this->resourceRepository->findAll();
 
-        foreach ($all_resources as $resource)
-        {
-            if ($resource->isPublic()){ ++$nbr; }
+        foreach ($all_resources as $resource) {
+            if ($resource->isPublic()) {
+                ++$nbr;
+            }
         }
 
         return $nbr;
@@ -90,12 +91,10 @@ class ResourceStatsController extends AbstractController
         $resources_per_type = [];
         $all_resources = $this->resourceRepository->findAll();
 
-        foreach ($all_resources as $resource)
-        {
+        foreach ($all_resources as $resource) {
             try {
                 ++$resources_per_type[$resource->getResourceType()->getLabel()];
-            } catch (Exception $e)
-            {
+            } catch (Exception $e) {
                 $resources_per_type[$resource->getResourceType()->getLabel()] = 0;
             }
         }
@@ -111,12 +110,10 @@ class ResourceStatsController extends AbstractController
         $resources_per_category = [];
         $all_resources = $this->resourceRepository->findAll();
 
-        foreach ($all_resources as $resource)
-        {
+        foreach ($all_resources as $resource) {
             try {
                 ++$resources_per_category[$resource->getCategory()->getLabel()];
-            } catch (Exception $e)
-            {
+            } catch (Exception $e) {
                 $resources_per_category[$resource->getCategory()->getLabel()] = 0;
             }
         }
@@ -132,12 +129,10 @@ class ResourceStatsController extends AbstractController
         $resources_per_age_category = [];
         $all_resources = $this->resourceRepository->findAll();
 
-        foreach ($all_resources as $resource)
-        {
+        foreach ($all_resources as $resource) {
             try {
                 ++$resources_per_age_category[$resource->getAgeCategory()->getLabel()];
-            } catch (Exception $e)
-            {
+            } catch (Exception $e) {
                 $resources_per_age_category[$resource->getAgeCategory()->getLabel()] = 0;
             }
         }

@@ -2,20 +2,27 @@
 
 {% block body %}
 
-{{ resource.title }}
+    {{ resource.title }}
     {{ resource.description }}
-    <div>
-        <h5> Liste des commentaires </h5>
-        {% for comment in resource.comments %}
-            <div>
 
-                <i>{{ comment.content }}</i>
+
+
+    <div class="row">
+    {% for comment in resource.comments %}
+        <div class="col-md-4">
+
+
+            <p class="card-text text-center"> {{ comment.content }}</p>
+            <p class="card-text text-center"> {{ comment.commentDate|date }}</p>
+            <p class="form-row text-center">{{ comment.user.username }}</p>
+
             </div>
-            <div><b>Author : </b>{{ comment.user.username }}</div>
-            <a href="" > Répondre </a>
-            <br>
-        {% endfor %}
+        </div>
+            
+
+    {% endfor %}
+
+    {{ form(form) }}
 
 
-    </div>
 {% endblock %}

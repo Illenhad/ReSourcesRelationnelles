@@ -38,12 +38,16 @@ class SubscribeType extends AbstractType
                 'label' => 'Comfirmation du mot de passe', ])
             ->add('age_category', EntityType::class, [
                 'class' => AgeCategory::class,
-                'choice_label' => function ($ageCat) { return $ageCat->getLabel(); },
+                'choice_label' => function ($ageCat) {
+                    return $ageCat->getLabel();
+                },
                 'choice_value' => 'label',
                 'label' => 'Catégorie d\'âge', ])
             ->add('department', EntityType::class, [
                 'class' => Department::class,
-                'choice_label' => function ($dep) { return $dep->getnumber().' | '.$dep->getLabel(); },
+                'choice_label' => function ($dep) {
+                    return $dep->getnumber().' | '.$dep->getLabel();
+                },
                 'choice_value' => 'label',
                 'attr' => ['placeholder' => 'Departement...'],
                 'label' => 'Departement', ])

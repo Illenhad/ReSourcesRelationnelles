@@ -7,6 +7,7 @@ use App\Entity\RelUserActionResource;
 use App\Entity\Resource;
 use App\Form\ResourceType;
 use App\Entity\Comment;
+use App\Form\CommentType;
 use App\Repository\ResourceRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ObjectManager;
@@ -46,7 +47,8 @@ class ResourceController extends AbstractController
             9
         );
 
-        return $this->render(self::ROUTE_PREFIX.'/index.html.twig',
+        return $this->render(
+            self::ROUTE_PREFIX . '/index.html.twig',
             [
                 'resources' => $resources,
             ]
@@ -56,13 +58,32 @@ class ResourceController extends AbstractController
     /**
      * @Route("/{slug}-{id}", requirements={"slug": "[a-z0-9\-]*"})
      */
-    public function show(string $slug, int $id, ResourceRepository $resourceRepository): Response
+    public function show(Request $request, string $slug, int $id, ResourceRepository $resourceRepository, EntityManagerInterface $entityManager): Response
     {
+        $comment = new Comment();
         $resource = $resourceRepository->find($id);
 
-        return $this->render(self::ROUTE_PREFIX.'/show.html.twig', [
+        $form = $this->createForm(CommentType::class, $comment);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            if (null === $this->getUser()) {
+                return $this->redirectToRoute('login');
+            }
+
+            $comment = $form->getData();
+
+            $comment->setResource($resource);
+            $comment->setUser($this->getUser());
+
+            $entityManager->persist($comment);
+            $entityManager->flush();
+        }
+
+        return $this->render(self::ROUTE_PREFIX . '/show.html.twig', [
             'resource' => $resource,
             'current_menu' => 'resources',
+            'form' => $form->createView(),
         ]);
     }
 

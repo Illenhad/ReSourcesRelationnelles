@@ -142,12 +142,10 @@ class DashboardController extends AbstractController
         $user = $this->getUser();
 
         if (isset($user)) {
-
             $form = $this->createForm(ChangePasswordType::class);
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
-
                 $model = new ChangePasswordModel($this->passwordEncoder);
                 $passwordUpdatedMessage = $model->changePassword($this->manager, $user->getUsername(), $form->getData());
 

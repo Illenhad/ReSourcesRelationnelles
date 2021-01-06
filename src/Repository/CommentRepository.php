@@ -19,16 +19,6 @@ class CommentRepository extends ServiceEntityRepository
         parent::__construct($registry, Comment::class);
     }
 
-    /**
-     * @param resource $resouce
-     */
-    public function addComment($resouce)
-    {
-        $comment = new Comment();
-
-        return $resouce.$this->addComment($comment);
-    }
-
     // /**
     //  * @return Comment[] Returns an array of Comment objects
     //  */
