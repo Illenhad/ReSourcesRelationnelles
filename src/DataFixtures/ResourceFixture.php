@@ -26,6 +26,7 @@ class ResourceFixture extends Fixture implements DependentFixtureInterface
                 ->setDateCreation($faker->dateTimeBetween('-2 years', 'now', null))
                 ->setUser($this->getReference('user'.$faker->numberBetween(1, UserFixture::$numberOfUsers)))
                 ->setDescription($faker->words(5, true))
+                ->setActive(1)
                 ->setAgeCategory($this->getReference('ageCategory'.$faker->numberBetween(1, count(AgeCategoryFixture::$tabAge))))
                 ->setCategory($this->getReference('category'.$faker->numberBetween(1, count(CategoryFixture::$tabCategory))))
                 ->setResourceType($this->getReference(('resourceType'.$faker->numberBetween(1, count(ResourceTypeFixture::$tabResourceType)))))

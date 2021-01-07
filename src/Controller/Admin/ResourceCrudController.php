@@ -33,6 +33,7 @@ class ResourceCrudController extends AbstractCrudController
             AssociationField::new('resourceType'),
             AssociationField::new('relationShip'),
             AssociationField::new('comments')->onlyWhenUpdating(),
+            BooleanField::new('active')->setLabel('Ressource active')
         ];
     }
 }

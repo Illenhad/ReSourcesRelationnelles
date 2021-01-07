@@ -197,6 +197,16 @@ class User implements UserInterface
      */
     private $token_recup;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $active;
+
+    /**
+     * @ORM\Column(type="date")
+     */
+    private $creationDate;
+
     public function __construct()
     {
         $this->dateLastConnection = new DateTime('NOW');
@@ -631,6 +641,30 @@ class User implements UserInterface
     public function setTokenRecup(?string $token_recup): self
     {
         $this->token_recup = $token_recup;
+
+        return $this;
+    }
+
+    public function getActive(): ?bool
+    {
+        return $this->active;
+    }
+
+    public function setActive(?bool $active): self
+    {
+        $this->active = $active;
+
+        return $this;
+    }
+
+    public function getCreationDate(): ?\DateTimeInterface
+    {
+        return $this->creationDate;
+    }
+
+    public function setCreationDate(\DateTimeInterface $creationDate): self
+    {
+        $this->creationDate = $creationDate;
 
         return $this;
     }

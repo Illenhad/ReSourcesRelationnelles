@@ -36,7 +36,9 @@ class UserFixture extends Fixture implements DependentFixtureInterface
                 ->setAgeCategory($this->getReference('ageCategory'.$faker->numberBetween(1, count(AgeCategoryFixture::$tabAge))))
                 ->setDateLastConnection($faker->dateTimeBetween('-60 days', 'now', null))
                 ->setRole($this->getReference('ROLE_USER'))
-                ->setPassword($this->passwordEncoder->encodePassword($user, '12345678'));
+                ->setPassword($this->passwordEncoder->encodePassword($user, '12345678'))
+                ->setActive(true)
+                ->setCreationDate($faker->dateTimeBetween('-2 years', 'now', null));
             $manager->persist($user);
             $this->addReference('user'.$i, $user);
         }
@@ -54,6 +56,8 @@ class UserFixture extends Fixture implements DependentFixtureInterface
             ->setDateLastConnection(new \DateTime('now'))
             ->setRole($this->getReference('ROLE_MODERATEUR'))
             ->setPassword($this->passwordEncoder->encodePassword($user, 'admin'))
+            ->setActive(true)
+            ->setCreationDate($faker->dateTimeBetween('-2 years', 'now', null))
         ;
         $manager->persist($user);
         ++self::$numberOfUsers;
@@ -71,6 +75,8 @@ class UserFixture extends Fixture implements DependentFixtureInterface
             ->setDateLastConnection(new \DateTime('now'))
             ->setRole($this->getReference('ROLE_MODERATEUR'))
             ->setPassword($this->passwordEncoder->encodePassword($user, 'admin'))
+            ->setActive(true)
+            ->setCreationDate($faker->dateTimeBetween('-2 years', 'now', null))
         ;
         $manager->persist($user);
         ++self::$numberOfUsers;
@@ -88,6 +94,8 @@ class UserFixture extends Fixture implements DependentFixtureInterface
             ->setDateLastConnection(new \DateTime('now'))
             ->setRole($this->getReference('ROLE_ADMIN'))
             ->setPassword($this->passwordEncoder->encodePassword($user, 'admin'))
+            ->setActive(true)
+            ->setCreationDate($faker->dateTimeBetween('-2 years', 'now', null))
         ;
         $manager->persist($user);
         ++self::$numberOfUsers;
@@ -105,6 +113,8 @@ class UserFixture extends Fixture implements DependentFixtureInterface
             ->setDateLastConnection(new \DateTime('now'))
             ->setRole($this->getReference('ROLE_SUPER_ADMIN'))
             ->setPassword($this->passwordEncoder->encodePassword($user, 'admin'))
+            ->setActive(true)
+            ->setCreationDate($faker->dateTimeBetween('-2 years', 'now', null))
         ;
         $manager->persist($user);
         ++self::$numberOfUsers;
