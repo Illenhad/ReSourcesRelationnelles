@@ -156,10 +156,10 @@ class ResourceStatsController extends AbstractController
         foreach ($all_resources as $resource)
         {
             try {
-                ++$resources_per_relationship_type[$resource->getResourceType()->getLabel()];
+                ++$resources_per_relationship_type[$resource->getRelationShip()->getLabel()];
             } catch (Exception $e)
             {
-                $resources_per_relationship_type[$resource->getResourceType()->getLabel()] = 0;
+                $resources_per_relationship_type[$resource->getRelationShip()->getLabel()] = 0;
             }
         }
 
