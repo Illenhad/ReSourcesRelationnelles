@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\User;
 use App\Repository\AgeCategoryRepository;
 use App\Repository\DepartementRepository;
 use App\Repository\RoleRepository;
@@ -57,9 +58,9 @@ class UsersStatsController extends AbstractController
     private $departementRepository;
     private $year;
     /**
-     * @var array
+     * @var User[]
      */
-    private $test;
+    private $all_users;
 
     public function __construct(
         RoleRepository $roleRepository,
@@ -71,8 +72,7 @@ class UsersStatsController extends AbstractController
         $this->userRepository = $userRepository;
         $this->ageCategoryRepository = $ageCategoryRepository;
         $this->departementRepository = $departementRepository;
-        $this->year = '2020';
-        $this->test = [];
+        $this->all_users = $this->userRepository->findAll();
         $this->initVariables();
     }
 
@@ -102,14 +102,13 @@ class UsersStatsController extends AbstractController
     private function countUserPerYear(): array
     {
         $user_per_years = [];
-        $all_users = $this->userRepository->findAll();
         foreach (range((new DateTime())->format('Y'), 2019) as $year) {
             foreach (range(1, 12) as $m) {
                 $user_per_years[$year][] = 0;
             }
         }
 
-        foreach ($all_users as $user) {
+        foreach ($this->all_users as $user) {
             $date = new DateTime($user->getFormatedCreationDate());
             try {
                 ++$user_per_years[$date->format('Y')][$date->format('m') - 1];
@@ -127,9 +126,8 @@ class UsersStatsController extends AbstractController
     public function countUserActive(): int
     {
         $user_active = 0;
-        $all_users = $this->userRepository->findAll();
 
-        foreach ($all_users as $user) {
+        foreach ($this->all_users as $user) {
             if ($user->getActive()) {
                 ++$user_active;
             }
