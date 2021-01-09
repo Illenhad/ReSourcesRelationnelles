@@ -66,8 +66,7 @@ class UsersStatsController extends AbstractController
         UserRepository $userRepository,
         AgeCategoryRepository $ageCategoryRepository,
         DepartementRepository $departementRepository
-    )
-    {
+    ) {
         $this->roleRepository = $roleRepository;
         $this->userRepository = $userRepository;
         $this->ageCategoryRepository = $ageCategoryRepository;
@@ -93,9 +92,13 @@ class UsersStatsController extends AbstractController
             'users_count_dpt' => $this->users_count_dpt,
             'year' => $this->year,
             'register_per_year' => $this->countUserPerYear(),
+            'user_active' => $this->countUserActive(),
         ]);
     }
 
+    /**
+     * @throws Exception
+     */
     private function countUserPerYear(): array
     {
         $user_per_years = [];
@@ -107,7 +110,7 @@ class UsersStatsController extends AbstractController
         }
 
         foreach ($all_users as $user) {
-            $date = new DateTime($user->getDateLastConnection());
+            $date = new DateTime($user->getFormatedCreationDate());
             try {
                 ++$user_per_years[$date->format('Y')][$date->format('m') - 1];
             } catch (Exception $e) {
@@ -116,6 +119,23 @@ class UsersStatsController extends AbstractController
         }
 
         return $user_per_years;
+    }
+
+    /**
+     * @return int
+     */
+    public function countUserActive(): int
+    {
+        $user_active = 0;
+        $all_users = $this->userRepository->findAll();
+
+        foreach ($all_users as $user) {
+            if ($user->getActive()) {
+                ++$user_active;
+            }
+        }
+
+        return $user_active;
     }
 
     /**

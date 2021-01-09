@@ -39,6 +39,15 @@
                 </div>
             </div>
         </div>
+        <div class="col-md-2">
+            <div class="card border-success border-top-0 border-bottom-0 border-right-0 h-100 py-2 shadow-sm"
+                 style="border-left: 5px solid;">
+                <div class="card-body  ">
+                    <h5 class="text-success">Nombre de comptes actifs</h5>
+                    <p class="card-text h1 ">{{ user_active }}</p>
+                </div>
+            </div>
+        </div>
     </div>
     <hr/>
 
@@ -48,11 +57,11 @@
             <nav class="navbar justify-content-between">
                 <div class="nav nav-pills" id="nav-tab" role="tablist">
                     <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-register"
-                       role="tab" aria-controls="nav-year" aria-selected="true">Par années</a>
+                       role="tab" aria-controls="nav-year" aria-selected="true">Inscriptions par années</a>
                     <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-dept" role="tab"
-                       aria-controls="nav-department" aria-selected="false">Par départements</a>
+                       aria-controls="nav-department" aria-selected="false">Inscriptions par départements</a>
                 </div>
-                <a class="btn btn-info">CSV</a>
+                <a class="btn btn-info" onclick="export2CSV()">CSV</a>
             </nav>
 
             <div class="tab-content pt-2" id="nav-tabContent">
@@ -81,7 +90,6 @@
                     <canvas id="usersPerDpt"></canvas>
                 </div>
             </div>
-
         </div>
         <div class="col">
             <div class="row">
@@ -106,6 +114,39 @@
 
     <script src="{{ asset('js/gen_chart.js') }}"></script>
     <script>
+        function export2CSV() {
+
+            let csv_content = "data:text/csv;charset=utf-8,";
+            let csv_title;
+
+            if (document.getElementById('nav-home-tab').className.includes("active")) {
+                csv_title = "register_per_year.csv";
+                csv_content += "annee,01,02,03,04,05,06,07,08,09,10,11,12\r\n";
+                {% for year, registerYear in register_per_year %}
+                csv_content += {{ year|json_encode|raw }}+"," + {{ registerYear|json_encode|raw }} +'\r\n';
+                {% endfor %}
+            } else {
+                csv_title = "register_per_department.csv";
+                csv_content += "dpt"
+                {% for dpt in dpt_num %}
+                csv_content += "," + {{ dpt|json_encode|raw }};
+                {% endfor %}
+                csv_content += '\r\nnbr';
+                {% for nbr in users_count_dpt %}
+                csv_content += "," + {{ nbr|json_encode|raw }};
+                {% endfor %}
+                csv_content += '\r\n';
+            }
+
+            const encodedUri = encodeURI(csv_content);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", csv_title);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link)
+
+        }
         genPieChart(
             'usersPerRole',
             null,

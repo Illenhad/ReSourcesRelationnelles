@@ -42,6 +42,7 @@ class UserCrudController extends AbstractCrudController
             TextField::new('lastname')->setLabel('Nom'),
             EmailField::new('email'),
             TextField::new('dateLastConnection')->setLabel('Dernière connexion')->hideOnForm(),
+            TextField::new('getFormatedCreationDate')->setLabel('Inscription')->hideOnForm(),
             AssociationField::new('role')->setLabel('Rôle'),
             AssociationField::new('department')->setLabel('Lieu'),
             AssociationField::new('ageCategory')->setLabel('Catégorie d\'age'),
@@ -55,7 +56,7 @@ class UserCrudController extends AbstractCrudController
                 ->setFormType(PasswordType::class)
                 ->onlyWhenCreating()
                 ->setLabel('Confirmation mot de passe'),
-            BooleanField::new('active')->setLabel('Compte activé')
+            BooleanField::new('active')->setLabel('Compte activé'),
         ];
     }
 }

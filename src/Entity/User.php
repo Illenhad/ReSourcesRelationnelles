@@ -673,6 +673,11 @@ class User implements UserInterface
         return $this->creationDate;
     }
 
+    public function getFormatedCreationDate(): string
+    {
+        return $this->creationDate->format('d M Y H:i:s');
+    }
+
     public function setCreationDate(DateTimeInterface $creationDate): self
     {
         $this->creationDate = $creationDate;
