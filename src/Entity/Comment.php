@@ -84,6 +84,7 @@ class Comment
     public function __construct()
     {
         $this->answers = new ArrayCollection();
+        $this->commentDate = new \DateTime();
     }
 
     public function getId(): int

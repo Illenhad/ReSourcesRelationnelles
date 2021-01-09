@@ -7,8 +7,8 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ChangePasswordType extends AbstractType {
-
+class ChangePasswordType extends AbstractType
+{
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -23,5 +23,4 @@ class ChangePasswordType extends AbstractType {
             ])
         ;
     }
-
 }

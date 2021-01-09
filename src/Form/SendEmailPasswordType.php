@@ -12,9 +12,9 @@ class SendEmailPasswordType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('email',TextType::class,[
-                'attr'=>['placeholder'=>'Adresse mail..' ],
-                'label'=>'Votre adresse mail'])
+            ->add('email', TextType::class, [
+                'attr' => ['placeholder' => 'Adresse mail..'],
+                'label' => 'Votre adresse mail', ])
         ;
     }
 

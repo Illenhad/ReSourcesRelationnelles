@@ -197,7 +197,7 @@ class Resource
         return $this;
     }
 
-    public function getDateCreation(): \DateTimeInterface
+    public function getDateCreation(): DateTimeInterface
     {
         return $this->dateCreation;
     }
@@ -207,7 +207,7 @@ class Resource
         return $this->dateCreation->format('d M Y H:i:s');
     }
 
-    public function setDateCreation(\DateTimeInterface $dateCreation): self
+    public function setDateCreation(DateTimeInterface $dateCreation): self
     {
         $this->dateCreation = $dateCreation;
 

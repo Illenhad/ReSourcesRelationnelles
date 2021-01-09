@@ -61,10 +61,12 @@ class UsersStatsController extends AbstractController
      */
     private $test;
 
-    public function __construct(RoleRepository $roleRepository,
-                                UserRepository $userRepository,
-                                AgeCategoryRepository $ageCategoryRepository,
-                                DepartementRepository $departementRepository)
+    public function __construct(
+        RoleRepository $roleRepository,
+        UserRepository $userRepository,
+        AgeCategoryRepository $ageCategoryRepository,
+        DepartementRepository $departementRepository
+    )
     {
         $this->roleRepository = $roleRepository;
         $this->userRepository = $userRepository;

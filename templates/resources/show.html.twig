@@ -1,6 +1,28 @@
-{% block body %}
-    <h1> {{ resource.title }}</h1>
+{% extends 'base.html.twig' %}
 
+{% block body %}
+
+    {{ resource.title }}
     {{ resource.description }}
+
+
+
+    <div class="row">
+    {% for comment in resource.comments %}
+        <div class="col-md-4">
+
+
+            <p class="card-text text-center"> {{ comment.content }}</p>
+            <p class="card-text text-center"> {{ comment.commentDate|date }}</p>
+            <p class="form-row text-center">{{ comment.user.username }}</p>
+
+            </div>
+        </div>
+            
+
+    {% endfor %}
+
+    {{ form(form) }}
+
 
 {% endblock %}

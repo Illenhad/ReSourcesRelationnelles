@@ -6,8 +6,8 @@ use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
-class ChangePasswordModel {
-
+class ChangePasswordModel
+{
     private $passwordEncoder;
 
     public function __construct(UserPasswordEncoderInterface $passwordEncoder)
@@ -21,12 +21,13 @@ class ChangePasswordModel {
      * @param $data
      * @return string
      */
-    public function changePassword(EntityManagerInterface $manager, string $username, $data): string {
+    public function changePassword(EntityManagerInterface $manager, string $username, $data): string
+    {
         $user = $manager->getRepository(User::class)->findOneBy([
             'username' => $username
         ]);
 
-        if(!$this->passwordEncoder->isPasswordValid($user, $data['old_password'])) {
+        if (!$this->passwordEncoder->isPasswordValid($user, $data['old_password'])) {
             return "L'ancien mot de passe n'est pas valide";
         }
 

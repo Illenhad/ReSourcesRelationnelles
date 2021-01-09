@@ -48,7 +48,8 @@ class DashboardController extends AbstractDashboardController
                         ->setIcon('fa fa-pencil')
                         ->setLabel(false)
                         ->addCssClass('btn btn-secondary');
-                })
+                }
+            )
             ->update(
                 Crud::PAGE_INDEX,
                 Action::DELETE,
@@ -60,7 +61,8 @@ class DashboardController extends AbstractDashboardController
                         ->setHtmlAttributes([
                             'style',
                         ]);
-                });
+                }
+            );
     }
 
     public function configureMenuItems(): iterable
