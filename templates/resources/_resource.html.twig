@@ -24,7 +24,29 @@
 
         <div class="card-footer  text-left " style="color:dodgerblue"> Auteur {{ resource.user }}  </div>
         <div class="card-footer  text-left " style="color:dodgerblue">
-           {{ resource.comments | length }}   commentaires  </div>
+            {{ resource.comments | length }} commentaires
+
+            <div class="card-footer text-left" style="color:dodgerblue">
+
+                {% if resource.comments|length > 0 %}
+                    {% set valuation_average = 0 %}
+                    {% for comment in resource.comments %}
+                        {% set valuation_average = valuation_average + comment.valuation  %}
+                    {% endfor %}
+
+                    {% set valuation_average = valuation_average / resource.comments|length %}
+
+                    Note: {{ valuation_average|number_format(1) }} / 5
+
+                {% else %}
+                    Il n'y a pas encore d'évaluation.
+                {% endif %}
+
+            </div>
+
+
+        </div>
     </div>
+
 
 </div>

@@ -93,7 +93,8 @@ class ResourceController extends AbstractController
      * @param Request $request
      * @return Response
      */
-    public function edit(Resource $resource, Request $request): Response {
+    public function edit(Resource $resource, Request $request): Response
+    {
         $user = $this->getUser();
 
         if (isset($user)) {
@@ -123,7 +124,8 @@ class ResourceController extends AbstractController
      * @Route("/add", name="add_resource")
      * @param Request $request
      */
-    public function add(Request $request) {
+    public function add(Request $request)
+    {
         $user = $this->getUser();
 
         if (isset($user)) {
@@ -161,23 +163,5 @@ class ResourceController extends AbstractController
         } else {
             return $this->redirectToRoute('login');
         }
-    }
-
-    /**
-     * @Route("/{slug}", name="resource")
-     */
-    public function showComments($slug)
-    {
-        $resource = $this->getDoctrine()->getRepository(Resource::class)->findOneBy(['slug' => $slug]);
-
-        $comments = $this->getDoctrine()->getRepository(Comment::class)->findBy([
-            'resources' => $resource,
-        ], ['created_at' => 'desc']);
-
-        if (!$resource) {
-            throw $this->createNotFoundException('L\'article n\'existe pas');
-        }
-
-        return $this->render('show.html.twig', compact('resource', 'comments'));
     }
 }

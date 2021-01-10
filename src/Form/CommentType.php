@@ -4,6 +4,9 @@ namespace App\Form;
 
 use App\Entity\Comment;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\RangeType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -39,11 +42,11 @@ class CommentType extends AbstractType
             )
             ->add(
                 'valuation',
-                TextareaType::class,
+                RangeType::class,
                 [
                     'attr' => [
-                        'placeholder' => 'Ajouter une évaluation...',
-                        'class' => 'form-control',
+                        'min' => 0,
+                        'max' => 5,
                     ],
                     'label' => 'Evaluation',
                 ]

@@ -38,9 +38,11 @@ class Comment
     private $content;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * Should be between 0 and 5.
      *
-     * @var string
+     * @ORM\Column(type="smallint")
+     *
+     * @var int
      */
     private $valuation;
 
@@ -116,12 +118,12 @@ class Comment
         return $this;
     }
 
-    public function getValuation(): string
+    public function getValuation(): int
     {
         return $this->valuation;
     }
 
-    public function setValuation(string $valuation): Comment
+    public function setValuation(int $valuation): Comment
     {
         $this->valuation = $valuation;
 
