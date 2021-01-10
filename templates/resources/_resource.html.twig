@@ -24,7 +24,10 @@
 
         <div class="card-footer  text-left " style="color:dodgerblue"> Auteur {{ resource.user }}  </div>
         <div class="card-footer  text-left " style="color:dodgerblue">
-            {{ resource.comments | length }} commentaires
+
+        {{ resource.comments | length }} commentaires
+
+        </div>
 
             <div class="card-footer text-left" style="color:dodgerblue">
 
@@ -42,7 +45,6 @@
                     Il n'y a pas encore d'évaluation.
                 {% endif %}
 
-            </div>
 
 
         </div>

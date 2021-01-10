@@ -58,21 +58,40 @@
         </div>
     </div>
 
-    <footer class="bg-primary text-white text-center text-lg-start">
+    <footer class=" text-secondary text-center text-lg-start style= background-color: #ffffff">
 
         <div class="container p-4">
 
             <div class="row">
-                <!--Grid column-->
-                <div class="col-lg-6 col-md-12 mb-4 mb-md-0">
-                    <h5 class="text-uppercase">A propos</h5>
 
-                    <p>
-                        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iste atque ea quis
-                        molestias. Fugiat pariatur maxime quis culpa corporis vitae repudiandae aliquam
-                        voluptatem veniam, est atque cumque eum delectus sint!
+                <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
 
-                    </p>
+
+                    <img src="{{ asset('image/logo2.png') }}" alt="" width="50%">
+
+
+                </div>
+
+                <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+
+
+                    <ul class="list-unstyled mb-0">
+                        <li>
+                            <a href="https://solidarites-sante.gouv.fr/" class="text-secondary">Plan du site </a>
+                        </li>
+                        <li>
+
+                            <a href="https://gouvernement-et-citoyens.consultation.etalab.gouv.fr/"
+                               class="text-secondary">Accesibilité</a>
+                        </li>
+                        <li>
+                            <a href="https://solidarites-sante.gouv.fr/" class="text-secondary">Mention légale</a>
+                        </li>
+                        <li>
+                            <a href="https://solidarites-sante.gouv.fr/" class="text-secondary">Données et RGPD </a>
+                        </li>
+
+                    </ul>
                 </div>
 
 
@@ -81,16 +100,19 @@
 
                     <ul class="list-unstyled mb-0">
                         <li>
-                            <a href="https://solidarites-sante.gouv.fr/" class="text-white">Site du gouvernement </a>
+                            <a href="https://solidarites-sante.gouv.fr/" class="text-secondary">Site du
+                                gouvernement </a>
                         </li>
                         <li>
 
-                            <a href="https://gouvernement-et-citoyens.consultation.etalab.gouv.fr/" class="text-white">Participation
+                            <a href="https://gouvernement-et-citoyens.consultation.etalab.gouv.fr/"
+                               class="text-secondary">Participation
                                 citoyenne</a>
                         </li>
 
                     </ul>
                 </div>
+
 
                 <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
 
@@ -137,12 +159,16 @@
             </div>
         </div>
 
-        <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
-            © 2020 Copyright
-            <a class="text-white"
-               href="https://les-semi-croustillants.atlassian.net/jira/software/projects/SP/boards/3">Les Semis
-                Croustillants</a>
-        </div>
+        <footer class="bg-light text-center text-lg-start">
+
+            <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
+                © 2021 Copyright:
+                <a class="text-dark"
+                   href="https://les-semi-croustillants.atlassian.net/jira/software/projects/SP/boards/3">Les semis
+                    croustillants</a>
+            </div>
+
+        </footer>
     </footer>
 {% endblock %}
 
