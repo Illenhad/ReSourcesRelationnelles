@@ -19,7 +19,9 @@ class CommentType extends AbstractType
                 'title',
                 TextType::class,
                 [
-                    'attr' => ['placeholder' => 'Ajouter un titre...'],
+                    'attr' => ['placeholder' => 'Ajouter un titre...',
+                        'class' => 'form-control',
+                        ],
                     'label' => 'Titre',
                 ]
             )
@@ -27,7 +29,11 @@ class CommentType extends AbstractType
                 'content',
                 TextareaType::class,
                 [
-                    'attr' => ['placeholder' => 'Ajouter un commentaire...'],
+                    'attr' => [
+                        'placeholder' => 'Ajouter un commentaire...',
+                        'class' => 'form-control',
+                    ],
+
                     'label' => 'Commentaire',
                 ]
             )
@@ -35,14 +41,20 @@ class CommentType extends AbstractType
                 'valuation',
                 TextareaType::class,
                 [
-                    'attr' => ['placeholder' => 'Ajouter une évaluation...'],
-                    'label' => 'Valuation',
+                    'attr' => [
+                        'placeholder' => 'Ajouter une évaluation...',
+                        'class' => 'form-control',
+                    ],
+                    'label' => 'Evaluation',
                 ]
             )
             ->add(
                 'submit',
                 SubmitType::class,
                 [
+                    'attr' => [
+                        'class' => 'btn btn-primary ',
+                    ],
                     'label' => 'Envoyer',
                 ]
             );
