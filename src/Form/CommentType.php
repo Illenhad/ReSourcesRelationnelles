@@ -47,8 +47,9 @@ class CommentType extends AbstractType
                     'attr' => [
                         'min' => 0,
                         'max' => 5,
+                        'class' => ' mt-4 ',
                     ],
-                    'label' => 'Evaluation',
+                    'label' => 'Note ',
                 ]
             )
             ->add(
@@ -56,7 +57,7 @@ class CommentType extends AbstractType
                 SubmitType::class,
                 [
                     'attr' => [
-                        'class' => 'btn btn-primary ',
+                        'class' => 'btn btn-primary mt-4 mb-4 ',
                     ],
                     'label' => 'Envoyer',
                 ]
