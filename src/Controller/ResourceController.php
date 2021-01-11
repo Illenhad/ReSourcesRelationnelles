@@ -136,6 +136,7 @@ class ResourceController extends AbstractController
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
+                $resource->setActive(false);
                 $this->manager->persist($resource);
 
                 //alimente la table de relation

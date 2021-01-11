@@ -30,7 +30,11 @@ class SubscribeController extends AbstractController
             $role = $this->getDoctrine()
                 ->getRepository(Role::class)
                 ->findOneBy(['label' => 'ROLE_USER']);
-            $user->setRoles($role);
+            $user
+                ->setRoles($role)
+                ->setActive(true)
+                ->setCreationDate(new \DateTime('now'));
+
             $entity_manager = $this->getDoctrine()->getManager();
             $entity_manager->persist($user);
             $entity_manager->flush();
