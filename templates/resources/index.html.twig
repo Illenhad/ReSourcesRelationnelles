@@ -2,6 +2,8 @@
 
 {% block title 'toutes nos ressources' %}
 
+
+
 {% block stylesheets %}
     <style>
         .btn-primary {
@@ -11,6 +13,7 @@
             text-decoration: none;
         }
     </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" integrity="sha512-nMNlpuaDPrqlEls3IX/Q56H36qvBASwb3ipuo3MxeWbsQB1881ox0cRv7UPTgBlriqoynt35KjEwgGUeUXIPnw==" crossorigin="anonymous" />
 {% endblock %}
 
 {% block body %}
@@ -46,6 +49,28 @@
 
     <div class="container mt-4">
         <h3 style="color:dodgerblue"> Dernières ressources </h3>
+
+<!--Filtre-->
+        <div class="container">
+            {{ form_start(filter) }}
+            <div class="row ">
+                <div class="col">
+                {{ form_row(filter.type,{'attr': {'class': 'select2'}}) }}
+                </div>
+                <div class="col">
+                    {{ form_row(filter.relation) }}
+                </div>
+                <div class="col">
+                    {{ form_row(filter.age) }}
+                </div>
+                <div class="col">
+                    <button class="btn btn-primary">Filtrer</button>
+                </div>
+            </div>
+            {{ form_end(filter) }}
+        </div>
+
+
         <div class="row">
             {% for resource in resources %}
                 <div class="col-md-4">
@@ -146,6 +171,12 @@
     </footer>
 {% endblock %}
 
+{% block javascripts %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js" integrity="sha512-2ImtlRlf2VVmiGZsjm9bEyhjGW4dU7B6TNwh/hx/iSByxNENtj3WVE6o/9Lj4TJeVXPi4bnOIMXFIJJAeufa0A==" crossorigin="anonymous"></script>
+<script>
+    $('select').select2();
+</script>
+{% endblock %}
 
 
 

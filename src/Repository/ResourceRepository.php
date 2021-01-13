@@ -2,11 +2,9 @@
 
 namespace App\Repository;
 
-use App\Entity\ManagementType;
 use App\Entity\Resource;
-use App\Entity\User;
+use App\Search\FilterData;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -43,13 +41,33 @@ class ResourceRepository extends ServiceEntityRepository
      *
      * @param string $dateCreationSorting
      */
-    public function findPublicQuery($dateCreationSorting = 'ASC'): Query
+    public function findPublicQuery(FilterData $filterData, $dateCreationSorting = 'ASC'): Query
     {
-        return ($this->createQueryBuilder('r'))
-            ->where('r.public = 1')
+        $query = $this->createQueryBuilder('r')
+            ->select('t', 'rel', 'a', 'r')
+            ->join('r.resourceType', 't')
+            ->join('r.ageCategory', 'a')
+            ->join('r.relationShip', 'rel')
+            ->andWhere('r.public = 1')
             ->orderBy('r.dateCreation', $dateCreationSorting)
-            ->getQuery()
         ;
+
+        if ($filterData->getType()) {
+            $query->andWhere('t.id IN (:type)')
+                ->setParameter('type', $filterData->getType());
+        }
+
+        if ($filterData->getAge()) {
+            $query->andWhere('a.id IN (:age)')
+                  ->setParameter('age', $filterData->getAge());
+        }
+
+        if ($filterData->getRelation()) {
+            $query->andWhere('rel.id IN (:relationShip)')
+                ->setParameter('relationShip', $filterData->getRelation());
+        }
+
+        return $query->getQuery();
     }
 
     // /**
