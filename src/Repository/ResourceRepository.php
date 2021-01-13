@@ -39,9 +39,12 @@ class ResourceRepository extends ServiceEntityRepository
     /**
      * Cette méthode retourne les ressources qui ne necessitent  pas d'être authentifié.
      *
+     * @param FilterData $filterData
+     * @param string|null $search
      * @param string $dateCreationSorting
+     * @return Query
      */
-    public function findPublicQuery(FilterData $filterData, $dateCreationSorting = 'ASC'): Query
+    public function findPublicQuery(FilterData $filterData, ?string $search, $dateCreationSorting = 'ASC'): Query
     {
         $query = $this->createQueryBuilder('r')
             ->select('t', 'rel', 'a', 'r')
@@ -51,6 +54,11 @@ class ResourceRepository extends ServiceEntityRepository
             ->andWhere('r.public = 1')
             ->orderBy('r.dateCreation', $dateCreationSorting)
         ;
+
+        if ($search) {
+            $query->andWhere('r.title LIKE :search')
+                ->setParameter('search', '%'.$search.'%');
+        }
 
         if ($filterData->getType()) {
             $query->andWhere('t.id IN (:type)')

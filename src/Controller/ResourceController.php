@@ -39,12 +39,14 @@ class ResourceController extends AbstractController
     }
 
     /**
-     * @Route("")
+     * @Route("", name="resources")
      *
      * @return Response
      */
     public function index(Request $request, Request $request2, ResourceRepository $resourceRepository, PaginatorInterface $paginator)
     {
+        $search = $request->query->get('search');
+
         $filter = new FilterData();
         $formfilter = $this->createFormBuilder($filter, [
             'method' => 'GET',
@@ -76,7 +78,7 @@ class ResourceController extends AbstractController
         $formfilter->handleRequest($request);
 
         $resources = $paginator->paginate(
-            $resourceRepository->findPublicQuery($filter, 'DESC'),
+            $resourceRepository->findPublicQuery($filter, $search, 'DESC'),
             $request->query->getInt('page', 1),
             9
         );

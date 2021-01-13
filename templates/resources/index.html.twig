@@ -39,10 +39,10 @@
 
                 </ul>
 
-                <form class="d-flex">
+                <form class="d-flex" method="get" action="{{ path('resources') }}" >
                     <input class="form-control me-2" type="search" placeholder="Ex : Comment devenir un jedi"
-                           aria-label="Recherche">
-                    <button class="btn btn-light" type="submit">Recherche</button>
+                           aria-label="Recherche" name="search"/>
+                    <input class="btn btn-light" type="submit" value="Recherche"/>
                 </form>
             </div>
         </div>
