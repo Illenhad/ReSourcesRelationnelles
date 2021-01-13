@@ -52,20 +52,20 @@
         <h3 style="color:dodgerblue"> Dernières ressources </h3>
 
 <!--Filtre-->
-        <div class="container">
+        <div class="container bg-light">
             {{ form_start(filter) }}
-            <div class="row ">
+            <div class="row align-items-end">
                 <div class="col">
-                {{ form_row(filter.type,{'attr': {'class': 'select2'}}) }}
+                    {{ form_row(filter.type) }}
                 </div>
-                <div class="col">
+                <div class="col ">
                     {{ form_row(filter.relation) }}
                 </div>
-                <div class="col">
+                <div class="col ">
                     {{ form_row(filter.age) }}
                 </div>
-                <div class="col">
-                    <button class="btn btn-primary">Filtrer</button>
+                <div class="col-md-auto">
+                    <button class="btn btn-primary ">Filtrer</button>
                 </div>
             </div>
             {{ form_end(filter) }}
@@ -82,6 +82,12 @@
         <div class="pagination text-center">
             {{ knp_pagination_render(resources) }}
         </div>
+
+        {% if resources is empty %}
+            <div class="alert alert-danger">
+                Aucune ressource ne correspond à votre recherche
+            </div>
+        {% endif %}
     </div>
 
     <footer class="bg-primary text-white text-center text-lg-start">

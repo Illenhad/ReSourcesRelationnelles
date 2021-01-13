@@ -60,6 +60,12 @@ class ResourceRepository extends ServiceEntityRepository
                 ->setParameter('search', '%'.$search.'%');
         }
 
+        if ($filterData->getSearch()) {
+            $query->andWhere('r.title LIKE :search')
+                ->setParameter('search', '%'.$filterData->getSearch().'%');
+        }
+
+
         if ($filterData->getType()) {
             $query->andWhere('t.id IN (:type)')
                 ->setParameter('type', $filterData->getType());

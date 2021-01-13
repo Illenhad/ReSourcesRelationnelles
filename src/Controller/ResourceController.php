@@ -17,6 +17,7 @@ use Doctrine\Persistence\ObjectManager;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -41,9 +42,12 @@ class ResourceController extends AbstractController
     /**
      * @Route("", name="resources")
      *
+     * @param Request $request
+     * @param ResourceRepository $resourceRepository
+     * @param PaginatorInterface $paginator
      * @return Response
      */
-    public function index(Request $request, Request $request2, ResourceRepository $resourceRepository, PaginatorInterface $paginator)
+    public function index(Request $request, ResourceRepository $resourceRepository, PaginatorInterface $paginator): Response
     {
         $search = $request->query->get('search');
 
@@ -52,26 +56,26 @@ class ResourceController extends AbstractController
             'method' => 'GET',
             'csrf_protection' => false,
             'block_prefix' => null, ])
+            ->add('search', HiddenType::class, [
+                'data' => $search,
+            ])
             ->add('type', EntityType::class, [
-                'label' => false,
                 'required' => false,
                 'class' => \App\Entity\ResourceType::class,
                 'multiple' => true,
-                'attr' => ['class' => 'selectTags', 'name' => 'type'],
+                'attr' => ['class' => 'selectTags w-100', 'name' => 'type', 'label' => 'Type de Ressoureces'],
             ])
             ->add('relation', EntityType::class, [
-                'label' => false,
                 'required' => false,
                 'class' => RelationshipType::class,
                 'multiple' => true,
-                'attr' => ['class' => 'selectTags', 'name' => 'relationship'],
+                'attr' => ['class' => 'selectTags w-100', 'name' => 'relationship'],
                 ])
             ->add('age', EntityType::class, [
-                'label' => false,
                 'required' => false,
                 'class' => AgeCategory::class,
                 'multiple' => true,
-                'attr' => ['class' => 'selectTags', 'name' => 'age'],
+                'attr' => ['class' => 'selectTags w-100', 'name' => 'age'],
                 ])
             ->getForm()
         ;

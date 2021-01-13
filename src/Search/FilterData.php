@@ -11,6 +11,11 @@ use \App\Entity\ResourceType;
 class FilterData
 {
     /**
+     * @var string|null
+     */
+    private $search;
+
+    /**
      *@var  ResourceType[]|null
      */
     private $type;
@@ -81,6 +86,22 @@ class FilterData
     {
         $this->age=$age;
         return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getSearch(): ?string
+    {
+        return $this->search;
+    }
+
+    /**
+     * @param string|null $search
+     */
+    public function setSearch(?string $search): void
+    {
+        $this->search = $search;
     }
 
 }
