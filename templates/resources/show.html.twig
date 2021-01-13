@@ -8,27 +8,30 @@
 
     <h3 class="text-center text-dark">Liste des commentaires </h3>
 
-    <div class="card w-100 text-center">
+
+
+    <div class="card  text-center">
 
 
     {% for comment in resource.comments %}
 
 
 
+        <div class="container">
 
-
-        <div class="card text-center">
-            <div class="card-header mt-4">
-                De {{ comment.user.username }}
-            </div>
-            <div class="card-body ">
-                <h5 class="card-title">{{ comment.title }}</h5>
-                <p class="card-text">{{ comment.content }}</p>
-                <p class="card-text">Note {{ comment.valuation }} / 5</p>
-                <a href="#" class="btn btn-primary">Répondre</a>
-            </div>
-            <div class="card-footer text-muted">
-                posté le {{ comment.commentDate|date }}
+            <div class="card w-50 text-center mx-auto ">
+                <div class="card-header mt-4 ">
+                    De {{ comment.user.username }}
+                </div>
+                <div class="card-body ">
+                    <h5 class="card-title">{{ comment.title }}</h5>
+                    <p class="card-text">{{ comment.content }}</p>
+                    <p class="card-text">Note {{ comment.valuation }} / 5</p>
+                    <a href="#" class="btn btn-primary">Répondre</a>
+                </div>
+                <div class="card-footer text-muted">
+                    posté le {{ comment.commentDate|date }}
+                </div>
             </div>
         </div>
     {% endfor %}
@@ -37,8 +40,4 @@
 
 
     {{ form(form) }}
-
-
-
-
 {% endblock %}

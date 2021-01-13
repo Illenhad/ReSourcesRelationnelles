@@ -23,7 +23,7 @@ class CommentType extends AbstractType
                 TextType::class,
                 [
                     'attr' => ['placeholder' => 'Ajouter un titre...',
-                        'class' => 'form-control',
+                        'class' => 'form-control card w-50 text-center mx-auto ',
                         ],
                     'label' => 'Titre',
                 ]
@@ -34,7 +34,7 @@ class CommentType extends AbstractType
                 [
                     'attr' => [
                         'placeholder' => 'Ajouter un commentaire...',
-                        'class' => 'form-control',
+                        'class' => 'form-control card w-50 text-center mx-auto ',
                     ],
 
                     'label' => 'Commentaire',

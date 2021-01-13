@@ -44,7 +44,7 @@ class ResourceController extends AbstractController
         $resources = $paginator->paginate(
             $resourceRepository->findPublicQuery('DESC'),
             $request->query->getInt('page', 1),
-            9
+            12
         );
 
         return $this->render(
