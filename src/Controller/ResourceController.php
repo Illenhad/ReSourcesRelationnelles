@@ -3,11 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\ActionType;
+use App\Entity\Comment;
 use App\Entity\RelUserActionResource;
 use App\Entity\Resource;
-use App\Form\ResourceType;
-use App\Entity\Comment;
 use App\Form\CommentType;
+use App\Form\ResourceType;
 use App\Repository\ResourceRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ObjectManager;
@@ -44,11 +44,11 @@ class ResourceController extends AbstractController
         $resources = $paginator->paginate(
             $resourceRepository->findPublicQuery('DESC'),
             $request->query->getInt('page', 1),
-            9
+            12
         );
 
         return $this->render(
-            self::ROUTE_PREFIX . '/index.html.twig',
+            self::ROUTE_PREFIX.'/index.html.twig',
             [
                 'resources' => $resources,
             ]
@@ -80,7 +80,7 @@ class ResourceController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->render(self::ROUTE_PREFIX . '/show.html.twig', [
+        return $this->render(self::ROUTE_PREFIX.'/show.html.twig', [
             'resource' => $resource,
             'current_menu' => 'resources',
             'form' => $form->createView(),
@@ -89,9 +89,6 @@ class ResourceController extends AbstractController
 
     /**
      * @Route("/edit/{id}", name="edit_resource")
-     * @param Resource $resource
-     * @param Request $request
-     * @return Response
      */
     public function edit(Resource $resource, Request $request): Response
     {
@@ -106,14 +103,14 @@ class ResourceController extends AbstractController
                 $this->addFlash('success', 'Les modifications ont été enregistrées');
 
                 return $this->redirectToRoute('user_resource', [
-                    'resourceGestion' => 'created'
+                    'resourceGestion' => 'created',
                 ]);
             }
 
             return $this->render('resources/create_edit.html.twig', [
                 'resource' => $resource,
                 'form' => $form->createView(),
-                'type' => 'edit'
+                'type' => 'edit',
             ]);
         } else {
             return $this->redirectToRoute('login');
@@ -122,7 +119,6 @@ class ResourceController extends AbstractController
 
     /**
      * @Route("/add", name="add_resource")
-     * @param Request $request
      */
     public function add(Request $request)
     {
@@ -151,15 +147,16 @@ class ResourceController extends AbstractController
 
                 $this->manager->flush();
                 $this->addFlash('success', 'La ressource a été créée');
+
                 return $this->redirectToRoute('user_resource', [
-                    'resourceGestion' => 'created'
+                    'resourceGestion' => 'created',
                 ]);
             }
 
             return $this->render('resources/create_edit.html.twig', [
                 'resource' => $resource,
                 'form' => $form->createView(),
-                'type' => 'creation'
+                'type' => 'creation',
             ]);
         } else {
             return $this->redirectToRoute('login');

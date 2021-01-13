@@ -1,0 +1,10 @@
+.card-body {
+    height: 120px !important;
+    min-height: 40px;
+    font-size: small;
+}
+
+.c1 {
+    margin: auto;
+    padding: 2px 14px 10px 14px;
+}

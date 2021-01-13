@@ -1,54 +1,65 @@
-<div class="shadow p-3 mb-5 bg-white rounded">
-    <div class="card-header  text-left " style="color:dodgerblue">
-        Le {{ resource.dateCreation|date("d.m.Y à h:m") }} </div>
-    <div class="card mb-4">
-        <div class="text-center">
-            <div class="container-fluid">
-                {# <img src="{{ asset('image/arbre.jpg') }}" alt="" width="100%"> #}
-                <img src="https://source.unsplash.com/random" alt="" width="100%">
-            </div>
-        </div>
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/resource.css') }}" type="text/css">
+{% endblock %}
 
-        <div class="card-body">
-            <h5 class="card-title text-center">
-                <a href="{{ path('app_resource_show', {id: resource.id, slug: resource.slug}) }}"> {{ resource.title }} </a>
-            </h5>
-            <p class="card-text text-center"> {{ resource.description }}</p>
-            <p class="card-text text-center"> Catégorie {{ resource.relationShip.label }}</p>
-            <div class="form-row text-center">
-                <a href="{{ path('app_resource_show', {id: resource.id, slug: resource.slug}) }}"
-                   class="btn btn-primary "> Consulter la ressource</a>
-
-            </div>
-        </div>
-
-        <div class="card-footer  text-left " style="color:dodgerblue"> Auteur {{ resource.user }}  </div>
-        <div class="card-footer  text-left " style="color:dodgerblue">
-
-        {{ resource.comments | length }} commentaires
-
-        </div>
-
-            <div class="card-footer text-left" style="color:dodgerblue">
-
-                {% if resource.comments|length > 0 %}
-                    {% set valuation_average = 0 %}
-                    {% for comment in resource.comments %}
-                        {% set valuation_average = valuation_average + comment.valuation  %}
-                    {% endfor %}
-
-                    {% set valuation_average = valuation_average / resource.comments|length %}
-
-                    Note: {{ valuation_average|number_format(1) }} / 5
-
-                {% else %}
-                    Il n'y a pas encore d'évaluation.
-                {% endif %}
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 
+<div class="container">
 
-        </div>
+    <div class="row">
+
     </div>
+</div>
+<div class="col mt-4">
+    <div class="card" style="width: 18rem;">
+        <div class="card-header">
+            De {{ resource.user.username }} <br>
+            posté le {{ resource.dateCreation|date("d.m.Y à h:m") }}
+        </div>
+        <img class="card-img-top" src="https://picsum.photos/200/200" alt="Card image cap">
+        <div class="card-body">
+            <div class="card-title text-center">
+                <a href="{{ path('app_resource_show', {id: resource.id, slug: resource.slug}) }}">
+                    {{ resource.title }}
+                </a>
 
+                <p>{{ resource.description }}</p>
+
+                <p class=" text-center"> {{ resource.relationShip.label }}</p>
+
+            </div>
+        </div>
+        <span class="c1">
+            <a href="{{ path('app_resource_show', {id: resource.id, slug: resource.slug}) }}"
+               class="btn btn-primary "> Consulter la ressource
+            </a>
+        </span>
+
+
+
+        <div class="card-footer text-left" style="color:dodgerblue">
+
+            {% if resource.comments|length > 0 %}
+                {% set valuation_average = 0 %}
+                {% for comment in resource.comments %}
+                    {% set valuation_average = valuation_average + comment.valuation %}
+                {% endfor %}
+
+                {% set valuation_average = valuation_average / resource.comments|length %}
+
+                Note {{ valuation_average|number_format(1) }} / 5
+
+
+            {% else %}
+                Il n'y a pas encore d'évaluation.
+            {% endif %}
+            <br>
+            {{ resource.comments | length }} commentaires
+
+
+        </div>
+
+    </div>
 
 </div>
