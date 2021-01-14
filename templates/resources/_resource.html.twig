@@ -3,8 +3,6 @@
 {% endblock %}
 
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-
 <div class="container">
 
     <div class="row">
@@ -14,8 +12,11 @@
 <div class="col mt-4">
     <div class="card" style="width: 18rem;">
         <div class="card-header">
+            {{ resource.ResourceType }} <br>
             De {{ resource.user.username }} <br>
             posté le {{ resource.dateCreation|date("d.m.Y à h:m") }}
+
+
         </div>
         <img class="card-img-top" src="https://picsum.photos/200/200" alt="Card image cap">
         <div class="card-body">
@@ -35,7 +36,6 @@
                class="btn btn-primary "> Consulter la ressource
             </a>
         </span>
-
 
 
         <div class="card-footer text-left" style="color:dodgerblue">
