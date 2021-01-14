@@ -63,19 +63,19 @@ class ResourceController extends AbstractController
                 'required' => false,
                 'class' => \App\Entity\ResourceType::class,
                 'multiple' => true,
-                'attr' => ['class' => 'selectTags w-100', 'name' => 'type', 'label' => 'Type de Ressoureces'],
+                'attr' => ['class' => 'selectTags w-100'],
             ])
             ->add('relation', EntityType::class, [
                 'required' => false,
                 'class' => RelationshipType::class,
                 'multiple' => true,
-                'attr' => ['class' => 'selectTags w-100', 'name' => 'relationship'],
+                'attr' => ['class' => 'selectTags w-100'],
                 ])
             ->add('age', EntityType::class, [
                 'required' => false,
                 'class' => AgeCategory::class,
                 'multiple' => true,
-                'attr' => ['class' => 'selectTags w-100', 'name' => 'age'],
+                'attr' => ['class' => 'selectTags w-100'],
                 ])
             ->getForm()
         ;

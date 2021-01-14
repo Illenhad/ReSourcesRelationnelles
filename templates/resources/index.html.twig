@@ -56,13 +56,13 @@
             {{ form_start(filter) }}
             <div class="row align-items-end">
                 <div class="col">
-                    {{ form_row(filter.type) }}
+                    {{ form_row(filter.type, { 'label' : 'Type de Ressoureces'}) }}
                 </div>
                 <div class="col ">
-                    {{ form_row(filter.relation) }}
+                    {{ form_row(filter.relation ,{'label' : 'Type de Relation'}) }}
                 </div>
                 <div class="col ">
-                    {{ form_row(filter.age) }}
+                    {{ form_row(filter.age , {'label' : "Tranches d'âge"}) }}
                 </div>
                 <div class="col-md-auto">
                     <button class="btn btn-primary ">Filtrer</button>
