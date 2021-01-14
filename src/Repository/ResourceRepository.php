@@ -2,11 +2,9 @@
 
 namespace App\Repository;
 
-use App\Entity\ManagementType;
 use App\Entity\Resource;
-use App\Entity\User;
+use App\Search\FilterData;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -41,15 +39,48 @@ class ResourceRepository extends ServiceEntityRepository
     /**
      * Cette méthode retourne les ressources qui ne necessitent  pas d'être authentifié.
      *
+     * @param FilterData $filterData
+     * @param string|null $search
      * @param string $dateCreationSorting
+     * @return Query
      */
-    public function findPublicQuery($dateCreationSorting = 'ASC'): Query
+    public function findPublicQuery(FilterData $filterData, ?string $search, $dateCreationSorting = 'ASC'): Query
     {
-        return ($this->createQueryBuilder('r'))
-            ->where('r.public = 1')
+        $query = $this->createQueryBuilder('r')
+            ->select('t', 'rel', 'a', 'r')
+            ->join('r.resourceType', 't')
+            ->join('r.ageCategory', 'a')
+            ->join('r.relationShip', 'rel')
+            ->andWhere('r.public = 1')
             ->orderBy('r.dateCreation', $dateCreationSorting)
-            ->getQuery()
         ;
+
+        if ($search) {
+            $query->andWhere('r.title LIKE :search OR r.description LIKE :search' )
+                ->setParameter('search', '%'.$search.'%');
+        }
+
+        if ($filterData->getSearch()) {
+            $query->andWhere('r.title LIKE :search')
+                ->setParameter('search', '%'.$filterData->getSearch().'%');
+        }
+
+        if ($filterData->getType()) {
+            $query->andWhere('t.id IN (:type)')
+                ->setParameter('type', $filterData->getType());
+        }
+
+        if ($filterData->getAge()) {
+            $query->andWhere('a.id IN (:age)')
+                  ->setParameter('age', $filterData->getAge());
+        }
+
+        if ($filterData->getRelation()) {
+            $query->andWhere('rel.id IN (:relationShip)')
+                ->setParameter('relationShip', $filterData->getRelation());
+        }
+
+        return $query->getQuery();
     }
 
     // /**

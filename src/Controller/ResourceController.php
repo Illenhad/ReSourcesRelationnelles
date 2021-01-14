@@ -4,15 +4,20 @@ namespace App\Controller;
 
 use App\Entity\ActionType;
 use App\Entity\Comment;
+use App\Entity\AgeCategory;
+use App\Entity\RelationshipType;
 use App\Entity\RelUserActionResource;
 use App\Entity\Resource;
 use App\Form\CommentType;
 use App\Form\ResourceType;
 use App\Repository\ResourceRepository;
+use App\Search\FilterData;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ObjectManager;
 use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -35,14 +40,49 @@ class ResourceController extends AbstractController
     }
 
     /**
-     * @Route("")
+     * @Route("", name="resources")
      *
+     * @param Request $request
+     * @param ResourceRepository $resourceRepository
+     * @param PaginatorInterface $paginator
      * @return Response
      */
-    public function index(Request $request, ResourceRepository $resourceRepository, PaginatorInterface $paginator)
+    public function index(Request $request, ResourceRepository $resourceRepository, PaginatorInterface $paginator): Response
     {
+        $search = $request->query->get('search');
+
+        $filter = new FilterData();
+        $formfilter = $this->createFormBuilder($filter, [
+            'method' => 'GET',
+            'csrf_protection' => false,
+            'block_prefix' => null, ])
+            ->add('search', HiddenType::class, [
+                'data' => $search,
+            ])
+            ->add('type', EntityType::class, [
+                'required' => false,
+                'class' => \App\Entity\ResourceType::class,
+                'multiple' => true,
+                'attr' => ['class' => 'selectTags w-100'],
+            ])
+            ->add('relation', EntityType::class, [
+                'required' => false,
+                'class' => RelationshipType::class,
+                'multiple' => true,
+                'attr' => ['class' => 'selectTags w-100'],
+                ])
+            ->add('age', EntityType::class, [
+                'required' => false,
+                'class' => AgeCategory::class,
+                'multiple' => true,
+                'attr' => ['class' => 'selectTags w-100'],
+                ])
+            ->getForm()
+        ;
+        $formfilter->handleRequest($request);
+
         $resources = $paginator->paginate(
-            $resourceRepository->findPublicQuery('DESC'),
+            $resourceRepository->findPublicQuery($filter, $search, 'DESC'),
             $request->query->getInt('page', 1),
             12
         );
@@ -51,6 +91,7 @@ class ResourceController extends AbstractController
             self::ROUTE_PREFIX.'/index.html.twig',
             [
                 'resources' => $resources,
+                'filter' => $formfilter->CreateView(),
             ]
         );
     }
