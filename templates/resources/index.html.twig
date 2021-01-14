@@ -12,9 +12,12 @@
             border-color: ghostwhite;
             text-decoration: none;
         }
-        select{display: block}
+
+        select {
+            display: block
+        }
     </style>
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet"/>
 {% endblock %}
 
 {% block body %}
@@ -31,15 +34,15 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Accueil</a>
+                        <a class="nav-link active" aria-current="page" href="{{ path('resources') }}">Accueil</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="#">Filtre</a>
+                        <a class="nav-link active" href="{{ path('user_dashboard') }}">Espace personnel</a>
                     </li>
 
                 </ul>
 
-                <form class="d-flex" method="get" action="{{ path('resources') }}" >
+                <form class="d-flex" method="get" action="{{ path('resources') }}">
                     <input class="form-control me-2" type="search" placeholder="Ex : Comment devenir un jedi"
                            aria-label="Recherche" name="search"/>
                     <input class="btn btn-light" type="submit" value="Recherche"/>
@@ -49,9 +52,9 @@
     </nav>
 
     <div class="container">
-        <h3 style="color:dodgerblue"> Dernières ressources </h3>
 
-<!--Filtre-->
+
+        <!--Filtre-->
         <div class="container bg-light">
             {{ form_start(filter) }}
             <div class="row align-items-end">
@@ -71,7 +74,7 @@
             {{ form_end(filter) }}
         </div>
 
-
+        <h3 class="mt-2" style="color:dodgerblue"> Dernières ressources </h3>
         <div class="row">
             {% for resource in resources %}
                 <div class="col mt-4  ">
@@ -208,7 +211,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
     <script>
-        $(function(){
+        $(function () {
             $('.selectTags').select2();
         })
     </script>
