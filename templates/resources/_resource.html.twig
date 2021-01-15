@@ -3,63 +3,56 @@
 {% endblock %}
 
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<div class="container">
 
-    <div class="row">
+
+<div class="card mb-4 mx-auto" style="width: 18rem;">
+    <div class="card-header">
+        De {{ resource.user.username }} <br>
+        posté le {{ resource.dateCreation|date("d.m.Y à h:m") }}
+
 
     </div>
-</div>
-<div class="col mt-4">
-    <div class="card" style="width: 18rem;">
-        <div class="card-header">
-            {{ resource.ResourceType }} <br>
-            De {{ resource.user.username }} <br>
-            posté le {{ resource.dateCreation|date("d.m.Y à h:m") }}
+    <img class="card-img-top" src="https://picsum.photos/200/200" alt="Card image cap">
+    <div class="card-body">
+        <div class="card-title text-center">
+            <a href="{{ path('app_resource_show', {id: resource.id, slug: resource.slug}) }}">
+                {{ resource.title }}
+            </a>
 
+
+            <p class=" text-center"> {{ resource.relationShip.label }}</p>
+            <p class="text-center "> {{ resource.ResourceType }}</p>
 
         </div>
-        <img class="card-img-top" src="https://picsum.photos/200/200" alt="Card image cap">
-        <div class="card-body">
-            <div class="card-title text-center">
-                <a href="{{ path('app_resource_show', {id: resource.id, slug: resource.slug}) }}">
-                    {{ resource.title }}
-                </a>
-
-                <p>{{ resource.description }}</p>
-
-                <p class=" text-center"> {{ resource.relationShip.label }}</p>
-
-            </div>
-        </div>
-        <span class="c1">
+    </div>
+    <span class="text-center mb-4">
             <a href="{{ path('app_resource_show', {id: resource.id, slug: resource.slug}) }}"
                class="btn btn-primary "> Consulter la ressource
             </a>
         </span>
 
 
-        <div class="card-footer text-left" style="color:dodgerblue">
+    <div class="card-footer text-left" style="color:dodgerblue">
 
-            {% if resource.comments|length > 0 %}
-                {% set valuation_average = 0 %}
-                {% for comment in resource.comments %}
-                    {% set valuation_average = valuation_average + comment.valuation %}
-                {% endfor %}
+        {% if resource.comments|length > 0 %}
+            {% set valuation_average = 0 %}
+            {% for comment in resource.comments %}
+                {% set valuation_average = valuation_average + comment.valuation %}
+            {% endfor %}
 
-                {% set valuation_average = valuation_average / resource.comments|length %}
+            {% set valuation_average = valuation_average / resource.comments|length %}
 
-                Note {{ valuation_average|number_format(1) }} / 5
-
-
-            {% else %}
-                Il n'y a pas encore d'évaluation.
-            {% endif %}
-            <br>
-            {{ resource.comments | length }} commentaires
+            Note {{ valuation_average|number_format(1) }} / 5
 
 
-        </div>
+        {% else %}
+            Il n'y a pas encore d'évaluation.
+        {% endif %}
+        <br>
+        {{ resource.comments | length }} commentaires
+
 
     </div>
 
 </div>
+
