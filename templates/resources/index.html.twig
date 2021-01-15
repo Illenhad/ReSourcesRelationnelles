@@ -74,23 +74,27 @@
             {{ form_end(filter) }}
         </div>
 
-        <h3 class="mt-2" style="color:dodgerblue"> Dernières ressources </h3>
-        <div class="row">
-            {% for resource in resources %}
-                <div class="col mt-4  ">
-                    {% include'resources/_resource.html.twig' %}
-                </div>
+
+        <div class="container mt-4">
+            <h3 style="color:dodgerblue"> Dernières ressources </h3>
+            <div class="row">
+                {% for resource in resources %}
+                <div class="col-md-4"
+
+                {% include'resources/_resource.html.twig' %}
+            </div>
             {% endfor %}
         </div>
-        <div class="pagination text-center mt-4">
-            {{ knp_pagination_render(resources) }}
-        </div>
+    </div>
+    <div class="pagination text-center mt-4">
+        {{ knp_pagination_render(resources) }}
+    </div>
 
-        {% if resources is empty %}
-            <div class="alert alert-danger">
-                Aucune ressource ne correspond à votre recherche
-            </div>
-        {% endif %}
+    {% if resources is empty %}
+        <div class="alert alert-danger">
+            Aucune ressource ne correspond à votre recherche
+        </div>
+    {% endif %}
     </div>
 
     <footer class=" text-secondary text-center text-lg-start style= background-color: #ffffff">
