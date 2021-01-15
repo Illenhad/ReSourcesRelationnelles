@@ -13,13 +13,14 @@
         </div>
         <img class="card-img-top" src="https://picsum.photos/200/200" alt="">
         <div class="card-body ">
-            <h5 class="card-title text-center "><a
+            <h5 class="card-title text-truncate text-center "><a
                         href="{{ path('app_resource_show', {id: resource.id, slug: resource.slug}) }}">
                     {{ resource.title }}
                 </a></h5>
             <div class="card-text text-center">
                 <p class="text-center"> {{ resource.resourceType }}</p>
                 <p class="text-center"> {{ resource.relationShip.label }}</p>
+
                 <span class="text-center mb-4">
             <a href="{{ path('app_resource_show', {id: resource.id, slug: resource.slug}) }}"
                class="btn btn-primary "> Consulter la ressource

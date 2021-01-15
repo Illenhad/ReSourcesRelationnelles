@@ -20,12 +20,12 @@ class ResourceFixture extends Fixture implements DependentFixtureInterface
         for ($i = 1; $i <= 500; ++$i) {
             $resource = new Resource();
             $resource
-                ->setTitle($faker->words(3, true))
+                ->setTitle($faker->words(8, true))
                 ->setLink($faker->url)
                 ->setPublic($faker->boolean(40))
                 ->setDateCreation($faker->dateTimeBetween('-2 years', 'now', null))
                 ->setUser($this->getReference('user'.$faker->numberBetween(1, UserFixture::$numberOfUsers)))
-                ->setDescription($faker->words(5, true))
+                ->setDescription($faker->words(20, true))
                 ->setActive(1)
                 ->setAgeCategory($this->getReference('ageCategory'.$faker->numberBetween(1, count(AgeCategoryFixture::$tabAge))))
                 ->setCategory($this->getReference('category'.$faker->numberBetween(1, count(CategoryFixture::$tabCategory))))
