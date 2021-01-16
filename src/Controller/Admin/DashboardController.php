@@ -8,9 +8,12 @@ use App\Entity\Category;
 use App\Entity\Department;
 use App\Entity\ManagementType;
 use App\Entity\RelationshipType;
+use App\Entity\RelUserActionResource;
 use App\Entity\Resource;
 use App\Entity\Role;
 use App\Entity\User;
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Persistence\ObjectManager;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
@@ -22,12 +25,35 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class DashboardController extends AbstractDashboardController
 {
+
+    /**
+     * @var ObjectManager
+     */
+    private $manager;
+
+    public function __construct(EntityManagerInterface $manager)
+    {
+        $this->manager = $manager;
+    }
+
     /**
      * @Route("/admin", name="admin")
      */
     public function index(): Response
     {
-        return $this->render('bundles/EasyAdminBundle/welcome.html.twig');
+        //Ressources à valider
+        $resourcesToValidateNumber = $this->manager->getRepository(RelUserActionResource::class)->getResourceToValidateNumber();
+        if ($resourcesToValidateNumber == -1) {
+            $resourcesToValidateNumber = 'N/A';
+        }
+
+        //Ressources les plus commentées
+        $resourcesMostCommented = $this->manager->getRepository(Resource::class)->getMostCommentedResources($this->manager);
+
+        return $this->render('bundles/EasyAdminBundle/welcome.html.twig', [
+            'resourcesToValidateNumber' => $resourcesToValidateNumber,
+            'resourcesMostCommented' => $resourcesMostCommented
+        ]);
     }
 
     public function configureDashboard(): Dashboard

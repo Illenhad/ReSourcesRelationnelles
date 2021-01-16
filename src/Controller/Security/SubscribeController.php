@@ -15,6 +15,9 @@ class SubscribeController extends AbstractController
 {
     /**
      * @Route("/subscribe", name="subscribe")
+     * @param Request $request
+     * @param UserPasswordEncoderInterface $encoder
+     * @return Response
      */
     public function index(Request $request, UserPasswordEncoderInterface $encoder): Response
     {
