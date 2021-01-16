@@ -15,7 +15,7 @@ class CommentFixture extends Fixture implements DependentFixtureInterface
     public function load(ObjectManager $manager)
     {
         $faker = Factory::create('fr_FR');
-        self::$numberOfComments = 200;
+        self::$numberOfComments = 2000;
 
         for ($i = 1; $i <= self::$numberOfComments; ++$i) {
             $comment = new Comment();

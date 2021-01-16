@@ -30,6 +30,8 @@ class UserDashBoardModel
     }
 
     /**
+     * @param EntityManagerInterface $manager
+     * @param User $user
      * @return mixed
      */
     public function getNumberOfSharedResource(EntityManagerInterface $manager, User $user)
@@ -97,6 +99,8 @@ class UserDashBoardModel
     }
 
     /**
+     * @param EntityManagerInterface $manager
+     * @param User $user
      * @return array
      */
     public function getSharedResources(EntityManagerInterface $manager, User $user)
@@ -110,6 +114,12 @@ class UserDashBoardModel
         return $this->putResourcesInTab($query->getResult());
     }
 
+    /**
+     * @param EntityManagerInterface $manager
+     * @param int $actionTypeId
+     * @param User $user
+     * @return array
+     */
     public function getResourcesByActionType(EntityManagerInterface $manager, int $actionTypeId, User $user)
     {
         $actionType = $manager->getRepository(ActionType::class)->find($actionTypeId);

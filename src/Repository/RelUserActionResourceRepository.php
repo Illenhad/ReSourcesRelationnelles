@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\RelUserActionResource;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\DBAL\Exception;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -19,8 +20,33 @@ class RelUserActionResourceRepository extends ServiceEntityRepository
         parent::__construct($registry, RelUserActionResource::class);
     }
 
+    /**
+     * @return int
+     */
+    public function getResourceToValidateNumber() : int {
+
+        $connexion = $this->getEntityManager()->getConnection();
+
+        $sql = '
+            SELECT DISTINCT resource_id FROM rel_user_action_resource 
+            WHERE id NOT IN (
+                SELECT resource_id FROM rel_user_action_resource 
+                WHERE action_type_id = :actionTypeId
+            )';
+
+        try {
+            $statement = $connexion->prepare($sql);
+            $statement->execute(['actionTypeId' => 3]);
+            return $statement->rowCount();
+        } catch (Exception $e) {
+            return -1;
+        } catch (\Doctrine\DBAL\Driver\Exception $e) {
+            return -1;
+        }
+    }
+
     // /**
-    //  * @return RelUserActionResource[] Returns an array of RelUserActionResource objects
+    //  * @return RelUserActionResource[] Returns an array of RelUse    rActionResource objects
     //  */
     /*
     public function findByExampleField($value)
