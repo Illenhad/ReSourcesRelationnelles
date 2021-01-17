@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\Comment;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\RangeType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -23,8 +24,8 @@ class CommentType extends AbstractType
                 TextType::class,
                 [
                     'attr' => ['placeholder' => 'Ajouter un titre...',
-                        'class' => 'form-control card w-50 text-center mx-auto ',
-                        ],
+                        'class' => 'form-control  mb-4 card w-50 text-center mx-auto ',
+                    ],
                     'label' => 'Titre',
                 ]
             )
@@ -42,7 +43,7 @@ class CommentType extends AbstractType
             )
             ->add(
                 'valuation',
-                RangeType::class,
+                HiddenType::class,
                 [
                     'attr' => [
                         'min' => 0,
@@ -57,9 +58,10 @@ class CommentType extends AbstractType
                 SubmitType::class,
                 [
                     'attr' => [
-                        'class' => 'btn btn-primary mt-4 mb-4 ',
+                        'class' => 'btn btn-primary  mb-4 mt-4 mx-auto',
                     ],
                     'label' => 'Envoyer',
+
                 ]
             );
     }

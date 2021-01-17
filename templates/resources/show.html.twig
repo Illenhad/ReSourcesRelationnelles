@@ -1,45 +1,90 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/rating.css') }}" type="text/css">
+    <script src="{{ asset('js/jquery-3.5.1.min.js') }}"></script>
+{% endblock %}
 {% block body %}
 
-    {{ resource.title }}
-    {{ resource.description }}
+    <div class="container text-center" style="border: 1px solid silver;height:60px;">
+        {{ resource.title }}
+    </div>
+
+    posté le {{ resource.dateCreation|date("d.m.Y à h:m") }}
+
+    <div class="container" style="border: 1px solid silver;height:60px;">
+        {{ resource.description }}
+    </div>
+
+    <div class="container">
+        <span class="card">
+            Informations
+            <span class="card-header ">  {{ resource.resourceType }} </span>
+            <span class="card-header">  {{ resource.ageCategory }} </span>
+            <span class="card-header">  {{ resource.relationShip.label }} </span>
+        </span>
+
+    </div>
 
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-
     <h3 class="text-center text-dark">Liste des commentaires </h3>
 
-
-
-    <div class="card  text-center">
-
+    <div class="container">
 
     {% for comment in resource.comments %}
 
-
-
-        <div class="container">
-
-            <div class="card  mt-4 w-50 text-center mx-auto ">
-                <div class="card-header  ">
-                    De {{ comment.user.username }}
-                </div>
-                <div class="card-body ">
-                    <h5 class="card-title">{{ comment.title }}</h5>
-                    <p class="card-text">{{ comment.content }}</p>
-                    <p class="card-text">Note {{ comment.valuation }} / 5</p>
-                    <a href="#" class="btn btn-primary">Répondre</a>
-                </div>
-                <div class="card-footer text-muted">
-                    posté le {{ comment.commentDate|date }}
-                </div>
+        <div class="card  mt-4 w-50 text-center mx-auto ">
+            <div class="card-header  ">
+                De {{ comment.user.username }}
+            </div>
+            <div class="card-body ">
+                <h5 class="card-title">{{ comment.title }}</h5>
+                <p class="card-text">{{ comment.content }}</p>
+                <p class="card-text">Note {{ comment.valuation }} / 5</p>
+                <a href="#" class="btn btn-primary">Répondre</a>
+            </div>
+            <div class="card-footer text-muted">
+                posté le {{ comment.commentDate|date }}
             </div>
         </div>
+
     {% endfor %}
 
-    <h2 class="text-center pt-5">Ajouter un commentaire </h2>
+    <div class="card  mt-4 w-50 text-center mx-auto ">
+    <h4> Votre commentaire </h4>
 
 
-    {{ form(form) }}
+    {{ form_start(form) }}
+    {{ form_widget(form.title) }}
+    {{ form_widget(form.content) }}
+    {{ form_widget(form.valuation) }}
+
+
+    <div class=" rating">
+        <input type="radio" name="rating" value="5" id="5">
+        <label for="5">☆</label>
+        <input type="radio" name="rating" value="4" id="4">
+        <label for="4">☆</label>
+        <input type="radio" name="rating" value="3" id="3">
+        <label for="3">☆</label>
+        <input type="radio" name="rating" value="2" id="2">
+        <label for="2">☆</label>
+        <input type="radio" name="rating" value="1" id="1">
+        <label for="1">☆</label>
+    </div>
+    {{ form_widget(form.submit) }}
+    {{ form_end(form) }}
+
+    {% block javascripts %}
+        <script>
+            $(document).ready(function () {
+                $("input[name='rating']").click(function () {
+                    $("#comment_valuation").val($(this).val());
+
+                });
+            });
+        </script>
+
+    {% endblock %}
 {% endblock %}
