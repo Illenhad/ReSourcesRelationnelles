@@ -11,7 +11,7 @@
             posté le {{ resource.dateCreation|date("d.m.Y à h:m") }}
 
         </div>
-        <img class="card-img-top" src="https://picsum.photos/200/200" alt="">
+        <img class="card-img-top" src="https://picsum.photos/300/300" alt="">
         <div class="card-body ">
             <h5 class="card-title text-truncate text-center "><a
                         href="{{ path('app_resource_show', {id: resource.id, slug: resource.slug}) }}">
@@ -46,7 +46,7 @@
                 Il n'y a pas encore d'évaluation.
             {% endif %}
             <br>
-            {{ resource.comments | length }} commentaires
+            <img src="https://img.icons8.com/color/30/000000/chat--v1.png"/> {{ resource.comments | length }}
 
         </div>
     </div>
