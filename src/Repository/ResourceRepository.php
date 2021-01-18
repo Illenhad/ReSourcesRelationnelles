@@ -86,7 +86,7 @@ class ResourceRepository extends ServiceEntityRepository
         return $query->getQuery();
     }
 
-    public function getMostCommentedResources(EntityManagerInterface $manager) {
+    public function getMostCommentedResources() {
 
         $connexion = $this->getEntityManager()->getConnection();
 
@@ -107,7 +107,7 @@ class ResourceRepository extends ServiceEntityRepository
             $tabResources = [];
             $i = 0;
             foreach ($statement->fetchAllAssociative() as $row) {
-                $tabResources[$i] = $manager->getRepository(Resource::class)->find($row['id']);
+                $tabResources[$i] = $this->getEntityManager()->getRepository(Resource::class)->find($row['id']);
                 $i++;
             }
             return $tabResources;

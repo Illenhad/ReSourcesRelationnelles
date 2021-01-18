@@ -1,0 +1,22 @@
+.div-cartouche {
+    border-radius: 5px;
+}
+
+.div-red-cartouche {
+    height: 80px;
+}
+
+.div-blue-green-cartouche {
+    height: 70px;
+}
+
+.div-cartouche-header {
+    padding-top: 5%;
+    padding-bottom: 5%;
+    border-bottom: solid white 0.1em;
+}
+
+.div-cartouche-under-header {
+    padding-top: 5%;
+    padding-bottom: 5%;
+}
