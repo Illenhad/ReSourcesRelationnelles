@@ -55,18 +55,18 @@
         <div class="row">
 
         <!--Filtre-->
-
-            <div class="col col-sm-2 ">
-                <div class="container position-sticky mt-lg-5  bg-light" style="top:20px;">
+            <div class="col col-sm-2  ">
+                <div class="container position-sticky mt-lg-5 card p-sm-3" style="top:20px;">
+                    <h2>Filtre</h2>
                     {{ form_start(filter) }}
-                    <div class="col align-items-end">
-                        <div class="row">
+                    <div class="col">
+                        <div class="row d-inline-block w-auto" >
                             {{ form_row(filter.type, { 'label' : 'Type de Ressources'}) }}
                         </div>
-                        <div class="row ">
+                        <div class="row d-inline-block w-auto">
                             {{ form_row(filter.relation ,{'label' : 'Type de Relation'}) }}
                         </div>
-                        <div class="row ">
+                        <div class="row d-inline-block w-auto">
                             {{ form_row(filter.age , {'label' : "Tranches d'âge"}) }}
                         </div>
                         <div class="row-md-auto">
@@ -225,5 +225,15 @@
             $('.selectTags').select2();
         })
     </script>
+<script>
+    var collapseElementList = [].slice.call(document.querySelectorAll('.collapse'))
+    var collapseList = collapseElementList.map(function (collapseEl) {
+    return new bootstrap.Collapse(collapseEl)
+    })
+    $('#myCollapsible').collapse({
+        toggle: true
+    })
+</script>
+
 {% endblock %}
 
