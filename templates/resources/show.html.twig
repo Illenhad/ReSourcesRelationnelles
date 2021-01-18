@@ -10,7 +10,7 @@
         {{ resource.title }}
     </div>
 
-    posté le {{ resource.dateCreation|date("d.m.Y à h:m") }}
+    posté le {{ resource.dateCreation|date("d.m.Y à H:i", "Europe/Paris") }}
 
     <div class="container" style="border: 1px solid silver;height:60px;">
         {{ resource.description }}
@@ -47,11 +47,19 @@
                         <label for="{{ i }}">☆</label>
                     {% endfor %}
                 </div>
-                <a href="#" class="btn btn-primary">Répondre</a>
+                <a href="{{ path('resources') }}" class="btn btn-primary">Répondre</a>
+            {% if app.user== comment.user %}
+
+                    <a href="{{ path('comment.edit', {id: comment.id} ) }}" class="btn btn-secondary">Modifier</a>
+
+
+            {% endif %}
             </div>
             <div class="card-footer text-muted">
                 posté le {{ comment.commentDate|date }}
             </div>
+
+
         </div>
 
     {% endfor %}

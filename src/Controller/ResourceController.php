@@ -3,8 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\ActionType;
-use App\Entity\Comment;
 use App\Entity\AgeCategory;
+use App\Entity\Comment;
 use App\Entity\RelationshipType;
 use App\Entity\RelUserActionResource;
 use App\Entity\Resource;
@@ -41,11 +41,6 @@ class ResourceController extends AbstractController
 
     /**
      * @Route("", name="resources")
-     *
-     * @param Request $request
-     * @param ResourceRepository $resourceRepository
-     * @param PaginatorInterface $paginator
-     * @return Response
      */
     public function index(Request $request, ResourceRepository $resourceRepository, PaginatorInterface $paginator): Response
     {
@@ -121,8 +116,35 @@ class ResourceController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->render(self::ROUTE_PREFIX.'/show.html.twig', [
+        return $this->render(self::ROUTE_PREFIX . '/show.html.twig', [
             'resource' => $resource,
+            'current_menu' => 'resources',
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("comment/{id}/edit", name="comment.edit")
+     *
+     * @param int $commentId
+     */
+    public function editComment(Request $request, int $id, EntityManagerInterface $entityManager): Response
+    {
+        $comment = $entityManager->getRepository(Comment::class)->find($id);
+
+        $form = $this->createForm(CommentType::class, $comment);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            if ($comment->getUser() !== $this->getUser()) {
+                return $this->redirectToRoute('resources');
+            }
+            $entityManager->persist($comment);
+            $entityManager->flush();
+        }
+
+        return $this->render(self::ROUTE_PREFIX . '/editComment.html.twig', [
+            'comment' => $comment,
             'current_menu' => 'resources',
             'form' => $form->createView(),
         ]);
