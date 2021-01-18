@@ -19,6 +19,16 @@ class RelSharedResourceUserFixture extends Fixture implements DependentFixtureIn
             $relSharedResourceUser->setResource($this->getReference('resource'.$faker->numberBetween(1, ResourceFixture::$numberOfResources)));
             $relSharedResourceUser->setSharerUser($this->getReference('user'.$faker->numberBetween(1, UserFixture::$numberOfUsers)));
             $relSharedResourceUser->setSharedWithUser($this->getReference('user'.$faker->numberBetween(1, UserFixture::$numberOfUsers)));
+            $relSharedResourceUser->setShareDate($faker->dateTimeBetween('-2 years', 'now', null));
+            $manager->persist($relSharedResourceUser);
+        }
+
+        for ($i = 1; $i <= 10; ++$i) {
+            $relSharedResourceUser = new RelSharedResourceUser();
+            $relSharedResourceUser->setResource($this->getReference('resource'.$faker->numberBetween(1, ResourceFixture::$numberOfResources)));
+            $relSharedResourceUser->setSharerUser($this->getReference('user'.$faker->numberBetween(1, UserFixture::$numberOfUsers)));
+            $relSharedResourceUser->setSharedWithUser($this->getReference('user'.$faker->numberBetween(1, UserFixture::$numberOfUsers)));
+            $relSharedResourceUser->setShareDate(new \DateTime('now'));
             $manager->persist($relSharedResourceUser);
         }
 

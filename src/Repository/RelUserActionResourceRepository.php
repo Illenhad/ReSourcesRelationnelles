@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\RelUserActionResource;
+use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\DBAL\Exception;
 use Doctrine\Persistence\ManagerRegistry;
@@ -43,6 +44,20 @@ class RelUserActionResourceRepository extends ServiceEntityRepository
         } catch (\Doctrine\DBAL\Driver\Exception $e) {
             return -1;
         }
+    }
+
+    public function getCurrentDayResourcesConsultedNumber() {
+
+        $manager = $this->getEntityManager();
+
+        $query = $manager->createQuery('
+            SELECT count(r)
+            FROM App\Entity\RelUserActionResource r
+            WHERE r.actionDate BETWEEN :date1 AND :date2
+        ')-> setParameter('date1', new DateTime('today'))
+        ->setParameter('date2', new DateTime('now'));
+
+        return $query->getScalarResult()[0][1];
     }
 
     // /**

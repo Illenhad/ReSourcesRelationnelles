@@ -9,6 +9,7 @@ use App\Entity\Comment;
 use App\Entity\Department;
 use App\Entity\ManagementType;
 use App\Entity\RelationshipType;
+use App\Entity\RelSharedResourceUser;
 use App\Entity\RelUserActionResource;
 use App\Entity\Resource;
 use App\Entity\Role;
@@ -55,11 +56,23 @@ class DashboardController extends AbstractDashboardController
         $currentDayCommentsNumber = $this->manager->getRepository(Comment::class)->getCurrentDayCommentNumber();
         $currentDayComments = $this->manager->getRepository(Comment::class)->getCurrentDayComments();
 
+        //Stat du jour - Consulations
+        $currentDayResourcesConsultedNumber = $this->manager->getRepository(RelUserActionResource::class)->getCurrentDayResourcesConsultedNumber();
+        $currentDayResourcesConsulted = $this->manager->getRepository(Resource::class)->getCurrentDayConsultedResources();
+
+        //Stat du jour - Partages
+        $currentDaySharedResourcesNumber = $this->manager->getRepository(RelSharedResourceUser::class)->getCurrentDaySharedResourceNumber();
+        $currentDaySharedResources = $this->manager->getRepository(Resource::class)->getCurrentDaySharedResources();
+
         return $this->render('bundles/EasyAdminBundle/welcome.html.twig', [
             'resourcesToValidateNumber' => $resourcesToValidateNumber,
             'resourcesMostCommented' => $resourcesMostCommented,
             'currentDayCommentsNumber' => $currentDayCommentsNumber,
-            'currentDayComments' => $currentDayComments
+            'currentDayComments' => $currentDayComments,
+            'currentDayResourcesConsultedNumber' => $currentDayResourcesConsultedNumber,
+            'currentDayResourcesConsulted' => $currentDayResourcesConsulted,
+            'currentDaySharedResourcesNumber' => $currentDaySharedResourcesNumber,
+            'currentDaySharedResources' => $currentDaySharedResources
         ]);
     }
 

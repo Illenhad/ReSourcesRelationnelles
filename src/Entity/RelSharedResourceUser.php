@@ -45,6 +45,11 @@ class RelSharedResourceUser
      */
     private $resource;
 
+    /**
+     * @ORM\Column(type="date")
+     */
+    private $shareDate;
+
     public function getId(): int
     {
         return $this->id;
@@ -82,6 +87,18 @@ class RelSharedResourceUser
     public function setResource(resource $resource): RelSharedResourceUser
     {
         $this->resource = $resource;
+
+        return $this;
+    }
+
+    public function getShareDate(): ?\DateTimeInterface
+    {
+        return $this->shareDate;
+    }
+
+    public function setShareDate(\DateTimeInterface $shareDate): self
+    {
+        $this->shareDate = $shareDate;
 
         return $this;
     }
