@@ -31,6 +31,19 @@ class CommentFixture extends Fixture implements DependentFixtureInterface
             $this->addReference('comment'.$i, $comment);
         }
 
+        for ($i = 1; $i <= 3; ++$i) {
+            $comment = new Comment();
+            $comment
+                ->setTitle($faker->word())
+                ->setContent($faker->sentences(2, true))
+                ->setValuation($faker->numberBetween(1, 5))
+                ->setUser($this->getReference('user'.$faker->numberBetween(1, UserFixture::$numberOfUsers)))
+                ->setResource($this->getReference('resource'.$faker->numberBetween(1, ResourceFixture::$numberOfResources)))
+            ;
+            $comment->setCommentDate(new \DateTime('now'));
+            $manager->persist($comment);
+        }
+
         $manager->flush();
     }
 
