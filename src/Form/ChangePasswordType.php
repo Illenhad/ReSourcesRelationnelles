@@ -2,24 +2,23 @@
 
 namespace App\Form;
 
-use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ChangePasswordType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('old_password', null, [
-                'label' => 'Mot de passe'
+            ->add('old_password', PasswordType::class, [
+                'label' => 'Mot de passe',
             ])
-            ->add('new_password', null, [
-                'label' => 'Nouveau mot de passe'
+            ->add('new_password', PasswordType::class, [
+                'label' => 'Nouveau mot de passe',
             ])
-            ->add('new_password_confirm', null, [
-                'label' => 'Confirmez le nouveau mot de passe'
+            ->add('new_password_confirm', PasswordType::class, [
+                'label' => 'Confirmez le nouveau mot de passe',
             ])
         ;
     }
