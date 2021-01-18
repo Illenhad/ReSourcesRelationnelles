@@ -1,0 +1,223 @@
+{% extends 'base.html.twig' %}
+
+{% block title 'toutes nos ressources' %}
+
+
+
+{% block stylesheets %}
+    <style>
+        .btn-primary {
+            color: ghostwhite;
+            background-color: dodgerblue;
+            border-color: ghostwhite;
+            text-decoration: none;
+        }
+
+        select {
+            display: block
+        }
+    </style>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet"/>
+{% endblock %}
+
+{% block body %}
+
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{{ path('login') }}">Connexion</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{{ path('resources') }}">Accueil</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{{ path('user_dashboard') }}">Espace personnel</a>
+                    </li>
+
+                </ul>
+
+                <form class="d-flex" method="get" action="{{ path('resources') }}">
+                    <input class="form-control me-2" type="search" placeholder="Ex : Comment devenir un jedi"
+                           aria-label="Recherche" name="search"/>
+                    <input class="btn btn-light" type="submit" value="Recherche"/>
+                </form>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+
+
+        <!--Filtre-->
+        <div class="container bg-light">
+            {{ form_start(filter) }}
+            <div class="row align-items-end">
+                <div class="col">
+                    {{ form_row(filter.type, { 'label' : 'Type de Ressources'}) }}
+                </div>
+                <div class="col ">
+                    {{ form_row(filter.relation ,{'label' : 'Type de Relation'}) }}
+                </div>
+                <div class="col ">
+                    {{ form_row(filter.age , {'label' : "Tranches d'âge"}) }}
+                </div>
+                <div class="col-md-auto">
+                    <button class="btn btn-primary ">Filtrer</button>
+                </div>
+            </div>
+            {{ form_end(filter) }}
+        </div>
+
+
+        <div class="container mt-4">
+            <h3 style="color:dodgerblue"> Dernières ressources </h3>
+            <div class="row">
+                {% for resource in resources %}
+                <div class="col-md-4"
+
+                {% include'resources/_resource.html.twig' %}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="pagination text-center mt-4">
+        {{ knp_pagination_render(resources) }}
+    </div>
+
+    {% if resources is empty %}
+        <div class="alert alert-danger">
+            Aucune ressource ne correspond à votre recherche
+        </div>
+    {% endif %}
+    </div>
+
+    <footer class=" text-secondary text-center text-lg-start style= background-color: #ffffff">
+
+        <div class="container p-4">
+
+            <div class="row">
+
+                <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+
+
+                    <img src="{{ asset('image/logo2.png') }}" alt="" width="50%">
+
+
+                </div>
+
+                <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+
+
+                    <ul class="list-unstyled mb-0">
+                        <li>
+                            <a href="https://solidarites-sante.gouv.fr/" class="text-secondary">Plan du site </a>
+                        </li>
+                        <li>
+
+                            <a href="https://gouvernement-et-citoyens.consultation.etalab.gouv.fr/"
+                               class="text-secondary">Accesibilité</a>
+                        </li>
+                        <li>
+                            <a href="https://solidarites-sante.gouv.fr/" class="text-secondary">Mention légale</a>
+                        </li>
+                        <li>
+                            <a href="https://solidarites-sante.gouv.fr/" class="text-secondary">Données et RGPD </a>
+                        </li>
+
+                    </ul>
+                </div>
+
+
+                <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                    <h5 class="text-uppercase">Liens utiles</h5>
+
+                    <ul class="list-unstyled mb-0">
+                        <li>
+                            <a href="https://solidarites-sante.gouv.fr/" class="text-secondary">Site du
+                                gouvernement </a>
+                        </li>
+                        <li>
+
+                            <a href="https://gouvernement-et-citoyens.consultation.etalab.gouv.fr/"
+                               class="text-secondary">Participation
+                                citoyenne</a>
+                        </li>
+
+                    </ul>
+                </div>
+
+
+                <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+
+                    <h5 class="text-uppercase">Suivez-nous</h5>
+
+                    <div class="container">
+                        <div class="row">
+
+                            <div class="col">
+                                <a href="https://www.facebook.com/MinSoliSante">
+                                    <img src="https://img.icons8.com/color/48/000000/facebook-new.png"/>
+                                </a>
+                            </div>
+
+                            <div class="col">
+                                <a href="https://twitter.com/MinSoliSante?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor">
+                                    <img src="https://img.icons8.com/fluent/48/000000/twitter.png"/>
+                                </a>
+                            </div>
+
+                            <div class="col ">
+                                <a href="https://www.linkedin.com/company/minist%C3%A8re-des-solidarites-de-la-sant%C3%A9/">
+                                    <img src="https://img.icons8.com/fluent/48/000000/linkedin.png"/>
+                                </a>
+                            </div>
+                            <div class="col ">
+                                <a href="https://www.instagram.com/explore/locations/584326962/ministere-des-solidarites-et-de-la-sante/?hl=fr">
+                                    <img src="https://img.icons8.com/fluent/48/000000/instagram-new.png"/>
+                                </a>
+                            </div>
+                            <div class="col ">
+                                <a href="https://www.youtube.com/channel/UCApzB6X-04YRPq9SZ0WfEsg">
+                                    <img src="https://img.icons8.com/color/48/000000/youtube.png"/>
+                                </a>
+                            </div>
+                            <div class="col ">
+                                <a href="https://www.snapchat.com/add/gouvernementFR">
+                                    <img src="https://img.icons8.com/fluent/48/000000/snapchat.png"/>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="bg-light text-center text-lg-start">
+
+            <div class="text-center " style="background-color: rgba(0, 0, 0, 0.2)">
+                © 2021 Copyright:
+                <a class="text-dark"
+                   href="https://les-semi-croustillants.atlassian.net/jira/software/projects/SP/boards/3">Les semis
+                    croustillants</a>
+            </div>
+        </footer>
+    </footer>
+{% endblock %}
+
+
+{% block javascripts %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+    <script>
+        $(function () {
+            $('.selectTags').select2();
+        })
+    </script>
+{% endblock %}
+

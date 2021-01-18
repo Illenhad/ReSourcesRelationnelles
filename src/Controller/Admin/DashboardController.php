@@ -2,6 +2,21 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\ActionType;
+use App\Entity\AgeCategory;
+use App\Entity\Category;
+use App\Entity\Department;
+use App\Entity\ManagementType;
+use App\Entity\RelationshipType;
+use App\Entity\RelUserActionResource;
+use App\Entity\Resource;
+use App\Entity\Role;
+use App\Entity\User;
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Persistence\ObjectManager;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
@@ -10,35 +25,15 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class DashboardController extends AbstractDashboardController
 {
-    /**
-     * @var array : few statistics passed in view
-     */
-    private $stats_prop;
 
     /**
-     * @var array : last 5 ressources created
+     * @var ObjectManager
      */
-    private $last_ress;
+    private $manager;
 
-    /**
-     * DashboardController constructor.
-     */
-    public function __construct()
+    public function __construct(EntityManagerInterface $manager)
     {
-        // TODO: données de tests, créer la récupération en base
-        $this->stats_prop = [
-            ['title' => 'Utilisateur(s) connecté(s)', 'value' => 85, 'class' => 'bg-success'],
-            ['title' => 'Modérateur(s) connecté(s)', 'value' => 12, 'class' => 'bg-primary'],
-            ['title' => 'Ressource(s) en attente de validation', 'value' => 204, 'class' => 'bg-dark'],
-            ['title' => 'Ressource(s) à vérifier', 'value' => 72, 'class' => 'bg-dark']
-        ];
-        $this->last_ress = [
-            ['id' => 597, 'name' => 'Les bienfaits de la méditation', 'user' => 'kevindu62', 'date' => '12-12-2020 20h30'],
-            ['id' => 596, 'name' => 'La permaculture pour les nuls', 'user' => 'bgtuning', 'date' => '12-12-2020 20h29'],
-            ['id' => 595, 'name' => 'La croche, tu décroches !', 'user' => 'amandinedu38', 'date' => '12-12-2020 20h25'],
-            ['id' => 594, 'name' => 'Reconnaitre l\'intolérance au lactose', 'user' => 'lavachekiri', 'date' => '12-12-2020 20h10'],
-            ['id' => 592, 'name' => 'Je suis le meilleurs', 'user' => 'michaelvandetta', 'date' => '12-12-2020 19h59']
-        ];
+        $this->manager = $manager;
     }
 
     /**
@@ -46,28 +41,74 @@ class DashboardController extends AbstractDashboardController
      */
     public function index(): Response
     {
+        //Ressources à valider
+        $resourcesToValidateNumber = $this->manager->getRepository(RelUserActionResource::class)->getResourceToValidateNumber();
+        if ($resourcesToValidateNumber == -1) {
+            $resourcesToValidateNumber = 'N/A';
+        }
+
+        //Ressources les plus commentées
+        $resourcesMostCommented = $this->manager->getRepository(Resource::class)->getMostCommentedResources($this->manager);
+
         return $this->render('bundles/EasyAdminBundle/welcome.html.twig', [
-            'stats_prop' => $this->stats_prop,
-            'last_ress' => $this->last_ress
+            'resourcesToValidateNumber' => $resourcesToValidateNumber,
+            'resourcesMostCommented' => $resourcesMostCommented
         ]);
     }
 
     public function configureDashboard(): Dashboard
     {
         return Dashboard::new()
-            ->setTitle('(RE)Sources Relationnelles');
+            ->setTitle('[RE]Sources<br//>Relationnelles')
+            ->renderContentMaximized(true);
+    }
+
+    public function configureActions(): Actions
+    {
+        return parent::configureActions()
+            ->update(
+                Crud::PAGE_INDEX,
+                Action::EDIT,
+                function (Action $action) {
+                    return $action
+                        ->setIcon('fa fa-pencil')
+                        ->setLabel(false)
+                        ->addCssClass('btn btn-secondary');
+                }
+            )
+            ->update(
+                Crud::PAGE_INDEX,
+                Action::DELETE,
+                function (Action $action) {
+                    return $action
+                        ->setIcon('fa fa-trash')
+                        ->setLabel(false)
+                        ->addCssClass('btn btn-danger text-light')
+                        ->setHtmlAttributes([
+                            'style',
+                        ]);
+                }
+            );
     }
 
     public function configureMenuItems(): iterable
     {
         return [
             MenuItem::linktoDashboard('Accueil', 'fa fa-home'),
-            MenuItem::section('Utilisateurs', 'fa fa-users'),
-            // TODO: Ajouter la gestion des utilisateurs
+            MenuItem::section('Administration', 'fa fa-users-cog'),
+            MenuItem::linkToCrud('Utilisateurs', 'fa fa-users', User::class),
+            MenuItem::linkToCrud('Catégories d\'ages', 'fa fa-hourglass', AgeCategory::class),
+            MenuItem::linkToCrud('Rôles', 'fa fa-user-tag', Role::class),
+            MenuItem::linkToCrud('Départements', 'fa fa-map-marker-alt', Department::class),
             MenuItem::section('Ressources', 'fa fa-book'),
-            // TODO: Ajouter la gestion des ressources
-            MenuItem::section('Statistiques', 'fa fa-chart-pie')
-            // TODO: Ajouter la gestion des statistiques
+            MenuItem::linkToCrud('Ressources', 'fa fa-book-open', Resource::class),
+            MenuItem::linkToCrud('Catégorie', 'fa fa-bookmark', Category::class),
+            MenuItem::linkToCrud('Type de relations', 'fa fa-people-arrows', RelationshipType::class),
+            MenuItem::linkToCrud('Type de gestion', 'fa fa-star', ManagementType::class),
+            MenuItem::linkToCrud('Type d\'actions', 'fa fa-hand-point-up', ActionType::class),
+            MenuItem::section('Statistiques', 'fa fa-chart-pie'),
+            MenuItem::linktoRoute('Utilisateurs', 'fa fa-users', 'users-stats'),
+            MenuItem::linktoRoute('Ressources', 'fa fa-book', 'resources-stats'),
         ];
     }
 }

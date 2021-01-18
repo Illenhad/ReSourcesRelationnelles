@@ -1,0 +1,8 @@
+.content-panel-body{
+  background-color: var(--body-bg);
+  box-shadow: #0d5e42;
+}
+
+.content-panel {
+  box-shadow: none;
+}

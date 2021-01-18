@@ -1,0 +1,43 @@
+.h2 {
+    color: rgb(3, 152, 158);
+    margin: 3%;
+}
+
+.input-group-text {
+    background-color: rgb(255, 188, 90);
+}
+
+.div-personal-info {
+    background-color: rgb(255, 188, 90, 0.3);
+}
+
+.btn-perso, .card-linked {
+    background-color: rgb(3, 152, 158);
+    color: white;
+}
+
+.btn-selected {
+    background-color: rgb(255, 188, 90);
+    color: white;
+}
+
+.card-not-linked {
+    background-color: rgb(255, 188, 90);
+}
+
+.card-linked {
+    text-decoration: none;
+}
+
+.card-linked:hover {
+    color: black;
+}
+
+.tab-header {
+    background-color: rgb(255, 188, 90);
+}
+
+/*form resource*/
+.field-description {
+    height: 20em;
+}

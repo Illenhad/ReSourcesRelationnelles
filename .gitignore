@@ -57,3 +57,11 @@
 # Local variables
 .env.local
 .env.$APP_ENV.local
+
+# Server script
+phpserve.bat
+
+###> friendsofphp/php-cs-fixer ###
+/.php_cs
+/.php_cs.cache
+###< friendsofphp/php-cs-fixer ###

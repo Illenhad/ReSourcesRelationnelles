@@ -9,39 +9,53 @@
     {# Pour surcharger la vue, effectuer les modifications depuis templates/bundles/easyadminBundles #}
 
     <div class="row">
-        {% for property in stats_prop %}
-            <div class="col-3">
-                <div class="card text-white {{ property['class'] }} mb-3" style="max-width: 18rem;">
-                    <div class="card-header text-white">{{ property['title'] }}</div>
-                    <div class="card-body">
-                        <p class="card-text h1 text-white text-center">{{ property['value'] }}</p>
-                    </div>
+        <div class="col-2">
+            <div class="card text-white bg-danger mb-3">
+                <div class="card-header text-white text-center">Ressources à valider</div>
+                <div class="card-body">
+                    <p class="card-text h4 text-white text-center">{{ resourcesToValidateNumber }}</p>
                 </div>
             </div>
-        {% endfor %}
-    </div>
-    <div class="row mt-4">
-    <h4>Dernières ressources</h4>
-        <table class="table">
-            <thead class="thead-dark">
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">Nom</th>
-                <th scope="col">Utilisateur</th>
-                <th scope="col">Date</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for ress in last_ress %}
-                <tr>
-                    <td>{{ ress['id'] }}</td>
-                    <td>{{ ress['name'] }}</td>
-                    <td>{{ ress['user'] }}</td>
-                    <td>{{ ress['date'] }}</td>
-                </tr>
+        </div>
+        <div class="col-10 row">
+            <div class="col-1"></div>
+            <div class="card text-white bg-danger mb-3 col-2">
+                <div class="card-body">
+                    <p class="card-text text-white text-center">Ressources les plus commentées</p>
+                </div>
+            </div>
+            {% for resource in resourcesMostCommented %}
+            <a href="{{ path('app_resource_show', {id: resource.id, slug: resource.slug}) }}" class="card text-white bg-danger mb-3 col-2">
+                <div class="card-header text-white text-center text-truncate">{{ resource.title }}</div>
+                <div class="card-body">
+                    <p class="card-text text-white text-center text-truncate">{{ resource.user }}</p>
+                </div>
+            </a>
             {% endfor %}
-            </tbody>
-        </table>
+        </div>
     </div>
+{#    <div class="row mt-4">#}
+{#    <h4>Dernières ressources</h4>#}
+{#        <table class="table">#}
+{#            <thead class="thead-dark">#}
+{#            <tr>#}
+{#                <th scope="col">#</th>#}
+{#                <th scope="col">Nom</th>#}
+{#                <th scope="col">Utilisateur</th>#}
+{#                <th scope="col">Date</th>#}
+{#            </tr>#}
+{#            </thead>#}
+{#            <tbody>#}
+{#            {% for ress in last_ress %}#}
+{#                <tr>#}
+{#                    <td>{{ ress['id'] }}</td>#}
+{#                    <td>{{ ress['name'] }}</td>#}
+{#                    <td>{{ ress['user'] }}</td>#}
+{#                    <td>{{ ress['date'] }}</td>#}
+{#                </tr>#}
+{#            {% endfor %}#}
+{#            </tbody>#}
+{#        </table>#}
+{#    </div>#}
 
 {% endblock %}

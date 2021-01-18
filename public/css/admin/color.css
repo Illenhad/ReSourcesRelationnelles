@@ -1,0 +1,30 @@
+:root {
+  /*Bootstrap color*/
+  --color-danger: #dc3545 !important;
+  --color-primary: #2965a7 !important;
+  --color-info: #17a2b8 !important;
+  --color-success: #1ea471 !important;
+  --color-warning: #ffc107 !important;
+
+  /*Link color*/
+  --link-color: #2965a7 !important;
+  --link-hover-color: #2965a7 !important;
+
+  /*Text color*/
+  --text-color-light: #f8f9fa !important;
+}
+
+/*Nav button*/
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+  background-color: var(--color-primary);
+}
+
+a {
+  color: var(--color-primary);
+}
+
+/**/
+.custom-control-input:checked~.custom-control-label:before {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+}
