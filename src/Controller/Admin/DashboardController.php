@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\ActionType;
 use App\Entity\AgeCategory;
 use App\Entity\Category;
+use App\Entity\Comment;
 use App\Entity\Department;
 use App\Entity\ManagementType;
 use App\Entity\RelationshipType;
@@ -48,11 +49,17 @@ class DashboardController extends AbstractDashboardController
         }
 
         //Ressources les plus commentées
-        $resourcesMostCommented = $this->manager->getRepository(Resource::class)->getMostCommentedResources($this->manager);
+        $resourcesMostCommented = $this->manager->getRepository(Resource::class)->getMostCommentedResources();
+
+        //Stat du jour - Commentaires
+        $currentDayCommentsNumber = $this->manager->getRepository(Comment::class)->getCurrentDayCommentNumber();
+        $currentDayComments = $this->manager->getRepository(Comment::class)->getCurrentDayComments();
 
         return $this->render('bundles/EasyAdminBundle/welcome.html.twig', [
             'resourcesToValidateNumber' => $resourcesToValidateNumber,
-            'resourcesMostCommented' => $resourcesMostCommented
+            'resourcesMostCommented' => $resourcesMostCommented,
+            'currentDayCommentsNumber' => $currentDayCommentsNumber,
+            'currentDayComments' => $currentDayComments
         ]);
     }
 
