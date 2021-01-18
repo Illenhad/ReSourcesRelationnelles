@@ -59,20 +59,18 @@
                 <div class="container position-sticky mt-lg-5 card p-sm-3" style="top:20px;">
                     <h2>Filtre</h2>
                     {{ form_start(filter) }}
-                    <div class="col">
-                        <div class="row d-inline-block w-auto" >
+                        <div class="row d-flex w-auto overflow-auto " >
                             {{ form_row(filter.type, { 'label' : 'Type de Ressources'}) }}
                         </div>
-                        <div class="row d-inline-block w-auto">
+                        <div class="row d-flex w-auto overflow-auto " >
                             {{ form_row(filter.relation ,{'label' : 'Type de Relation'}) }}
                         </div>
-                        <div class="row d-inline-block w-auto">
+                        <div class="row d-flex w-auto overflow-auto " >
                             {{ form_row(filter.age , {'label' : "Tranches d'âge"}) }}
                         </div>
                         <div class="row-md-auto">
                             <button class="btn btn-primary ">Filtrer</button>
                         </div>
-                    </div>
                     {{ form_end(filter) }}
                 </div>
             </div>

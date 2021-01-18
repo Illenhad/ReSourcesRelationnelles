@@ -69,13 +69,13 @@ class ResourceController extends AbstractController
                 'required' => false,
                 'class' => RelationshipType::class,
                 'multiple' => true,
-                'attr' => ['class' => 'selectTags w-100'],
+                'attr' => ['class' => 'selectTags w-100 '],
                 ])
             ->add('age', EntityType::class, [
                 'required' => false,
                 'class' => AgeCategory::class,
                 'multiple' => true,
-                'attr' => ['class' => 'selectTags w-100'],
+                'attr' => ['class' => 'selectTags w-100 '],
                 ])
             ->getForm()
         ;
