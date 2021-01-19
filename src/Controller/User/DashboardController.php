@@ -2,9 +2,11 @@
 
 namespace App\Controller\User;
 
+use App\Entity\Comment;
+use App\Entity\Resource;
+use App\Entity\User;
 use App\Form\ChangePasswordType;
 use App\Form\EditPersonalInformationType;
-use App\Model\ChangePasswordModel;
 use App\Model\UserDashBoardModel;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ObjectManager;
@@ -36,14 +38,13 @@ class DashboardController extends AbstractController
         $user = $this->getUser();
 
         if (isset($user)) {
-            $model = new UserDashBoardModel();
-            $favoris = $model->getNumberOfResourceByManagementType($this->manager, 1, $user);
-            $putAside = $model->getNumberOfResourceByManagementType($this->manager, 2, $user);
-            $exploited = $model->getNumberOfResourceByManagementType($this->manager, 3, $user);
-            $shared = $model->getNumberOfSharedResource($this->manager, $user);
-            $consulted = $model->getNumberOfResourceByActionType($this->manager, 2, $user);
-            $created = $model->getNumberOfResourceByActionType($this->manager, 1, $user);
-            $commented = $model->getNumberOfComments($this->manager, $user);
+            $favoris = $this->manager->getRepository(Resource::class)->getNumberOfResourceByManagementType(1, $user);
+            $putAside = $this->manager->getRepository(Resource::class)->getNumberOfResourceByManagementType(2, $user);
+            $exploited = $this->manager->getRepository(Resource::class)->getNumberOfResourceByManagementType(3, $user);
+            $shared = $this->manager->getRepository(Resource::class)->getNumberOfSharedResource($user);
+            $consulted = $this->manager->getRepository(Resource::class)->getNumberOfResourceByActionType(2, $user);
+            $created = $this->manager->getRepository(Resource::class)->getNumberOfResourceByActionType(1, $user);
+            $commented = $this->manager->getRepository(Comment::class)->getNumberOfComments($user);
 
             return $this->render('user/dashboard.html.twig', [
                 'favoris' => $favoris,
@@ -98,26 +99,25 @@ class DashboardController extends AbstractController
         $user = $this->getUser();
 
         if (isset($user)) {
-            $model = new UserDashBoardModel();
 
             switch ($resourceGestion) {
                 case 'favoris':
-                    $resources = $model->getResourcesByManagementType($this->manager, 1, $user);
+                    $resources = $this->manager->getRepository(Resource::class)->getResourcesByManagementType(1, $user);
                     break;
                 case 'putAside':
-                    $resources = $model->getResourcesByManagementType($this->manager, 2, $user);
+                    $resources = $this->manager->getRepository(Resource::class)->getResourcesByManagementType(2, $user);
                     break;
                 case 'exploited':
-                    $resources = $model->getResourcesByManagementType($this->manager, 3, $user);
+                    $resources = $this->manager->getRepository(Resource::class)->getResourcesByManagementType(3, $user);
                     break;
                 case 'shared':
-                    $resources = $model->getSharedResources($this->manager, $user);
+                    $resources = $this->manager->getRepository(Resource::class)->getSharedResources($user);
                     break;
                 case 'consulted':
-                    $resources = $model->getResourcesByActionType($this->manager, 2, $user);
+                    $resources = $this->manager->getRepository(Resource::class)->getResourcesByActionType(2, $user);
                     break;
                 case 'created':
-                    $resources = $model->getResourcesByActionType($this->manager, 1, $user);
+                    $resources = $this->manager->getRepository(Resource::class)->getResourcesByActionType(1, $user);
                     break;
                 default:
                     $resources = [];
@@ -146,8 +146,7 @@ class DashboardController extends AbstractController
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
-                $model = new ChangePasswordModel($this->passwordEncoder);
-                $passwordUpdatedMessage = $model->changePassword($this->manager, $user->getUsername(), $form->getData());
+                $passwordUpdatedMessage = $this->manager->getRepository(User::class)->changePassword($user->getUsername(), $form->getData());
 
                 if ('' == $passwordUpdatedMessage) {
                     $this->addFlash('success', 'Le mot de passe a été modifié');

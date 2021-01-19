@@ -11,7 +11,7 @@
 
     <div class="row">
         <div class="col-2">
-            <div class="text-white mb-3 bg-danger div-cartouche div-red-cartouche" >
+            <div class="text-white mb-3 bg-danger div-cartouche d-flex flex-column justify-content-center div-red-cartouche" >
                 <div class="text-white text-center div-cartouche-header">
                     Ressources à valider
                 </div>
@@ -25,19 +25,19 @@
             </div>
             {% for resource in resourcesMostCommented %}
             <a href="{{ path('app_resource_show', {id: resource.id, slug: resource.slug}) }}"
-               class="text-white bg-danger mb-3 col-2 div-cartouche div-red-cartouche">
+               class="text-white bg-danger mb-3 col-2 div-cartouche div-red-cartouche d-flex flex-column justify-content-center">
                 <div class="text-white text-center text-truncate div-cartouche-header">{{ resource.title }}</div>
                 <p class="card-text text-white text-center text-truncate div-cartouche-under-header">{{ resource.user }}</p>
             </a>
             {% endfor %}
         </div>
     </div>
-    <div class="row mt-3">
+    <div class="row mt-5">
         <div class="col-6 text-center">
-            <h2>Statistiques du jour</h2>
             <div class="row">
-                <div class="col-11 row">
-                    <div class="text-white bg-primary div-cartouche div-blue-green-cartouche col-3" >
+                <h2 class="col-11">STATISTIQUES DU JOUR</h2>
+                <div class="col-11 row mt-4">
+                    <div class="text-white bg-primary div-cartouche div-blue-green-cartouche col-3 d-flex flex-column justify-content-center" >
                         <div class="text-white text-center div-cartouche-header">
                             Commentaires
                         </div>
@@ -45,43 +45,102 @@
                     </div>
                     {% for comment in currentDayComments %}
                         <a href="{{ path('app_resource_show', {id: comment.resource.id, slug: comment.resource.slug}) }}"
-                           class="col-3 mb-3 bg-primary div-cartouche div-blue-green-cartouche text-white">
+                           class="col-3 mb-3 bg-primary div-cartouche div-blue-green-cartouche text-white d-flex flex-column justify-content-center">
                             <div class="text-white text-truncate div-cartouche-header" >
                                 {{ comment.title }}
                             </div>
-                            <p class="card-text text-white text-center div-cartouche-under-header">{{ comment.user }}</p>
+                            <p class="card-text text-white text-center text-truncate div-cartouche-under-header">{{ comment.user }}</p>
                         </a>
                     {% endfor %}
                 </div>
                 <div class="col-1"></div>
             </div>
+            <div class="row">
+                <div class="col-11 row">
+                    <div class="text-white bg-primary div-cartouche div-blue-green-cartouche col-3 d-flex flex-column justify-content-center" >
+                        <div class="text-white text-center div-cartouche-header">
+                            Consultations
+                        </div>
+                        <p class="card-text h4 text-white text-center div-cartouche-under-header">{{ currentDayResourcesConsultedNumber }}</p>
+                    </div>
+                    {% for resource in currentDayResourcesConsulted %}
+                        <a href="{{ path('app_resource_show', {id: resource.id, slug: resource.slug}) }}"
+                           class="col-3 mb-3 bg-primary div-cartouche div-blue-green-cartouche text-white d-flex flex-column justify-content-center">
+                            <div class="text-white text-truncate div-cartouche-header" >
+                                {{ resource.title }}
+                            </div>
+                            <p class="card-text text-white text-center text-truncate div-cartouche-under-header">{{ resource.user }}</p>
+                        </a>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-11 row">
+                    <div class="text-white bg-primary div-cartouche div-blue-green-cartouche col-3 d-flex flex-column justify-content-center" >
+                        <div class="text-white text-center div-cartouche-header">
+                            Partages
+                        </div>
+                        <p class="card-text h4 text-white text-center div-cartouche-under-header">{{ currentDaySharedResourcesNumber }}</p>
+                    </div>
+                    {% for resource in currentDaySharedResources %}
+                        <a href="{{ path('app_resource_show', {id: resource.id, slug: resource.slug}) }}"
+                           class="col-3 mb-3 bg-primary div-cartouche div-blue-green-cartouche text-white d-flex flex-column justify-content-center">
+                            <div class="text-white text-truncate div-cartouche-header" >
+                                {{ resource.title }}
+                            </div>
+                            <p class="card-text text-white text-center text-truncate div-cartouche-under-header">{{ resource.user }}</p>
+                        </a>
+                    {% endfor %}
+                </div>
+            </div>
         </div>
         <div class="col-6 text-center">
-            <h2>Statistiques de la semaine</h2>
+            <div class="row">
+                <h2 class="col-11">STATISTIQUES DES 7 DERNIERS JOURS</h2>
+                <div class="col-11 row mt-4">
+                    <div class="text-white bg-success mb-3 col-3 justify-content-center d-flex align-items-center div-cartouche div-blue-green-cartouche">
+                        <p class="card-text text-white text-center align-middle">Ressources les mieux notées</p>
+                    </div>
+                    {% for resource in lastWeekBestValuatedResources %}
+                        <a href="{{ path('app_resource_show', {id: resource.id, slug: resource.slug}) }}"
+                           class="col-3 mb-3 bg-success div-cartouche div-blue-green-cartouche text-white d-flex flex-column justify-content-center">
+                            <div class="text-white text-truncate div-cartouche-header" >
+                                {{ resource.title }}
+                            </div>
+                            <p class="card-text text-white text-center text-truncate div-cartouche-under-header">{{ resource.valuation }}/5</p>
+                        </a>
+                    {% endfor %}
+                </div>
+                <div class="col-11 row">
+                    <div class="text-white bg-success mb-3 col-3 justify-content-center d-flex align-items-center div-cartouche div-blue-green-cartouche">
+                        <p class="card-text text-white text-center align-middle">Ressources les moins bien notées</p>
+                    </div>
+                    {% for resource in lastWeekWorstValuatedResources %}
+                        <a href="{{ path('app_resource_show', {id: resource.id, slug: resource.slug}) }}"
+                           class="col-3 mb-3 bg-success div-cartouche div-blue-green-cartouche text-white d-flex flex-column justify-content-center">
+                            <div class="text-white text-truncate div-cartouche-header" >
+                                {{ resource.title }}
+                            </div>
+                            <p class="card-text text-white text-center text-truncate div-cartouche-under-header">{{ resource.valuation }}/5</p>
+                        </a>
+                    {% endfor %}
+                </div>
+                <div class="col-11 row">
+                    <div class="text-white bg-success mb-3 col-3 justify-content-center d-flex align-items-center div-cartouche div-blue-green-cartouche">
+                        <p class="card-text text-white text-center align-middle">Ressources les plus partagées</p>
+                    </div>
+                    {% for resource in lastWeekMostSharedResources %}
+                        <a href="{{ path('app_resource_show', {id: resource.id, slug: resource.slug}) }}"
+                           class="col-3 mb-3 bg-success div-cartouche div-blue-green-cartouche text-white d-flex flex-column justify-content-center">
+                            <div class="text-white text-truncate div-cartouche-header" >
+                                {{ resource.title }}
+                            </div>
+                            <p class="card-text text-white text-center text-truncate div-cartouche-under-header">{{ resource.shareNb }} partages</p>
+                        </a>
+                    {% endfor %}
+                </div>
+            </div>
         </div>
     </div>
-{#    <div class="row mt-4">#}
-{#    <h4>Dernières ressources</h4>#}
-{#        <table class="table">#}
-{#            <thead class="thead-dark">#}
-{#            <tr>#}
-{#                <th scope="col">#</th>#}
-{#                <th scope="col">Nom</th>#}
-{#                <th scope="col">Utilisateur</th>#}
-{#                <th scope="col">Date</th>#}
-{#            </tr>#}
-{#            </thead>#}
-{#            <tbody>#}
-{#            {% for ress in last_ress %}#}
-{#                <tr>#}
-{#                    <td>{{ ress['id'] }}</td>#}
-{#                    <td>{{ ress['name'] }}</td>#}
-{#                    <td>{{ ress['user'] }}</td>#}
-{#                    <td>{{ ress['date'] }}</td>#}
-{#                </tr>#}
-{#            {% endfor %}#}
-{#            </tbody>#}
-{#        </table>#}
-{#    </div>#}
 
 {% endblock %}

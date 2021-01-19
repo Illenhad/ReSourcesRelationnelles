@@ -1,13 +1,13 @@
 .div-cartouche {
-    border-radius: 5px;
+    border-right: solid 0.1em white;
 }
 
 .div-red-cartouche {
-    height: 6.5em;
+    height: 7em;
 }
 
 .div-blue-green-cartouche {
-    height: 5.5em;
+    height: 6em;
 }
 
 .div-cartouche-header {

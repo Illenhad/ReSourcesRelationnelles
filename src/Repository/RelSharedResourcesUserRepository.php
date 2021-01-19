@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\RelSharedResourceUser;
+use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -17,6 +18,19 @@ class RelSharedResourcesUserRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, RelSharedResourceUser::class);
+    }
+
+    public function getCurrentDaySharedResourceNumber() {
+        $manager = $this->getEntityManager();
+
+        $query = $manager->createQuery('
+            SELECT count(r)
+            FROM App\Entity\RelSharedResourceUser r
+            WHERE r.shareDate BETWEEN :date1 AND :date2
+        ')-> setParameter('date1', new DateTime('today'))
+        ->setParameter('date2', new DateTime('now'));
+
+        return $query->getScalarResult()[0][1];
     }
 
     // /**

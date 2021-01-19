@@ -15,9 +15,9 @@ class ResourceFixture extends Fixture implements DependentFixtureInterface
     public function load(ObjectManager $manager)
     {
         $faker = Factory::create('fr_FR');
-        self::$numberOfResources = 15;
+        self::$numberOfResources = 500; //ne pas mettre une valeur inférieure à 60
 
-        for ($i = 1; $i <= 500; ++$i) {
+        for ($i = 1; $i <= self::$numberOfResources; ++$i) {
             $resource = new Resource();
             $resource
                 ->setTitle($faker->words(8, true))
