@@ -44,6 +44,45 @@ class CommentFixture extends Fixture implements DependentFixtureInterface
             $manager->persist($comment);
         }
 
+        for ($i = 1; $i <= 20; ++$i) {
+            $comment = new Comment();
+            $comment
+                ->setTitle($faker->word())
+                ->setContent($faker->sentences(2, true))
+                ->setValuation(3)
+                ->setUser($this->getReference('user'.$faker->numberBetween(1, UserFixture::$numberOfUsers)))
+                ->setResource($this->getReference('resource'.$faker->numberBetween(1, ResourceFixture::$numberOfResources)))
+            ;
+            $comment->setCommentDate($faker->dateTimeBetween('-7 days', 'now'));
+            $manager->persist($comment);
+        }
+
+        for ($i = 1; $i <= 100; ++$i) {
+            $comment = new Comment();
+            $comment
+                ->setTitle($faker->word())
+                ->setContent($faker->sentences(2, true))
+                ->setValuation($faker->numberBetween(4, 5))
+                ->setUser($this->getReference('user'.$faker->numberBetween(1, UserFixture::$numberOfUsers)))
+                ->setResource($this->getReference('resource'.$faker->numberBetween(1, 30)))
+            ;
+            $comment->setCommentDate($faker->dateTimeBetween('-7 days', 'now'));
+            $manager->persist($comment);
+        }
+
+        for ($i = 1; $i <= 80; ++$i) {
+            $comment = new Comment();
+            $comment
+                ->setTitle($faker->word())
+                ->setContent($faker->sentences(2, true))
+                ->setValuation($faker->numberBetween(1, 2))
+                ->setUser($this->getReference('user'.$faker->numberBetween(1, UserFixture::$numberOfUsers)))
+                ->setResource($this->getReference('resource'.$faker->numberBetween(31, 60)))
+            ;
+            $comment->setCommentDate($faker->dateTimeBetween('-7 days', 'now'));
+            $manager->persist($comment);
+        }
+
         $manager->flush();
     }
 

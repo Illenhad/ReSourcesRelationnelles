@@ -195,6 +195,87 @@ class ResourceRepository extends ServiceEntityRepository
         } catch (\Doctrine\DBAL\Driver\Exception $e) {
             return [];
         }
+    }
+
+    public function getLastWeekResourcesByValuation($bestvaluation) {
+
+        if($bestvaluation) {
+            $order = 'DESC';
+        } else {
+            $order = 'ASC';
+        }
+
+        $connexion = $this->getEntityManager()->getConnection();
+
+        $sql = '
+            select resource_id, sum(valuation)/count(resource_id) as valuation, count(resource_id) as resources_nb
+            from comment
+            where comment_date BETWEEN CURDATE() - INTERVAL 7 DAY AND CURDATE() + INTERVAL 1 DAY
+            group by resource_id
+            having count(resource_id) > 
+                (select max(resource_nb)/2 FROM (
+                    select resource_id, count(resource_id) as resource_nb
+                    from comment
+                    where comment_date BETWEEN CURDATE() - INTERVAL 7 DAY AND CURDATE() + INTERVAL 1 DAY
+                    group by resource_id) 
+                t)
+            order by sum(valuation)/count(resource_id) '.$order.' , resources_nb desc
+            limit 3
+            ';
+
+        try {
+            $statement = $connexion->prepare($sql);
+            $statement->execute();
+            $tabResources = [];
+            $i = 0;
+
+            foreach ($statement->fetchAllAssociative() as $row) {
+                $resource = $this->getEntityManager()->getRepository(Resource::class)->find($row['resource_id']);
+                $resource->setValuation(round($row['valuation'], 1));
+                $tabResources[$i] = $resource;
+                $i++;
+            }
+
+            return $tabResources;
+        } catch (Exception $e) {
+            return [];
+        } catch (\Doctrine\DBAL\Driver\Exception $e) {
+            return [];
+        }
+    }
+
+    public function getLastWeekMostSharedResources() {
+
+        $connexion = $this->getEntityManager()->getConnection();
+
+        $sql = '
+            select resource_id, count(resource_id) as resource_nb
+            from rel_shared_resource_user
+            where share_date BETWEEN CURDATE() - INTERVAL 7 DAY AND CURDATE() + INTERVAL 1 DAY
+            group by resource_id
+            order by resource_nb desc
+            limit 3
+        ';
+
+        try {
+            $statement = $connexion->prepare($sql);
+            $statement->execute();
+            $tabResources = [];
+            $i = 0;
+
+            foreach ($statement->fetchAllAssociative() as $row) {
+                $resource = $this->getEntityManager()->getRepository(Resource::class)->find($row['resource_id']);
+                $resource->setShareNb($row['resource_nb']);
+                $tabResources[$i] = $resource;
+                $i++;
+            }
+
+            return $tabResources;
+        } catch (Exception $e) {
+            return [];
+        } catch (\Doctrine\DBAL\Driver\Exception $e) {
+            return [];
+        }
 
     }
 
