@@ -5,7 +5,10 @@ namespace App\Repository;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\OptimisticLockException;
+use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
  * @method User|null find($id, $lockMode = null, $lockVersion = null)
@@ -15,9 +18,13 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class UserRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+
+    private $passwordEncoder;
+
+    public function __construct(ManagerRegistry $registry, UserPasswordEncoderInterface $passwordEncoder)
     {
         parent::__construct($registry, User::class);
+        $this->passwordEncoder = $passwordEncoder;
     }
 
     public function findJunior()
@@ -106,4 +113,42 @@ class UserRepository extends ServiceEntityRepository
             ->getResult()
             ;
     }
+
+    /**
+     * @param string $username
+     * @param $data
+     * @return string
+     */
+    public function changePassword(string $username, $data): string
+    {
+        $manager = $this->getEntityManager();
+
+        $user = $manager->getRepository(User::class)->findOneBy([
+            'username' => $username
+        ]);
+
+        if (!$this->passwordEncoder->isPasswordValid($user, $data['old_password'])) {
+            return "L'ancien mot de passe n'est pas valide";
+        }
+
+        if ($data['new_password'] == $data['new_password_confirm']) {
+            $user->setPassword($this->passwordEncoder->encodePassword($user, $data['new_password']));
+
+            try {
+                $manager->persist($user);
+                $manager->flush();
+            } catch (OptimisticLockException $e) {
+                return "Un problème est survenu lors de l'enregistrement du nouveau mot de passe";
+            } catch (ORMException $e) {
+                return "Un problème est survenu lors de l'enregistrement du nouveau mot de passe";
+            }
+
+        } else {
+            return "Saisie incorrecte : vous devez saisir deux fois le nouveau mot de passe pour le confirmer";
+        }
+
+        return "";
+    }
+
+
 }

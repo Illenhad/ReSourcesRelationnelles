@@ -2,12 +2,13 @@
 
 namespace App\Repository;
 
+use App\Entity\ActionType;
+use App\Entity\ManagementType;
 use App\Entity\Resource;
 use App\Entity\User;
 use App\Search\FilterData;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\DBAL\Exception;
-use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -279,32 +280,129 @@ class ResourceRepository extends ServiceEntityRepository
 
     }
 
-    // /**
-    //  * @return Resource[] Returns an array of Resource objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @param int $managementTypeId
+     * @param User $user
+     * @return int
+     */
+    public function getNumberOfResourceByManagementType(int $managementTypeId, User $user)
     {
-        return $this->createQueryBuilder('r')
-            ->andWhere('r.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('r.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+        $manager = $this->getEntityManager();
+        $managementType = $manager->getRepository(ManagementType::class)->find($managementTypeId);
+        $query = $manager->createQuery(
+            'SELECT COUNT(r) FROM App\Entity\RelUserManagementResource r
+                WHERE r.user = :user
+                AND r.managementType = :managementType'
+        )
+            ->setParameter('user', $user)
+            ->setParameter('managementType', $managementType);
 
-    /*
-    public function findOneBySomeField($value): ?Resource
-    {
-        return $this->createQueryBuilder('r')
-            ->andWhere('r.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        return $query->getScalarResult()[0][1];
     }
-    */
+
+    /**
+     * @param User $user
+     * @return mixed
+     */
+    public function getNumberOfSharedResource(User $user)
+    {
+        $manager = $this->getEntityManager();
+        $query = $manager->createQuery(
+            'SELECT COUNT(r) FROM App\Entity\RelSharedResourceUser r
+                WHERE r.sharedWithUser = :user'
+        )
+            ->setParameter('user', $user);
+
+        return $query->getScalarResult()[0][1];
+    }
+
+    /**
+     * @param int $actionTypeId
+     * @param User $user
+     * @return mixed
+     */
+    public function getNumberOfResourceByActionType(int $actionTypeId, User $user)
+    {
+        $manager = $this->getEntityManager();
+        $actionType = $manager->getRepository(ActionType::class)->find($actionTypeId);
+        $query = $manager->createQuery(
+            'SELECT COUNT(r) FROM App\Entity\RelUserActionResource r
+                WHERE r.user = :user
+                AND r.actionType = :actionType'
+        )
+            ->setParameter('user', $user)
+            ->setParameter('actionType', $actionType);
+
+        return $query->getScalarResult()[0][1];
+    }
+
+    /**
+     * @param int $managementTypeId
+     * @param User $user
+     * @return int|mixed|string
+     */
+    public function getResourcesByManagementType(int $managementTypeId, User $user)
+    {
+        $manager = $this->getEntityManager();
+        $managementType = $manager->getRepository(ManagementType::class)->find($managementTypeId);
+        $query = $manager->createQuery(
+            'SELECT t FROM App\Entity\RelUserManagementResource t
+            WHERE t.user = :user
+            AND t.managementType = :managementType'
+        )
+            ->setParameter('user', $user)
+            ->setParameter('managementType', $managementType);
+
+        return $this->putResourcesInTab($query->getResult());
+    }
+
+    /**
+     * @param User $user
+     * @return array
+     */
+    public function getSharedResources(User $user)
+    {
+        $manager = $this->getEntityManager();
+        $query = $manager->createQuery(
+            'SELECT t FROM App\Entity\RelSharedResourceUser t
+                WHERE t.sharedWithUser = :user'
+        )
+            ->setParameter('user', $user);
+
+        return $this->putResourcesInTab($query->getResult());
+    }
+
+    /**
+     * @param int $actionTypeId
+     * @param User $user
+     * @return array
+     */
+    public function getResourcesByActionType(int $actionTypeId, User $user)
+    {
+        $manager = $this->getEntityManager();
+        $actionType = $manager->getRepository(ActionType::class)->find($actionTypeId);
+        $query = $manager->createQuery(
+            'SELECT t FROM App\Entity\RelUserActionResource t
+                WHERE t.user = :user
+                AND t.actionType = :actionType'
+        )
+            ->setParameter('user', $user)
+            ->setParameter('actionType', $actionType);
+
+        return $this->putResourcesInTab($query->getResult());
+    }
+
+    /**
+     * @param $result
+     * @return array
+     */
+    private function putResourcesInTab($result)
+    {
+        $resources = [];
+        for ($i = 0; $i < count($result); ++$i) {
+            $resources[$i] = $result[$i]->getResource();
+        }
+
+        return $resources;
+    }
 }
