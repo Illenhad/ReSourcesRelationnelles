@@ -141,6 +141,10 @@ class Resource
      */
     private $active;
 
+    private $valuation;
+
+    private $shareNb;
+
     public function getSlug(): string
     {
         return (new Slugify())->slugify($this->title);
@@ -356,5 +360,37 @@ class Resource
         $this->active = $active;
 
         return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getValuation()
+    {
+        return $this->valuation;
+    }
+
+    /**
+     * @param mixed $valuation
+     */
+    public function setValuation($valuation): void
+    {
+        $this->valuation = $valuation;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getShareNb()
+    {
+        return $this->shareNb;
+    }
+
+    /**
+     * @param mixed $shareNb
+     */
+    public function setShareNb($shareNb): void
+    {
+        $this->shareNb = $shareNb;
     }
 }

@@ -64,6 +64,15 @@ class DashboardController extends AbstractDashboardController
         $currentDaySharedResourcesNumber = $this->manager->getRepository(RelSharedResourceUser::class)->getCurrentDaySharedResourceNumber();
         $currentDaySharedResources = $this->manager->getRepository(Resource::class)->getCurrentDaySharedResources();
 
+        //Stat de la semaine - Ressources les mieux notées
+        $lastWeekBestValuatedResources = $this->manager->getRepository(Resource::class)->getLastWeekResourcesByValuation(true);
+
+        //Stat de la semaine - Ressources les moins bien notées
+        $lastWeekWorstValuatedResources = $this->manager->getRepository(Resource::class)->getLastWeekResourcesByValuation(false);
+
+        //Stat de la semaine - Ressources les plus partagées
+        $lastWeekMostSharedResources = $this->manager->getRepository(Resource::class)->getLastWeekMostSharedResources();
+
         return $this->render('bundles/EasyAdminBundle/welcome.html.twig', [
             'resourcesToValidateNumber' => $resourcesToValidateNumber,
             'resourcesMostCommented' => $resourcesMostCommented,
@@ -72,7 +81,10 @@ class DashboardController extends AbstractDashboardController
             'currentDayResourcesConsultedNumber' => $currentDayResourcesConsultedNumber,
             'currentDayResourcesConsulted' => $currentDayResourcesConsulted,
             'currentDaySharedResourcesNumber' => $currentDaySharedResourcesNumber,
-            'currentDaySharedResources' => $currentDaySharedResources
+            'currentDaySharedResources' => $currentDaySharedResources,
+            'lastWeekBestValuatedResources' => $lastWeekBestValuatedResources,
+            'lastWeekWorstValuatedResources' => $lastWeekWorstValuatedResources,
+            'lastWeekMostSharedResources' => $lastWeekMostSharedResources
         ]);
     }
 
