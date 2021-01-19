@@ -16,6 +16,7 @@ use App\Repository\RelUserManagementResourceRepository;
 use App\Repository\ResourceRepository;
 use App\Search\FilterData;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Persistence\ObjectManager;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -45,8 +46,12 @@ class ResourceController extends AbstractController
     /**
      * @Route("", name="resources")
      */
-    public function index(Request $request, ResourceRepository $resourceRepository, PaginatorInterface $paginator): Response
+    public function index(ManagerRegistry $registry,Request $request, ResourceRepository $resourceRepository,RelUserManagementResourceRepository $relUserManagementResourceRepository, PaginatorInterface $paginator): Response
     {
+        $resourceFav=[];
+        if($this->getUser()){
+            $resourceFav=$relUserManagementResourceRepository->getFavorite($this->getUser(),$registry);
+        }
         $search = $request->query->get('search');
 
         $filter = new FilterData();
@@ -90,6 +95,7 @@ class ResourceController extends AbstractController
             [
                 'resources' => $resources,
                 'filter' => $formfilter->CreateView(),
+                'resourceFav'=>$resourceFav,
             ]
         );
     }
@@ -253,40 +259,34 @@ class ResourceController extends AbstractController
     }
 
     /**
-     * @Route("/addRemoveFav/{id}", name="addRemoveFav")
-     * @param Request $request
-     * @param string $slug
-     * @param int $id
-     * @param ResourceRepository $resourceRepository
-     * @param RelUserManagementResourceRepository $managementResourceRepository
-     * @param ManagementTypeRepository $managementTypeRepository
-     * @param EntityManagerInterface $entityManager
-     * @return Response
+     * @Route("/addRemoveFav", name="addRemoveFav")
      */
-    public function addRemoveFav(Request $request, int $id, ResourceRepository $resourceRepository, RelUserManagementResourceRepository $managementResourceRepository, ManagementTypeRepository $managementTypeRepository, EntityManagerInterface $entityManager): Response
+    public function addRemoveFav(Request $request, ResourceRepository $resourceRepository, RelUserManagementResourceRepository $managementResourceRepository, ManagementTypeRepository $managementTypeRepository, EntityManagerInterface $entityManager): Response
     {
+        $url = $request->query->get('url');
+        $id = $request->query->get('id');
         $resource = $resourceRepository->find($id);
 
         //Management Type Favoris
         $FavmanagementType = $managementTypeRepository->findOneBy(['label' => 'favoris']);
 
         $existingfav = $managementResourceRepository->findOneBy([
-            'user' => $this->getUser()->getId(),
-            'resource' => $id,
-            'managementType' => $FavmanagementType->getId(),
-        ]);
+                'user' => $this->getUser()->getId(),
+                'resource' => $id,
+                'managementType' => $FavmanagementType->getId(),
+            ]);
         if ($existingfav) {
             $entityManager->remove($existingfav);
             $entityManager->flush();
         } else {
             $newfav = new RelUserManagementResource();
             $newfav->setUser($this->getUser())
-                ->setManagementType($managementTypeRepository->findOneBy(['label' => 'favoris']))
-                ->setResource($resource);
+                    ->setManagementType($FavmanagementType)
+                    ->setResource($resource);
             $entityManager->persist($newfav);
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('app_resource_show', ['id' => $id, 'slug' => $resource->getSlug()]);
+        return $this->redirect($url);
     }
 }
