@@ -1,0 +1,76 @@
+@import "color.css";
+.btn {
+    display: block;
+    padding: 5px 15px;
+    width: max-content;
+    color: white;
+}
+.btn-primary {
+    background-color: var(--charte-turquoise);
+    border-color: var(--charte-turquoise);
+}
+.btn-primary:hover {
+    color: var(--charte-turquoise);
+    background-color: white;
+}
+
+.btn-blue {
+    background-color: var(--charte-blue);
+    border-color: var(--charte-blue);
+}
+.btn-blue:hover {
+    color: var(--charte-blue);
+    background-color: white;
+}
+.btn-green {
+    background-color: var(--charte-green);
+    border-color: var(--charte-green);
+}
+.btn-green:hover {
+    color: var(--charte-green);
+    background-color: white;
+}
+.btn-red {
+    background-color: var(--charte-red);
+    border-color: var(--charte-red);
+}
+.btn-red:hover {
+    color: var(--charte-red);
+    background-color: white;
+}
+.btn-yellow {
+    background-color: var(--charte-yellow);
+    border-color: var(--charte-yellow);
+}
+.btn-yellow:hover {
+    color: var(--charte-yellow);
+    background-color: white;
+}
+
+.btn-conexion {
+    margin: auto;
+    font-size: 1.4rem;
+}
+#nav li:not(:first-child) {
+    margin-left: 30px;
+}
+.nav-link {
+    font-size: 1.2em;
+    padding-bottom: 15px;
+    color: var(--charte-grey);
+}
+.nav-link.active {
+    padding-bottom: 10px;
+    color: var(--charte-turquoise);
+    border-bottom: 5px solid var(--charte-turquoise);
+}
+.nav-link:hover {
+    padding-bottom: 10px;
+    color: var(--charte-turquoise);
+    border-bottom: 5px solid var(--charte-turquoise);
+}
+.nav-link:active {
+    padding-bottom: 10px;
+    color: var(--charte-turquoise);
+    border-bottom: 5px solid var(--charte-turquoise);
+}

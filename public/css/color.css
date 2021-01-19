@@ -1,0 +1,12 @@
+:root {
+    --charte-turquoise: #0083ae;
+    --charte-grey: #8f8f8f;
+    --charte-grey-light: #bcbcbc;
+    --charte-green: #009f79;
+    --charte-blue: #0b6ba8;
+    --charte-red: #a63950;
+    --charte-yellow: #e1a212;
+
+    /*Text*/
+    --text-color-default: #1e1e1e;
+}
