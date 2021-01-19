@@ -8,6 +8,7 @@
 
     <div class="container text-center" style="border: 1px solid silver;height:60px;">
         {{ resource.title }}
+        <a href="{{  path('addRemoveFav', {id: resource.id}) }}") >Ajouter au favoris</a>
     </div>
 
     posté le {{ resource.dateCreation|date("d.m.Y à H:i", "Europe/Paris") }}
