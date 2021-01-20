@@ -10,7 +10,43 @@
             De {{ resource.user.username }} <br>
             posté le {{ resource.dateCreation|date("d.m.Y à H:i", "Europe/Paris") }}
         </div>
-        <img class="card-img-top" src="https://picsum.photos/300/300" alt="">
+
+        {% if resource.relationShip.label == 'Soi' %}
+            <img src="{{ asset('image/1.jpg') }}" alt=""/>
+
+        {% elseif resource.relationShip.label == 'Conjoints' %}
+
+            <img src="{{ asset('image/2.jpg') }}" alt=""/>
+
+        {% elseif resource.relationShip.label == 'Famille - enfants' %}
+
+            <img src="{{ asset('image/3.jpg') }}" alt=""/>
+
+        {% elseif resource.relationShip.label == 'Famille - parents' %}
+
+            <img src="{{ asset('image/4.jpg') }}" alt=""/>
+
+        {% elseif resource.relationShip.label == 'Famille - fratrie' %}
+
+            <img src="{{ asset('image/5.jpg') }}" alt=""/>
+
+
+        {% elseif resource.relationShip.label == 'Professionnel - collègues' %}
+
+            <img src="{{ asset('image/6.jpg') }}" alt=""/>
+
+        {% elseif resource.relationShip.label == 'Professionnel - collaborateurs' %}
+
+            <img src="{{ asset('image/7.jpg') }}" alt=""/>
+
+        {% elseif resource.relationShip.label == 'Professionnel - manager' %}
+
+            <img src="{{ asset('image/8.jpg') }}" alt=""/>
+
+        {% else %}
+            <img class="card-img-top" src="https://picsum.photos/300/300" alt="">
+        {% endif %}
+
         <div class="card-body ">
             <h5 class="card-title text-truncate text-center "><a
                         href="{{ path('comment.show', {id: resource.id, slug: resource.slug}) }}">
@@ -43,18 +79,21 @@
                     <img src="https://img.icons8.com/color/30/000000/chat--v1.png"/> {{ resource.comments | length }}
                 </div>
                 <!--Gestion Favoris-->
-                    {% if app.user %}
+                {% if app.user %}
                     <div class="col">
-                        <a style="display:block;text-align: right" href="{{  path('addRemoveFav', {id: resource.id,url:app.request.requestUri }) }}">
-                             {% if resource.id in resourceFav %}
-                            <img src="https://img.icons8.com/cotton/64/000000/like--v1.png" title="Retirer des Favoris"  style="width: 30px;height: 30px;" />
+                        <a style="display:block;text-align: right"
+                           href="{{ path('addRemoveFav', {id: resource.id,url:app.request.requestUri }) }}">
+                            {% if resource.id in resourceFav %}
+                                <img src="https://img.icons8.com/cotton/64/000000/like--v1.png"
+                                     title="Retirer des Favoris" style="width: 30px;height: 30px;"/>
                             {% else %}
-                            <img src="https://img.icons8.com/plasticine/100/000000/like--v3.png" title="Ajouter aux favoris"  style="width: 30px;height: 30px;" />
+                                <img src="https://img.icons8.com/plasticine/100/000000/like--v3.png"
+                                     title="Ajouter aux favoris" style="width: 30px;height: 30px;"/>
                             {% endif %}
                         </a>
                     </div>
-                    {% endif %}
-                </div>
+                {% endif %}
+            </div>
         </div>
     </div>
 </div>

@@ -64,18 +64,16 @@
 
                     <a href="{{ path('comment.edit', {id: comment.id} ) }}" class="btn btn-secondary">Modifier</a>
 
-            {% endif %}
-                {% if app.user== comment.user or app.user.role == 'ROLE_MODERATEUR' %}
-                <a href="{{ path('comment.delete', {id: comment.id}) }}" class=" btn btn-danger" >Supprimer </a>
+                {% endif %}
 
+                {% if app.user== comment.user or is_granted('ROLE_MODERATEUR') %}
+                    <a href="{{ path('comment.delete', {id: comment.id}) }}" class=" btn btn-danger">Supprimer </a>
                 {% endif %}
 
             </div>
             <div class="card-footer text-muted">
                 posté le {{ comment.commentDate|date }}
             </div>
-
-
         </div>
 
     {% endfor %}
