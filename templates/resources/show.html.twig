@@ -8,7 +8,18 @@
 
     <div class="container text-center" style="border: 1px solid silver;height:60px;">
         {{ resource.title }}
-        <a href="{{  path('addRemoveFav', {id: resource.id,url:app.request.requestUri }) }}" methods="post" >Ajouter au favoris</a>
+
+        <!--Gestion Favoris-->
+        {% if app.user %}
+                <a style="display:block;text-align: right" href="{{  path('addRemoveFav', {id: resource.id,url:app.request.requestUri }) }}">
+                    {% if isFavorite %}
+                        <img src="https://img.icons8.com/cotton/64/000000/like--v1.png" title="Retirer des Favoris"  style="width: 30px;height: 30px;" />
+                    {% else %}
+                        <img src="https://img.icons8.com/plasticine/100/000000/like--v3.png" title="Ajouter aux favoris"  style="width: 30px;height: 30px;" />
+                    {% endif %}
+                </a>
+        {% endif %}
+
     </div>
 
     posté le {{ resource.dateCreation|date("d.m.Y à H:i", "Europe/Paris") }}

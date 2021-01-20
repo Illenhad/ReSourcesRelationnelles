@@ -107,28 +107,17 @@ class ResourceController extends AbstractController
     {
         $resource = $resourceRepository->find($id);
 
-        //Gestion des favoris
+        //Management Type Favoris
         $FavmanagementType = $managementTypeRepository->findOneBy(['label' => 'favoris']);
-        $isChangeFav = $request->query->get('fav');
-        if ($isChangeFav) {
-            $fav = $managementResourceRepository->findOneBy([
+
+        if($this->getUser()) {
+            $isfav = $managementResourceRepository->findOneBy([
                 'user' => $this->getUser()->getId(),
                 'resource' => $id,
                 'managementType' => $FavmanagementType->getId(),
             ]);
-            if ($fav) {
-                $entityManager->remove($fav);
-                $entityManager->flush();
-            } else {
-                $newfav = new RelUserManagementResource();
-                $newfav->setUser($this->getUser())
-                    ->setManagementType($managementTypeRepository->findOneBy(['label' => 'favoris']))
-                        ->setResource($resource);
-                $entityManager->persist($newfav);
-                $entityManager->flush();
-            }
         }
-
+        else{$isfav =null;}
         $comment = new Comment();
 
         $form = $this->createForm(CommentType::class, $comment);
@@ -152,6 +141,7 @@ class ResourceController extends AbstractController
             'resource' => $resource,
             'current_menu' => 'resources',
             'form' => $form->createView(),
+            'isFavorite'=>$isfav,
         ]);
     }
 
