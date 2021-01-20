@@ -46,8 +46,23 @@
                 Il n'y a pas encore d'évaluation.
             {% endif %}
             <br>
-            <img src="https://img.icons8.com/color/30/000000/chat--v1.png"/> {{ resource.comments | length }}
-
+            <div class="row">
+                <div class="col">
+                    <img src="https://img.icons8.com/color/30/000000/chat--v1.png"/> {{ resource.comments | length }}
+                </div>
+                <!--Gestion Favoris-->
+                    {% if app.user %}
+                    <div class="col">
+                        <a style="display:block;text-align: right" href="{{  path('addRemoveFav', {id: resource.id,url:app.request.requestUri }) }}">
+                             {% if resource.id in resourceFav %}
+                            <img src="https://img.icons8.com/cotton/64/000000/like--v1.png" title="Retirer des Favoris"  style="width: 30px;height: 30px;" />
+                            {% else %}
+                            <img src="https://img.icons8.com/plasticine/100/000000/like--v3.png" title="Ajouter aux favoris"  style="width: 30px;height: 30px;" />
+                            {% endif %}
+                        </a>
+                    </div>
+                    {% endif %}
+                </div>
         </div>
     </div>
 
