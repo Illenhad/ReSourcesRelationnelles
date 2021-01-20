@@ -9,7 +9,6 @@
         <div class="card-header">
             De {{ resource.user.username }} <br>
             posté le {{ resource.dateCreation|date("d.m.Y à H:i", "Europe/Paris") }}
-
         </div>
         <img class="card-img-top" src="https://picsum.photos/300/300" alt="">
         <div class="card-body ">
@@ -18,9 +17,8 @@
                     {{ resource.title }}
                 </a></h5>
             <div class="card-text text-center">
-                <p class="text-center"> {{ resource.resourceType }}</p>
-                <p class="text-center"> {{ resource.relationShip.label }}</p>
-
+                <p class="text-center">{{ resource.resourceType }}</p>
+                <p class="text-center">{{ resource.relationShip.label }}</p>
                 <span class="text-center mb-4">
             <a href="{{ path('comment.show', {id: resource.id, slug: resource.slug}) }}"
                class="btn btn-primary "> Consulter la ressource
@@ -29,19 +27,13 @@
             </div>
         </div>
         <div class="card-footer" style="color:dodgerblue">
-
-
             {% if resource.comments|length > 0 %}
                 {% set valuation_average = 0 %}
                 {% for comment in resource.comments %}
                     {% set valuation_average = valuation_average + comment.valuation %}
                 {% endfor %}
-
                 {% set valuation_average = valuation_average / resource.comments|length %}
-
                 Note {{ valuation_average|number_format(1) }} / 5
-
-
             {% else %}
                 Il n'y a pas encore d'évaluation.
             {% endif %}
@@ -65,7 +57,6 @@
                 </div>
         </div>
     </div>
-
 </div>
 
 

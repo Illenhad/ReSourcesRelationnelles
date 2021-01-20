@@ -7,13 +7,14 @@
           integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
     {% block stylesheets %}{% endblock %}
     <link href="{{ asset('css/header.css') }}" rel="stylesheet"/>
+    <link href="{{ asset('css/footer.css') }}" rel="stylesheet"/>
     <link href="{{ asset('css/button.css') }}" rel="stylesheet"/>
 </head>
 <body>
-{% block header %}
+{#{% block header %}#}
     <header>
         <div class="header-content">
-            <div id="logo"></div>
+            <a id="logo" href="{{ path('resources') }}"></a>
             <ul id="nav">
                 <li class="nav-item">
                     <a class="nav-link home" aria-current="page" href="{{ path('resources') }}">Accueil</a>
@@ -23,137 +24,191 @@
                 </li>
             </ul>
             <div id="search">
-                <form class="d-flex" method="get" action="{{ path('resources') }}">
-                    <input class="form-control me-2" type="search" placeholder="Ex : Comment devenir un jedi"
-                           aria-label="Recherche" name="search"/>
+                <form method="get" action="{{ path('resources') }}">
+                    <input class="form-control me-2" type="search" placeholder="Ex : Comment devenir un jedi" aria-label="Recherche" name="search"/>
                     <input class="btn btn-blue" type="submit" value="Recherche"/>
                 </form>
             </div>
             <div id="connexion">
-                <a class="btn btn-primary btn-conexion" href="{{ path('login') }}">Connexion</a>
+                <a class="btn btn-primary btn-log" href="{{ path('login') }}"><span class="log-icon"></span><span class="log-text">Connexion</span></a>
+            </div>
+        </div>
+        <div id="responsive-header">
+            <button id="responsive-nav-btn" class="btn btn-dark-light" onclick="setNav()">&#9776;</button>
+            <div id="responsive-nav">
+                <a class="btn btn-primary btn-log" href="{{ path('login') }}"><span class="log-icon"></span><span class="log-text">Connexion</span></a>
+                <form class="full-width" method="get" action="{{ path('resources') }}">
+                    <input class="form-control me-2" type="search" placeholder="Ex : Comment devenir un jedi" aria-label="Recherche" name="search"/>
+                    <button id="btn-search" class="btn btn-blue"><span></span></button>
+                </form>
+                <a class="nav-link home btn-full-width" aria-current="page" href="{{ path('resources') }}">Accueil</a>
+                <a class="nav-link btn-full-width" href="{{ path('user_dashboard') }}">Espace personnel</a>
             </div>
         </div>
     </header>
-{% endblock %}
-{#<button class="btn btn-primary">PRIMARY</button>#}
-{#<button class="btn btn-blue">BLUE</button>#}
-{#<button class="btn btn-green">GREEN</button>#}
-{#<button class="btn btn-red">RED</button>#}
-{#<button class="btn btn-yellow">YELLOW</button>#}
+{#{% endblock %}#}
 {% block body %}{% endblock %}
-{% block footer %}
-    <footer class=" text-secondary text-center text-lg-start style= background-color: #ffffff">
 
-    <div class="container p-4">
-
-        <div class="row">
-
-            <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
-
-
-                <img src="{{ asset('image/logo2.png') }}" alt="" width="50%">
-
-
-            </div>
-
-            <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
-
-
-                <ul class="list-unstyled mb-0">
+{#{% block footer %}#}
+    <footer>
+        <div class="footer-content">
+            <div id="logo-footer"></div>
+            <div id="links-footer" class="footer-list-links">
+                <ul>
                     <li>
-                        <a href="https://solidarites-sante.gouv.fr/" class="text-secondary">Plan du site </a>
+                        <a href="https://solidarites-sante.gouv.fr/">Plan du site </a>
                     </li>
                     <li>
-
-                        <a href="https://gouvernement-et-citoyens.consultation.etalab.gouv.fr/"
-                           class="text-secondary">Accesibilité</a>
+                        <a href="https://gouvernement-et-citoyens.consultation.etalab.gouv.fr/">Accesibilité</a>
                     </li>
                     <li>
-                        <a href="https://solidarites-sante.gouv.fr/" class="text-secondary">Mention légale</a>
+                        <a href="https://solidarites-sante.gouv.fr/">Mention légale</a>
                     </li>
                     <li>
-                        <a href="https://solidarites-sante.gouv.fr/" class="text-secondary">Données et RGPD </a>
+                        <a href="https://solidarites-sante.gouv.fr/">Données et RGPD</a>
                     </li>
-
                 </ul>
             </div>
-
-
-            <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+            <div id="usables-footer" class="footer-list-links">
                 <h5 class="text-uppercase">Liens utiles</h5>
-
-                <ul class="list-unstyled mb-0">
+                <ul>
                     <li>
-                        <a href="https://solidarites-sante.gouv.fr/" class="text-secondary">Site du
-                            gouvernement </a>
+                        <a href="https://solidarites-sante.gouv.fr/">Site du gouvernement</a>
                     </li>
                     <li>
-
-                        <a href="https://gouvernement-et-citoyens.consultation.etalab.gouv.fr/"
-                           class="text-secondary">Participation
-                            citoyenne</a>
+                        <a href="https://gouvernement-et-citoyens.consultation.etalab.gouv.fr/">Participation citoyenne</a>
                     </li>
 
                 </ul>
             </div>
-
-
-            <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
-
+            <div id="socials-footer">
                 <h5 class="text-uppercase">Suivez-nous</h5>
-
-                <div class="container">
-                    <div class="row">
-
-                        <div class="col">
-                            <a href="https://www.facebook.com/MinSoliSante">
-                                <img src="https://img.icons8.com/color/48/000000/facebook-new.png"/>
-                            </a>
-                        </div>
-
-                        <div class="col">
-                            <a href="https://twitter.com/MinSoliSante?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor">
-                                <img src="https://img.icons8.com/fluent/48/000000/twitter.png"/>
-                            </a>
-                        </div>
-
-                        <div class="col ">
-                            <a href="https://www.linkedin.com/company/minist%C3%A8re-des-solidarites-de-la-sant%C3%A9/">
-                                <img src="https://img.icons8.com/fluent/48/000000/linkedin.png"/>
-                            </a>
-                        </div>
-                        <div class="col ">
-                            <a href="https://www.instagram.com/explore/locations/584326962/ministere-des-solidarites-et-de-la-sante/?hl=fr">
-                                <img src="https://img.icons8.com/fluent/48/000000/instagram-new.png"/>
-                            </a>
-                        </div>
-                        <div class="col ">
-                            <a href="https://www.youtube.com/channel/UCApzB6X-04YRPq9SZ0WfEsg">
-                                <img src="https://img.icons8.com/color/48/000000/youtube.png"/>
-                            </a>
-                        </div>
-                        <div class="col ">
-                            <a href="https://www.snapchat.com/add/gouvernementFR">
-                                <img src="https://img.icons8.com/fluent/48/000000/snapchat.png"/>
-                            </a>
-                        </div>
-                    </div>
+                <div class="socials-content">
+                    <a href="https://www.facebook.com/MinSoliSante" class="social-facebook"></a>
+                    <a href="https://twitter.com/MinSoliSante?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor" class="social-twitter"></a>
+                    <a href="https://www.linkedin.com/company/minist%C3%A8re-des-solidarites-de-la-sant%C3%A9/" class="social-linkedin"></a>
+                    <a href="https://www.instagram.com/explore/locations/584326962/ministere-des-solidarites-et-de-la-sante/?hl=fr" class="social-insta"></a>
+                    <a href="https://www.youtube.com/channel/UCApzB6X-04YRPq9SZ0WfEsg" class="social-youtube"></a>
                 </div>
             </div>
         </div>
-    </div>
-
-    <footer class="bg-light text-center text-lg-start">
-
-        <div class="text-center " style="background-color: rgba(0, 0, 0, 0.2)">
-            © 2021 Copyright:
-            <a class="text-dark"
-               href="https://les-semi-croustillants.atlassian.net/jira/software/projects/SP/boards/3">Les semis
-                croustillants</a>
+        <div class="sub-footer">
+            <span>© 2021 Copyright:</span>
+            <a href="https://les-semi-croustillants.atlassian.net/jira/software/projects/SP/boards/3">Les semis croustillants</a>
         </div>
+
+{#    <footer class=" text-secondary text-center text-lg-start style= background-color: #ffffff">#}
+
+{#        <div class="container p-4">#}
+{#    #}
+{#            <div class="row">#}
+{#    #}
+{#                <div class="col-lg-3 col-md-6 mb-4 mb-md-0">#}
+{#    #}
+{#    #}
+{#                    <img src="{{ asset('image/logo2.png') }}" alt="" width="50%">#}
+{#    #}
+{#    #}
+{#                </div>#}
+{#    #}
+{#                <div class="col-lg-3 col-md-6 mb-4 mb-md-0">#}
+{#    #}
+{#    #}
+{#                    <ul class="list-unstyled mb-0">#}
+{#                        <li>#}
+{#                            <a href="https://solidarites-sante.gouv.fr/" class="text-secondary">Plan du site </a>#}
+{#                        </li>#}
+{#                        <li>#}
+{#    #}
+{#                            <a href="https://gouvernement-et-citoyens.consultation.etalab.gouv.fr/"#}
+{#                               class="text-secondary">Accesibilité</a>#}
+{#                        </li>#}
+{#                        <li>#}
+{#                            <a href="https://solidarites-sante.gouv.fr/" class="text-secondary">Mention légale</a>#}
+{#                        </li>#}
+{#                        <li>#}
+{#                            <a href="https://solidarites-sante.gouv.fr/" class="text-secondary">Données et RGPD </a>#}
+{#                        </li>#}
+{#    #}
+{#                    </ul>#}
+{#                </div>#}
+{#    #}
+{#    #}
+{#                <div class="col-lg-3 col-md-6 mb-4 mb-md-0">#}
+{#                    <h5 class="text-uppercase">Liens utiles</h5>#}
+{#    #}
+{#                    <ul class="list-unstyled mb-0">#}
+{#                        <li>#}
+{#                            <a href="https://solidarites-sante.gouv.fr/" class="text-secondary">Site du#}
+{#                                gouvernement </a>#}
+{#                        </li>#}
+{#                        <li>#}
+{#    #}
+{#                            <a href="https://gouvernement-et-citoyens.consultation.etalab.gouv.fr/"#}
+{#                               class="text-secondary">Participation#}
+{#                                citoyenne</a>#}
+{#                        </li>#}
+{#    #}
+{#                    </ul>#}
+{#                </div>#}
+{#    #}
+{#    #}
+{#                <div class="col-lg-3 col-md-6 mb-4 mb-md-0">#}
+{#    #}
+{#                    <h5 class="text-uppercase">Suivez-nous</h5>#}
+{#    #}
+{#                    <div class="container">#}
+{#                        <div class="row">#}
+{#    #}
+{#                            <div class="col">#}
+{#                                <a href="https://www.facebook.com/MinSoliSante">#}
+{#                                    <img src="https://img.icons8.com/color/48/000000/facebook-new.png"/>#}
+{#                                </a>#}
+{#                            </div>#}
+{#    #}
+{#                            <div class="col">#}
+{#                                <a href="https://twitter.com/MinSoliSante?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor">#}
+{#                                    <img src="https://img.icons8.com/fluent/48/000000/twitter.png"/>#}
+{#                                </a>#}
+{#                            </div>#}
+{#    #}
+{#                            <div class="col ">#}
+{#                                <a href="https://www.linkedin.com/company/minist%C3%A8re-des-solidarites-de-la-sant%C3%A9/">#}
+{#                                    <img src="https://img.icons8.com/fluent/48/000000/linkedin.png"/>#}
+{#                                </a>#}
+{#                            </div>#}
+{#                            <div class="col ">#}
+{#                                <a href="https://www.instagram.com/explore/locations/584326962/ministere-des-solidarites-et-de-la-sante/?hl=fr">#}
+{#                                    <img src="https://img.icons8.com/fluent/48/000000/instagram-new.png"/>#}
+{#                                </a>#}
+{#                            </div>#}
+{#                            <div class="col ">#}
+{#                                <a href="https://www.youtube.com/channel/UCApzB6X-04YRPq9SZ0WfEsg">#}
+{#                                    <img src="https://img.icons8.com/color/48/000000/youtube.png"/>#}
+{#                                </a>#}
+{#                            </div>#}
+{#                            <div class="col ">#}
+{#                                <a href="https://www.snapchat.com/add/gouvernementFR">#}
+{#                                    <img src="https://img.icons8.com/fluent/48/000000/snapchat.png"/>#}
+{#                                </a>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+
+{#    <footer class="bg-light text-center text-lg-start">#}
+
+{#        <div class="text-center " style="background-color: rgba(0, 0, 0, 0.2)">#}
+{#            © 2021 Copyright:#}
+{#            <a class="text-dark"#}
+{#               href="https://les-semi-croustillants.atlassian.net/jira/software/projects/SP/boards/3">Les semis#}
+{#                croustillants</a>#}
+{#        </div>#}
+{#    </footer>#}
     </footer>
-    </footer>
-{% endblock %}
+{#{% endblock %}#}
 
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"
         integrity="sha384-q2kxQ16AaE6UbzuKqyBE9/u/KzioAlnx2maXQHiDX9d4/zp8Ok3f+M7DPm+Ib6IU"
@@ -169,6 +224,19 @@
         crossorigin="anonymous"></script>
 <script>
     $('select').select2();
+
+    /*Responsive nav menu burger*/
+    var showRespinsiveNav = false;
+    function setNav() {
+        showRespinsiveNav = !showRespinsiveNav;
+        console.log('set nav');
+        var nav = document.getElementById("responsive-nav");
+        if (showRespinsiveNav) {
+            nav.style.height = "230px"
+        } else {
+            nav.style.height = "0";
+        }
+    }
 </script>
 
 {% block javascripts %}
