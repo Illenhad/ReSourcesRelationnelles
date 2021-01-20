@@ -84,7 +84,7 @@
                         <td>{{ resource.ageCategory }}</td>
                         <td>{{ resource.relationShip }}</td>
                         <td>
-                            <a href="{{ path('app_resource_show', {id: resource.id, slug: resource.slug}) }}" class="btn btn-perso">Consulter</a>
+                            <a href="{{ path('comment.show', {id: resource.id, slug: resource.slug}) }}" class="btn btn-perso">Consulter</a>
                             {% if resourceGestion == 'created' %}
                                 <a href="{{ path('edit_resource', {id: resource.id}) }}" class="btn btn-perso">Modifier</a>
                             {% endif %}
