@@ -65,15 +65,14 @@ class ResourceController extends AbstractController
                 'class' => RelationshipType::class,
                 'multiple' => true,
                 'attr' => ['class' => 'selectTags w-100 '],
-                ])
+            ])
             ->add('age', EntityType::class, [
                 'required' => false,
                 'class' => AgeCategory::class,
                 'multiple' => true,
                 'attr' => ['class' => 'selectTags w-100 '],
-                ])
-            ->getForm()
-        ;
+            ])
+            ->getForm();
         $formfilter->handleRequest($request);
 
         $resources = $paginator->paginate(
@@ -92,7 +91,7 @@ class ResourceController extends AbstractController
     }
 
     /**
-     * @Route("/{slug}-{id}", requirements={"slug": "[a-z0-9\-]*"})
+     * @Route("/{slug}-{id}", name="comment.show", requirements={"slug": "[a-z0-9\-]*"})
      */
     public function show(Request $request, string $slug, int $id, ResourceRepository $resourceRepository, EntityManagerInterface $entityManager): Response
     {
@@ -116,7 +115,7 @@ class ResourceController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->render(self::ROUTE_PREFIX . '/show.html.twig', [
+        return $this->render(self::ROUTE_PREFIX.'/show.html.twig', [
             'resource' => $resource,
             'current_menu' => 'resources',
             'form' => $form->createView(),
@@ -143,10 +142,26 @@ class ResourceController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->render(self::ROUTE_PREFIX . '/editComment.html.twig', [
+        return $this->render(self::ROUTE_PREFIX.'/editComment.html.twig', [
             'comment' => $comment,
             'current_menu' => 'resources',
             'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("comment/{id}/delete", name="comment.delete")
+     */
+    public function delete(int $id, EntityManagerInterface $entityManager): Response
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $comment = $entityManager->getRepository(Comment::class)->find($id);
+        $entityManager->remove($comment);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('comment.show', [
+            'slug' => $comment->getResource()->getSlug(),
+            'id' => $comment->getResource()->getId(),
         ]);
     }
 
