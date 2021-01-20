@@ -43,7 +43,8 @@ class UserCrudController extends AbstractCrudController
             EmailField::new('email'),
             TextField::new('dateLastConnection')->setLabel('Dernière connexion')->hideOnForm(),
             TextField::new('getFormatedCreationDate')->setLabel('Inscription')->hideOnForm(),
-            AssociationField::new('role')->setLabel('Rôle'),
+            AssociationField::new('role')->setLabel('Rôle')
+                                                    ->setPermission('ROLE_SUPER_ADMIN'),
             AssociationField::new('department')->setLabel('Lieu'),
             AssociationField::new('ageCategory')->setLabel('Catégorie d\'age'),
             TextField::new('password')
