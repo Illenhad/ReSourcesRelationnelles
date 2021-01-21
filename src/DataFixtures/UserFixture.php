@@ -66,6 +66,25 @@ class UserFixture extends Fixture implements DependentFixtureInterface
 
         $user = new User();
         $user
+            ->setFirstname('Alice')
+            ->setLastname('Delarose')
+            ->setUsername('aliceclt')
+            ->setEmail('aliceclt@hotmail.fr')
+            ->setDepartment($this->getReference('department'.$faker->numberBetween(1, count(DepartmentFixture::$tabDept))))
+            ->setAgeCategory($this->getReference('ageCategory'.$faker->numberBetween(1, count(AgeCategoryFixture::$tabAge))))
+            ->setDateLastConnection(new \DateTime('now'))
+            ->setRole($this->getReference('ROLE_USER'))
+            ->setPassword($this->passwordEncoder->encodePassword($user, 'user'))
+            ->setActive(true)
+            ->setCreationDate($faker->dateTimeBetween('-2 years', 'now', null))
+        ;
+        $manager->persist($user);
+        ++self::$numberOfUsers;
+        $this->addReference('user'.self::$numberOfUsers, $user);
+        array_push($tabModerator, 'user'.self::$numberOfUsers);
+
+        $user = new User();
+        $user
             ->setFirstname('Jacqueline')
             ->setLastname('Dumont')
             ->setUsername('mamienova')

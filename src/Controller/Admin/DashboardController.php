@@ -5,9 +5,11 @@ namespace App\Controller\Admin;
 use App\Entity\ActionType;
 use App\Entity\AgeCategory;
 use App\Entity\Category;
+use App\Entity\Comment;
 use App\Entity\Department;
 use App\Entity\ManagementType;
 use App\Entity\RelationshipType;
+use App\Entity\RelSharedResourceUser;
 use App\Entity\RelUserActionResource;
 use App\Entity\Resource;
 use App\Entity\Role;
@@ -48,11 +50,41 @@ class DashboardController extends AbstractDashboardController
         }
 
         //Ressources les plus commentées
-        $resourcesMostCommented = $this->manager->getRepository(Resource::class)->getMostCommentedResources($this->manager);
+        $resourcesMostCommented = $this->manager->getRepository(Resource::class)->getMostCommentedResources();
+
+        //Stat du jour - Commentaires
+        $currentDayCommentsNumber = $this->manager->getRepository(Comment::class)->getCurrentDayCommentNumber();
+        $currentDayComments = $this->manager->getRepository(Comment::class)->getCurrentDayComments();
+
+        //Stat du jour - Consulations
+        $currentDayResourcesConsultedNumber = $this->manager->getRepository(RelUserActionResource::class)->getCurrentDayResourcesConsultedNumber();
+        $currentDayResourcesConsulted = $this->manager->getRepository(Resource::class)->getCurrentDayConsultedResources();
+
+        //Stat du jour - Partages
+        $currentDaySharedResourcesNumber = $this->manager->getRepository(RelSharedResourceUser::class)->getCurrentDaySharedResourceNumber();
+        $currentDaySharedResources = $this->manager->getRepository(Resource::class)->getCurrentDaySharedResources();
+
+        //Stat de la semaine - Ressources les mieux notées
+        $lastWeekBestValuatedResources = $this->manager->getRepository(Resource::class)->getLastWeekResourcesByValuation(true);
+
+        //Stat de la semaine - Ressources les moins bien notées
+        $lastWeekWorstValuatedResources = $this->manager->getRepository(Resource::class)->getLastWeekResourcesByValuation(false);
+
+        //Stat de la semaine - Ressources les plus partagées
+        $lastWeekMostSharedResources = $this->manager->getRepository(Resource::class)->getLastWeekMostSharedResources();
 
         return $this->render('bundles/EasyAdminBundle/welcome.html.twig', [
             'resourcesToValidateNumber' => $resourcesToValidateNumber,
-            'resourcesMostCommented' => $resourcesMostCommented
+            'resourcesMostCommented' => $resourcesMostCommented,
+            'currentDayCommentsNumber' => $currentDayCommentsNumber,
+            'currentDayComments' => $currentDayComments,
+            'currentDayResourcesConsultedNumber' => $currentDayResourcesConsultedNumber,
+            'currentDayResourcesConsulted' => $currentDayResourcesConsulted,
+            'currentDaySharedResourcesNumber' => $currentDaySharedResourcesNumber,
+            'currentDaySharedResources' => $currentDaySharedResources,
+            'lastWeekBestValuatedResources' => $lastWeekBestValuatedResources,
+            'lastWeekWorstValuatedResources' => $lastWeekWorstValuatedResources,
+            'lastWeekMostSharedResources' => $lastWeekMostSharedResources
         ]);
     }
 

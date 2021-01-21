@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\RelUserManagementResource;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -17,6 +18,27 @@ class RelUserManagementResourceRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, RelUserManagementResource::class);
+    }
+
+    public function getFavorite(User $user, ManagerRegistry $registry)
+    {
+        $managementTypeRepository = new ManagementTypeRepository($registry);
+        $favType = $managementTypeRepository->findOneBy(['label' => 'favoris']);
+        $query = $this->createQueryBuilder('rel')
+            ->select('res.id')
+            ->join('rel.resource', 'res')
+            ->andWhere('rel.user = :user')
+            ->setParameter('user', $user->getId())
+            ->andWhere('rel.managementType = :favType')
+            ->setParameter('favType', $favType->getId())
+        ;
+        $rawlistFav = $query->getQuery()->getArrayResult();
+        $listFav = [];
+        foreach ($rawlistFav as $Fav) {
+            array_push($listFav, $Fav['id']);
+        }
+
+        return $listFav;
     }
 
     // /**

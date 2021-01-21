@@ -3,6 +3,8 @@
 namespace App\Repository;
 
 use App\Entity\Comment;
+use App\Entity\User;
+use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -19,32 +21,46 @@ class CommentRepository extends ServiceEntityRepository
         parent::__construct($registry, Comment::class);
     }
 
-    // /**
-    //  * @return Comment[] Returns an array of Comment objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('c.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+    public function getCurrentDayCommentNumber() {
+        $manager = $this->getEntityManager();
 
-    /*
-    public function findOneBySomeField($value): ?Comment
-    {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        $query = $manager->createQuery(
+            'SELECT count(c)
+            FROM App\Entity\Comment c 
+            WHERE c.commentDate BETWEEN :date1 AND :date2'
+        )-> setParameter('date1', new DateTime('today'))
+        ->setParameter('date2', new DateTime('now'));
+
+        return $query->getScalarResult()[0][1];
     }
-    */
+
+    public function getCurrentDayComments() {
+        $manager = $this->getEntityManager();
+
+        $query = $manager->createQuery(
+            'SELECT c
+            FROM App\Entity\Comment c 
+            WHERE c.commentDate BETWEEN :date1 AND :date2'
+        )-> setParameter('date1', new DateTime('today'))
+        ->setParameter('date2', new DateTime('now'))
+        ->setMaxResults(3);
+
+        return $query->getResult();
+    }
+
+    /**
+     * @param User $user
+     * @return mixed
+     */
+    public function getNumberOfComments(User $user)
+    {
+        $manager = $this->getEntityManager();
+        $query = $manager->createQuery(
+            'SELECT COUNT(r) FROM App\Entity\Comment r
+                WHERE r.user = :user'
+        )
+            ->setParameter('user', $user);
+
+        return $query->getScalarResult()[0][1];
+    }
 }

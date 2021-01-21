@@ -3,16 +3,20 @@
 namespace App\Controller;
 
 use App\Entity\ActionType;
-use App\Entity\Comment;
 use App\Entity\AgeCategory;
+use App\Entity\Comment;
 use App\Entity\RelationshipType;
 use App\Entity\RelUserActionResource;
+use App\Entity\RelUserManagementResource;
 use App\Entity\Resource;
 use App\Form\CommentType;
 use App\Form\ResourceType;
+use App\Repository\ManagementTypeRepository;
+use App\Repository\RelUserManagementResourceRepository;
 use App\Repository\ResourceRepository;
 use App\Search\FilterData;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Persistence\ObjectManager;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -41,14 +45,13 @@ class ResourceController extends AbstractController
 
     /**
      * @Route("", name="resources")
-     *
-     * @param Request $request
-     * @param ResourceRepository $resourceRepository
-     * @param PaginatorInterface $paginator
-     * @return Response
      */
-    public function index(Request $request, ResourceRepository $resourceRepository, PaginatorInterface $paginator): Response
+    public function index(ManagerRegistry $registry,Request $request, ResourceRepository $resourceRepository,RelUserManagementResourceRepository $relUserManagementResourceRepository, PaginatorInterface $paginator): Response
     {
+        $resourceFav=[];
+        if($this->getUser()){
+            $resourceFav=$relUserManagementResourceRepository->getFavorite($this->getUser(),$registry);
+        }
         $search = $request->query->get('search');
 
         $filter = new FilterData();
@@ -69,16 +72,15 @@ class ResourceController extends AbstractController
                 'required' => false,
                 'class' => RelationshipType::class,
                 'multiple' => true,
-                'attr' => ['class' => 'selectTags w-100'],
-                ])
+                'attr' => ['class' => 'selectTags w-100 '],
+            ])
             ->add('age', EntityType::class, [
                 'required' => false,
                 'class' => AgeCategory::class,
                 'multiple' => true,
-                'attr' => ['class' => 'selectTags w-100'],
-                ])
-            ->getForm()
-        ;
+                'attr' => ['class' => 'selectTags w-100 '],
+            ])
+            ->getForm();
         $formfilter->handleRequest($request);
 
         $resources = $paginator->paginate(
@@ -92,17 +94,30 @@ class ResourceController extends AbstractController
             [
                 'resources' => $resources,
                 'filter' => $formfilter->CreateView(),
+                'resourceFav'=>$resourceFav,
             ]
         );
     }
 
     /**
-     * @Route("/{slug}-{id}", requirements={"slug": "[a-z0-9\-]*"})
+     * @Route("/{slug}-{id}", name="comment.show", requirements={"slug": "[a-z0-9\-]*"})
      */
-    public function show(Request $request, string $slug, int $id, ResourceRepository $resourceRepository, EntityManagerInterface $entityManager): Response
+    public function show(Request $request, string $slug, int $id, ResourceRepository $resourceRepository, RelUserManagementResourceRepository $managementResourceRepository, ManagementTypeRepository $managementTypeRepository, EntityManagerInterface $entityManager): Response
     {
-        $comment = new Comment();
         $resource = $resourceRepository->find($id);
+
+        //Management Type Favoris
+        $FavmanagementType = $managementTypeRepository->findOneBy(['label' => 'favoris']);
+
+        if($this->getUser()) {
+            $isfav = $managementResourceRepository->findOneBy([
+                'user' => $this->getUser()->getId(),
+                'resource' => $id,
+                'managementType' => $FavmanagementType->getId(),
+            ]);
+        }
+        else{$isfav =null;}
+        $comment = new Comment();
 
         $form = $this->createForm(CommentType::class, $comment);
         $form->handleRequest($request);
@@ -125,6 +140,50 @@ class ResourceController extends AbstractController
             'resource' => $resource,
             'current_menu' => 'resources',
             'form' => $form->createView(),
+            'isFavorite'=>$isfav,
+        ]);
+    }
+
+    /**
+     * @Route("comment/{id}/edit", name="comment.edit")
+     *
+     * @param int $commentId
+     */
+    public function editComment(Request $request, int $id, EntityManagerInterface $entityManager): Response
+    {
+        $comment = $entityManager->getRepository(Comment::class)->find($id);
+
+        $form = $this->createForm(CommentType::class, $comment);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            if ($comment->getUser() !== $this->getUser()) {
+                return $this->redirectToRoute('resources');
+            }
+            $entityManager->persist($comment);
+            $entityManager->flush();
+        }
+
+        return $this->render(self::ROUTE_PREFIX.'/editComment.html.twig', [
+            'comment' => $comment,
+            'current_menu' => 'resources',
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("comment/{id}/delete", name="comment.delete")
+     */
+    public function delete(int $id, EntityManagerInterface $entityManager): Response
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $comment = $entityManager->getRepository(Comment::class)->find($id);
+        $entityManager->remove($comment);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('comment.show', [
+            'slug' => $comment->getResource()->getSlug(),
+            'id' => $comment->getResource()->getId(),
         ]);
     }
 
@@ -202,5 +261,37 @@ class ResourceController extends AbstractController
         } else {
             return $this->redirectToRoute('login');
         }
+    }
+
+    /**
+     * @Route("/addRemoveFav", name="addRemoveFav")
+     */
+    public function addRemoveFav(Request $request, ResourceRepository $resourceRepository, RelUserManagementResourceRepository $managementResourceRepository, ManagementTypeRepository $managementTypeRepository, EntityManagerInterface $entityManager): Response
+    {
+        $url = $request->query->get('url');
+        $id = $request->query->get('id');
+        $resource = $resourceRepository->find($id);
+
+        //Management Type Favoris
+        $FavmanagementType = $managementTypeRepository->findOneBy(['label' => 'favoris']);
+
+        $existingfav = $managementResourceRepository->findOneBy([
+                'user' => $this->getUser()->getId(),
+                'resource' => $id,
+                'managementType' => $FavmanagementType->getId(),
+            ]);
+        if ($existingfav) {
+            $entityManager->remove($existingfav);
+            $entityManager->flush();
+        } else {
+            $newfav = new RelUserManagementResource();
+            $newfav->setUser($this->getUser())
+                    ->setManagementType($FavmanagementType)
+                    ->setResource($resource);
+            $entityManager->persist($newfav);
+            $entityManager->flush();
+        }
+
+        return $this->redirect($url);
     }
 }

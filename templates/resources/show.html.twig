@@ -8,9 +8,21 @@
 
     <div class="container text-center" style="border: 1px solid silver;height:60px;">
         {{ resource.title }}
+
+        <!--Gestion Favoris-->
+        {% if app.user %}
+                <a style="display:block;text-align: right" href="{{  path('addRemoveFav', {id: resource.id,url:app.request.requestUri }) }}">
+                    {% if isFavorite %}
+                        <img src="https://img.icons8.com/cotton/64/000000/like--v1.png" title="Retirer des Favoris"  style="width: 30px;height: 30px;" />
+                    {% else %}
+                        <img src="https://img.icons8.com/plasticine/100/000000/like--v3.png" title="Ajouter aux favoris"  style="width: 30px;height: 30px;" />
+                    {% endif %}
+                </a>
+        {% endif %}
+
     </div>
 
-    posté le {{ resource.dateCreation|date("d.m.Y à h:m") }}
+    posté le {{ resource.dateCreation|date("d.m.Y à H:i", "Europe/Paris") }}
 
     <div class="container" style="border: 1px solid silver;height:60px;">
         {{ resource.description }}
@@ -47,7 +59,17 @@
                         <label for="{{ i }}">☆</label>
                     {% endfor %}
                 </div>
-                <a href="#" class="btn btn-primary">Répondre</a>
+                <a href="{{ path('resources') }}" class="btn btn-primary">Répondre</a>
+            {% if app.user== comment.user %}
+
+                    <a href="{{ path('comment.edit', {id: comment.id} ) }}" class="btn btn-secondary">Modifier</a>
+
+                {% endif %}
+
+                {% if app.user== comment.user or is_granted('ROLE_MODERATEUR') %}
+                    <a href="{{ path('comment.delete', {id: comment.id}) }}" class=" btn btn-danger">Supprimer </a>
+                {% endif %}
+
             </div>
             <div class="card-footer text-muted">
                 posté le {{ comment.commentDate|date }}
