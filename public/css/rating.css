@@ -39,7 +39,9 @@
 .rating-show {
     display: flex;
     flex-direction: row-reverse;
-    justify-content: center
+    justify-content: center;
+    margin-top: -8px;
+    margin-left: 10px;
 }
 
 .rating-show > input {
@@ -49,7 +51,7 @@
 .rating-show > label {
     position: relative;
     width: 1em;
-    font-size: 200%;
+    font-size: 150%;
     color: orange;
     cursor: pointer
 }
