@@ -46,11 +46,11 @@ class ResourceController extends AbstractController
     /**
      * @Route("", name="resources")
      */
-    public function index(ManagerRegistry $registry,Request $request, ResourceRepository $resourceRepository,RelUserManagementResourceRepository $relUserManagementResourceRepository, PaginatorInterface $paginator): Response
+    public function index(ManagerRegistry $registry, Request $request, ResourceRepository $resourceRepository, RelUserManagementResourceRepository $relUserManagementResourceRepository, PaginatorInterface $paginator): Response
     {
-        $resourceFav=[];
-        if($this->getUser()){
-            $resourceFav=$relUserManagementResourceRepository->getFavorite($this->getUser(),$registry);
+        $resourceFav = [];
+        if ($this->getUser()) {
+            $resourceFav = $relUserManagementResourceRepository->getFavorite($this->getUser(), $registry);
         }
         $search = $request->query->get('search');
 
@@ -94,7 +94,7 @@ class ResourceController extends AbstractController
             [
                 'resources' => $resources,
                 'filter' => $formfilter->CreateView(),
-                'resourceFav'=>$resourceFav,
+                'resourceFav' => $resourceFav,
             ]
         );
     }
@@ -109,14 +109,15 @@ class ResourceController extends AbstractController
         //Management Type Favoris
         $FavmanagementType = $managementTypeRepository->findOneBy(['label' => 'favoris']);
 
-        if($this->getUser()) {
+        if ($this->getUser()) {
             $isfav = $managementResourceRepository->findOneBy([
                 'user' => $this->getUser()->getId(),
                 'resource' => $id,
                 'managementType' => $FavmanagementType->getId(),
             ]);
+        } else {
+            $isfav = null;
         }
-        else{$isfav =null;}
         $comment = new Comment();
 
         $form = $this->createForm(CommentType::class, $comment);
@@ -140,7 +141,7 @@ class ResourceController extends AbstractController
             'resource' => $resource,
             'current_menu' => 'resources',
             'form' => $form->createView(),
-            'isFavorite'=>$isfav,
+            'isFavorite' => $isfav,
         ]);
     }
 

@@ -3,15 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}ResourceRelationnelle{% endblock %}</title>
+    {# Bootstrap #}
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    {# Font Awesome #}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css">
     {% block stylesheets %}{% endblock %}
     <link href="{{ asset('css/header.css') }}" rel="stylesheet"/>
     <link href="{{ asset('css/footer.css') }}" rel="stylesheet"/>
     <link href="{{ asset('css/button.css') }}" rel="stylesheet"/>
+    <link href="{{ asset('css/search.css') }}" rel="stylesheet"/>
+
 </head>
 <body>
 {#{% block header %}#}
+
     <header>
         <div class="header-content">
             <a id="logo" href="{{ path('resources') }}"></a>
@@ -24,9 +30,11 @@
                 </li>
             </ul>
             <div id="search">
-                <form method="get" action="{{ path('resources') }}">
-                    <input class="form-control me-2" type="search" placeholder="Ex : Comment devenir un jedi" aria-label="Recherche" name="search"/>
-                    <input class="btn btn-blue" type="submit" value="Recherche"/>
+                <form class="search" method="get" action="{{ path('resources') }}">
+                    <div class="search__wrapper" >
+                        <input type="text" name="search" placeholder="Rechercher..." class="search__field">
+                        <button type="submit" class="fa fa-search search__icon"></button>
+                    </div>
                 </form>
             </div>
             <div id="connexion">
@@ -37,9 +45,11 @@
             <button id="responsive-nav-btn" class="btn btn-dark-light" onclick="setNav()">&#9776;</button>
             <div id="responsive-nav">
                 <a class="btn btn-primary btn-log" href="{{ path('login') }}"><span class="log-icon"></span><span class="log-text">Connexion</span></a>
-                <form class="full-width" method="get" action="{{ path('resources') }}">
-                    <input class="form-control me-2" type="search" placeholder="Ex : Comment devenir un jedi" aria-label="Recherche" name="search"/>
-                    <button id="btn-search" class="btn btn-blue"><span></span></button>
+                <form class="search" method="get" action="{{ path('resources') }}">
+                    <div class="search__wrapper">
+                        <input type="text" name="search" placeholder="Rechercher..." class="search__field">
+                        <button type="submit" class="fa fa-search search__icon"></button>
+                    </div>
                 </form>
                 <a class="nav-link home btn-full-width" aria-current="page" href="{{ path('resources') }}">Accueil</a>
                 <a class="nav-link btn-full-width" href="{{ path('user_dashboard') }}">Espace personnel</a>
