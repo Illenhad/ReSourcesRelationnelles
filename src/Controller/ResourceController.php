@@ -140,7 +140,7 @@ class ResourceController extends AbstractController
         return $this->render(self::ROUTE_PREFIX.'/show.html.twig', [
             'resource' => $resource,
             'current_menu' => 'resources',
-            'form' => $form->createView(),
+            'form' => $this->createForm(CommentType::class, new Comment())->createView(),
             'isFavorite' => $isfav,
         ]);
     }
