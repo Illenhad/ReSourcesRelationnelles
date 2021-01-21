@@ -43,13 +43,21 @@
                 </form>
             </div>
             <div id="connexion">
+                {% if app.user %}
+                    <a class="btn btn-primary btn-log" href="{{ path('logout') }}"><span class="log-icon"></span><span class="log-text">Deconnexion</span></a>
+                {% else %}
                 <a class="btn btn-primary btn-log" href="{{ path('login') }}"><span class="log-icon"></span><span class="log-text">Connexion</span></a>
+                {% endif %}
             </div>
         </div>
         <div id="responsive-header">
             <button id="responsive-nav-btn" class="btn btn-dark-light" onclick="setNav()">&#9776;</button>
             <div id="responsive-nav">
+                {% if app.user %}
+                    <a class="btn btn-primary btn-log" href="{{ path('logout') }}"><span class="log-icon"></span><span class="log-text">Deconnexion</span></a>
+                {% else %}
                 <a class="btn btn-primary btn-log" href="{{ path('login') }}"><span class="log-icon"></span><span class="log-text">Connexion</span></a>
+                {% endif %}
                 <form class="search" method="get" action="{{ path('resources') }}">
                     <div class="search__wrapper">
                         <input type="text" name="search" placeholder="Rechercher..." class="search__field">
