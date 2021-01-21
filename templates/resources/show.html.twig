@@ -71,7 +71,7 @@
                 {{ form_widget(form.content) }}
                 {{ form_widget(form.valuation) }}
                 <div class="rating">
-                    {% for i in range(5, 1) %}
+                    {% for i in range(1, 5) %}
                         <input type="radio" name="rating" value="{{ i }}" id="{{ i }}">
                         <label for="{{ i }}">☆</label>
                     {% endfor %}
@@ -84,38 +84,51 @@
     </div>
 {% endblock %}
 
-{% block javascripts %}
-    <script>
-        $(document).ready(function () {
-            $("input[name='rating']").click(function () {
-                $("#comment_valuation").val($(this).val());
-            });
-        });
+        {% block javascripts %}
+            <script>
+                $(document).ready(function () {
+                    const container = document.querySelector('.rating');
+                    const items = container.querySelectorAll('.rating-item');
+                    container.onclick = e => {
+                        const elClass = e.target.classList;
+                        if (!elClass.contains('active')) {
+                            items.forEach(
+                                item => item.classList.remove('active')
+                            );
+                            $("#comment_valuation").val(e.target.getAttribute("data-rate"));
+                            elClass.add('active');
+                        }
+                    };
+                });
 
-        /*COMMENTS MANAGING*/
-        var showComments = true;
-        var allComments = document.getElementsByClassName('comment-content');
-        var button = document.querySelector('#more-less-comment');
-        comments = Array.prototype.slice.call(allComments);
-        if(comments.length > 5) {
-            comments = comments.splice(5, comments.length - 5);
-            setShowComments();
-        } else {
-            button.style.display = 'none';
-        }
-        console.log('init, show = ' + showComments);
-        function setShowComments() {
-            showComments = !showComments;
-            if (showComments) {
-                comments.forEach(showHideComments);
-                button.innerHTML = '<span class="icon-upper-arrow"></span> Voir moins de commentaire';
-            } else {
-                comments.forEach(showHideComments);
-                button.innerHTML = '<span class="icon-lower-arrow"></span> Voir plus de commentaire (' + comments.length + ')';
-            }
-        }
-        function showHideComments(item) {
-            item.style.display = showComments ? 'block' : 'none';
-        }
-    </script>
+                /*COMMENTS MANAGING*/
+                var showComments = true;
+                var allComments = document.getElementsByClassName('comment-content');
+                var button = document.querySelector('#more-less-comment');
+                comments = Array.prototype.slice.call(allComments);
+                if(comments.length > 5) {
+                    comments = comments.splice(5, comments.length - 5);
+                    setShowComments();
+                } else {
+                    button.style.display = 'none';
+                }
+                console.log('init, show = ' + showComments);
+                function setShowComments() {
+                    showComments = !showComments;
+                    if (showComments) {
+                        comments.forEach(showHideComments);
+                        button.innerHTML = '<span class="icon-upper-arrow"></span> Voir moins de commentaire';
+                    } else {
+                        comments.forEach(showHideComments);
+                        button.innerHTML = '<span class="icon-lower-arrow"></span> Voir plus de commentaire (' + comments.length + ')';
+                    }
+                }
+                function showHideComments(item) {
+                    item.style.display = showComments ? 'block' : 'none';
+                }
+            </script>
+        {% endblock %}
+    </div>
+    <div class="text-center mt-4 mb-4">
+    <a class="btn btn-primary" href="{{ path('resources') }}">Retour</a>
 {% endblock %}
