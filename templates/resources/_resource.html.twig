@@ -10,41 +10,44 @@
             De {{ resource.user.username }} <br>
             posté le {{ resource.dateCreation|date("d.m.Y à H:i", "Europe/Paris") }}
         </div>
-
-        {% if resource.relationShip.label == 'Soi' %}
-            <img src="{{ asset('image/1.jpg') }}" alt=""/>
-
-        {% elseif resource.relationShip.label == 'Conjoints' %}
-
-            <img src="{{ asset('image/2.jpg') }}" alt=""/>
-
-        {% elseif resource.relationShip.label == 'Famille - enfants' %}
-
-            <img src="{{ asset('image/3.jpg') }}" alt=""/>
-
-        {% elseif resource.relationShip.label == 'Famille - parents' %}
-
-            <img src="{{ asset('image/4.jpg') }}" alt=""/>
-
-        {% elseif resource.relationShip.label == 'Famille - fratrie' %}
-
-            <img src="{{ asset('image/5.jpg') }}" alt=""/>
-
-
-        {% elseif resource.relationShip.label == 'Professionnel - collègues' %}
-
-            <img src="{{ asset('image/6.jpg') }}" alt=""/>
-
-        {% elseif resource.relationShip.label == 'Professionnel - collaborateurs' %}
-
-            <img src="{{ asset('image/7.jpg') }}" alt=""/>
-
-        {% elseif resource.relationShip.label == 'Professionnel - manager' %}
-
-            <img src="{{ asset('image/8.jpg') }}" alt=""/>
-
+        {% if resource.imageName %}
+            <img src="{{ vich_uploader_asset(resource,'imageFile') }}", style="width: 300px" alt=""/>
         {% else %}
-            <img class="card-img-top" src="https://picsum.photos/300/300" alt="">
+            {% if resource.relationShip.label == 'Soi' %}
+                <img src="{{ asset('image/1.jpg') }}" alt=""/>
+
+            {% elseif resource.relationShip.label == 'Conjoints' %}
+
+                <img src="{{ asset('image/2.jpg') }}" alt=""/>
+
+            {% elseif resource.relationShip.label == 'Famille - enfants' %}
+
+                <img src="{{ asset('image/3.jpg') }}" alt=""/>
+
+            {% elseif resource.relationShip.label == 'Famille - parents' %}
+
+                <img src="{{ asset('image/4.jpg') }}" alt=""/>
+
+            {% elseif resource.relationShip.label == 'Famille - fratrie' %}
+
+                <img src="{{ asset('image/5.jpg') }}" alt=""/>
+
+
+            {% elseif resource.relationShip.label == 'Professionnel - collègues' %}
+
+                <img src="{{ asset('image/6.jpg') }}" alt=""/>
+
+            {% elseif resource.relationShip.label == 'Professionnel - collaborateurs' %}
+
+                <img src="{{ asset('image/7.jpg') }}" alt=""/>
+
+            {% elseif resource.relationShip.label == 'Professionnel - manager' %}
+
+                <img src="{{ asset('image/8.jpg') }}" alt=""/>
+
+            {% else %}
+                <img class="card-img-top" src="https://picsum.photos/300/300" alt="">
+            {% endif %}
         {% endif %}
 
         <div class="card-body ">

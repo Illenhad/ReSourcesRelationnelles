@@ -67,4 +67,7 @@ phpserve.bat
 ###< friendsofphp/php-cs-fixer ###
 
 #Fichier import de r
-/public/
+/public/file
+###> liip/imagine-bundle ###
+/public/media/cache/
+###< liip/imagine-bundle ###
