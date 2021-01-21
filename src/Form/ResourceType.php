@@ -7,6 +7,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Vich\UploaderBundle\Form\Type\VichFileType;
 
 class ResourceType extends AbstractType
 {
@@ -15,6 +16,16 @@ class ResourceType extends AbstractType
         $builder
             ->add('title')
             ->add('description', TextareaType::class)
+            ->add('imageFile', VichFileType::class, [
+                'required' => false,
+                'allow_delete' => true,
+                'asset_helper' => true,
+              ])
+            ->add('contentFile', VichFileType::class, [
+        'required' => false,
+        'allow_delete' => true,
+        'asset_helper' => true,
+    ])
             ->add('link')
             ->add('public')
             ->add('ageCategory')

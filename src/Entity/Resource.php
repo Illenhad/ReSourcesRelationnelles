@@ -11,9 +11,12 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Entity(repositoryClass=ResourceRepository::class)
+ * @Vich\Uploadable
  */
 class Resource
 {
@@ -42,7 +45,6 @@ class Resource
 
     /**
      * @ORM\Column(type="string", length=255)
-     *
      * @var string
      */
     private $link;
@@ -60,6 +62,50 @@ class Resource
      * @var \DateTimeInterface
      */
     private $dateCreation;
+    /**
+    *
+    * @Vich\UploadableField(mapping="res_img", fileNameProperty="imageName", size="imageSize")
+    *
+    * @var File|null
+     */
+    private $imageFile;
+
+    /**
+     * @ORM\Column(type="string")
+     *
+     * @var string|null
+     */
+    private $imageName;
+
+    /**
+     * @ORM\Column(type="integer")
+     *
+     * @var int|null
+     */
+    private $imageSize;
+
+    /**
+     *
+     * @Vich\UploadableField(mapping="res_content", fileNameProperty="contentName", size="contentSize")
+     *
+     * @var File|null
+     */
+    private $contentFile;
+
+    /**
+     * @ORM\Column(type="string")
+     *
+     * @var string|null
+     */
+    private $contentName;
+
+    /**
+     * @ORM\Column(type="integer")
+     *
+     * @var int|null
+     */
+    private $contentSize;
+
 
     /**
      * @ORM\OneToMany(targetEntity="RelUserManagementResource", mappedBy="resource")
@@ -392,5 +438,84 @@ class Resource
     public function setShareNb($shareNb): void
     {
         $this->shareNb = $shareNb;
+    }
+
+    /**
+     * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
+     * of 'UploadedFile' is injected into this setter to trigger the update. If this
+     * bundle's configuration parameter 'inject_on_load' is set to 'true' this setter
+     * must be able to accept an instance of 'File' as the bundle will inject one here
+     * during Doctrine hydration.
+     *
+     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile|null $imageFile
+     */
+    public function setImageFile(?File $imageFile = null): void
+    {
+        $this->imageFile = $imageFile;
+    }
+
+    public function getImageFile(): ?File
+    {
+        return $this->imageFile;
+    }
+
+    public function setImageName(?string $imageName): void
+    {
+        $this->imageName = $imageName;
+    }
+
+    public function getImageName(): ?string
+    {
+        return $this->imageName;
+    }
+
+    public function setImageSize(?int $imageSize): void
+    {
+        $this->imageSize = $imageSize;
+    }
+
+    public function getImageSize(): ?int
+    {
+        return $this->imageSize;
+    }
+
+    /**
+     * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
+     * of 'UploadedFile' is injected into this setter to trigger the update. If this
+     * bundle's configuration parameter 'inject_on_load' is set to 'true' this setter
+     * must be able to accept an instance of 'File' as the bundle will inject one here
+     * during Doctrine hydration.
+     *
+     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile|null $imageFile
+     */
+    public function setContentFile(?File $contentFile = null): void
+    {
+        $this->contentFile = $contentFile;
+
+    }
+
+    public function getContentFile(): ?File
+    {
+        return $this->contentFile;
+    }
+
+    public function setContentName(?string $contentName): void
+    {
+        $this->contentName = $contentName;
+    }
+
+    public function getContentName(): ?string
+    {
+        return $this->contentName;
+    }
+
+    public function setContentSize(?int $contentSize): void
+    {
+        $this->contentSize = $contentSize;
+    }
+
+    public function getContentSize(): ?int
+    {
+        return $this->contentSize;
     }
 }
