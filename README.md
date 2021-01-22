@@ -40,7 +40,7 @@ php bin\console doctrine:schema:create
 php bin\console doctrine:fixtures:load
 ```
 
-*Ne pas oublier de lancer le server de base de données*
+:warning: *Ne pas oublier de lancer le server de base de données*
 
 ### Lancer le serveur
 ```
