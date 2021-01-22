@@ -11,13 +11,16 @@
 
         <!--Gestion Favoris-->
         {% if app.user %}
-                <a style="display:block;text-align: right" href="{{  path('addRemoveFav', {id: resource.id,url:app.request.requestUri }) }}">
-                    {% if isFavorite %}
-                        <img src="https://img.icons8.com/cotton/64/000000/like--v1.png" title="Retirer des Favoris"  style="width: 30px;height: 30px;" />
-                    {% else %}
-                        <img src="https://img.icons8.com/plasticine/100/000000/like--v3.png" title="Ajouter aux favoris"  style="width: 30px;height: 30px;" />
-                    {% endif %}
-                </a>
+            <a style="display:block;text-align: right"
+               href="{{ path('addRemoveFav', {id: resource.id,url:app.request.requestUri }) }}">
+                {% if isFavorite %}
+                    <img src="https://img.icons8.com/cotton/64/000000/like--v1.png" title="Retirer des Favoris"
+                         style="width: 30px;height: 30px;"/>
+                {% else %}
+                    <img src="https://img.icons8.com/plasticine/100/000000/like--v3.png" title="Ajouter aux favoris"
+                         style="width: 30px;height: 30px;"/>
+                {% endif %}
+            </a>
         {% endif %}
 
     </div>
@@ -60,7 +63,7 @@
                     {% endfor %}
                 </div>
                 <a href="{{ path('resources') }}" class="btn btn-primary">Répondre</a>
-            {% if app.user== comment.user %}
+                {% if app.user== comment.user %}
 
                     <a href="{{ path('comment.edit', {id: comment.id} ) }}" class="btn btn-secondary">Modifier</a>
 
@@ -86,18 +89,14 @@
         {{ form_widget(form.content) }}
         {{ form_widget(form.valuation) }}
 
-        <div class=" rating">
-            <input type="radio" name="rating" value="5" id="5">
-            <label for="5">☆</label>
-            <input type="radio" name="rating" value="4" id="4">
-            <label for="4">☆</label>
-            <input type="radio" name="rating" value="3" id="3">
-            <label for="3">☆</label>
-            <input type="radio" name="rating" value="2" id="2">
-            <label for="2">☆</label>
-            <input type="radio" name="rating" value="1" id="1">
-            <label for="1">☆</label>
-        </div>
+        <ul class="rating">
+            <li class="rating-item " data-rate="1"></li>
+            <li class="rating-item" data-rate="2"></li>
+            <li class="rating-item" data-rate="3"></li>
+            <li class="rating-item" data-rate="4"></li>
+            <li class="rating-item" data-rate="5"></li>
+        </ul>
+
 
         {{ form_widget(form.submit) }}
         {{ form_end(form) }}
@@ -105,10 +104,18 @@
         {% block javascripts %}
             <script>
                 $(document).ready(function () {
-                    $("input[name='rating']").click(function () {
-                        $("#comment_valuation").val($(this).val());
-
-                    });
+                    const container = document.querySelector('.rating');
+                    const items = container.querySelectorAll('.rating-item');
+                    container.onclick = e => {
+                        const elClass = e.target.classList;
+                        if (!elClass.contains('active')) {
+                            items.forEach(
+                                item => item.classList.remove('active')
+                            );
+                            $("#comment_valuation").val(e.target.getAttribute("data-rate"));
+                            elClass.add('active');
+                        }
+                    };
                 });
             </script>
 
