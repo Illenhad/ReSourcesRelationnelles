@@ -45,6 +45,7 @@ class Resource
 
     /**
      * @ORM\Column(type="string", length=255)
+     *
      * @var string
      */
     private $link;
@@ -63,10 +64,9 @@ class Resource
      */
     private $dateCreation;
     /**
-    *
-    * @Vich\UploadableField(mapping="res_img", fileNameProperty="imageName", size="imageSize")
-    *
-    * @var File|null
+     * @Vich\UploadableField(mapping="res_img", fileNameProperty="imageName", size="imageSize")
+     *
+     * @var File|null
      */
     private $imageFile;
 
@@ -85,7 +85,6 @@ class Resource
     private $imageSize;
 
     /**
-     *
      * @Vich\UploadableField(mapping="res_content", fileNameProperty="contentName", size="contentSize")
      *
      * @var File|null
@@ -105,7 +104,6 @@ class Resource
      * @var int|null
      */
     private $contentSize;
-
 
     /**
      * @ORM\OneToMany(targetEntity="RelUserManagementResource", mappedBy="resource")
@@ -191,6 +189,13 @@ class Resource
 
     private $shareNb;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Commentary", mappedBy="resource")
+     *
+     * @var Collection
+     */
+    private $commentaries;
+
     public function getSlug(): string
     {
         return (new Slugify())->slugify($this->title);
@@ -204,6 +209,7 @@ class Resource
         $this->resourceModerations = new ArrayCollection();
         $this->sharedResources = new ArrayCollection();
         $this->dateCreation = new DateTime('NOW');
+        $this->commentaries = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -491,7 +497,6 @@ class Resource
     public function setContentFile(?File $contentFile = null): void
     {
         $this->contentFile = $contentFile;
-
     }
 
     public function getContentFile(): ?File
@@ -518,4 +523,24 @@ class Resource
     {
         return $this->contentSize;
     }
+
+    /**
+     * @return Collection
+     */
+    public function getCommentaries(): Collection
+    {
+        return $this->commentaries;
+    }
+
+    /**
+     * @param Collection $commentaries
+     * @return Resource
+     */
+    public function setCommentaries(Collection $commentaries): Resource
+    {
+        $this->commentaries = $commentaries;
+        return $this;
+    }
+
+
 }

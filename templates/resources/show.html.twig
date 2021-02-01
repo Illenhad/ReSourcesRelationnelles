@@ -80,7 +80,7 @@
         </div>
 
     {% endfor %}
-
+    {% include "commentary/index.html.twig"  with {"commentaries": resource.commentaries, "resource": resource}%}
     <div class="card  mt-4 w-50 text-center mx-auto ">
         <h4 class="text-secondary"> Votre commentaire </h4>
 
