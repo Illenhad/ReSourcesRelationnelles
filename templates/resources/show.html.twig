@@ -61,6 +61,9 @@
                         <hr>
                     </div>
                 {% endfor %}
+
+                {% include "commentary/index.html.twig"  with {"commentaries": resource.commentaries, "resource": resource}%}
+
                 <button id="more-less-comment" class="btn btn-more-less" onclick="setShowComments()"></button>
             {% endif %}
             <div class="commentary">
@@ -126,6 +129,7 @@
                     item.style.display = showComments ? 'block' : 'none';
                 }
             </script>
+
         {% endblock %}
     </div>
     <div class="text-center mt-4 mb-4">
