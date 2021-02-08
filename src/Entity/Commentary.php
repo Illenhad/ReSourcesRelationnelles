@@ -4,7 +4,9 @@ namespace App\Entity;
 
 use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\OneToMany;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
@@ -47,9 +49,16 @@ class Commentary
      * @ORM\ManyToOne(targetEntity="App\Entity\Resource", inversedBy="commentaries")
      * @ORM\JoinColumn(name="resource_id", referencedColumnName="id", nullable=false)
      *
-     * @var Resource
+     * @var resource
      */
     private $resource;
+
+    /**
+     * @OneToMany(targetEntity="App\Entity\Answer", mappedBy="commentary")
+     *
+     * @var Collection
+     */
+    private $answers;
 
     public function __construct()
     {
@@ -98,21 +107,26 @@ class Commentary
         return $this;
     }
 
-    /**
-     * @return Resource
-     */
     public function getResource(): Resource
     {
         return $this->resource;
     }
 
-    /**
-     * @param Resource $resource
-     * @return Commentary
-     */
     public function setResource(Resource $resource): Commentary
     {
         $this->resource = $resource;
+
+        return $this;
+    }
+
+    public function getAnswers(): Collection
+    {
+        return $this->answers;
+    }
+
+    public function setAnswers(Collection $answers): Commentary
+    {
+        $this->answers = $answers;
 
         return $this;
     }
