@@ -15,9 +15,12 @@
             <td>{{ commentary.user }}</td>
             <td>{{ commentary.content }}</td>
             <td>{{ commentary.commentDate ? commentary.commentDate|date('Y-m-d H:i:s') : '' }}</td>
-            <td>
-                <a href="{{ path('commentary_edit', {'id': commentary.id}) }}">edit</a>
-            </td>
+            {% if app.user== commentary.user %}
+                <td>
+
+                    <a href="{{ path('commentary_edit', {'id': commentary.id}) }}">edit</a>
+                </td>
+            {% endif %}
         </tr>
     {% else %}
         <tr>
