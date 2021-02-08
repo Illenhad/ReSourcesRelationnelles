@@ -62,7 +62,7 @@
                         <label for="{{ i }}">☆</label>
                     {% endfor %}
                 </div>
-                <a href="{{ path('resources') }}" class="btn btn-primary">Répondre</a>
+
                 {% if app.user== comment.user %}
 
                     <a href="{{ path('comment.edit', {id: comment.id} ) }}" class="btn btn-secondary">Modifier</a>
