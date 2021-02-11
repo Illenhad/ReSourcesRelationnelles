@@ -37,4 +37,6 @@
     </tbody>
 </table>
 
-{{ render(url('commentary_new', { 'resource':resource.id })) }}
+{% if app.user %}
+    {{ render(url('commentary_new', { 'resource':resource.id })) }}
+{% endif %}
