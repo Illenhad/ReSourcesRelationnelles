@@ -59,7 +59,7 @@ class ResourceController extends AbstractController
         $formfilter = $this->createFormBuilder($filter, [
             'method' => 'GET',
             'csrf_protection' => false,
-            'block_prefix' => null, ])
+            'block_prefix' => null,])
             ->add('search', HiddenType::class, [
                 'data' => $search,
             ])
@@ -91,7 +91,7 @@ class ResourceController extends AbstractController
         );
 
         return $this->render(
-            self::ROUTE_PREFIX.'/index.html.twig',
+            self::ROUTE_PREFIX . '/index.html.twig',
             [
                 'resources' => $resources,
                 'filter' => $formfilter->CreateView(),
@@ -129,13 +129,10 @@ class ResourceController extends AbstractController
             $commentary
                 ->setContent($request->request->get('commentary')['content'])
                 ->setResource($resource)
-                ->setUser($this->getUser())
-            ;
+                ->setUser($this->getUser());
             $entityManager->persist($commentary);
             $entityManager->flush();
         }
-
-        $entityManager->persist($commentary);
         if ($form->isSubmitted() && $form->isValid()) {
             if (null === $this->getUser()) {
                 return $this->redirectToRoute('login');
@@ -146,11 +143,12 @@ class ResourceController extends AbstractController
             $comment->setResource($resource);
             $comment->setUser($this->getUser());
 
+            //dump($comment);die;
             $entityManager->persist($comment);
             $entityManager->flush();
         }
 
-        return $this->render(self::ROUTE_PREFIX.'/show.html.twig', [
+        return $this->render(self::ROUTE_PREFIX . '/show.html.twig', [
             'resource' => $resource,
             'current_menu' => 'resources',
             'form' => $this->createForm(CommentType::class, new Comment())->createView(),
@@ -180,7 +178,7 @@ class ResourceController extends AbstractController
             ]);
         }
 
-        return $this->render(self::ROUTE_PREFIX.'/editComment.html.twig', [
+        return $this->render(self::ROUTE_PREFIX . '/editComment.html.twig', [
             'comment' => $comment,
             'current_menu' => 'resources',
             'resource' => $comment->getResource(),
