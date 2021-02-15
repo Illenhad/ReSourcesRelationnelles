@@ -16,79 +16,132 @@
             display: block
         }
     </style>
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet"/>
+
+    <link href="{{ asset('css/filter.css') }}" rel="stylesheet"/>
 {% endblock %}
 
 {% block body %}
 
-    <div class="container w-100">
-        <div class="row">
-
-        <!--Filtre-->
-            <div class="col col-sm-2  ">
-                <div class="container position-sticky mt-lg-5 card p-sm-3" style="top:20px;">
-                    <h2>Filtre</h2>
-                    {{ form_start(filter) }}
-                        <div class="row d-flex w-auto overflow-auto " >
-                            {{ form_row(filter.type, { 'label' : 'Type de Ressources'}) }}
-                        </div>
-                        <div class="row d-flex w-auto overflow-auto " >
-                            {{ form_row(filter.relation ,{'label' : 'Type de Relation'}) }}
-                        </div>
-                        <div class="row d-flex w-auto overflow-auto " >
-                            {{ form_row(filter.age , {'label' : "Tranches d'âge"}) }}
-                        </div>
-                        <div class="row-md-auto">
-                            <button class="btn btn-primary ">Filtrer</button>
-                        </div>
-                    {{ form_end(filter) }}
+    <div id="filter">
+        <h2>Filtre</h2>
+        {{ form_start(filter) }}
+        <div class="filter_menu  ">
+            <div class="filter_header dropdown">
+                <label>Type de Ressource</label>
+                <div class="filter_fa_down">
+                    <i class="fa_down">
+                    </i>
                 </div>
             </div>
+            <div class="filter_items_list">
+                <ul>
+                    {% for item in filter.type %}
 
-            <div class="col">
-                <div class="container mt-4">
-                    <h3 style="color:dodgerblue"> Dernières ressources </h3>
-                    <div class="row">
-                        {% for resource in resources %}
-                        <div class="col-md-4">
-                            {% include'resources/_resource.html.twig' %}
-                        </div>
-                        {% endfor %}
-                    </div>
-                </div>
-
-                <div class="pagination text-center mt-4">
-                    {{ knp_pagination_render(resources) }}
-                </div>
+                        <li class="filter_items">
+                            {{ form_widget(item) }} {{ form_label(item) }}
+                        </li>
+                    {% endfor %}
+                </ul>
             </div>
-
-        {% if resources is empty %}
-            <div class="alert alert-danger">
-                Aucune ressource ne correspond à votre recherche
-            </div>
-        {% endif %}
         </div>
+        <div class="filter_menu ">
+            <div class="filter_header dropdown">
+                <label>Type de rellation</label>
+                <div class="filter_fa_down">
+                    <i class="fa_down">
+                    </i>
+                </div>
+            </div>
+            <div class="filter_items_list">
+                <ul>
+                    {% for item in filter.relation %}
+                        <li class="filter_items">
+                            {{ form_widget(item) }} {{ form_label(item) }}
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        <div class="filter_menu">
+            <div class="filter_header dropdown">
+                <label>Catégorie d'âge</label>
+                <div class="filter_fa_down">
+                    <i class="fa_down">
+                    </i>
+                </div>
+            </div>
+            <div class="filter_items_list">
+                <ul>
+                    {% for item in filter.age  %}
+                        <li class="filter_items">
+                            {{ form_widget(item) }} {{ form_label(item) }}
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        <div class="filter_button">
+            <button class="btn btn-primary ">Filtrer</button>
+        </div>
+        {{ form_end(filter) }}
+    </div>
+
+    <div class="container mt-4">
+        <h3 style="color:dodgerblue"> Dernières ressources </h3>
+        <div class="row">
+            {% for resource in resources %}
+            <div class="col-md-4">
+                {% include'resources/_resource.html.twig' %}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="pagination text-center mt-4">
+        {{ knp_pagination_render(resources) }}
     </div>
 {% endblock %}
 
 
 {% block javascripts %}
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+
     <script>
-        $(function () {
-            $('.selectTags').select2();
+
+        var collapseElementList = [].slice.call(document.querySelectorAll('.collapse'))
+        var collapseList = collapseElementList.map(function (collapseEl) {
+        return new bootstrap.Collapse(collapseEl)
         })
+        $('#myCollapsible').collapse({
+            toggle: true
+        });
     </script>
-<script>
-    var collapseElementList = [].slice.call(document.querySelectorAll('.collapse'))
-    var collapseList = collapseElementList.map(function (collapseEl) {
-    return new bootstrap.Collapse(collapseEl)
-    })
-    $('#myCollapsible').collapse({
-        toggle: true
-    })
-</script>
+    <script>
+    function toggleClass(elem,className){
+        if (elem.className.indexOf(className) !== -1){
+            elem.className = elem.className.replace(className,'');
+        }
+        else{
+            elem.className = elem.className.replace(/\s+/g,' ') + 	' ' + className;
+        }
+
+        return elem;
+    }
+
+    var dropdown = document.getElementsByClassName("dropdown");
+    var i;
+
+    for (i = 0; i < dropdown.length; i++) {
+        dropdown[i].onclick = function() {
+
+            var dropdownContent = this.nextElementSibling;
+            if (dropdownContent.style.display === "block") {
+                dropdownContent.style.display = "none";
+            } else {
+                dropdownContent.style.display = "block";
+            }
+        }
+    }
+    </script>
 
 {% endblock %}
 
