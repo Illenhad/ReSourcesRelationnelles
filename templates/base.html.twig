@@ -79,16 +79,13 @@
             <div id="links-footer" class="footer-list-links">
                 <ul>
                     <li>
-                        <a href="https://solidarites-sante.gouv.fr/">Plan du site </a>
+                        <a href="{{ path('accessibilite') }}">Accesibilité</a>
                     </li>
                     <li>
-                        <a href="https://gouvernement-et-citoyens.consultation.etalab.gouv.fr/">Accesibilité</a>
+                        <a href="{{ path('legal') }}">Mention légale</a>
                     </li>
                     <li>
-                        <a href="https://solidarites-sante.gouv.fr/">Mention légale</a>
-                    </li>
-                    <li>
-                        <a href="https://solidarites-sante.gouv.fr/">Données et RGPD</a>
+                        <a href="{{ path('RGPD') }}/">Données et RGPD</a>
                     </li>
                 </ul>
             </div>
@@ -242,11 +239,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
         crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"
-        integrity="sha512-2ImtlRlf2VVmiGZsjm9bEyhjGW4dU7B6TNwh/hx/iSByxNENtj3WVE6o/9Lj4TJeVXPi4bnOIMXFIJJAeufa0A=="
-        crossorigin="anonymous"></script>
 <script>
-    $('select').select2();
 
     /*Responsive nav menu burger*/
     var showRespinsiveNav = false;

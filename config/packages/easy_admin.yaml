@@ -1,0 +1,19 @@
+easy_admin:
+  design:
+    form_theme:
+      - '@EasyAdmin/form/bootstrap_4.html.twig'
+      - '@VichUploader/Form/fields.html.twig'
+  entities:
+    Resource:
+      form:
+        fields:
+          - { property: 'imageFile', type: 'vich_image' }
+          - { property: 'contentFile', type: 'vich_image' }
+      list:
+        fields:
+          - { property: 'imageName', type: 'image', base_path: '%app.path.resource_Image%' }
+          - { property: 'contentName', type: 'image', base_path: '%app.path.resource_File%' }
+      show:
+        fields:
+          - { property: 'imageName', type: 'image', base_path: '%app.path.resource_Image%' }
+          - { property: 'contentName', type: 'image', base_path: '%app.path.resource_File%' }
