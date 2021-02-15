@@ -91,6 +91,8 @@
         top: 20px;
         width: 95%;
         margin: 20px;
+        position: relative;
+        float:none;
     }
 
 }
