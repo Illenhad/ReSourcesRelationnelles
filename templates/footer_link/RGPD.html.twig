@@ -1,34 +1,35 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}
+  <link href="{{ asset('css/footer_article.css') }}" rel="stylesheet"/>
+{% endblock %}
+
 {% block title %}Accessibilité du site{% endblock %}
 
 {% block body %}
   <div id="article">
-
-
     <h1>Données personnelles et cookies</h1>
-    <h2>Politique de protection des données</h2>
-
-    Le ministère des Solidarités et de la Santé s’engage à ce que les traitements de données personnelles effectués à partir de ce site, soient conformes au « Règlement général sur la protection des données » (RGPD) et à la loi n° 78-17 du 6 janvier 1978 modifiée, relative à l’informatique, aux fichiers et aux libertés.
-
-    Le ministère des Solidarités et de la Santé est très attentif à la protection des données à caractère personnel.
-
-    Les données statistiques recueillies sont utilisées pour nous permettre d’enrichir le parcours des internautes, fournir une meilleure information et ainsi participer à l’amélioration de notre mission de service public.
-    <h2>Exercer vos droits</h2>
-
-    Pour toute information ou exercice de vos droits Informatique et Libertés sur les traitements de données personnelles gérés par solidarites-sante.gouv.fr, vous pouvez nous contacter par courriel.
-    Informations complémentaires :
-    - Afin de pouvoir traiter votre demande, merci de bien préciser l’objet de votre demande
-    - En cas d’exercice de vos droits, vous devez justifier de votre identité.
+    <div class="paragraph">
+      <h2>Politique de protection des données</h2>
+      Le ministère des Solidarités et de la Santé s’engage à ce que les traitements de données personnelles effectués à partir de ce site, soient conformes au « Règlement général sur la protection des données » (RGPD) et à la loi n° 78-17 du 6 janvier 1978 modifiée, relative à l’informatique, aux fichiers et aux libertés.<br/>
+      Le ministère des Solidarités et de la Santé est très attentif à la protection des données à caractère personnel.<br/>
+      Les données statistiques recueillies sont utilisées pour nous permettre d’enrichir le parcours des internautes, fournir une meilleure information et ainsi participer à l’amélioration de notre mission de service public.<br/>
+    </div>
+    <div class="paragraph">
+      <h2>Exercer vos droits</h2>
+      Pour toute information ou exercice de vos droits Informatique et Libertés sur les traitements de données personnelles gérés par solidarites-sante.gouv.fr, vous pouvez nous contacter par courriel.<br/>
+      Informations complémentaires :<br/>
+      - Afin de pouvoir traiter votre demande, merci de bien préciser l’objet de votre demande<br/>
+      - En cas d’exercice de vos droits, vous devez justifier de votre identité.<br/>
+    </div>
+    <div class="paragraph">
       <h2>Cookies</h2>
-    <h3>Définition d’un cookie</h3>
-    Un cookie est un fichier texte déposé sur votre ordinateur lors de la visite d’un site ou de la consultation d’une publicité. Il a pour but de collecter des informations relatives à votre navigation et de vous adresser des services adaptés à votre terminal (ordinateur, mobile ou tablette). Les cookies sont gérés par votre navigateur internet.
-
-    Nous veillons dans la mesure du possible à ce que les prestataires de mesures d’audience respectent strictement la loi n° 78-17 du 6 janvier 1978 modifiée, relative à l’informatique, aux fichiers et aux libertés, et s’engagent à mettre en œuvre des mesures appropriées de sécurisation et de protection de la confidentialité des données.
-
-    <h3>Paramétrer votre navigateur internet</h3>
-    Vous pouvez à tout moment choisir de désactiver ces cookies. Votre navigateur peut également être paramétré pour vous signaler les cookies qui sont déposés dans votre ordinateur et vous demander de les accepter ou pas. Vous pouvez accepter ou refuser les cookies au cas par cas ou bien les refuser systématiquement.
-
-    Afin de gérer les cookies au plus près de vos attentes nous vous invitons à paramétrer votre navigateur en tenant compte de la finalité des cookies.
+      <h3>Définition d’un cookie</h3>
+      Un cookie est un fichier texte déposé sur votre ordinateur lors de la visite d’un site ou de la consultation d’une publicité. Il a pour but de collecter des informations relatives à votre navigation et de vous adresser des services adaptés à votre terminal (ordinateur, mobile ou tablette). Les cookies sont gérés par votre navigateur internet.<br/>
+      Nous veillons dans la mesure du possible à ce que les prestataires de mesures d’audience respectent strictement la loi n° 78-17 du 6 janvier 1978 modifiée, relative à l’informatique, aux fichiers et aux libertés, et s’engagent à mettre en œuvre des mesures appropriées de sécurisation et de protection de la confidentialité des données.<br/>
+      <h3>Paramétrer votre navigateur internet</h3>
+      Vous pouvez à tout moment choisir de désactiver ces cookies. Votre navigateur peut également être paramétré pour vous signaler les cookies qui sont déposés dans votre ordinateur et vous demander de les accepter ou pas. Vous pouvez accepter ou refuser les cookies au cas par cas ou bien les refuser systématiquement.<br/>
+      Afin de gérer les cookies au plus près de vos attentes nous vous invitons à paramétrer votre navigateur en tenant compte de la finalité des cookies.<br/>
+    </div>
   </div>
 {% endblock %}
