@@ -40,16 +40,18 @@
         </tr>
         <tr>
             <td>
-
+                <h3> les réponses </h3>
                 {% for answer in commentary.answers %}
 
-                    Réponses :
-                    {{ answer.content }} <br>
 
+                    {{ answer. user }} : {{ answer.content }} <br>
+
+                    {% if app.user == answer.user %}
+                        <a href="{{ path('answer_edit', {'id': answer.id}) }}" class=" btn btn-primary">éditer</a>
+                    {% endif %}
                 {% endfor %}
             </td>
-            <td></td>
-            <td></td>
+
         </tr>
     {% else %}
         <tr>
