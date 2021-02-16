@@ -1,43 +1,90 @@
-.h2 {
-    color: rgb(3, 152, 158);
-    margin: 3%;
+.user-content {
+    display: grid;
+    grid-template-columns: auto min-content;
+    grid-template-rows: auto;
+    grid-column-gap: 30px;
+    grid-row-gap: 15px;
+    grid-template-areas: 'description stats';
 }
 
-.input-group-text {
-    background-color: rgb(255, 188, 90);
+.user-description {
+    grid-area: description;
 }
 
-.div-personal-info {
-    background-color: rgb(255, 188, 90, 0.3);
+.user-description > *:not(:last-child) {
+    margin-bottom: 20px;
 }
 
-.btn-perso, .card-linked {
-    background-color: rgb(3, 152, 158);
-    color: white;
+.description-label {
+    font-weight: bold;
+    color: var(--charte-blue);
 }
 
-.btn-selected {
-    background-color: rgb(255, 188, 90);
-    color: white;
+.user-stats {
+    grid-area: stats;
 }
 
-.card-not-linked {
-    background-color: rgb(255, 188, 90);
-}
-
-.card-linked {
+.user-stats a {
     text-decoration: none;
 }
 
-.card-linked:hover {
-    color: black;
+.user-action {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
 }
 
-.tab-header {
-    background-color: rgb(255, 188, 90);
+.user-action > a:not(:last-child) {
+    margin-right: 10px;
 }
 
-/*form resource*/
-.field-description {
-    height: 20em;
+.stat-card {
+    box-shadow: inset 0 0 10px var(--charte-dark);
 }
+.stat-card:hover {
+    box-shadow: 0 0 10px var(--charte-dark);
+}
+
+/*.h2 {*/
+/*    color: rgb(3, 152, 158);*/
+/*    margin: 3%;*/
+/*}*/
+
+/*.input-group-text {*/
+/*    background-color: rgb(255, 188, 90);*/
+/*}*/
+
+/*.div-personal-info {*/
+/*    background-color: rgb(255, 188, 90, 0.3);*/
+/*}*/
+
+/*.btn-perso, .card-linked {*/
+/*    background-color: rgb(3, 152, 158);*/
+/*    color: white;*/
+/*}*/
+
+/*.btn-selected {*/
+/*    background-color: rgb(255, 188, 90);*/
+/*    color: white;*/
+/*}*/
+
+/*.card-not-linked {*/
+/*    background-color: rgb(255, 188, 90);*/
+/*}*/
+
+/*.card-linked {*/
+/*    text-decoration: none;*/
+/*}*/
+
+/*.card-linked:hover {*/
+/*    color: black;*/
+/*}*/
+
+/*.tab-header {*/
+/*    background-color: rgb(255, 188, 90);*/
+/*}*/
+
+/*!*form resource*!*/
+/*.field-description {*/
+/*    height: 20em;*/
+/*}*/

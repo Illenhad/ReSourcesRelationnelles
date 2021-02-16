@@ -4,120 +4,201 @@
 
 {% block stylesheets %}
     <link rel="stylesheet" href="{{ asset('css/user_space.css') }}" type="text/css">
+    <link rel="stylesheet" href="{{ asset('css/stats.css') }}" type="text/css">
 {% endblock %}
 
 {% block body %}
-    <div class="container mt-5">
-        <div class="row justify-content-center">
-            <div class="col-4 div-personal-info">
-                <div class="h2 text-center">Informations personnelles</div>
-
-                {% for message in app.flashes('success') %}
-                    <div class="alert alert-success mt-4 text-center">
-                        {{ message }}
-                    </div>
-                {% endfor %}
-
-                <div class="input-group mb-3 mt-5">
-                    <div class="input-group-prepend col-4">
-                        <span class="input-group-text col-12">Prénom</span>
-                    </div>
-                    <div class="form-control">{{ app.user.lastname }}</div>
-                </div>
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend col-4">
-                        <span class="input-group-text col-12">Nom</span>
-                    </div>
-                    <div class="form-control">{{ app.user.firstname }}</div>
-                </div>
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend col-4">
-                        <span class="input-group-text col-12">Pseudonyme</span>
-                    </div>
-                    <div class="form-control">{{ app.user.username }}</div>
-                </div>
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend col-4">
-                        <span class="input-group-text col-12">Email</span>
-                    </div>
-                    <div class="form-control">{{ app.user.email }}</div>
-                </div>
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend col-4">
-                        <span class="input-group-text col-12">Département</span>
-                    </div>
-                    <div class="form-control">{{ app.user.department }}</div>
-                </div>
-                <div class="input-group mb-5">
-                    <div class="input-group-prepend col-4">
-                        <span class="input-group-text col-12">Catégorie d'âge</span>
-                    </div>
-                    <div class="form-control">{{ app.user.agecategory }}</div>
-                </div>
-                <div class="row mb-3 justify-content-around">
-                    <div class="col-5 text-center">
-                        <a href="{{ path('user_dashboard_edit_user') }}" class="btn btn-perso">Modifier</a>
-                    </div>
-                    <div class="col-7 text-center">
-                        <a href="{{ path('change_password') }}" class="btn btn-perso">Changer mot de passe</a>
-                    </div>
-                </div>
+    <div class="user-content">
+        <div class="user-description">
+            <h1>Mon compte</h1>
+            <hr>
+            <div>
+                <label for="lastname" class="form-input-label">Nom</label>
+                <input type="text" name="lastname" value="{{ app.user.lastname }}" class="charte-input" disabled>
             </div>
-            <div class="col-1"></div>
-            <div class="col-4 div-personal-info">
-                <div class="h2 text-center mb-5">Ressources</div>
-                <div class="row justify-content-around mb-4">
-                    <a href="{{ path('user_resource', {resourceGestion: 'favoris'}) }}"
-                       class="card card-linked col-5">
-                        <div class="card-body text-center">
-                            <div class="card-title">Favoris</div>
-                            <div class="card-text">{{ favoris }}</div>
-                        </div>
-                    </a>
-                    <a href="{{ path('user_resource', {resourceGestion: 'putAside'}) }}" class="card card-linked col-5">
-                        <div class="card-body text-center">
-                            <div class="card-title">Mises de côté</div>
-                            <div class="card-text">{{ putAside }}</div>
-                        </div>
-                    </a>
-                </div>
-                <div class="row justify-content-around mb-3">
-                    <a href="{{ path('user_resource', {resourceGestion: 'exploited'}) }}" class="card card-linked col-5">
-                        <div class="card-body text-center">
-                            <div class="card-title">Exploitées</div>
-                            <div class="card-text">{{ exploited }}</div>
-                        </div>
-                    </a>
-                    <a href="{{ path('user_resource', {resourceGestion: 'shared'}) }}" class="card card-linked col-5">
-                        <div class="card-body text-center">
-                            <div class="card-title">Partagées</div>
-                            <div class="card-text">{{ shared }}</div>
-                        </div>
-                    </a>
-                </div>
-                <div class="row justify-content-around mb-3">
-                    <a href="{{ path('user_resource', {resourceGestion: 'consulted'}) }}" class="card card-linked col-5">
-                        <div class="card-body text-center">
-                            <div class="card-title">Consultées</div>
-                            <div class="card-text">{{ consulted }}</div>
-                        </div>
-                    </a>
-                    <a href="{{ path('user_resource', {resourceGestion: 'created'}) }}" class="card card-linked col-5">
-                        <div class="card-body text-center">
-                            <div class="card-title">Créées</div>
-                            <div class="card-text">{{ created }}</div>
-                        </div>
-                    </a>
-                </div>
-                <div class="row justify-content-around center mb-3">
-                    <div class="card card-not-linked col-5">
-                        <div class="card-body text-center">
-                            <div class="card-title">Commentaires</div>
-                            <div class="card-text">{{ commented }}</div>
-                        </div>
-                    </div>
-                </div>
+            <div>
+                <label for="firstname" class="form-input-label">Prénom</label>
+                <input type="text" name="firstname" value="{{ app.user.firstname }}" class="charte-input" disabled>
+            </div>
+            <div>
+                <label for="username" class="form-input-label">Pseudonyme</label>
+                <input type="text" name="username" value="{{ app.user.username }}" class="charte-input" disabled>
+            </div>
+            <div>
+                <label for="email" class="form-input-label">Email</label>
+                <input type="text" name="email" value="{{ app.user.email }}" class="charte-input" disabled>
+            </div>
+            <div>
+                <label for="department" class="form-input-label">Département</label>
+                <input type="text" name="department" value="{{ app.user.department }}" class="charte-input" disabled>
+            </div>
+            <div>
+                <label for="agecategory" class="form-input-label">Catégorie d'âge</label>
+                <input type="text" name="agecategory" value="{{ app.user.agecategory }}" class="charte-input" disabled>
+            </div>
+{#            <p><span class="description-label">Nom : </span>{{ app.user.lastname }}</p>#}
+{#            <p><span class="description-label">Prénom : </span>{{ app.user.firstname }}</p>#}
+{#            <p><span class="description-label">Pseudo : </span>{{ app.user.username }}</p>#}
+{#            <p><span class="description-label">Mail : </span>{{ app.user.email }}</p>#}
+{#            <p><span class="description-label">Département : </span>{{ app.user.department }}</p>#}
+{#            <p><span class="description-label">Catégorie d'age : </span>{{ app.user.agecategory }}</p>#}
+            <div class="user-action">
+                <a href="{{ path('user_dashboard_edit_user') }}" class="btn btn-yellow">Modifier</a>
+                <a href="{{ path('change_password') }}" class="btn btn-yellow">Changer mot de passe</a>
+            </div>
+        </div>
+
+
+        {# <a href="{{ path('user_dashboard_edit_user') }}" class="btn btn-perso">Modifier</a> #}
+
+        {# <a href="{{ path('change_password') }}" class="btn btn-perso">Changer mot de passe</a> #}
+
+        <div class="user-stats">
+            <h2>Mes stats</h2>
+            <a href="{{ path('user_resource', {resourceGestion: 'favoris'}) }}" class="stat-card stat-card-pink">
+                <span class="icone-stat icone-heart"></span>
+                <p>Favories {{ favoris }}</p>
+            </a>
+            <a href="{{ path('user_resource', {resourceGestion: 'putAside'}) }}" class="stat-card stat-card-turquoise">
+                <span class="icone-stat icone-folder"></span>
+                <p>Mises de côté {{ putAside }}</p>
+            </a>
+            <a href="{{ path('user_resource', {resourceGestion: 'exploited'}) }}" class="stat-card stat-card-yellow">
+                <span class="icone-stat icone-checked"></span>
+                <p>Exploitées {{ exploited }}</p>
+            </a>
+            <a href="{{ path('user_resource', {resourceGestion: 'shared'}) }}" class="stat-card stat-card-purple">
+                <span class="icone-stat icone-share"></span>
+                <p>Partagées {{ shared }}</p>
+            </a>
+            <a href="{{ path('user_resource', {resourceGestion: 'consulted'}) }}" class="stat-card stat-card-blue">
+                <span class="icone-stat icone-eye"></span>
+                <p>Consultées {{ consulted }}</p>
+            </a>
+            <a href="{{ path('user_resource', {resourceGestion: 'created'}) }}" class="stat-card stat-card-green">
+                <span class="icone-stat icone-add"></span>
+                <p>Crées {{ created }}</p>
+            </a>
+            <div class="stat-card stat-card-red">
+                <span class="icone-stat icone-chat"></span>
+                <p>Commentées {{ commented }}</p>
             </div>
         </div>
     </div>
+
+
+
+{#    <div class="container mt-5">#}
+{#        <div class="row justify-content-center">#}
+{#            <div class="col-4 div-personal-info">#}
+{#                <div class="h2 text-center">Informations personnelles</div>#}
+
+{#                {% for message in app.flashes('success') %}#}
+{#                    <div class="alert alert-success mt-4 text-center">#}
+{#                        {{ message }}#}
+{#                    </div>#}
+{#                {% endfor %}#}
+
+{#                <div class="input-group mb-3 mt-5">#}
+{#                    <div class="input-group-prepend col-4">#}
+{#                        <span class="input-group-text col-12">Prénom</span>#}
+{#                    </div>#}
+{#                    <div class="form-control">{{ app.user.lastname }}</div>#}
+{#                </div>#}
+{#                <div class="input-group mb-3">#}
+{#                    <div class="input-group-prepend col-4">#}
+{#                        <span class="input-group-text col-12">Nom</span>#}
+{#                    </div>#}
+{#                    <div class="form-control">{{ app.user.firstname }}</div>#}
+{#                </div>#}
+{#                <div class="input-group mb-3">#}
+{#                    <div class="input-group-prepend col-4">#}
+{#                        <span class="input-group-text col-12">Pseudonyme</span>#}
+{#                    </div>#}
+{#                    <div class="form-control">{{ app.user.username }}</div>#}
+{#                </div>#}
+{#                <div class="input-group mb-3">#}
+{#                    <div class="input-group-prepend col-4">#}
+{#                        <span class="input-group-text col-12">Email</span>#}
+{#                    </div>#}
+{#                    <div class="form-control">{{ app.user.email }}</div>#}
+{#                </div>#}
+{#                <div class="input-group mb-3">#}
+{#                    <div class="input-group-prepend col-4">#}
+{#                        <span class="input-group-text col-12">Département</span>#}
+{#                    </div>#}
+{#                    <div class="form-control">{{ app.user.department }}</div>#}
+{#                </div>#}
+{#                <div class="input-group mb-5">#}
+{#                    <div class="input-group-prepend col-4">#}
+{#                        <span class="input-group-text col-12">Catégorie d'âge</span>#}
+{#                    </div>#}
+{#                    <div class="form-control">{{ app.user.agecategory }}</div>#}
+{#                </div>#}
+{#                <div class="row mb-3 justify-content-around">#}
+{#                    <div class="col-5 text-center">#}
+{#                        <a href="{{ path('user_dashboard_edit_user') }}" class="btn btn-perso">Modifier</a>#}
+{#                    </div>#}
+{#                    <div class="col-7 text-center">#}
+{#                        <a href="{{ path('change_password') }}" class="btn btn-perso">Changer mot de passe</a>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{#            <div class="col-1"></div>#}
+{#            <div class="col-4 div-personal-info">#}
+{#                <div class="h2 text-center mb-5">Ressources</div>#}
+{#                <div class="row justify-content-around mb-4">#}
+{#                    <a href="{{ path('user_resource', {resourceGestion: 'favoris'}) }}"#}
+{#                       class="card card-linked col-5">#}
+{#                        <div class="card-body text-center">#}
+{#                            <div class="card-title">Favoris</div>#}
+{#                            <div class="card-text">{{ favoris }}</div>#}
+{#                        </div>#}
+{#                    </a>#}
+{#                    <a href="{{ path('user_resource', {resourceGestion: 'putAside'}) }}" class="card card-linked col-5">#}
+{#                        <div class="card-body text-center">#}
+{#                            <div class="card-title">Mises de côté</div>#}
+{#                            <div class="card-text">{{ putAside }}</div>#}
+{#                        </div>#}
+{#                    </a>#}
+{#                </div>#}
+{#                <div class="row justify-content-around mb-3">#}
+{#                    <a href="{{ path('user_resource', {resourceGestion: 'exploited'}) }}" class="card card-linked col-5">#}
+{#                        <div class="card-body text-center">#}
+{#                            <div class="card-title">Exploitées</div>#}
+{#                            <div class="card-text">{{ exploited }}</div>#}
+{#                        </div>#}
+{#                    </a>#}
+{#                    <a href="{{ path('user_resource', {resourceGestion: 'shared'}) }}" class="card card-linked col-5">#}
+{#                        <div class="card-body text-center">#}
+{#                            <div class="card-title">Partagées</div>#}
+{#                            <div class="card-text">{{ shared }}</div>#}
+{#                        </div>#}
+{#                    </a>#}
+{#                </div>#}
+{#                <div class="row justify-content-around mb-3">#}
+{#                    <a href="{{ path('user_resource', {resourceGestion: 'consulted'}) }}" class="card card-linked col-5">#}
+{#                        <div class="card-body text-center">#}
+{#                            <div class="card-title">Consultées</div>#}
+{#                            <div class="card-text">{{ consulted }}</div>#}
+{#                        </div>#}
+{#                    </a>#}
+{#                    <a href="{{ path('user_resource', {resourceGestion: 'created'}) }}" class="card card-linked col-5">#}
+{#                        <div class="card-body text-center">#}
+{#                            <div class="card-title">Créées</div>#}
+{#                            <div class="card-text">{{ created }}</div>#}
+{#                        </div>#}
+{#                    </a>#}
+{#                </div>#}
+{#                <div class="row justify-content-around center mb-3">#}
+{#                    <div class="card card-not-linked col-5">#}
+{#                        <div class="card-body text-center">#}
+{#                            <div class="card-title">Commentaires</div>#}
+{#                            <div class="card-text">{{ commented }}</div>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
 {% endblock %}

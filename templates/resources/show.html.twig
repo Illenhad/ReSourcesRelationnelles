@@ -3,6 +3,7 @@
 {% block stylesheets %}
     <link rel="stylesheet" href="{{ asset('css/rating.css') }}" type="text/css">
     <link rel="stylesheet" href="{{ asset('css/show.css') }}" type="text/css">
+    <link rel="stylesheet" href="{{ asset('css/stats.css') }}" type="text/css">
     <script src="{{ asset('js/jquery-3.5.1.min.js') }}"></script>
 {% endblock %}
 
@@ -27,9 +28,9 @@
         </div>
         <div>
             <h2 class="resource-informations-title">Informations</h2>
-            <div class="resource-informations resource-informations-type" title="Type de la ressource"><span class="icone-resource icone-resource-type"></span><p>{{ resource.resourceType }}</p></div>
-            <div class="resource-informations resource-informations-age" title="Ages concernés par la ressource"><span class="icone-resource icone-resource-age"></span><p>{{ resource.ageCategory }}</p></div>
-            <div class="resource-informations resource-informations-relationship" title="Relations concernées par la ressource"><span class="icone-resource icone-resource-relationship"></span><p>{{ resource.relationShip.label }}</p></div>
+            <div class="stat-card stat-card-blue" title="Type de la ressource"><span class="icone-stat icone-info"></span><p>{{ resource.resourceType }}</p></div>
+            <div class="stat-card stat-card-green" title="Ages concernés par la ressource"><span class="icone-stat icone-user"></span><p>{{ resource.ageCategory }}</p></div>
+            <div class="stat-card stat-card-purple" title="Relations concernées par la ressource"><span class="icone-stat icone-share"></span><p>{{ resource.relationShip.label }}</p></div>
         </div>
     </div>
 
