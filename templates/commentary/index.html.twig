@@ -4,8 +4,8 @@
     <thead>
     <tr>
         <th>Pseudo</th>
-        <th>Content</th>
-        <th>CommentDate</th>
+        <th>Commentaire</th>
+        <th>Date</th>
         <th>actions</th>
     </tr>
     </thead>
@@ -15,7 +15,7 @@
             <td>{{ commentary.user }}</td>
             <td>{{ commentary.content }}</td>
             <td>{{ commentary.commentDate ? commentary.commentDate|date('Y-m-d H:i:s') : '' }}</td>
-            {% if app.user== commentary.user %}
+            {% if app.user == commentary.user %}
                 <td>
 
                     <a href="{{ path('commentary_edit', {'id': commentary.id}) }}" class=" btn btn-primary">éditer</a>
@@ -28,6 +28,28 @@
                        class=" btn btn-danger">Supprimer </a>
                 {% endif %}
             </td>
+
+
+            {% if app.user != commentary.user  and app.user %}
+                <td>
+                    <a href="{{ path('answer_new', {'commentary': commentary.id}) }}"
+                       class=" btn btn-primary">répondre</a>
+                </td>
+            {% endif %}
+
+        </tr>
+        <tr>
+            <td>
+
+                {% for answer in commentary.answers %}
+
+                    Réponses :
+                    {{ answer.content }} <br>
+
+                {% endfor %}
+            </td>
+            <td></td>
+            <td></td>
         </tr>
     {% else %}
         <tr>
