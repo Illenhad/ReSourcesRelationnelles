@@ -49,6 +49,11 @@
                     {% if app.user == answer.user %}
                         <a href="{{ path('answer_edit', {'id': answer.id}) }}" class=" btn btn-primary">éditer</a>
                     {% endif %}
+
+                    {% if app.user== answer.user or is_granted('ROLE_MODERATEUR') %}
+                        <a href="{{ path('answer_delete', {id: answer.id}) }}"
+                           class=" btn btn-danger">Supprimer </a>
+                    {% endif %}
                 {% endfor %}
             </td>
 
@@ -64,3 +69,4 @@
 {% if app.user %}
     {{ render(url('commentary_new', { 'resource':resource.id })) }}
 {% endif %}
+

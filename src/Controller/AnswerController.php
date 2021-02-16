@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Entity\Answer;
 use App\Entity\Commentary;
 use App\Form\AnswerType;
-use App\Form\CommentaryType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -52,23 +51,14 @@ class AnswerController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/answer/{id}", name="answer_show", methods={"GET"})
-     */
-    public function show(Answer $answer): Response
-    {
-        return $this->render('answer/show.html.twig', [
-            'answer' => $answer,
-        ]);
-    }
 
-   /**
-    * @Route("/answer/{id}/edit", name="answer_edit", methods={"GET","POST"})
-    */
-   public function edit(Request $request, Answer $answer): Response
-   {
-       $form = $this->createForm(AnswerType::class, $answer);
-       $form->handleRequest($request);
+    /**
+     * @Route("/answer/{id}/edit", name="answer_edit", methods={"GET","POST"})
+     */
+    public function edit(Request $request, Answer $answer): Response
+    {
+        $form = $this->createForm(AnswerType::class, $answer);
+        $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
@@ -88,17 +78,20 @@ class AnswerController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/answer/{id}", name="answer_delete", methods={"DELETE"})
-     */
-    public function delete(Request $request, Answer $answer): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$answer->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($answer);
-            $entityManager->flush();
-        }
 
-        return $this->redirectToRoute('answer_index');
+    /**
+     * @Route("/answer/{id}", name="answer_delete")
+     */
+    public function delete(Request $request, int $id, Answer $answer): Response
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $answer = $entityManager->getRepository(Answer::class)->find($id);
+        $entityManager->remove($answer);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('comment.show', [
+            'slug' => $answer->getCommentary()->getResource()->getSlug(),
+            'id' => $answer->getCommentary()->getResource()->getId(),
+        ]);
     }
 }

@@ -69,7 +69,6 @@ class CommentaryController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('comment.show', [
@@ -93,10 +92,10 @@ class CommentaryController extends AbstractController
         $comment = $entityManager->getRepository(Commentary::class)->find($id);
         $entityManager->remove($commentary);
         $entityManager->flush();
+
         return $this->redirectToRoute('comment.show', [
             'slug' => $commentary->getResource()->getSlug(),
             'id' => $commentary->getResource()->getId(),
         ]);
-
     }
 }
