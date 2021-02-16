@@ -1,42 +1,23 @@
 <h2>Liste des commentaires</h2>
 
-<table class="table">
-    <thead>
-    <tr>
-        <th>Pseudo</th>
-        <th>Content</th>
-        <th>CommentDate</th>
-        <th>actions</th>
-    </tr>
-    </thead>
-    <tbody>
-    {% for commentary in commentaries %}
-        <tr>
-            <td>{{ commentary.user }}</td>
-            <td>{{ commentary.content }}</td>
-            <td>{{ commentary.commentDate ? commentary.commentDate|date('Y-m-d H:i:s') : '' }}</td>
-            {% if app.user== commentary.user %}
-                <td>
-
-                    <a href="{{ path('commentary_edit', {'id': commentary.id}) }}" class=" btn btn-primary">éditer</a>
-                </td>
-            {% endif %}
-
-            <td>
-                {% if app.user== commentary.user or is_granted('ROLE_MODERATEUR') %}
-                    <a href="{{ path('commentary_delete', {id: commentary.id}) }}"
-                       class=" btn btn-danger">Supprimer </a>
+{% for commentary in commentaries %}
+    <div>
+        <hr>
+        <p><span class="commentary-author">{{ commentary.user }}</span><span class="author-date"> le {{ commentary.commentDate|date("d/m/Y à H:i", "Europe/Paris") }}</span></p>
+        <p>{{ commentary.content }}</p>
+        <div class="commentary-actions">
+            <button class="btn btn-more-less" {#onclick="setShowCommentaries()"#}>Voir les réponses</button>
+            <div class="commentary-actions-buttons">
+                {% if app.user== commentary.user %}
+                    <a href="{{ path('commentary_edit', {id: commentary.id}) }}" class=" btn btn-icon"><span class="icon-edit"></span></a>
                 {% endif %}
-            </td>
-        </tr>
-    {% else %}
-        <tr>
-            <td colspan="4">Il n'y a pas encore de commentaire</td>
-        </tr>
-    {% endfor %}
-    </tbody>
-</table>
+                {% if app.user== commentary.user or is_granted('ROLE_MODERATEUR') %}
+                    <a href="{{ path('commentary_delete', {id: commentary.id}) }}" class=" btn btn-icon"><span class="icon-delete"></span></a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% else %}
+    <p>Il n'y a pas encore de commentaire</p>
+{% endfor %}
 
-{% if app.user %}
-    {{ render(url('commentary_new', { 'resource':resource.id })) }}
-{% endif %}

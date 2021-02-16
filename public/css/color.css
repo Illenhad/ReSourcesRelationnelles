@@ -11,6 +11,8 @@
     --charte-dark-light:    #414856;
     --charte-dark:          #363c48;
 
+    --imput-focus: rgba(0, 131, 174, 0.3);
+
     /*Text*/
     --text-color-default: #1e1e1e;
 }

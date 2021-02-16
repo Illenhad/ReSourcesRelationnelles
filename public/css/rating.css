@@ -1,7 +1,9 @@
 .rating-show {
     display: flex;
     flex-direction: row-reverse;
-    justify-content: center
+    justify-content: center;
+    margin-top: -4px;
+    margin-left: 10px;
 }
 
 .rating-show > input {
@@ -11,7 +13,7 @@
 .rating-show > label {
     position: relative;
     width: 1em;
-    font-size: 200%;
+    font-size: 150%;
     color: orange;
     cursor: pointer
 }
@@ -23,10 +25,11 @@
 }
 
 .rating{
+    width: max-content;
     display: flex;
     flex-direction: row;
+    margin: auto;
     padding: 0;
-    margin: 0;
 }
 
 .rating li {

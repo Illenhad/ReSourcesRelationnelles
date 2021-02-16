@@ -24,7 +24,7 @@ class CommentType extends AbstractType
                 TextType::class,
                 [
                     'attr' => ['placeholder' => 'Ajouter un titre...',
-                        'class' => 'form-control  mb-4 card w-50 text-center mx-auto ',
+                        'class' => 'charte-input',
                     ],
                     'label' => 'Titre',
                 ]
@@ -35,7 +35,7 @@ class CommentType extends AbstractType
                 [
                     'attr' => [
                         'placeholder' => 'Ajouter un commentaire...',
-                        'class' => 'form-control card w-50 text-center mx-auto ',
+                        'class' => 'charte-input',
                     ],
 
                     'label' => 'Commentaire',
@@ -49,6 +49,7 @@ class CommentType extends AbstractType
                         'min' => 0,
                         'max' => 5,
                         'class' => ' mt-4 ',
+                        'value' => 5,
                     ],
                     'label' => 'Note ',
                 ]
@@ -58,7 +59,7 @@ class CommentType extends AbstractType
                 SubmitType::class,
                 [
                     'attr' => [
-                        'class' => 'btn btn-primary  mb-4 mt-4 mx-auto',
+                        'class' => 'btn btn-primary ',
                     ],
                     'label' => 'Envoyer',
 

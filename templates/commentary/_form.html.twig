@@ -1,4 +1,5 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn btn-primary">{{ button_label|default('envoyer') }}</button>
+    <h3 style="margin-bottom: 40px">Ajouter un commentaire</h3>
+    {{ form_widget(form.content) }}
+    {{ form_widget(form.submit) }}
 {{ form_end(form) }}
