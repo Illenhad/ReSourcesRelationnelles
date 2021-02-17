@@ -73,8 +73,8 @@
     </header>
 {#{% endblock %}#}
 {% block body %}{% endblock %}
-
-{{ render_esi(path('ch_cookie_consent.show', { 'locale' : 'fr' })) }}
+{# BandeauCookies #}
+{{ render_esi(path('ch_cookie_consent.show_if_cookie_consent_not_set')) }}
 
 {#{% block footer %}#}
     <footer>
