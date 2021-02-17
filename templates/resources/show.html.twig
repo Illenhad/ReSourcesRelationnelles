@@ -28,7 +28,7 @@
     posté le {{ resource.dateCreation|date("d.m.Y à H:i", "Europe/Paris") }}
 
     <div class="container" style="border: 1px solid silver;height:60px;">
-        {{ resource.description }}
+        {{ resource.description|raw }}
     </div>
 
     <div class="container">
