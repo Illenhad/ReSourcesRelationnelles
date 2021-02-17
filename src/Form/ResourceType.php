@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Resource;
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -16,7 +17,7 @@ class ResourceType extends AbstractType
     {
         $builder
             ->add('title')
-            ->add('description', TextareaType::class)
+            ->add('description', CKEditorType::class)
             ->add('imageFile', VichImageType::class, [
                 'required' => false,
                 'download_uri' => true,
