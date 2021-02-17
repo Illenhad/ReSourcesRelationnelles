@@ -1,0 +1,25 @@
+#article{
+    margin: auto;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    max-width: 1000px;
+    background-color:#f7f7f7 ;
+}
+
+#article h1{
+    color: #0b6ba8;
+}
+.paragraph{
+    margin-bottom: 10px;
+}
+.paragraph h2{
+    color: #0b6ba8;
+    font-size: 25px;
+    margin-bottom: .25em;
+}
+
+.paragraph h3{
+    color: black;
+    font-size: 20px;
+    margin-bottom: .25em;
+}

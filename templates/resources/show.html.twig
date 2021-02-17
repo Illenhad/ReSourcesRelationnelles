@@ -43,7 +43,7 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <h4 class="text-center text-secondary">Liste des commentaires </h4>
+    <h4 class="text-center text-secondary">Evaluation </h4>
 
     <div class="container">
 
@@ -62,7 +62,7 @@
                         <label for="{{ i }}">☆</label>
                     {% endfor %}
                 </div>
-                <a href="{{ path('resources') }}" class="btn btn-primary">Répondre</a>
+
                 {% if app.user== comment.user %}
 
                     <a href="{{ path('comment.edit', {id: comment.id} ) }}" class="btn btn-secondary">Modifier</a>
@@ -80,9 +80,9 @@
         </div>
 
     {% endfor %}
-
+    {% include "commentary/index.html.twig"  with {"commentaries": resource.commentaries, "resource": resource}%}
     <div class="card  mt-4 w-50 text-center mx-auto ">
-        <h4 class="text-secondary"> Votre commentaire </h4>
+        <h4 class="text-secondary"> Notez cette ressource </h4>
 
         {{ form_start(form) }}
         {{ form_widget(form.title) }}
@@ -90,7 +90,7 @@
         {{ form_widget(form.valuation) }}
 
         <ul class="rating">
-            <li class="rating-item " data-rate="1"></li>
+            <li class="rating-item active " data-rate="1"></li>
             <li class="rating-item" data-rate="2"></li>
             <li class="rating-item" data-rate="3"></li>
             <li class="rating-item" data-rate="4"></li>
@@ -123,4 +123,5 @@
     </div>
     <div class="text-center mt-4 mb-4">
     <a class="btn btn-primary" href="{{ path('resources') }}">Retour</a>
+    </div>
 {% endblock %}

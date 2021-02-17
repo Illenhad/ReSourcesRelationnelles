@@ -1,0 +1,15 @@
+ch_cookie_consent:
+  title: ''
+  intro: "Sélectionnez le bouton « Valider» pour consentir à l'utilisation des cookies en fonction de vos choix. Pour plus d'informations cliquer sur le lien ci-dessous"
+  read_more: 'En savoir plus'
+  analytics:
+    title: "Mesure d'audience"
+    description: 'La mesure de l’audience du site contribue à l’amélioration continue de son ergonomie, de sa navigation et de ses contenus.'
+
+  no: 'Oui'
+  yes: 'Non'
+  save: 'Enregistrer'
+  use_only_functional_cookies: ''
+  use_all_cookies: 'Valider '
+  show_details: ''
+  hide_details: ''

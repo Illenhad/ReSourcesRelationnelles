@@ -57,3 +57,4 @@ Pour permettre l'utilisation rapide du produit, des comptes ont été créé.
 | Administrateur      | jeaaaanne     | admin         |
 | Modérateur          | mamienova     | admin         |
 | Utilisateur         | aliceclt      | user          |
+

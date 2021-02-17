@@ -1,0 +1,8 @@
+ch_cookie_consent:
+    theme: 'dark'
+    categories:
+        - 'analytics'
+    use_logger:
+    position: 'bottom'
+    simplified: true
+    http_only: true

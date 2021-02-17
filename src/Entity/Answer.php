@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Repository\AnswerRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -9,7 +10,7 @@ use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
 
 /**
- * @ORM\Entity(repositoryClass=Answer::class)
+ * @ORM\Entity(repositoryClass=AnswerRepository::class)
  */
 class Answer
 {
@@ -23,12 +24,12 @@ class Answer
     private $id;
 
     /**
-     * @ManyToOne(targetEntity="App\Entity\Comment", inversedBy="answers")
-     * @JoinColumn(name="comment_id", referencedColumnName="id")
+     * @ManyToOne(targetEntity="App\Entity\Commentary", inversedBy="answers")
+     * @JoinColumn(name="commentary_id", referencedColumnName="id")
      *
-     * @var Comment
+     * @var Commentary
      */
-    private $comment;
+    private $commentary;
 
     /**
      * @ORM\OneToMany(targetEntity="RelModerationUserAnswer", mappedBy="answer")
@@ -67,18 +68,6 @@ class Answer
     public function getId(): int
     {
         return $this->id;
-    }
-
-    public function getComment(): Comment
-    {
-        return $this->comment;
-    }
-
-    public function setComment(Comment $comment): Answer
-    {
-        $this->comment = $comment;
-
-        return $this;
     }
 
     public function getRelModerationUserAnswers(): Collection
@@ -128,4 +117,18 @@ class Answer
 
         return $this;
     }
+
+    public function getCommentary(): Commentary
+    {
+        return $this->commentary;
+    }
+
+    public function setCommentary(Commentary $commentary): Answer
+    {
+        $this->commentary = $commentary;
+
+        return $this;
+    }
+
+
 }

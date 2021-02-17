@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\ActionType;
 use App\Entity\AgeCategory;
 use App\Entity\Comment;
+use App\Entity\Commentary;
 use App\Entity\RelationshipType;
 use App\Entity\RelUserActionResource;
 use App\Entity\RelUserManagementResource;
@@ -58,7 +59,7 @@ class ResourceController extends AbstractController
         $formfilter = $this->createFormBuilder($filter, [
             'method' => 'GET',
             'csrf_protection' => false,
-            'block_prefix' => null, ])
+            'block_prefix' => null,])
             ->add('search', HiddenType::class, [
                 'data' => $search,
             ])
@@ -66,19 +67,19 @@ class ResourceController extends AbstractController
                 'required' => false,
                 'class' => \App\Entity\ResourceType::class,
                 'multiple' => true,
-                'attr' => ['class' => 'selectTags w-100'],
+                'expanded'=>true,
             ])
             ->add('relation', EntityType::class, [
                 'required' => false,
                 'class' => RelationshipType::class,
+                'expanded'=>true,
                 'multiple' => true,
-                'attr' => ['class' => 'selectTags w-100 '],
             ])
             ->add('age', EntityType::class, [
                 'required' => false,
                 'class' => AgeCategory::class,
                 'multiple' => true,
-                'attr' => ['class' => 'selectTags w-100 '],
+                'expanded'=>true,
             ])
             ->getForm();
         $formfilter->handleRequest($request);
@@ -90,7 +91,7 @@ class ResourceController extends AbstractController
         );
 
         return $this->render(
-            self::ROUTE_PREFIX.'/index.html.twig',
+            self::ROUTE_PREFIX . '/index.html.twig',
             [
                 'resources' => $resources,
                 'filter' => $formfilter->CreateView(),
@@ -119,10 +120,19 @@ class ResourceController extends AbstractController
             $isfav = null;
         }
         $comment = new Comment();
+        $commentary = new Commentary();
 
         $form = $this->createForm(CommentType::class, $comment);
         $form->handleRequest($request);
 
+        if ($request->request->get('commentary')) {
+            $commentary
+                ->setContent($request->request->get('commentary')['content'])
+                ->setResource($resource)
+                ->setUser($this->getUser());
+            $entityManager->persist($commentary);
+            $entityManager->flush();
+        }
         if ($form->isSubmitted() && $form->isValid()) {
             if (null === $this->getUser()) {
                 return $this->redirectToRoute('login');
@@ -133,11 +143,12 @@ class ResourceController extends AbstractController
             $comment->setResource($resource);
             $comment->setUser($this->getUser());
 
+            //dump($comment);die;
             $entityManager->persist($comment);
             $entityManager->flush();
         }
 
-        return $this->render(self::ROUTE_PREFIX.'/show.html.twig', [
+        return $this->render(self::ROUTE_PREFIX . '/show.html.twig', [
             'resource' => $resource,
             'current_menu' => 'resources',
             'form' => $this->createForm(CommentType::class, new Comment())->createView(),
@@ -158,16 +169,19 @@ class ResourceController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            if ($comment->getUser() !== $this->getUser()) {
-                return $this->redirectToRoute('resources');
-            }
             $entityManager->persist($comment);
             $entityManager->flush();
+
+            return $this->redirectToRoute('comment.show', [
+                'slug' => $comment->getResource()->getSlug(),
+                'id' => $comment->getResource()->getId(),
+            ]);
         }
 
-        return $this->render(self::ROUTE_PREFIX.'/editComment.html.twig', [
+        return $this->render(self::ROUTE_PREFIX . '/editComment.html.twig', [
             'comment' => $comment,
             'current_menu' => 'resources',
+            'resource' => $comment->getResource(),
             'form' => $form->createView(),
         ]);
     }
@@ -277,18 +291,18 @@ class ResourceController extends AbstractController
         $FavmanagementType = $managementTypeRepository->findOneBy(['label' => 'favoris']);
 
         $existingfav = $managementResourceRepository->findOneBy([
-                'user' => $this->getUser()->getId(),
-                'resource' => $id,
-                'managementType' => $FavmanagementType->getId(),
-            ]);
+            'user' => $this->getUser()->getId(),
+            'resource' => $id,
+            'managementType' => $FavmanagementType->getId(),
+        ]);
         if ($existingfav) {
             $entityManager->remove($existingfav);
             $entityManager->flush();
         } else {
             $newfav = new RelUserManagementResource();
             $newfav->setUser($this->getUser())
-                    ->setManagementType($FavmanagementType)
-                    ->setResource($resource);
+                ->setManagementType($FavmanagementType)
+                ->setResource($resource);
             $entityManager->persist($newfav);
             $entityManager->flush();
         }

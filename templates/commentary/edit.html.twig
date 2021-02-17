@@ -1,0 +1,9 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Editer le commentaire{% endblock %}
+
+{% block body %}
+   Modification
+
+    {{ include('commentary/_form.html.twig', {'button_label': 'envoyer'}) }}
+{% endblock %}

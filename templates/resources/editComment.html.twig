@@ -15,36 +15,41 @@
         {{ form_widget(form.content) }}
         {{ form_widget(form.valuation) }}
 
-        <div class=" rating">
-            <input type="radio" name="rating" value="5" id="5">
-            <label for="5">☆</label>
-            <input type="radio" name="rating" value="4" id="4">
-            <label for="4">☆</label>
-            <input type="radio" name="rating" value="3" id="3">
-            <label for="3">☆</label>
-            <input type="radio" name="rating" value="2" id="2">
-            <label for="2">☆</label>
-            <input type="radio" name="rating" value="1" id="1">
-            <label for="1">☆</label>
-        </div>
+        <ul class="rating">
+            <li class="rating-item " data-rate="1"></li>
+            <li class="rating-item" data-rate="2"></li>
+            <li class="rating-item" data-rate="3"></li>
+            <li class="rating-item" data-rate="4"></li>
+            <li class="rating-item" data-rate="5"></li>
+        </ul>
 
         {{ form_widget(form.submit) }}
         {{ form_end(form) }}
 
+
         {% block javascripts %}
             <script>
                 $(document).ready(function () {
-                    $("input[name='rating']").click(function () {
-                        $("#comment_valuation").val($(this).val());
-
-                    });
+                    const container = document.querySelector('.rating');
+                    const items = container.querySelectorAll('.rating-item');
+                    container.onclick = e => {
+                        const elClass = e.target.classList;
+                        if (!elClass.contains('active')) {
+                            items.forEach(
+                                item => item.classList.remove('active')
+                            );
+                            $("#comment_valuation").val(e.target.getAttribute("data-rate"));
+                            elClass.add('active');
+                        }
+                    };
                 });
             </script>
 
         {% endblock %}
     </div>
     <div class="text-center mt-4 mb-4">
-        <a class="btn btn-primary" href="{{ path('resources') }}">Retour</a>
+
+        <a href="{{ path('comment.show', {id: resource.id, slug: resource.slug}) }}"> Retour </a>
     </div>
 
 
