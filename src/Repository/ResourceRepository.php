@@ -51,12 +51,14 @@ class ResourceRepository extends ServiceEntityRepository
     public function findPublicQuery(FilterData $filterData, ?string $search, $dateCreationSorting = 'ASC'): Query
     {
         $query = $this->createQueryBuilder('r')
-            ->select('t', 'rel', 'a', 'r')
+            ->select( 'r','avg(comments.valuation) as note','count(commentaries.id) as nb_coms' )
             ->join('r.resourceType', 't')
             ->join('r.ageCategory', 'a')
             ->join('r.relationShip', 'rel')
+            ->join('r.comments','comments')
+            ->join('r.commentaries','commentaries')
             ->andWhere('r.public = 1')
-            ->orderBy('r.dateCreation', $dateCreationSorting)
+            ->groupBy('r')
         ;
 
         if ($search) {

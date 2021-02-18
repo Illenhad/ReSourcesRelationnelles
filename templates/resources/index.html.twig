@@ -88,10 +88,31 @@
 
     <div class="container mt-4">
         <h3 style="color:dodgerblue"> Dernières ressources </h3>
-        <div class="row">
-            {% for resource in resources %}
+        <ul id="sort_list">
+            <li class="sort_items {% if pagination.isSorted('a.r.title') %}sorted{% endif %}">
+                {{ knp_pagination_sortable(resources, 'Par ordre Alphabetique A->Z', 'r.title',{}, {'direction': 'asc'}) }}
+            </li>
+            <li class="sort_items {% if pagination.isSorted('a.r.title') %}sorted{% endif %}">
+                {{ knp_pagination_sortable(resources, 'Par ordre Alphabetique Z->A', 'r.title',{}, {'direction': 'desc'}) }}
+            </li>
+            <li class="sort_items {% if pagination.isSorted('a.r.title') %}sorted{% endif %}">
+                {{ knp_pagination_sortable(resources, 'Les plus récentes', 'r.dateCreation',{}, {'direction': 'desc'}) }}
+            </li>
+            <li class="sort_items {% if pagination.isSorted('a.r.title') %}sorted{% endif %}">
+                {{ knp_pagination_sortable(resources, 'Les plus commentées', 'nb_coms',{}, {'direction': 'desc'}) }}
+            </li>
+            <li class="sort_items {% if pagination.isSorted('a.r.title') %}sorted{% endif %}">
+                {{ knp_pagination_sortable(resources, 'Les meilleurs notes', 'note',{}, {'direction': 'desc'})}}
+            </li>
+        </ul>
+
+
+            <div class="row">
+            {% for values in resources %}
+                {% set resource = values[0] %}
             <div class="col-md-4">
-                {% include'resources/_resource.html.twig' %}
+                 {% include'resources/_resource.html.twig' %}
+                {{ dump(values) }}
             </div>
             {% endfor %}
         </div>

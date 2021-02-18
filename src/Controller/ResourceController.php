@@ -49,6 +49,7 @@ class ResourceController extends AbstractController
      */
     public function index(ManagerRegistry $registry, Request $request, ResourceRepository $resourceRepository, RelUserManagementResourceRepository $relUserManagementResourceRepository, PaginatorInterface $paginator): Response
     {
+        $request->query->set('direction', 'desc');
         $resourceFav = [];
         if ($this->getUser()) {
             $resourceFav = $relUserManagementResourceRepository->getFavorite($this->getUser(), $registry);
@@ -87,7 +88,8 @@ class ResourceController extends AbstractController
         $resources = $paginator->paginate(
             $resourceRepository->findPublicQuery($filter, $search, 'DESC'),
             $request->query->getInt('page', 1),
-            12
+            12,
+            array('defaultSortFieldName' => 'r.dateCreation', 'defaultSortDirection' => 'desc')
         );
 
         return $this->render(
