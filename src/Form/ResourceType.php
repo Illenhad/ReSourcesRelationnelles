@@ -29,7 +29,9 @@ class ResourceType extends AbstractType
                 'allow_delete' => true,
                 'asset_helper' => true,
             ])
-            ->add('link')
+            ->add('link', TextareaType::class, [
+                'required' => false,
+            ])
             ->add('public')
             ->add('ageCategory')
             ->add('resourceType')
