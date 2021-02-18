@@ -46,6 +46,14 @@
     color: var(--charte-yellow);
     background-color: white;
 }
+.btn-orange {
+    background-color: var(--charte-orange);
+    border-color: var(--charte-orange);
+}
+.btn-orange:hover {
+    color: var(--charte-orange);
+    background-color: white;
+}
 .btn-dark-light {
     background-color: var(--charte-dark-light);
     border-color: var(--charte-dark-light);
@@ -178,4 +186,97 @@
 }
 .btn-more-less:hover .icon-lower-arrow {
     background-image: url("data:image/svg+xml,%3C%3Fxml version='1.0' encoding='UTF-8' standalone='no'%3F%3E%3Csvg xmlns:dc='http://purl.org/dc/elements/1.1/' xmlns:cc='http://creativecommons.org/ns%23' xmlns:rdf='http://www.w3.org/1999/02/22-rdf-syntax-ns%23' xmlns:svg='http://www.w3.org/2000/svg' xmlns='http://www.w3.org/2000/svg' xmlns:sodipodi='http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd' xmlns:inkscape='http://www.inkscape.org/namespaces/inkscape' inkscape:version='1.0 (4035a4fb49, 2020-05-01)' sodipodi:docname='arrow-down-hover.svg' xml:space='preserve' style='enable-background:new 0 0 240.811 240.811;' viewBox='0 0 240.811 240.811' y='0px' x='0px' id='Capa_1' version='1.1'%3E%3Cmetadata id='metadata52'%3E%3Crdf:RDF%3E%3Ccc:Work rdf:about=''%3E%3Cdc:format%3Eimage/svg+xml%3C/dc:format%3E%3Cdc:type rdf:resource='http://purl.org/dc/dcmitype/StillImage' /%3E%3Cdc:title%3E%3C/dc:title%3E%3C/cc:Work%3E%3C/rdf:RDF%3E%3C/metadata%3E%3Cdefs id='defs50' /%3E%3Csodipodi:namedview inkscape:current-layer='g15' inkscape:window-maximized='1' inkscape:window-y='-8' inkscape:window-x='-8' inkscape:cy='120.4055' inkscape:cx='120.4055' inkscape:zoom='3.529739' showgrid='false' id='namedview48' inkscape:window-height='1017' inkscape:window-width='1920' inkscape:pageshadow='2' inkscape:pageopacity='0' guidetolerance='10' gridtolerance='10' objecttolerance='10' borderopacity='1' bordercolor='%23666666' pagecolor='%23ffffff' /%3E%3Cg id='g15'%3E%3Cpath style='fill:%23414856;fill-opacity:1' d='M220.088,57.667l-99.671,99.695L20.746,57.655c-4.752-4.752-12.439-4.752-17.191,0 c-4.74,4.752-4.74,12.451,0,17.203l108.261,108.297l0,0l0,0c4.74,4.752,12.439,4.752,17.179,0L237.256,74.859 c4.74-4.752,4.74-12.463,0-17.215C232.528,52.915,224.828,52.915,220.088,57.667z' id='Expand_More' /%3E%3Cg id='g3'%3E%3C/g%3E%3Cg id='g5'%3E%3C/g%3E%3Cg id='g7'%3E%3C/g%3E%3Cg id='g9'%3E%3C/g%3E%3Cg id='g11'%3E%3C/g%3E%3Cg id='g13'%3E%3C/g%3E%3C/g%3E%3Cg id='g17'%3E%3C/g%3E%3Cg id='g19'%3E%3C/g%3E%3Cg id='g21'%3E%3C/g%3E%3Cg id='g23'%3E%3C/g%3E%3Cg id='g25'%3E%3C/g%3E%3Cg id='g27'%3E%3C/g%3E%3Cg id='g29'%3E%3C/g%3E%3Cg id='g31'%3E%3C/g%3E%3Cg id='g33'%3E%3C/g%3E%3Cg id='g35'%3E%3C/g%3E%3Cg id='g37'%3E%3C/g%3E%3Cg id='g39'%3E%3C/g%3E%3Cg id='g41'%3E%3C/g%3E%3Cg id='g43'%3E%3C/g%3E%3Cg id='g45'%3E%3C/g%3E%3C/svg%3E%0A");
+}
+
+/*BUTTONS STATS*/
+.user-stats a {
+    text-decoration: none;
+}
+a.stat-card:not(.active) {
+    box-shadow: inset 0 0 10px var(--charte-dark);
+}
+a.stat-card:hover {
+    box-shadow: 0 0 10px var(--charte-dark);
+}
+
+a.stat-card:hover,
+a.stat-card.active {
+    background-color: var(--charte-white);
+}
+
+a.stat-card-green:hover p,
+a.stat-card-green.active p {
+    color: var(--charte-green);
+}
+
+a.stat-card-turquoise:hover p,
+a.stat-card-turquoise.active p {
+    color: var(--charte-turquoise);
+}
+
+a.stat-card-blue:hover p,
+a.stat-card-blue.active p {
+    color: var(--charte-blue);
+}
+
+a.stat-card-purple:hover p,
+a.stat-card-purple.active p {
+    color: var(--charte-purple);
+}
+
+a.stat-card-pink:hover p,
+a.stat-card-pink.active p {
+    color: var(--charte-pink);
+}
+
+a.stat-card-yellow:hover p,
+a.stat-card-yellow.active p {
+    color: var(--charte-yellow);
+}
+
+a.stat-card-orange:hover p,
+a.stat-card-orange.active p {
+    color: var(--charte-orange);
+}
+
+
+a.stat-card-green:hover,
+a.stat-card-green.active {
+    border: 2px solid var(--charte-green);
+}
+
+
+a.stat-card-turquoise:hover,
+a.stat-card-turquoise.active {
+    border: 2px solid var(--charte-turquoise);
+}
+
+
+a.stat-card-blue:hover,
+a.stat-card-blue.active {
+    border: 2px solid var(--charte-blue);
+}
+
+
+a.stat-card-purple:hover,
+a.stat-card-purple.active {
+    border: 2px solid var(--charte-purple);
+}
+
+
+a.stat-card-pink:hover,
+a.stat-card-pink.active {
+    border: 2px solid var(--charte-pink);
+}
+
+
+a.stat-card-yellow:hover,
+a.stat-card-yellow.active {
+    border: 2px solid var(--charte-yellow);
+}
+
+
+a.stat-card-orange:hover,
+a.stat-card-orange.active {
+    border: 2px solid var(--charte-orange);
 }

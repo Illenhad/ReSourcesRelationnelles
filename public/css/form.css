@@ -14,7 +14,7 @@
     margin-bottom: 30px;
 }
 
-.form-input-label {
+label {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
