@@ -11,7 +11,7 @@
             posté le {{ resource.dateCreation|date("d.m.Y à H:i", "Europe/Paris") }}
         </div>
         {% if resource.imageName %}
-            <img src="{{ vich_uploader_asset(resource,'imageFile') }}", style="width: 300px" alt=""/>
+            <img src="{{ vich_uploader_asset(resource,'imageFile') }}" , style="width: 300px" alt=""/>
         {% else %}
             {% if resource.relationShip.label == 'Soi' %}
                 <img src="{{ asset('image/1.jpg') }}" alt=""/>
@@ -83,19 +83,32 @@
                 </div>
                 <!--Gestion Favoris-->
                 {% if app.user %}
-                    <div class="col">
-                        <a style="display:block;text-align: right"
-                           href="{{ path('addRemoveFav', {id: resource.id,url:app.request.requestUri }) }}">
-                            {% if resource.id in resourceFav %}
-                                <img src="https://img.icons8.com/cotton/64/000000/like--v1.png"
-                                     title="Retirer des Favoris" style="width: 30px;height: 30px;"/>
+                <div class="col">
+                    <a style="display:block;text-align: right"
+                       href="{{ path('addRemoveFav', {id: resource.id,url:app.request.requestUri }) }}">
+                        {% if resource.id in resourceFav %}
+                            <img src="https://img.icons8.com/cotton/64/000000/like--v1.png"
+                                 title="Retirer des Favoris" style="width: 30px;height: 30px;"/>
+                        {% else %}
+                            <img src="https://img.icons8.com/plasticine/100/000000/like--v3.png"
+                                 title="Ajouter aux favoris" style="width: 30px;height: 30px;"/>
+                        {% endif %}
+
+                        <div class="col">
+                            <a style="display:block;text-align: right"
+                               href="{{ path('addRemoveSide', {id: resource.id,url:app.request.requestUri }) }}">
+                                {% if resource.id in resourceSide %}
+                                <img src="https://img.icons8.com/plasticine/100/000000/lock-2.png"
+                                     title="supprimer la mise de côte" style="width: 30px;height: 30px;"/>
+                            </a>
                             {% else %}
-                                <img src="https://img.icons8.com/plasticine/100/000000/like--v3.png"
-                                     title="Ajouter aux favoris" style="width: 30px;height: 30px;"/>
+                                <img src="https://img.icons8.com/carbon-copy/64/000000/lock-2.png"
+                                     title="mettre de côté" style="width: 30px;height: 30px;"/>
                             {% endif %}
-                        </a>
-                    </div>
-                {% endif %}
+                        </div>
+                        {% endif %}
+                    </a>
+                </div>
             </div>
         </div>
     </div>
