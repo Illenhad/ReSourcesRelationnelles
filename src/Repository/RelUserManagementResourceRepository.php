@@ -41,6 +41,28 @@ class RelUserManagementResourceRepository extends ServiceEntityRepository
         return $listFav;
     }
 
+    public function getSide(User $user, ManagerRegistry $registry)
+    {
+        $managementTypeRepository = new ManagementTypeRepository($registry);
+        $sidType = $managementTypeRepository->findOneBy(['label' => 'Mis de côté']);
+        $query = $this->createQueryBuilder('rel')
+            ->select('res.id')
+            ->join('rel.resource', 'res')
+            ->andWhere('rel.user = :user')
+            ->setParameter('user', $user->getId())
+            ->andWhere('rel.managementType = :sideType')
+            ->setParameter('sideType', $sidType->getId())
+        ;
+        $rawlistSide = $query->getQuery()->getArrayResult();
+        $listSide = [];
+        foreach ($rawlistSide as $Side) {
+            array_push($listSide, $Side['id']);
+        }
+
+        return $listSide;
+    }
+
+
     // /**
     //  * @return RelUserManagementResourceFixture[] Returns an array of RelUserManagementResourceFixture objects
     //  */
