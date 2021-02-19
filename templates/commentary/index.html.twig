@@ -3,35 +3,42 @@
 {% for commentary in commentaries %}
     <div>
         <hr>
+        <div class="actions comment-actions">
+            {% if app.user is defined %}
+                <a href="{{ path('answer_new', {'commentary': commentary.id}) }}" class=" btn btn-icon"><span class="icon-chat"></span></a>
+{#                <button onclick="showAnswerForm(this)" data-id="{{ commentary.id }}" class="btn btn-icon"><span class="icon-chat"></span></button>#}
+            {% endif %}
+            {% if app.user == commentary.user %}
+                <a href="{{ path('commentary_edit', {id: commentary.id}) }}" class=" btn btn-icon"><span class="icon-edit"></span></a>
+            {% endif %}
+            {% if app.user == commentary.user or is_granted('ROLE_MODERATEUR') %}
+                <a href="{{ path('commentary_delete', {id: commentary.id}) }}" class=" btn btn-icon"><span class="icon-delete"></span></a>
+            {% endif %}
+        </div>
         <p><span class="commentary-author">{{ commentary.user }}</span><span class="author-date"> le {{ commentary.commentDate|date("d/m/Y à H:i", "Europe/Paris") }}</span></p>
         <p>{{ commentary.content }}</p>
-        <div class="commentary-actions">
-            <button class="btn btn-more-less" {#onclick="setShowCommentaries()"#}>Voir les réponses</button>
-            <div class="commentary-actions-buttons">
-                {% if app.user== commentary.user %}
-                    <a href="{{ path('commentary_edit', {id: commentary.id}) }}" class=" btn btn-icon"><span class="icon-edit"></span></a>
-                {% endif %}
-                {% if app.user== commentary.user or is_granted('ROLE_MODERATEUR') %}
-                    <a href="{{ path('commentary_delete', {id: commentary.id}) }}" class=" btn btn-icon"><span class="icon-delete"></span></a>
-                {% endif %}
+        {% if(commentary.answers|length > 0) %}
+            <button class="btn btn-more-less btn-commentary" onclick="setShowCommentaries(this)" data-id="{{ commentary.id }}">Voir les réponses</button>
+        {% endif %}
+        {% if(commentary.answers|length > 0) %}
+            <div class="answer-content" id="commentary_{{ commentary.id }}">
+                {% for answer in commentary.answers %}
+                    <div class="answer">
+                        <div class="actions comment-actions">
+                            {% if app.user == commentary.user %}
+                                <a href="{{ path('commentary_edit', {id: commentary.id}) }}" class=" btn btn-icon"><span class="icon-edit"></span></a>
+                            {% endif %}
+                            {% if app.user == commentary.user or is_granted('ROLE_MODERATEUR') %}
+                                <a href="{{ path('commentary_delete', {id: commentary.id}) }}" class=" btn btn-icon"><span class="icon-delete"></span></a>
+                            {% endif %}
+                        </div>
+                        <p><span class="commentary-author">{{ answer.user }}</span><span class="author-date"> le {{ answer.answerDate|date("d/m/Y à H:i", "Europe/Paris") }}</span></p>
+                        <p>{{ answer.content }}</p>
+                    </div>
+                {% endfor %}
             </div>
-        </div>
-        <div>
-            {% for answer in commentary.answers %}
+        {% endif %}
 
-
-                {{ answer. user }} : {{ answer.content }} <br>
-
-                {% if app.user == answer.user %}
-                    <a href="{{ path('answer_edit', {'id': answer.id}) }}" class=" btn btn-primary">éditer</a>
-                {% endif %}
-
-                {% if app.user== answer.user or is_granted('ROLE_MODERATEUR') %}
-                    <a href="{{ path('answer_delete', {id: answer.id}) }}"
-                       class=" btn btn-danger">Supprimer </a>
-                {% endif %}
-            {% endfor %}
-        </div>
     </div>
 {% else %}
     <p>Il n'y a pas encore de commentaire</p>
@@ -40,3 +47,23 @@
 {% if app.user %}
     {{ render(url('commentary_new', { 'resource':resource.id })) }}
 {% endif %}
+
+
+    {% block javascripts %}
+    <script>
+        buttonsCommentary = document.querySelectorAll('.btn-commentary');
+        buttonsCommentary.forEach(setShowCommentaries);
+
+        function setShowCommentaries(button) {
+            commentaryId = button.getAttribute('data-id');
+            content = document.querySelector('#commentary_'+commentaryId);
+            if (content.style.display === 'none') {
+                content.style.display = 'block';
+                button.innerHTML = '<span class="icon-upper-arrow"></span> Masquer les réponses';
+            } else {
+                content.style.display = 'none';
+                button.innerHTML = '<span class="icon-lower-arrow"></span> Afficher les réponses';
+            }
+        }
+    </script>
+    {% endblock %}

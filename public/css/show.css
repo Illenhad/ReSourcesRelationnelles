@@ -1,0 +1,77 @@
+.resource-content {
+    display: grid;
+    grid-template-columns: auto min-content;
+    grid-template-rows: auto;
+    grid-column-gap: 30px;
+    grid-row-gap: 15px;
+    grid-template-areas: 'description information';
+}
+
+.resource-description {
+    grid-area: description;
+}
+.resource-informations {
+    grid-area: information;
+}
+
+/*DESCRIPTION*/
+.author-date {
+    font-style: italic;
+    color: var(--charte-grey);
+}
+
+/*COMMENTS*/
+.comment-title-content {
+    display: flex;
+    flex-direction: row;
+}
+.comment-actions {
+    display: flex;
+    flex-direction: row;
+}
+.actions {
+    float: right;
+}
+
+/*RESOURCE COMMENTS AND COMMENTARY*/
+.commentary-author {
+    font-weight: bold;
+    color: var(--charte-blue);
+}
+
+.user-form {
+    box-shadow: 0 0 5px var(--charte-grey);
+    padding: 20px;
+}
+
+.commentary-actions {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.commentary-actions .btn-more-less {
+    margin: 0;
+}
+.commentary-actions-buttons {
+    display: flex;
+    flex-direction: row;
+}
+
+/*COMMENTARIES*/
+.answer-content, .answerForm-content {
+    padding: 0 60px;
+}
+
+.answer {
+    display: block;
+}
+
+.answer:not(:first-child) {
+    padding-top: 16px;
+    border-top: 1px solid var(--charte-hr);
+}
+
+.answer .author-date {
+    margin: 0;
+}

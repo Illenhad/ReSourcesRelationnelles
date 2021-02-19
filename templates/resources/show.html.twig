@@ -1,7 +1,9 @@
 {% extends 'base.html.twig' %}
 
 {% block stylesheets %}
-    <link rel="stylesheet" href="{{ asset('css/rating.css') }}" type="text/css">
+    <link rel="stylesheet" href="{{ asset('css/rating.css') }}" type="text/css" xmlns="http://www.w3.org/1999/html">
+    <link rel="stylesheet" href="{{ asset('css/show.css') }}" type="text/css">
+    <link rel="stylesheet" href="{{ asset('css/stats.css') }}" type="text/css">
     <script src="{{ asset('js/jquery-3.5.1.min.js') }}"></script>
 {% endblock %}
 
@@ -21,16 +23,16 @@
                 {% endif %}
 
 {#A MODIFIER#}
-                <a style="display:block;text-align: right"
-                   href="{{ path('addRemoveSide', {id: resource.id,url:app.request.requestUri }) }}">
-                    {% if isSide %}
-                        <img src="https://img.icons8.com/plasticine/100/000000/lock-2.png" title="Retirer "
-                             style="width: 30px;height: 30px;"/>
-                    {% else %}
-                        <img src="https://img.icons8.com/carbon-copy/64/000000/lock-2.png" title="mettre de côte"
-                             style="width: 30px;height: 30px;"/>
-                    {% endif %}
-                </a>
+{#                <a style="display:block;text-align: right"#}
+{#                   href="{{ path('addRemoveSide', {id: resource.id,url:app.request.requestUri }) }}">#}
+{#                    {% if isSide %}#}
+{#                        <img src="https://img.icons8.com/plasticine/100/000000/lock-2.png" title="Retirer "#}
+{#                             style="width: 30px;height: 30px;"/>#}
+{#                    {% else %}#}
+{#                        <img src="https://img.icons8.com/carbon-copy/64/000000/lock-2.png" title="mettre de côte"#}
+{#                             style="width: 30px;height: 30px;"/>#}
+{#                    {% endif %}#}
+{#                </a>#}
 
             </h1>
             <p class="author-date">posté par {{ resource.user.username }} le {{ resource.dateCreation|date("d/m/Y à H:i", "Europe/Paris") }}</p>
@@ -70,7 +72,8 @@
                             {% endfor %}
                         </div>
                     </div>
-                    <p class="author-date">De {{ comment.user.username }} le {{ comment.commentDate|date("d/m/Y à H:i", "Europe/Paris") }}</p>
+                    <p><span class="commentary-author">{{ comment.user.username }}</span><span class="author-date"> le {{ comment.commentDate|date("d/m/Y à H:i", "Europe/Paris") }}</span></p>
+{#                    <p class="author-date">De {{ comment.user.username }} le {{ comment.commentDate|date("d/m/Y à H:i", "Europe/Paris") }}</p>#}
                     <p class="comment-text">{{ comment.content }}</p>
                 </div>
             {% endfor %}
@@ -98,11 +101,6 @@
         {% include "commentary/index.html.twig"  with {"commentaries": resource.commentaries, "resource": resource}%}
     </div>
 
-    {% if app.user %}
-        <div class="charte-form">
-            {{ render(url('commentary_new', { 'resource':resource.id })) }}
-        </div>
-    {% endif %}
     <a class="btn btn-primary" href="{{ path('resources') }}">Retour</a>
 
     {% block javascripts %}
@@ -138,10 +136,10 @@
                 showComments = !showComments;
                 if (showComments) {
                     comments.forEach(showHideComments);
-                    button.innerHTML = '<span class="icon-upper-arrow"></span> Voir moins de commentaire';
+                    button.innerHTML = '<span class="icon-upper-arrow"></span> Voir moins';
                 } else {
                     comments.forEach(showHideComments);
-                    button.innerHTML = '<span class="icon-lower-arrow"></span> Voir plus de commentaire (' + comments.length + ')';
+                    button.innerHTML = '<span class="icon-lower-arrow"></span> Voir plus (' + comments.length + ')';
                 }
             }
             function showHideComments(item) {

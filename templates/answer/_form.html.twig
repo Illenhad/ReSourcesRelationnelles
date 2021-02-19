@@ -1,4 +1,29 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('enregistrer') }}</button>
-{{ form_end(form) }}
+{#{{ form_start(form) }}#}
+{#    {{ form_widget(form) }}#}
+{#    <button class="btn">{{ button_label|default('enregistrer') }}</button>#}
+{#{{ form_end(form) }}#}
+
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/rating.css') }}" type="text/css">
+    <script src="{{ asset('js/jquery-3.5.1.min.js') }}"></script>
+{% endblock %}
+
+{% block body %}
+<div class="charte-form answer-form" id="form-answer-{{ commentary.id }}" data-id="{{ commentary.id }}">
+    {% for message in app.flashes('error') %}
+        <div class="alert alert-danger mt-4 text-center">
+            {{ message }}
+        </div>
+    {% endfor %}
+    {{ form_start(form) }}
+    <h4>Votre réponse</h4>
+    {{ form_widget(form.content) }}
+    <div class="form-action">
+        <input type="submit" class="btn btn-primary" value="Répondre">
+{#        <button class="btn btn-primary" onclick="showAnswerForm(this)" data-id="{{ commentary.id }}">Annuler</button>#}
+    </div>
+    {{ form_end(form) }}
+</div>
+{% endblock %}
