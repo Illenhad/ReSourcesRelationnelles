@@ -92,10 +92,10 @@ class CommentaryController extends AbstractController
         $comment = $entityManager->getRepository(Commentary::class)->find($id);
         $entityManager->remove($commentary);
         $entityManager->flush();
+
         return $this->redirectToRoute('comment.show', [
             'slug' => $commentary->getResource()->getSlug(),
             'id' => $commentary->getResource()->getId(),
         ]);
-
     }
 }

@@ -16,8 +16,27 @@
                 {% endif %}
             </div>
         </div>
+        <div>
+            {% for answer in commentary.answers %}
+
+
+                {{ answer. user }} : {{ answer.content }} <br>
+
+                {% if app.user == answer.user %}
+                    <a href="{{ path('answer_edit', {'id': answer.id}) }}" class=" btn btn-primary">éditer</a>
+                {% endif %}
+
+                {% if app.user== answer.user or is_granted('ROLE_MODERATEUR') %}
+                    <a href="{{ path('answer_delete', {id: answer.id}) }}"
+                       class=" btn btn-danger">Supprimer </a>
+                {% endif %}
+            {% endfor %}
+        </div>
     </div>
 {% else %}
     <p>Il n'y a pas encore de commentaire</p>
 {% endfor %}
 
+{% if app.user %}
+    {{ render(url('commentary_new', { 'resource':resource.id })) }}
+{% endif %}

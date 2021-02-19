@@ -2,8 +2,6 @@
 
 {% block stylesheets %}
     <link rel="stylesheet" href="{{ asset('css/rating.css') }}" type="text/css">
-    <link rel="stylesheet" href="{{ asset('css/show.css') }}" type="text/css">
-    <link rel="stylesheet" href="{{ asset('css/stats.css') }}" type="text/css">
     <script src="{{ asset('js/jquery-3.5.1.min.js') }}"></script>
 {% endblock %}
 
@@ -21,6 +19,19 @@
                         {% endif %}
                     </a>
                 {% endif %}
+
+{#A MODIFIER#}
+                <a style="display:block;text-align: right"
+                   href="{{ path('addRemoveSide', {id: resource.id,url:app.request.requestUri }) }}">
+                    {% if isSide %}
+                        <img src="https://img.icons8.com/plasticine/100/000000/lock-2.png" title="Retirer "
+                             style="width: 30px;height: 30px;"/>
+                    {% else %}
+                        <img src="https://img.icons8.com/carbon-copy/64/000000/lock-2.png" title="mettre de côte"
+                             style="width: 30px;height: 30px;"/>
+                    {% endif %}
+                </a>
+
             </h1>
             <p class="author-date">posté par {{ resource.user.username }} le {{ resource.dateCreation|date("d/m/Y à H:i", "Europe/Paris") }}</p>
             <hr>
