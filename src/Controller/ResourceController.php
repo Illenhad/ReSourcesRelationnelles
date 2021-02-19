@@ -125,6 +125,19 @@ class ResourceController extends AbstractController
         } else {
             $isfav = null;
         }
+
+        //Management Type mis de côte
+        $sideManagementType = $managementTypeRepository->findOneBy(['label' => 'Mis de côté']);
+
+        if ($this->getUser()) {
+            $isSide = $managementResourceRepository->findOneBy([
+                'user' => $this->getUser()->getId(),
+                'resource' => $id,
+                'managementType' => $sideManagementType->getId(),
+            ]);
+        } else {
+            $isSide = null;
+        }
         $comment = new Comment();
         $commentary = new Commentary();
 
@@ -159,6 +172,7 @@ class ResourceController extends AbstractController
             'current_menu' => 'resources',
             'form' => $this->createForm(CommentType::class, new Comment())->createView(),
             'isFavorite' => $isfav,
+            'isSide' => $isSide,
         ]);
     }
 
