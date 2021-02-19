@@ -67,11 +67,7 @@
         </div>
         <div class="card-footer" style="color:dodgerblue">
             {% if resource.comments|length > 0 %}
-                {% set valuation_average = 0 %}
-                {% for comment in resource.comments %}
-                    {% set valuation_average = valuation_average + comment.valuation %}
-                {% endfor %}
-                {% set valuation_average = valuation_average / resource.comments|length %}
+                {% set valuation_average = values.note %}
                 Note {{ valuation_average|number_format(1) }} / 5
             {% else %}
                 Il n'y a pas encore d'évaluation.
@@ -79,7 +75,7 @@
             <br>
             <div class="row">
                 <div class="col">
-                    <img src="https://img.icons8.com/color/30/000000/chat--v1.png"/> {{ resource.comments | length }}
+                    <img src="https://img.icons8.com/color/30/000000/chat--v1.png"/> {{ values.nb_coms}}
                 </div>
                 <!--Gestion Favoris-->
                 {% if app.user %}

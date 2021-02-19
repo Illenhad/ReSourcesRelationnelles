@@ -3,6 +3,7 @@
 
 
 
+
 {% block stylesheets %}
     <style>
         .btn-primary {
@@ -17,6 +18,7 @@
         }
     </style>
 
+    <link href="{{ asset('css/sort.css') }}" rel="stylesheet"/>
     <link href="{{ asset('css/filter.css') }}" rel="stylesheet"/>
 {% endblock %}
 
@@ -87,40 +89,49 @@
     </div>
 
     <div class="container mt-4">
-        <h3 style="color:dodgerblue"> Dernières ressources </h3>
-        <ul id="sort_list">
-            <li class="sort_items {% if pagination.isSorted('a.r.title') %}sorted{% endif %}">
-                {{ knp_pagination_sortable(resources, 'Par ordre Alphabetique A->Z', 'r.title',{}, {'direction': 'asc'}) }}
-            </li>
-            <li class="sort_items {% if pagination.isSorted('a.r.title') %}sorted{% endif %}">
-                {{ knp_pagination_sortable(resources, 'Par ordre Alphabetique Z->A', 'r.title',{}, {'direction': 'desc'}) }}
-            </li>
-            <li class="sort_items {% if pagination.isSorted('a.r.title') %}sorted{% endif %}">
-                {{ knp_pagination_sortable(resources, 'Les plus récentes', 'r.dateCreation',{}, {'direction': 'desc'}) }}
-            </li>
-            <li class="sort_items {% if pagination.isSorted('a.r.title') %}sorted{% endif %}">
-                {{ knp_pagination_sortable(resources, 'Les plus commentées', 'nb_coms',{}, {'direction': 'desc'}) }}
-            </li>
-            <li class="sort_items {% if pagination.isSorted('a.r.title') %}sorted{% endif %}">
-                {{ knp_pagination_sortable(resources, 'Les meilleurs notes', 'note',{}, {'direction': 'desc'})}}
-            </li>
-        </ul>
-
-
-            <div class="row">
-            {% for values in resources %}
-                {% set resource = values[0] %}
-            <div class="col-md-4">
-                 {% include'resources/_resource.html.twig' %}
-                {{ dump(values) }}
+        <h3 style="color:dodgerblue"> Toutes les ressources</h3>
+        <div id="sort">
+            <div class="sort_label dropdown">Trier par:
+                <div class="sort_fa_down">
+                    <i class="fa_down">
+                    </i>
+                </div>
             </div>
-            {% endfor %}
+            <div id="sort_list">
+                <ul>
+                    <li class="sort_items
+                    {% if resources.isSorted('r.title') and resources.direction == 'asc' %}sorted{% endif %}">
+                        {{ knp_pagination_sortable(resources, 'Ordre Alphabetique A->Z', 'r.title',{}, {'direction': 'asc'}) }}
+                    </li>
+                    <li class="sort_items
+                    {% if resources.isSorted('r.title') and resources.direction == 'desc' %}sorted{% endif %}">
+                        {{ knp_pagination_sortable(resources, 'Ordre Alphabetique Z->A', 'r.title',{}, {'direction': 'desc'}) }}
+                    </li>
+                    <li class="sort_items {% if resources.isSorted('r.dateCreation') %}sorted{% endif %}">
+                        {{ knp_pagination_sortable(resources, 'Les plus récentes', 'r.dateCreation',{}, {'direction': 'desc'}) }}
+                    </li>
+                    <li class="sort_items {% if resources.isSorted('nb_coms') %}sorted{% endif %}">
+                        {{ knp_pagination_sortable(resources, 'Les plus commentées', 'nb_coms',{}, {'direction': 'desc'}) }}
+                    </li>
+                    <li class="sort_items {% if resources.isSorted('note') %}sorted{% endif %}">
+                        {{ knp_pagination_sortable(resources, 'Les meilleurs notes', 'note',{}, {'direction': 'desc'})}}
+                    </li>
+                </ul>
+            </div>
         </div>
+        <div class="row">
+        {% for values in resources %}
+            {% set resource = values.resource %}
+        <div class="col-md-4">
+             {% include'resources/_resource.html.twig' %}
+        </div>
+        {% endfor %}
     </div>
+</div>
 
-    <div class="pagination text-center mt-4">
-        {{ knp_pagination_render(resources) }}
-    </div>
+<div class="pagination text-center mt-4">
+    {{ knp_pagination_render(resources) }}
+</div>
 {% endblock %}
 
 

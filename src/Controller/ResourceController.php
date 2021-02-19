@@ -98,6 +98,7 @@ class ResourceController extends AbstractController
                 'resources' => $resources,
                 'filter' => $formfilter->CreateView(),
                 'resourceFav' => $resourceFav,
+                'pagination' => $paginator
             ]
         );
     }
