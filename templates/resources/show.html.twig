@@ -22,18 +22,22 @@
                 {% endif %}
             </a>
         {% endif %}
-        <a style="display:block;text-align: right"
-           href="{{ path('addRemoveSide', {id: resource.id,url:app.request.requestUri }) }}">
-            {% if isSide %}
-                <img src="https://img.icons8.com/plasticine/100/000000/lock-2.png" title="Retirer "
-                     style="width: 30px;height: 30px;"/>
-            {% else %}
-                <img src="https://img.icons8.com/carbon-copy/64/000000/lock-2.png" title="mettre de côte"
-                     style="width: 30px;height: 30px;"/>
-            {% endif %}
-        </a>
-    </div>
 
+        <!--Gestion mise de côté-->
+        {% if app.user %}
+            <a style="display:block;text-align: right"
+               href="{{ path('addRemoveSide', {id: resource.id,url:app.request.requestUri }) }}">
+                {% if isSide %}
+                    <img src="https://img.icons8.com/plasticine/100/000000/lock-2.png" title="Retirer "
+                         style="width: 30px;height: 30px;"/>
+                {% else %}
+                    <img src="https://img.icons8.com/carbon-copy/64/000000/lock-2.png" title="mettre de côte"
+                         style="width: 30px;height: 30px;"/>
+                {% endif %}
+            </a>
+        {% endif %}
+    </div>
+    
     posté le {{ resource.dateCreation|date("d.m.Y à H:i", "Europe/Paris") }}
 
     <div class="container" style="border: 1px solid silver;height:60px;">
