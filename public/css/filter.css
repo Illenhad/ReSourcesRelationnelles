@@ -28,11 +28,11 @@
     font-size: 16px;
     font-weight: 500;
 }
-.fa_down{
+.filter_fa_down .fa_down{
     transition-duration: .2s;
     transition-property: transform,-webkit-transform,-o-transform;
 }
-.fa_down:before{
+.filter_fa_down .fa_down:before{
     content:"\F063";
     font-family: FontAwesome;
     font-style: normal;
