@@ -140,6 +140,20 @@ class ResourceController extends AbstractController
         } else {
             $isSide = null;
         }
+
+        //Management Type Exploité
+        $UtilityManagementType = $managementTypeRepository->findOneBy(['label' => 'Exploité']);
+
+        if ($this->getUser()) {
+            $isUtility = $managementResourceRepository->findOneBy([
+                'user' => $this->getUser()->getId(),
+                'resource' => $id,
+                'managementType' => $UtilityManagementType->getId(),
+            ]);
+        } else {
+            $isUtility = null;
+        }
+
         $comment = new Comment();
         $commentary = new Commentary();
 
@@ -175,6 +189,7 @@ class ResourceController extends AbstractController
             'form' => $this->createForm(CommentType::class, new Comment())->createView(),
             'isFavorite' => $isfav,
             'isSide' => $isSide,
+            'isUtility' => $isUtility,
         ]);
     }
 
@@ -362,4 +377,45 @@ class ResourceController extends AbstractController
 
         return $this->redirect($url);
     }
+    /**
+     * @Route("/addRemoveUtility", name="addRemoveUtility")
+     */
+    public function addRemoveUtility(Request $request, ResourceRepository $resourceRepository, RelUserManagementResourceRepository $managementResourceRepository, ManagementTypeRepository $managementTypeRepository, EntityManagerInterface $entityManager): Response
+    {
+        $url = $request->query->get('url');
+        $id = $request->query->get('id');
+        $details = $request->query->get('details');
+        $resource = $resourceRepository->find($id);
+
+        //Management Type mise de côte
+        $UtilityManagementType = $managementTypeRepository->findOneBy(['label' => 'Exploité']);
+        $existingUtility = $managementResourceRepository->findOneBy([
+            'user' => $this->getUser()->getId(),
+            'resource' => $id,
+            'managementType' => $UtilityManagementType->getId(),
+        ]);
+        if ($existingUtility) {
+
+            if ($existingUtility->getDetails()==$details){
+            $entityManager->remove($existingUtility);
+            $entityManager->flush();
+            }else{
+                $existingUtility->setDetails($details);
+                $entityManager->flush();
+            }
+        } else {
+            $newSide = new RelUserManagementResource();
+            $newSide->setUser($this->getUser())
+                ->setManagementType($UtilityManagementType)
+                ->setResource($resource)
+                ->setDetails($details);
+            $entityManager->persist($newSide);
+            $entityManager->flush();
+        }
+
+        return $this->redirect($url);
+    }
+
 }
+
+

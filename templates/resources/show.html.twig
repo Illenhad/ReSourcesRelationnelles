@@ -36,8 +36,32 @@
                 {% endif %}
             </a>
         {% endif %}
+
     </div>
-    
+
+    <!--Gestion Exploité-->
+    {% if app.user %}
+        <div>
+            Cette ressource vous est elle utile?
+            <a
+               href="{{ path('addRemoveUtility', {id: resource.id,url:app.request.requestUri,details:"non" }) }}">
+                {% if isUtility and isUtility.details=="non" %}
+                    <img src="https://img.icons8.com/material-rounded/24/000000/thumbs-down.png" title="Non! "/>
+                {% else %}
+                    <img src="https://img.icons8.com/material-outlined/24/000000/thumbs-down.png" title="Non!"/>
+                {% endif %}
+            </a>
+
+            <a
+               href="{{ path('addRemoveUtility', {id: resource.id,url:app.request.requestUri,details:"oui" }) }}">
+                {% if isUtility and isUtility.details=="oui" %}
+                    <img src="https://img.icons8.com/material-rounded/24/000000/thumb-up.png" title="Oui!"/>
+                {% else %}
+                    <img src="https://img.icons8.com/material-outlined/24/000000/thumb-up.png" title="Oui!"/>
+                {% endif %}
+            </a>
+        </div>
+    {% endif %}
     posté le {{ resource.dateCreation|date("d.m.Y à H:i", "Europe/Paris") }}
 
     <div class="container" style="border: 1px solid silver;height:60px;">
