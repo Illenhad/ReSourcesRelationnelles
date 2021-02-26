@@ -6,9 +6,9 @@
 {% endblock %}
 {% block body %}
 
-
+    {% if app.user %}
     <a href="mailto:adresse@mail.fr?body=http://localhost{{ path('comment.show', {id: resource.id, slug: resource.slug}) }}"> Partager </a>
-
+    {% endif %}
 
     <div class="container text-center" style="border: 1px solid silver;height:60px;">
         {{ resource.title }}

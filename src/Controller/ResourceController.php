@@ -94,11 +94,11 @@ class ResourceController extends AbstractController
             $resourceRepository->findPublicQuery($filter, $search, 'DESC'),
             $request->query->getInt('page', 1),
             12,
-            array('defaultSortFieldName' => 'r.dateCreation', 'defaultSortDirection' => 'desc')
+            ['defaultSortFieldName' => 'r.dateCreation', 'defaultSortDirection' => 'desc']
         );
 
         return $this->render(
-            self::ROUTE_PREFIX . '/index.html.twig',
+            self::ROUTE_PREFIX.'/index.html.twig',
             [
                 'resources' => $resources,
                 'filter' => $formfilter->CreateView(),
@@ -183,7 +183,7 @@ class ResourceController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->render(self::ROUTE_PREFIX . '/show.html.twig', [
+        return $this->render(self::ROUTE_PREFIX.'/show.html.twig', [
             'resource' => $resource,
             'current_menu' => 'resources',
             'form' => $this->createForm(CommentType::class, new Comment())->createView(),
@@ -215,7 +215,7 @@ class ResourceController extends AbstractController
             ]);
         }
 
-        return $this->render(self::ROUTE_PREFIX . '/editComment.html.twig', [
+        return $this->render(self::ROUTE_PREFIX.'/editComment.html.twig', [
             'comment' => $comment,
             'current_menu' => 'resources',
             'resource' => $comment->getResource(),
@@ -377,6 +377,7 @@ class ResourceController extends AbstractController
 
         return $this->redirect($url);
     }
+
     /**
      * @Route("/addRemoveUtility", name="addRemoveUtility")
      */
@@ -395,11 +396,10 @@ class ResourceController extends AbstractController
             'managementType' => $UtilityManagementType->getId(),
         ]);
         if ($existingUtility) {
-
-            if ($existingUtility->getDetails()==$details){
-            $entityManager->remove($existingUtility);
-            $entityManager->flush();
-            }else{
+            if ($existingUtility->getDetails() == $details) {
+                $entityManager->remove($existingUtility);
+                $entityManager->flush();
+            } else {
                 $existingUtility->setDetails($details);
                 $entityManager->flush();
             }
@@ -415,7 +415,4 @@ class ResourceController extends AbstractController
 
         return $this->redirect($url);
     }
-
 }
-
-
