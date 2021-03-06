@@ -15,10 +15,35 @@
 }
 
 /*DESCRIPTION*/
+.resource-title .actions {
+    display: flex;
+    flex-direction: row;
+}
+.resource-title .actions > *:not(:last-child){
+    margin-right: 15px;
+}
+
 .author-date {
     font-style: italic;
     color: var(--charte-grey);
 }
+
+.is-useful {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: max-content;
+    padding: 10px 20px;
+    border: 1px solid var(--charte-dark-light);
+    border-radius: 5px;
+}
+.is-useful p {
+    margin: 0;
+}
+.is-useful *:not(:last-child) {
+    margin-right: 15px;
+}
+
 
 /*COMMENTS*/
 .comment-title-content {

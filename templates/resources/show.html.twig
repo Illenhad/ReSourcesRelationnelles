@@ -8,76 +8,31 @@
 {% endblock %}
 
 {% block body %}
-
-    {% if app.user %}
-        <a href="mailto:adresse@mail.fr?body=http://localhost{{ path('comment.show', {id: resource.id, slug: resource.slug}) }}"> Partager </a>
-    {% endif %}
-
     <div class="resource-content">
         <div class="resource-description">
             <h1 class="resource-title">
                 {{ resource.title }}
                 {% if app.user %}
-                    <a class="actions btn btn-icon" href="{{ path('addRemoveFav', {id: resource.id,url:app.request.requestUri }) }}">
-                        {% if isFavorite %}
-                            <span class="icon-favourite-remove"></span>
-                        {% else %}
-                            <span class="icon-favourite-add"></span>
-                        {% endif %}
-                    </a>
-                {% endif %}
-
-{#A MODIFIER#}
-{#                <a style="display:block;text-align: right"#}
-{#                   href="{{ path('addRemoveSide', {id: resource.id,url:app.request.requestUri }) }}">#}
-{#                    {% if isSide %}#}
-{#                        <img src="https://img.icons8.com/plasticine/100/000000/lock-2.png" title="Retirer "#}
-{#                             style="width: 30px;height: 30px;"/>#}
-{#                    {% else %}#}
-{#                        <img src="https://img.icons8.com/carbon-copy/64/000000/lock-2.png" title="mettre de côte"#}
-{#                             style="width: 30px;height: 30px;"/>#}
-{#                    {% endif %}#}
-{#                </a>#}
-
-                <!--Gestion mise de côté-->
-                {% if app.user %}
-                    <a style="display:block;text-align: right"
-                       href="{{ path('addRemoveSide', {id: resource.id,url:app.request.requestUri }) }}">
-                        {% if isSide %}
-                            <img src="https://img.icons8.com/plasticine/100/000000/lock-2.png" title="Retirer "
-                                 style="width: 30px;height: 30px;"/>
-                        {% else %}
-                            <img src="https://img.icons8.com/carbon-copy/64/000000/lock-2.png" title="mettre de côte"
-                                 style="width: 30px;height: 30px;"/>
-                        {% endif %}
-                    </a>
-                {% endif %}
-
-
-                <!--Gestion Exploité-->
-                {% if app.user %}
-                    <div>
-                        Cette ressource vous est elle utile?
-                        <a
-                                href="{{ path('addRemoveUtility', {id: resource.id,url:app.request.requestUri,details:"non" }) }}">
-                            {% if isUtility and isUtility.details=="non" %}
-                                <img src="https://img.icons8.com/material-rounded/24/000000/thumbs-down.png" title="Non! "/>
+                    <div class="actions">
+                        <a class="btn btn-icon" href="mailto:adresse@mail.fr?body=http://localhost{{ path('comment.show', {id: resource.id, slug: resource.slug}) }}" title="Partager">
+                            <span class="icon-share"></span>
+                        </a>
+                        <a class="btn btn-icon" href="{{ path('addRemoveSide', {id: resource.id,url:app.request.requestUri }) }}" title="Mettre de côté">
+                            {% if isSide %}
+                                <span class="icon-aside-remove"></span>
                             {% else %}
-                                <img src="https://img.icons8.com/material-outlined/24/000000/thumbs-down.png" title="Non!"/>
+                                <span class="icon-aside-add"></span>
                             {% endif %}
                         </a>
-
-                        <a
-                                href="{{ path('addRemoveUtility', {id: resource.id,url:app.request.requestUri,details:"oui" }) }}">
-                            {% if isUtility and isUtility.details=="oui" %}
-                                <img src="https://img.icons8.com/material-rounded/24/000000/thumb-up.png" title="Oui!"/>
+                        <a class="btn btn-icon" href="{{ path('addRemoveFav', {id: resource.id,url:app.request.requestUri }) }}" title="Ajouter aux favories">
+                            {% if isFavorite %}
+                                <span class="icon-favourite-remove"></span>
                             {% else %}
-                                <img src="https://img.icons8.com/material-outlined/24/000000/thumb-up.png" title="Oui!"/>
+                                <span class="icon-favourite-add"></span>
                             {% endif %}
                         </a>
                     </div>
                 {% endif %}
-
             </h1>
             <p class="author-date">posté par {{ resource.user.username }} le {{ resource.dateCreation|date("d/m/Y à H:i", "Europe/Paris") }}</p>
             <hr>
@@ -90,6 +45,25 @@
             <div class="stat-card stat-card-purple" title="Relations concernées par la ressource"><span class="icone-stat icone-share"></span><p>{{ resource.relationShip.label }}</p></div>
         </div>
     </div>
+    {% if app.user %}
+        <div class="is-useful">
+            <p>Cette ressource vous est elle utile ?</p>
+            <a class="btn btn-icon" href="{{ path('addRemoveUtility', {id: resource.id,url:app.request.requestUri,details:"oui" }) }}" title="Non">
+                {% if isUtility and isUtility.details=="oui" %}
+                    <span class="icon-like active"></span>
+                {% else %}
+                    <span class="icon-like"></span>
+                {% endif %}
+            </a>
+            <a class="btn btn-icon" href="{{ path('addRemoveUtility', {id: resource.id,url:app.request.requestUri,details:"non" }) }}" title="Non">
+                {% if isUtility and isUtility.details=="non" %}
+                    <span class="icon-dislike active"></span>
+                {% else %}
+                    <span class="icon-dislike"></span>
+                {% endif %}
+            </a>
+        </div>
+    {% endif %}
 
     {% if resource.comments is defined and resource.comments is not empty%}
         <div class="resource-comments">
