@@ -1,0 +1,34 @@
+<div class="user-stats">
+    <a href="{{ path('user_dashboard') }}" class="stat-card stat-card-orange {{ (resourceGestion is defined) ? '' : 'active' }}">
+        <span class="icone-stat icone-user"></span>
+        <p>Mon profile</p>
+    </a>
+    <a href="{{ path('user_resource', {resourceGestion: 'favoris'}) }}" class="stat-card stat-card-pink {{ (resourceGestion is defined and resourceGestion == 'favoris') ? 'active' : '' }}">
+        <span class="icone-stat icone-heart"></span>
+        <p>Favories {{ favoris }}</p>
+    </a>
+    <a href="{{ path('user_resource', {resourceGestion: 'putAside'}) }}" class="stat-card stat-card-turquoise {{ (resourceGestion is defined and resourceGestion == 'putAside') ? 'active' : '' }}">
+        <span class="icone-stat icone-folder"></span>
+        <p>Mises de côté {{ putAside }}</p>
+    </a>
+    <a href="{{ path('user_resource', {resourceGestion: 'exploited'}) }}" class="stat-card stat-card-yellow {{ (resourceGestion is defined and resourceGestion == 'exploited') ? 'active' : '' }}">
+        <span class="icone-stat icone-checked"></span>
+        <p>Exploitées {{ exploited }}</p>
+    </a>
+    <a href="{{ path('user_resource', {resourceGestion: 'shared'}) }}" class="stat-card stat-card-purple {{ (resourceGestion is defined and resourceGestion == 'shared') ? 'active' : '' }}">
+        <span class="icone-stat icone-share"></span>
+        <p>Partagées {{ shared }}</p>
+    </a>
+    <a href="{{ path('user_resource', {resourceGestion: 'consulted'}) }}" class="stat-card stat-card-blue {{ (resourceGestion is defined and resourceGestion == 'consulted') ? 'active' : '' }}">
+        <span class="icone-stat icone-eye"></span>
+        <p>Consultées {{ consulted }}</p>
+    </a>
+    <a href="{{ path('user_resource', {resourceGestion: 'created'}) }}" class="stat-card stat-card-green {{ (resourceGestion is defined and resourceGestion == 'created') ? 'active' : '' }}">
+        <span class="icone-stat icone-add"></span>
+        <p>Crées {{ created }}</p>
+    </a>
+    <div class="stat-card stat-card-red">
+        <span class="icone-stat icone-chat"></span>
+        <p>Commentées {{ commented }}</p>
+    </div>
+</div>

@@ -1,43 +1,75 @@
-.h2 {
-    color: rgb(3, 152, 158);
-    margin: 3%;
+.dashboard-content {
+    display: grid;
+    grid-template-columns: auto min-content;
+    grid-template-rows: auto;
+    grid-column-gap: 30px;
+    grid-row-gap: 15px;
+    grid-template-areas: 'main menue';
 }
 
-.input-group-text {
-    background-color: rgb(255, 188, 90);
+.dashboard-main {
+    grid-area: main;
 }
 
-.div-personal-info {
-    background-color: rgb(255, 188, 90, 0.3);
+.dashboard-main form > * {
+    margin-bottom: 20px;
 }
 
-.btn-perso, .card-linked {
-    background-color: rgb(3, 152, 158);
-    color: white;
+
+.user-stats {
+    grid-area: menue;
 }
 
-.btn-selected {
-    background-color: rgb(255, 188, 90);
-    color: white;
+#user-action {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
 }
 
-.card-not-linked {
-    background-color: rgb(255, 188, 90);
+#user-action > a:not(:last-child) {
+    margin-right: 10px;
 }
 
-.card-linked {
-    text-decoration: none;
-}
+/*.h2 {*/
+/*    color: rgb(3, 152, 158);*/
+/*    margin: 3%;*/
+/*}*/
 
-.card-linked:hover {
-    color: black;
-}
+/*.input-group-text {*/
+/*    background-color: rgb(255, 188, 90);*/
+/*}*/
 
-.tab-header {
-    background-color: rgb(255, 188, 90);
-}
+/*.div-personal-info {*/
+/*    background-color: rgb(255, 188, 90, 0.3);*/
+/*}*/
 
-/*form resource*/
-.field-description {
-    height: 20em;
-}
+/*.btn-perso, .card-linked {*/
+/*    background-color: rgb(3, 152, 158);*/
+/*    color: white;*/
+/*}*/
+
+/*.btn-selected {*/
+/*    background-color: rgb(255, 188, 90);*/
+/*    color: white;*/
+/*}*/
+
+/*.card-not-linked {*/
+/*    background-color: rgb(255, 188, 90);*/
+/*}*/
+
+/*.card-linked {*/
+/*    text-decoration: none;*/
+/*}*/
+
+/*.card-linked:hover {*/
+/*    color: black;*/
+/*}*/
+
+/*.tab-header {*/
+/*    background-color: rgb(255, 188, 90);*/
+/*}*/
+
+/*!*form resource*!*/
+/*.field-description {*/
+/*    height: 20em;*/
+/*}*/

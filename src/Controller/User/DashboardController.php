@@ -99,6 +99,13 @@ class DashboardController extends AbstractController
         $user = $this->getUser();
 
         if (isset($user)) {
+            $favoris = $this->manager->getRepository(Resource::class)->getNumberOfResourceByManagementType(1, $user);
+            $putAside = $this->manager->getRepository(Resource::class)->getNumberOfResourceByManagementType(2, $user);
+            $exploited = $this->manager->getRepository(Resource::class)->getNumberOfResourceByManagementType(3, $user);
+            $shared = $this->manager->getRepository(Resource::class)->getNumberOfSharedResource($user);
+            $consulted = $this->manager->getRepository(Resource::class)->getNumberOfResourceByActionType(2, $user);
+            $created = $this->manager->getRepository(Resource::class)->getNumberOfResourceByActionType(1, $user);
+            $commented = $this->manager->getRepository(Comment::class)->getNumberOfComments($user);
 
             switch ($resourceGestion) {
                 case 'favoris':
@@ -126,6 +133,13 @@ class DashboardController extends AbstractController
             return $this->render('user/user_resource.html.twig', [
                 'resources' => $resources,
                 'resourceGestion' => $resourceGestion,
+                'favoris' => $favoris,
+                'putAside' => $putAside,
+                'exploited' => $exploited,
+                'shared' => $shared,
+                'consulted' => $consulted,
+                'created' => $created,
+                'commented' => $commented,
             ]);
         } else {
             return $this->redirectToRoute('login');

@@ -11,14 +11,17 @@
     {% include "@CHCookieConsent/cookie_consent_styling.html.twig" %}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css">
     {% block stylesheets %}{% endblock %}
-    <link href="{{ asset('css/common.css') }}" rel="stylesheet" type="text/css"/>
-    <link href="{{ asset('css/header.css') }}" rel="stylesheet" type="text/css"/>
-    <link href="{{ asset('css/footer.css') }}" rel="stylesheet" type="text/css"/>
-    <link href="{{ asset('css/button.css') }}" rel="stylesheet" type="text/css"/>
-    <link href="{{ asset('css/search.css') }}" rel="stylesheet" type="text/css"/>
+    <link href="{{ asset('css/header.css') }}" rel="stylesheet"/>
+    <link href="{{ asset('css/footer.css') }}" rel="stylesheet"/>
+    <link href="{{ asset('css/common.css') }}" rel="stylesheet"/>
+    <link href="{{ asset('css/form.css') }}" rel="stylesheet"/>
+    <link href="{{ asset('css/button.css') }}" rel="stylesheet"/>
+    <link href="{{ asset('css/search.css') }}" rel="stylesheet"/>
+
 </head>
 <body>
 {#{% block header %}#}
+
     <header>
         <div class="header-content">
             <a id="logo" href="{{ path('resources') }}"></a>
@@ -71,7 +74,10 @@
         </div>
     </header>
 {#{% endblock %}#}
+
+<div class="content">
 {% block body %}{% endblock %}
+</div>
 {# BandeauCookies #}
 {{ render_esi(path('ch_cookie_consent.show_if_cookie_consent_not_set')) }}
 
@@ -120,8 +126,7 @@
             <a href="https://les-semi-croustillants.atlassian.net/jira/software/projects/SP/boards/3">Les semis croustillants</a>
         </div>
     </footer>
-
-
+{#{% endblock %}#}
 
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"
         integrity="sha384-q2kxQ16AaE6UbzuKqyBE9/u/KzioAlnx2maXQHiDX9d4/zp8Ok3f+M7DPm+Ib6IU"

@@ -4,28 +4,27 @@
     <link rel="stylesheet" href="{{ asset('css/rating.css') }}" type="text/css">
     <script src="{{ asset('js/jquery-3.5.1.min.js') }}"></script>
 {% endblock %}
+
 {% block body %}
-
-
-    <div class="card  mt-4 w-50 text-center mx-auto ">
-        <h4 class="text-secondary"> Editer le commentaire </h4>
-
+    <div class="charte-form">
         {{ form_start(form) }}
-        {{ form_widget(form.title) }}
-        {{ form_widget(form.content) }}
-        {{ form_widget(form.valuation) }}
-
-        <ul class="rating">
-            <li class="rating-item " data-rate="1"></li>
-            <li class="rating-item" data-rate="2"></li>
-            <li class="rating-item" data-rate="3"></li>
-            <li class="rating-item" data-rate="4"></li>
-            <li class="rating-item" data-rate="5"></li>
-        </ul>
-
-        {{ form_widget(form.submit) }}
+            <h2>Editer l'évaluation</h2>
+            <ul class="rating">
+                <li class="rating-item" data-rate="1"></li>
+                <li class="rating-item" data-rate="2"></li>
+                <li class="rating-item" data-rate="3"></li>
+                <li class="rating-item" data-rate="4"></li>
+                <li class="rating-item" data-rate="5"></li>
+            </ul>
+            {{ form_widget(form.title) }}
+            {{ form_widget(form.content) }}
+            {{ form_widget(form.valuation) }}
+            <div class="form-action">
+                <a href="{{ path('comment.show', {id: resource.id, slug: resource.slug}) }}" class="btn btn-primary">Retour</a>
+                {{ form_widget(form.submit) }}
+            </div>
         {{ form_end(form) }}
-
+    </div>
 
         {% block javascripts %}
             <script>
@@ -44,13 +43,5 @@
                     };
                 });
             </script>
-
         {% endblock %}
-    </div>
-    <div class="text-center mt-4 mb-4">
-
-        <a href="{{ path('comment.show', {id: resource.id, slug: resource.slug}) }}"> Retour </a>
-    </div>
-
-
 {% endblock %}

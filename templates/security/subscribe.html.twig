@@ -8,10 +8,9 @@
 {% endblock %}
 
 {% block body %}
-    <div class="form">
-    <h1>  Inscrivez vous!  </h1>
-
+    <div class="charte-form">
     {{  form_start(form) }}
+        <h3>Inscrivez vous !</h3>
 
         {% if not form.vars.valid %}
             <ul class="alert alert-danger">
@@ -31,23 +30,61 @@
             </ul>
         {% endif %}
 
-        {% for field in form %}
-            <!-- Deal with hiden field token-->
-            {% if form_label(field) != form_label(form._token) %}
-                <div class="row">
-
-                    {{ form_label(field) }}
-                    {{ form_widget(field) }}
+        <div class="form-twoColumn-grid">
+            <div class="gridColumn-one">
+                <h4>Informations personnelles</h4>
+                <div class="form-input-label">
+                    {{ form_label(form.lastname) }}
+                    {{ form_widget(form.lastname) }}
                 </div>
-            {% endif %}
-        {%  endfor %}
+                <div class="form-input-label">
+                    {{ form_label(form.firstname) }}
+                    {{ form_widget(form.firstname) }}
+                </div>
+                <div class="form-input-label">
+                    {{ form_label(form.age_category) }}
+                    {{ form_widget(form.age_category) }}
+                </div>
+                <div class="form-input-label">
+                    {{ form_label(form.department) }}
+                    {{ form_widget(form.department) }}
+                </div>
+            </div>
+            <div class="gridColumn-two">
+                <h4>Informations du compte</h4>
+                <div class="form-input-label">
+                    {{ form_label(form.username) }}
+                    {{ form_widget(form.username) }}
+                </div>
+                <div class="form-input-label">
+                    {{ form_label(form.email) }}
+                    {{ form_widget(form.email) }}
+                </div>
+                <div class="form-input-label">
+                    {{ form_label(form.password) }}
+                    {{ form_widget(form.password) }}
+                </div>
+                <div class="form-input-label">
+                    {{ form_label(form.confirm_password) }}
+                    {{ form_widget(form.confirm_password) }}
+                </div>
+            </div>
+        </div>
 
-        <div class="row1">
-            Déjà inscrit ?<a class="link" href="{{ path('login') }}"> Connexion </a>
-        </div>
-        <div class="row">
-            <button> S'inscrire! </button>
-        </div>
+
+{#        {% for field in form %}#}
+{#            <!-- Deal with hiden field token-->#}
+{#            {% if form_label(field) != form_label(form._token) %}#}
+{#                <div class="form-input-label">#}
+{#                    {{ form_label(field) }}#}
+{#                    {{ form_widget(field) }}#}
+{#                </div>#}
+{#            {% endif %}#}
+{#        {%  endfor %}#}
+
+        <p>Déjà inscrit ?<a class="link" href="{{ path('login') }}"> Connexion </a></p>
+
+        <button class="btn btn-primary">S'inscrire !</button>
         {{  form_end(form) }}
     </div>
 {% endblock %}

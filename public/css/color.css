@@ -1,15 +1,20 @@
 :root {
-    --charte-turquoise: #0083ae;
-    --charte-green: #009f79;
-    --charte-blue: #0b6ba8;
-    --charte-red: #a63950;
-    --charte-yellow: #ffa212ff;
-    --charte-purple: #663399;
-    --charte-grey: #8f8f8f;
-    --charte-grey-light: #bcbcbc;
-    --charte-dark-light: #414856;
-    --charte-dark: #363c48;
-    --charte-pink: #e048a8;
+    --charte-green:         #009f79;
+    --charte-turquoise:     #0083ae;
+    --charte-blue:          #0b6ba8;
+    --charte-purple:        #663399;
+    --charte-pink:          #e048a8;
+    --charte-red:           #a63950;
+    --charte-orange:        #ff6c12;
+    --charte-yellow:        #ffa212ff;
+    --charte-white:         #ffffff;
+    --charte-grey-light:    #bcbcbc;
+    --charte-grey:          #8f8f8f;
+    --charte-dark-light:    #414856;
+    --charte-dark:          #363c48;
+    --charte-hr: #c8c9ca;
+
+    --imput-focus: rgba(0, 131, 174, 0.3);
 
     /*Text*/
     --text-color-default: #1e1e1e;
