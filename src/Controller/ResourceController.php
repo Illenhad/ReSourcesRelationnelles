@@ -49,17 +49,23 @@ class ResourceController extends AbstractController
      */
     public function index(ManagerRegistry $registry, Request $request, ResourceRepository $resourceRepository, RelUserManagementResourceRepository $relUserManagementResourceRepository, PaginatorInterface $paginator): Response
     {
+        $request->query->set('direction', 'desc');
         $resourceFav = [];
         if ($this->getUser()) {
             $resourceFav = $relUserManagementResourceRepository->getFavorite($this->getUser(), $registry);
         }
+        $resourceSide = [];
+        if ($this->getUser()) {
+            $resourceSide = $relUserManagementResourceRepository->getSide($this->getUser(), $registry);
+        }
+
         $search = $request->query->get('search');
 
         $filter = new FilterData();
         $formfilter = $this->createFormBuilder($filter, [
             'method' => 'GET',
             'csrf_protection' => false,
-            'block_prefix' => null, ])
+            'block_prefix' => null,])
             ->add('search', HiddenType::class, [
                 'data' => $search,
             ])
@@ -67,19 +73,19 @@ class ResourceController extends AbstractController
                 'required' => false,
                 'class' => \App\Entity\ResourceType::class,
                 'multiple' => true,
-                'attr' => ['class' => 'selectTags w-100'],
+                'expanded' => true,
             ])
             ->add('relation', EntityType::class, [
                 'required' => false,
                 'class' => RelationshipType::class,
+                'expanded' => true,
                 'multiple' => true,
-                'attr' => ['class' => 'selectTags w-100 '],
             ])
             ->add('age', EntityType::class, [
                 'required' => false,
                 'class' => AgeCategory::class,
                 'multiple' => true,
-                'attr' => ['class' => 'selectTags w-100 '],
+                'expanded' => true,
             ])
             ->getForm();
         $formfilter->handleRequest($request);
@@ -87,7 +93,8 @@ class ResourceController extends AbstractController
         $resources = $paginator->paginate(
             $resourceRepository->findPublicQuery($filter, $search, 'DESC'),
             $request->query->getInt('page', 1),
-            12
+            12,
+            ['defaultSortFieldName' => 'r.dateCreation', 'defaultSortDirection' => 'desc']
         );
 
         return $this->render(
@@ -96,6 +103,7 @@ class ResourceController extends AbstractController
                 'resources' => $resources,
                 'filter' => $formfilter->CreateView(),
                 'resourceFav' => $resourceFav,
+                'resourceSide' => $resourceSide,
             ]
         );
     }
@@ -119,6 +127,33 @@ class ResourceController extends AbstractController
         } else {
             $isfav = null;
         }
+
+        //Management Type mis de côte
+        $sideManagementType = $managementTypeRepository->findOneBy(['label' => 'Mis de côté']);
+
+        if ($this->getUser()) {
+            $isSide = $managementResourceRepository->findOneBy([
+                'user' => $this->getUser()->getId(),
+                'resource' => $id,
+                'managementType' => $sideManagementType->getId(),
+            ]);
+        } else {
+            $isSide = null;
+        }
+
+        //Management Type Exploité
+        $UtilityManagementType = $managementTypeRepository->findOneBy(['label' => 'Exploité']);
+
+        if ($this->getUser()) {
+            $isUtility = $managementResourceRepository->findOneBy([
+                'user' => $this->getUser()->getId(),
+                'resource' => $id,
+                'managementType' => $UtilityManagementType->getId(),
+            ]);
+        } else {
+            $isUtility = null;
+        }
+
         $comment = new Comment();
         $commentary = new Commentary();
 
@@ -129,13 +164,10 @@ class ResourceController extends AbstractController
             $commentary
                 ->setContent($request->request->get('commentary')['content'])
                 ->setResource($resource)
-                ->setUser($this->getUser())
-            ;
+                ->setUser($this->getUser());
             $entityManager->persist($commentary);
             $entityManager->flush();
         }
-
-        $entityManager->persist($commentary);
         if ($form->isSubmitted() && $form->isValid()) {
             if (null === $this->getUser()) {
                 return $this->redirectToRoute('login');
@@ -146,6 +178,7 @@ class ResourceController extends AbstractController
             $comment->setResource($resource);
             $comment->setUser($this->getUser());
 
+            //dump($comment);die;
             $entityManager->persist($comment);
             $entityManager->flush();
         }
@@ -155,6 +188,8 @@ class ResourceController extends AbstractController
             'current_menu' => 'resources',
             'form' => $this->createForm(CommentType::class, new Comment())->createView(),
             'isFavorite' => $isfav,
+            'isSide' => $isSide,
+            'isUtility' => $isUtility,
         ]);
     }
 
@@ -306,6 +341,75 @@ class ResourceController extends AbstractController
                 ->setManagementType($FavmanagementType)
                 ->setResource($resource);
             $entityManager->persist($newfav);
+            $entityManager->flush();
+        }
+
+        return $this->redirect($url);
+    }
+
+    /**
+     * @Route("/addRemoveSide", name="addRemoveSide")
+     */
+    public function addRemoveSide(Request $request, ResourceRepository $resourceRepository, RelUserManagementResourceRepository $managementResourceRepository, ManagementTypeRepository $managementTypeRepository, EntityManagerInterface $entityManager): Response
+    {
+        $url = $request->query->get('url');
+        $id = $request->query->get('id');
+        $resource = $resourceRepository->find($id);
+
+        //Management Type mise de côte
+        $SideManagementType = $managementTypeRepository->findOneBy(['label' => 'Mis de côté']);
+        $existingSide = $managementResourceRepository->findOneBy([
+            'user' => $this->getUser()->getId(),
+            'resource' => $id,
+            'managementType' => $SideManagementType->getId(),
+        ]);
+        if ($existingSide) {
+            $entityManager->remove($existingSide);
+            $entityManager->flush();
+        } else {
+            $newSide = new RelUserManagementResource();
+            $newSide->setUser($this->getUser())
+                ->setManagementType($SideManagementType)
+                ->setResource($resource);
+            $entityManager->persist($newSide);
+            $entityManager->flush();
+        }
+
+        return $this->redirect($url);
+    }
+
+    /**
+     * @Route("/addRemoveUtility", name="addRemoveUtility")
+     */
+    public function addRemoveUtility(Request $request, ResourceRepository $resourceRepository, RelUserManagementResourceRepository $managementResourceRepository, ManagementTypeRepository $managementTypeRepository, EntityManagerInterface $entityManager): Response
+    {
+        $url = $request->query->get('url');
+        $id = $request->query->get('id');
+        $details = $request->query->get('details');
+        $resource = $resourceRepository->find($id);
+
+        //Management Type mise de côte
+        $UtilityManagementType = $managementTypeRepository->findOneBy(['label' => 'Exploité']);
+        $existingUtility = $managementResourceRepository->findOneBy([
+            'user' => $this->getUser()->getId(),
+            'resource' => $id,
+            'managementType' => $UtilityManagementType->getId(),
+        ]);
+        if ($existingUtility) {
+            if ($existingUtility->getDetails() == $details) {
+                $entityManager->remove($existingUtility);
+                $entityManager->flush();
+            } else {
+                $existingUtility->setDetails($details);
+                $entityManager->flush();
+            }
+        } else {
+            $newSide = new RelUserManagementResource();
+            $newSide->setUser($this->getUser())
+                ->setManagementType($UtilityManagementType)
+                ->setResource($resource)
+                ->setDetails($details);
+            $entityManager->persist($newSide);
             $entityManager->flush();
         }
 

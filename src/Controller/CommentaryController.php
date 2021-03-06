@@ -84,16 +84,18 @@ class CommentaryController extends AbstractController
     }
 
     /**
-     * @Route("/commentary/{id}", name="commentary_delete", methods={"DELETE"})
+     * @Route("/commentary/{id}", name="commentary_delete")
      */
-    public function delete(Request $request, Commentary $commentary): Response
+    public function delete(Request $request, int $id, Commentary $commentary): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$commentary->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($commentary);
-            $entityManager->flush();
-        }
+        $entityManager = $this->getDoctrine()->getManager();
+        $comment = $entityManager->getRepository(Commentary::class)->find($id);
+        $entityManager->remove($commentary);
+        $entityManager->flush();
 
-        return $this->redirectToRoute('commentary_index');
+        return $this->redirectToRoute('comment.show', [
+            'slug' => $commentary->getResource()->getSlug(),
+            'id' => $commentary->getResource()->getId(),
+        ]);
     }
 }

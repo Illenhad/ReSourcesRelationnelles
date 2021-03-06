@@ -2,89 +2,145 @@
 
 {% block stylesheets %}
     <link rel="stylesheet" href="{{ asset('css/rating.css') }}" type="text/css">
-    <link rel="stylesheet" href="{{ asset('css/show.css') }}" type="text/css">
     <script src="{{ asset('js/jquery-3.5.1.min.js') }}"></script>
 {% endblock %}
 {% block body %}
-    <div class="resource-content">
-        <div class="resource-description">
-            <h1 class="resource-title">
-                {{ resource.title }}
-                {% if app.user %}
-                    <a class="actions btn btn-icon" href="{{ path('addRemoveFav', {id: resource.id,url:app.request.requestUri }) }}">
-                        {% if isFavorite %}
-                            <span class="icon-favourite-remove"></span>
-                        {% else %}
-                            <span class="icon-favourite-add"></span>
-                        {% endif %}
-                    </a>
+
+    {% if app.user %}
+    <a href="mailto:adresse@mail.fr?body=http://localhost{{ path('comment.show', {id: resource.id, slug: resource.slug}) }}"> Partager </a>
+    {% endif %}
+
+    <div class="container text-center" style="border: 1px solid silver;height:60px;">
+        {{ resource.title }}
+
+        <!--Gestion Favoris-->
+        {% if app.user %}
+            <a style="display:block;text-align: right"
+               href="{{ path('addRemoveFav', {id: resource.id,url:app.request.requestUri }) }}">
+                {% if isFavorite %}
+                    <img src="https://img.icons8.com/cotton/64/000000/like--v1.png" title="Retirer des Favoris"
+                         style="width: 30px;height: 30px;"/>
+                {% else %}
+                    <img src="https://img.icons8.com/plasticine/100/000000/like--v3.png" title="Ajouter aux favoris"
+                         style="width: 30px;height: 30px;"/>
                 {% endif %}
-            </h1>
-            <p class="author-date">posté par {{ resource.user.username }} le {{ resource.dateCreation|date("d/m/Y à H:i", "Europe/Paris") }}</p>
-            <hr>
-            <p class="resource-description-description">{{ resource.description }}</p>
-        </div>
+            </a>
+        {% endif %}
+
+        <!--Gestion mise de côté-->
+        {% if app.user %}
+            <a style="display:block;text-align: right"
+               href="{{ path('addRemoveSide', {id: resource.id,url:app.request.requestUri }) }}">
+                {% if isSide %}
+                    <img src="https://img.icons8.com/plasticine/100/000000/lock-2.png" title="Retirer "
+                         style="width: 30px;height: 30px;"/>
+                {% else %}
+                    <img src="https://img.icons8.com/carbon-copy/64/000000/lock-2.png" title="mettre de côte"
+                         style="width: 30px;height: 30px;"/>
+                {% endif %}
+            </a>
+        {% endif %}
+
+    </div>
+
+    <!--Gestion Exploité-->
+    {% if app.user %}
         <div>
-            <h2 class="resource-informations-title">Informations</h2>
-            <div class="resource-informations resource-informations-type" title="Type de la ressource"><span class="icone-resource icone-resource-type"></span><p>{{ resource.resourceType }}</p></div>
-            <div class="resource-informations resource-informations-age" title="Ages concernés par la ressource"><span class="icone-resource icone-resource-age"></span><p>{{ resource.ageCategory }}</p></div>
-            <div class="resource-informations resource-informations-relationship" title="Relations concernées par la ressource"><span class="icone-resource icone-resource-relationship"></span><p>{{ resource.relationShip.label }}</p></div>
+            Cette ressource vous est elle utile?
+            <a
+               href="{{ path('addRemoveUtility', {id: resource.id,url:app.request.requestUri,details:"non" }) }}">
+                {% if isUtility and isUtility.details=="non" %}
+                    <img src="https://img.icons8.com/material-rounded/24/000000/thumbs-down.png" title="Non! "/>
+                {% else %}
+                    <img src="https://img.icons8.com/material-outlined/24/000000/thumbs-down.png" title="Non!"/>
+                {% endif %}
+            </a>
+
+            <a
+               href="{{ path('addRemoveUtility', {id: resource.id,url:app.request.requestUri,details:"oui" }) }}">
+                {% if isUtility and isUtility.details=="oui" %}
+                    <img src="https://img.icons8.com/material-rounded/24/000000/thumb-up.png" title="Oui!"/>
+                {% else %}
+                    <img src="https://img.icons8.com/material-outlined/24/000000/thumb-up.png" title="Oui!"/>
+                {% endif %}
+            </a>
         </div>
-        <div class="resource-comments">
-            {% if resource.comments is defined and resource.comments is not empty%}
-            <h2 class="resource-comments-title">Commentaires</h2>
-                <hr>
-                {% for comment in resource.comments %}
-                    <div class="comment-content">
-                        {% if app.user== comment.user or is_granted('ROLE_MODERATEUR') %}
-                            <div class="actions comment-actions">
-                                {% if app.user== comment.user %}
-                                    <a href="{{ path('comment.edit', {id: comment.id} ) }}" class="btn btn-icon"><span class="icon-edit"></span></a>
-                                {% endif %}
-                                {% if app.user== comment.user or is_granted('ROLE_MODERATEUR') %}
-                                    <a href="{{ path('comment.delete', {id: comment.id}) }}" class="btn btn-icon"><span class="icon-delete"></span></a>
-                                {% endif %}
-                            </div>
-                        {% endif %}
-                        <div class="comment-title-content">
-                            <h4 class="comment-title">{{ comment.title }}</h4>
-                            <div class="rating-show">
-                                {% for i in  1..comment.valuation %}
-                                    <input type="radio" name="rating-show" value="{{ i }}" id="{{ i }}">
-                                    <label for="{{ i }}">☆</label>
-                                {% endfor %}
-                            </div>
-                        </div>
-                        <p class="author-date">De {{ comment.user.username }} le {{ comment.commentDate|date("d/m/Y à H:i", "Europe/Paris") }}</p>
-                        <p class="comment-text">{{ comment.content }}</p>
-                        <a href="{{ path('resources') }}" class="btn btn-primary">Répondre</a>
-                        <hr>
-                    </div>
-                {% endfor %}
+    {% endif %}
+    posté le {{ resource.dateCreation|date("d.m.Y à H:i", "Europe/Paris") }}
 
-                {% include "commentary/index.html.twig"  with {"commentaries": resource.commentaries, "resource": resource}%}
+    <div class="container" style="border: 1px solid silver;height:60px;">
+        {{ resource.description|raw }}
+    </div>
 
-                <button id="more-less-comment" class="btn btn-more-less" onclick="setShowComments()"></button>
-            {% endif %}
-            <div class="commentary">
-                <h3 class="commentary-title">Votre commentaire</h3>
-                {{ form_start(form) }}
-                {{ form_widget(form.title) }}
-                {{ form_widget(form.content) }}
-                {{ form_widget(form.valuation) }}
-                <div class="rating">
-                    {% for i in range(1, 5) %}
-                        <input type="radio" name="rating" value="{{ i }}" id="{{ i }}">
+    <div class="container">
+        <span class="card">
+            Informations
+            <span class="card-header ">  {{ resource.resourceType }} </span>
+            <span class="card-header">  {{ resource.ageCategory }} </span>
+            <span class="card-header">  {{ resource.relationShip.label }} </span>
+        </span>
+
+    </div>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <h4 class="text-center text-secondary">Evaluation </h4>
+
+    <div class="container">
+
+    {% for comment in resource.comments %}
+
+        <div class="card  mt-4 w-50 text-center mx-auto ">
+            <div class="card-header text-secondary  ">
+                De {{ comment.user.username }}
+            </div>
+            <div class="card-body ">
+                <h5 class="card-title">{{ comment.title }}</h5>
+                <p class="card-text">{{ comment.content }}</p>
+                <div class="rating-show">
+                    {% for i in  1..comment.valuation %}
+                        <input type="radio" name="rating-show" value="{{ i }}" id="{{ i }}">
                         <label for="{{ i }}">☆</label>
                     {% endfor %}
                 </div>
-                {{ form_widget(form.submit) }}
-                {{ form_end(form) }}
+
+                {% if app.user== comment.user %}
+
+                    <a href="{{ path('comment.edit', {id: comment.id} ) }}" class="btn btn-secondary">Modifier</a>
+
+                {% endif %}
+
+                {% if app.user== comment.user or is_granted('ROLE_MODERATEUR') %}
+                    <a href="{{ path('comment.delete', {id: comment.id}) }}" class=" btn btn-danger">Supprimer </a>
+                {% endif %}
+
+            </div>
+            <div class="card-footer text-muted">
+                posté le {{ comment.commentDate|date }}
             </div>
         </div>
-        <a class="btn btn-primary" href="{{ path('resources') }}">Retour</a>
-    </div>
-{% endblock %}
+
+    {% endfor %}
+    {% include "commentary/index.html.twig"  with {"commentaries": resource.commentaries, "resource": resource} %}
+    <div class="card  mt-4 w-50 text-center mx-auto ">
+        <h4 class="text-secondary"> Notez cette ressource </h4>
+
+        {{ form_start(form) }}
+        {{ form_widget(form.title) }}
+        {{ form_widget(form.content) }}
+        {{ form_widget(form.valuation) }}
+
+        <ul class="rating">
+            <li class="rating-item active " data-rate="1"></li>
+            <li class="rating-item" data-rate="2"></li>
+            <li class="rating-item" data-rate="3"></li>
+            <li class="rating-item" data-rate="4"></li>
+            <li class="rating-item" data-rate="5"></li>
+        </ul>
+
+
+        {{ form_widget(form.submit) }}
+        {{ form_end(form) }}
 
         {% block javascripts %}
             <script>
@@ -102,36 +158,11 @@
                         }
                     };
                 });
-
-                /*COMMENTS MANAGING*/
-                var showComments = true;
-                var allComments = document.getElementsByClassName('comment-content');
-                var button = document.querySelector('#more-less-comment');
-                comments = Array.prototype.slice.call(allComments);
-                if(comments.length > 5) {
-                    comments = comments.splice(5, comments.length - 5);
-                    setShowComments();
-                } else {
-                    button.style.display = 'none';
-                }
-                console.log('init, show = ' + showComments);
-                function setShowComments() {
-                    showComments = !showComments;
-                    if (showComments) {
-                        comments.forEach(showHideComments);
-                        button.innerHTML = '<span class="icon-upper-arrow"></span> Voir moins de commentaire';
-                    } else {
-                        comments.forEach(showHideComments);
-                        button.innerHTML = '<span class="icon-lower-arrow"></span> Voir plus de commentaire (' + comments.length + ')';
-                    }
-                }
-                function showHideComments(item) {
-                    item.style.display = showComments ? 'block' : 'none';
-                }
             </script>
 
         {% endblock %}
     </div>
     <div class="text-center mt-4 mb-4">
-    <a class="btn btn-primary" href="{{ path('resources') }}">Retour</a>
+        <a class="btn btn-primary" href="{{ path('resources') }}">Retour</a>
+    </div>
 {% endblock %}

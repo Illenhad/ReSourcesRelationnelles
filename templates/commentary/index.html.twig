@@ -1,30 +1,72 @@
-<h1>Commentary index</h1>
+<h1>Liste des commentaires</h1>
 
 <table class="table">
     <thead>
     <tr>
-        <th>Id</th>
-        <th>Content</th>
-        <th>CommentDate</th>
+        <th>Pseudo</th>
+        <th>Commentaire</th>
+        <th>Date</th>
         <th>actions</th>
     </tr>
     </thead>
     <tbody>
     {% for commentary in commentaries %}
         <tr>
-            <td>{{ commentary.id }}</td>
+            <td>{{ commentary.user }}</td>
             <td>{{ commentary.content }}</td>
             <td>{{ commentary.commentDate ? commentary.commentDate|date('Y-m-d H:i:s') : '' }}</td>
+            {% if app.user == commentary.user %}
+                <td>
+
+                    <a href="{{ path('commentary_edit', {'id': commentary.id}) }}" class=" btn btn-primary">éditer</a>
+                </td>
+            {% endif %}
+
             <td>
-                <a href="{{ path('commentary_edit', {'id': commentary.id}) }}">edit</a>
+                {% if app.user== commentary.user or is_granted('ROLE_MODERATEUR') %}
+                    <a href="{{ path('commentary_delete', {id: commentary.id}) }}"
+                       class=" btn btn-danger">Supprimer </a>
+                {% endif %}
             </td>
+
+
+            {% if app.user != commentary.user  and app.user %}
+                <td>
+                    <a href="{{ path('answer_new', {'commentary': commentary.id}) }}"
+                       class=" btn btn-primary">répondre</a>
+                </td>
+            {% endif %}
+
+        </tr>
+        <tr>
+            <td>
+                <h3> les réponses </h3>
+                {% for answer in commentary.answers %}
+
+
+                    {{ answer. user }} : {{ answer.content }} <br>
+
+                    {% if app.user == answer.user %}
+                        <a href="{{ path('answer_edit', {'id': answer.id}) }}" class=" btn btn-primary">éditer</a>
+                    {% endif %}
+
+                    {% if app.user== answer.user or is_granted('ROLE_MODERATEUR') %}
+                        <a href="{{ path('answer_delete', {id: answer.id}) }}"
+                           class=" btn btn-danger">Supprimer </a>
+                    {% endif %}
+                {% endfor %}
+            </td>
+
         </tr>
     {% else %}
         <tr>
-            <td colspan="4">no records found</td>
+            <td colspan="4">Il n'y a pas encore de commentaire</td>
         </tr>
     {% endfor %}
     </tbody>
 </table>
 
-{{ render(url('commentary_new', { 'resource':resource.id })) }}
+{% if app.user %}
+    {{ render(url('commentary_new', { 'resource':resource.id })) }}
+{% endif %}
+

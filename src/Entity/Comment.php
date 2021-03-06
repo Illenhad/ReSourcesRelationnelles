@@ -69,12 +69,6 @@ class Comment
      */
     private $commentModerations;
 
-    /**
-     * @OneToMany(targetEntity="App\Entity\Answer", mappedBy="comment")
-     *
-     * @var Collection
-     */
-    private $answers;
 
     /**
      * @ORM\Column(type="datetime")
@@ -174,17 +168,7 @@ class Comment
         return $this;
     }
 
-    public function getAnswers(): Collection
-    {
-        return $this->answers;
-    }
 
-    public function setAnswers(Collection $answers): Comment
-    {
-        $this->answers = $answers;
-
-        return $this;
-    }
 
     public function getCommentDate(): DateTimeInterface
     {

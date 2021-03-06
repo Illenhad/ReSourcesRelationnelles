@@ -3,6 +3,7 @@
 namespace App\DataFixtures;
 
 use App\Entity\Answer;
+use App\Entity\Commentary;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
@@ -20,7 +21,7 @@ class AnswerFixture extends Fixture implements DependentFixtureInterface
         for ($i = 1; $i <= self::$numberOfAnswers; ++$i) {
             $answer = new Answer();
             $answer
-                ->setComment($this->getReference('comment'.$faker->numberBetween(1, CommentFixture::$numberOfComments)))
+                ->setCommentary($this->getReference('commentary'.$faker->numberBetween(1, CommentaryFixture::$numberOfCommentaries)))
                 ->setContent($faker->sentences(1, true))
                 ->setUser($this->getReference('user'.$faker->numberBetween(1, UserFixture::$numberOfUsers)))
                 ->setAnswerDate($faker->dateTimeBetween('-2 years', 'now'));
@@ -35,7 +36,7 @@ class AnswerFixture extends Fixture implements DependentFixtureInterface
     {
         return [
             UserFixture::class,
-            CommentFixture::class,
+            CommentaryFixture::class,
         ];
     }
 }
