@@ -1,26 +1,43 @@
-#filter {
+.index-content .filters {
+    position: sticky;
+    top: 15px;
+    width: auto;
+    height: fit-content;
+}
+.index-content .filters .sort_items:hover {
+    background-color: #cfcfcf;
     cursor: pointer;
-    position: -webkit-sticky  ;
-    position:sticky;
-    top: 150px;
-    float:left;
-    margin: 20px;
+}
+.index-content .filters .sort_items a {
+    margin: 0 5px;
+    text-decoration: none;
+    color: var(--charte-dark);
+}
+
+#filter {
+    /*cursor: pointer;*/
+    /*position: -webkit-sticky  ;*/
+    /*position:sticky;*/
+    /*top: 150px;*/
+    /*float:left;*/
+    /*margin: 20px;*/
 }
 .filter_menu{
     background-color: #f7f7f7;
-    border-radius: 10px;
+    border-radius: 5px;
     border: 1px solid #dfdfdf;
     box-sizing: border-box;
     font-size: 16px;
     margin-bottom: 10px}
 
 .filter_header{
-    padding: 13px 16px;
+    padding: 5px 8px;
     align-items: center;
     display: flex;
     justify-content: space-between;
     position: relative;
     width: 100%;
+    cursor: pointer;
 }
 
 .filter_title label{
@@ -50,6 +67,7 @@
     list-style: none;
     overflow: auto;
     padding: 0;
+    margin: 0;
 }
 
 .filter_items{
@@ -57,6 +75,7 @@
     align-items: center;
     font-size: 14px !important;
     font-weight: 300;
+    cursor: pointer;
 }
 
 .filter_items:hover{

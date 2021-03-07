@@ -66,6 +66,19 @@ phpserve.bat
 /.php_cs.cache
 ###< friendsofphp/php-cs-fixer ###
 
+###> symfony/webpack-encore-pack ###
+/node_modules/
+/public/build/
+npm-debug.log
+yarn-error.log
+###< symfony/webpack-encore-pack ###
+
+#Fichier import de r
+/public/file
+###> liip/imagine-bundle ###
+/public/media/cache/
+###< liip/imagine-bundle ###
+
 #Fichier import de r
 /public/file
 ###> liip/imagine-bundle ###

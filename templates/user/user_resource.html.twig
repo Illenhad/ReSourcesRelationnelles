@@ -27,7 +27,8 @@
                     {{ message }}
                 </div>
             {% endfor %}
-            <table>
+            {% if resources %}
+            <table class="">
                 <thead>
                     <th>Titre</th>
                     <th>Type</th>
@@ -35,7 +36,6 @@
                     <th>Catégorie d'âge</th>
                 </thead>
                 <tbody>
-                    {% if resources %}
                         {% for resource in resources %}
                             <tr class="align-middle">
                                 <td><a href="{{ path('comment.show', {id: resource.id, slug: resource.slug}) }}"><span>{{ resource.title }}</span></a></td>
@@ -44,13 +44,16 @@
                                 <td><a href="{{ path('comment.show', {id: resource.id, slug: resource.slug}) }}"><span>{{ resource.ageCategory }}</span></a></td>
                             </tr>
                         {% endfor %}
-                    {% else %}
-                        <tr>
-                            <td colspan="7" class="text-center">Pas de ressources trouvées</td>
-                        </tr>
-                    {% endif %}
                 </tbody>
             </table>
+            {% else %}
+                <tr>
+                    <td colspan="7" class="text-center">Pas de ressources trouvées</td>
+                </tr>
+            {% endif %}
+            {% if resourceGestion == 'created' %}
+                <a class="btn btn-primary" href="{{ path('add_resource') }}" class="btn btn-perso col-2">Créer une nouvelle ressource</a>
+            {% endif %}
         </div>
 
         {% include'user/dashboard_menue.html.twig' %}

@@ -3,3 +3,58 @@
     font-size: small;
 }
 
+.resource-card {
+    position: relative;
+    box-shadow: inset 0 0 10px var(--charte-dark);
+    border-radius: 5px;
+    overflow: hidden;
+    width: 300px;
+    height: 300px;
+    margin: 10px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    text-decoration: none;
+}
+.resource-card:hover {
+    box-shadow: 0 0 10px var(--charte-dark);
+}
+
+.resource-card p {
+    color: white;
+    margin: 0;
+}
+
+.resource-card .resource-hidden {
+    background-color: rgba(0,0,0,0.9);
+    height: 0;
+    overflow: hidden;
+}
+.resource-card .resource-hidden p {
+    font-size: 1.4rem;
+    width: max-content;
+    margin: auto;
+    margin-top: 25%;
+}
+.resource-card:hover .resource-hidden {
+    height: 100%;
+}
+
+.resource-meta {
+    position: absolute;
+    bottom: 0;
+    background-image: linear-gradient(to top, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.9) 80%, rgba(0, 0, 0, 0) 120%);
+    width: 100%;
+    padding:  7px 12px;
+}
+.resource-card .resource-meta .resource-title {
+    margin-bottom: 10px;
+    font-weight: bold;
+    font-size: 1.1rem;
+    max-height: 52px;
+    overflow: hidden;
+}
+.resource-types {
+}
+.resource-types p {
+}

@@ -20,132 +20,157 @@
 
     <link href="{{ asset('css/sort.css') }}" rel="stylesheet"/>
     <link href="{{ asset('css/filter.css') }}" rel="stylesheet"/>
+    <link href="{{ asset('css/index.css') }}" rel="stylesheet"/>
 {% endblock %}
 
 {% block body %}
 
-    <div id="filter">
-        <h2>Filtre</h2>
-        {{ form_start(filter) }}
-        <div class="filter_menu  ">
-            <div class="filter_header dropdown">
-                <label>Type de Ressources</label>
-                <div class="filter_fa_down">
-                    <i class="fa_down">
-                    </i>
+    <div class="index-content">
+        <div class="filters">
+            <div class="sort">
+                <div id="sort">
+                    <h2>Trier</h2>
+                    <div class="filter_menu ">
+                        <div class="filter_header dropdown">
+                            <label>Trier par</label>
+                            <div class="filter_fa_down">
+                                <i class="fa_down"></i>
+                            </div>
+                        </div>
+                        <div class="filter_items_list">
+                            <ul>
+                                {% set sortTitle = [
+                                    'Ordre Alphabetique A->Z',
+                                    'Ordre Alphabetique Z->A',
+                                    'Les plus récents',
+                                    'Les plus commentées',
+                                    'Les meilleurs notes'
+                                ]
+                                %}
+                                {% set sortTarget = [
+                                    'r.title',
+                                    'r.title',
+                                    'r.dateCreation',
+                                    'nb_coms',
+                                    'note'
+                                ]
+                                %}
+                                {% set sortDirection = [
+                                    'asc',
+                                    'desc',
+                                    'desc',
+                                    'desc',
+                                    'desc'
+                                ]
+                                %}
+                                {% for i in range(0, sortTitle|length - 1) %}
+                                    <li class="sort_items {% if resources.isSorted(sortTarget[i]) and resources.direction == sortDirection[i] %}sorted{% endif %}">
+                                        {{ knp_pagination_sortable(resources, sortTitle[i], sortTarget[i],{}, {'direction': sortDirection[i]}) }}
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="filter_items_list">
-                <ul>
-                    {% for item in filter.type %}
+            <hr>
+            <div class="filter">
+                <div id="filter">
+                    <h2>Filtrer</h2>
+                    {{ form_start(filter) }}
 
-                        <li class="filter_items">
-                            {{ form_widget(item) }} {{ form_label(item) }}
-                        </li>
-                    {% endfor %}
-                </ul>
-            </div>
-        </div>
-        <div class="filter_menu ">
-            <div class="filter_header dropdown">
-                <label>Type de relation</label>
-                <div class="filter_fa_down">
-                    <i class="fa_down">
-                    </i>
+                    <div class="filter_menu  ">
+                        <div class="filter_header dropdown">
+                            <label>Type de Ressources</label>
+                            <div class="filter_fa_down">
+                                <i class="fa_down"></i>
+                            </div>
+                        </div>
+                        <div class="filter_items_list">
+                            <ul>
+                                {% for item in filter.type %}
+                                    <li class="filter_items">
+                                        {{ form_widget(item) }} {{ form_label(item) }}
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="filter_menu ">
+                        <div class="filter_header dropdown">
+                            <label>Type de relation</label>
+                            <div class="filter_fa_down">
+                                <i class="fa_down">
+                                </i>
+                            </div>
+                        </div>
+                        <div class="filter_items_list">
+                            <ul>
+                                {% for item in filter.relation %}
+                                    <li class="filter_items">
+                                        {{ form_widget(item) }} {{ form_label(item) }}
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="filter_menu">
+                        <div class="filter_header dropdown">
+                            <label>Catégorie d'âge</label>
+                            <div class="filter_fa_down">
+                                <i class="fa_down">
+                                </i>
+                            </div>
+                        </div>
+                        <div class="filter_items_list">
+                            <ul>
+                                {% for item in filter.age  %}
+                                    <li class="filter_items">
+                                        {{ form_widget(item) }} {{ form_label(item) }}
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="filter_button">
+                        <button class="btn btn-primary ">Filtrer</button>
+                    </div>
+                    {{ form_end(filter) }}
                 </div>
             </div>
-            <div class="filter_items_list">
-                <ul>
-                    {% for item in filter.relation %}
-                        <li class="filter_items">
-                            {{ form_widget(item) }} {{ form_label(item) }}
-                        </li>
-                    {% endfor %}
-                </ul>
-            </div>
         </div>
-        <div class="filter_menu">
-            <div class="filter_header dropdown">
-                <label>Catégorie d'âge</label>
-                <div class="filter_fa_down">
-                    <i class="fa_down">
-                    </i>
-                </div>
-            </div>
-            <div class="filter_items_list">
-                <ul>
-                    {% for item in filter.age  %}
-                        <li class="filter_items">
-                            {{ form_widget(item) }} {{ form_label(item) }}
-                        </li>
-                    {% endfor %}
-                </ul>
-            </div>
+
+        <div class="cards-content">
+            {% for values in resources %}
+                {% set resource = values.resource %}
+                {% include'resources/_resource.html.twig' %}
+            {% endfor %}
         </div>
-        <div class="filter_button">
-            <button class="btn btn-primary ">Filtrer</button>
-        </div>
-        {{ form_end(filter) }}
     </div>
-
-    <div class="container mt-4">
-        <h3 style="color:dodgerblue"> Toutes les ressources</h3>
-        <div id="sort">
-            <div class="sort_label dropdown">Trier par:
-                <div class="sort_fa_down">
-                    <i class="fa_down">
-                    </i>
-                </div>
-            </div>
-            <div id="sort_list">
-                <ul>
-                    <li class="sort_items
-                    {% if resources.isSorted('r.title') and resources.direction == 'asc' %}sorted{% endif %}">
-                        {{ knp_pagination_sortable(resources, 'Ordre Alphabetique A->Z', 'r.title',{}, {'direction': 'asc'}) }}
-                    </li>
-                    <li class="sort_items
-                    {% if resources.isSorted('r.title') and resources.direction == 'desc' %}sorted{% endif %}">
-                        {{ knp_pagination_sortable(resources, 'Ordre Alphabetique Z->A', 'r.title',{}, {'direction': 'desc'}) }}
-                    </li>
-                    <li class="sort_items {% if resources.isSorted('r.dateCreation') %}sorted{% endif %}">
-                        {{ knp_pagination_sortable(resources, 'Les plus récentes', 'r.dateCreation',{}, {'direction': 'desc'}) }}
-                    </li>
-                    <li class="sort_items {% if resources.isSorted('nb_coms') %}sorted{% endif %}">
-                        {{ knp_pagination_sortable(resources, 'Les plus commentées', 'nb_coms',{}, {'direction': 'desc'}) }}
-                    </li>
-                    <li class="sort_items {% if resources.isSorted('note') %}sorted{% endif %}">
-                        {{ knp_pagination_sortable(resources, 'Les meilleurs notes', 'note',{}, {'direction': 'desc'})}}
-                    </li>
-                </ul>
-            </div>
-        </div>
-        <div class="row">
-        {% for values in resources %}
-            {% set resource = values.resource %}
-        <div class="col-md-4">
-             {% include'resources/_resource.html.twig' %}
-        </div>
-        {% endfor %}
-    </div>
-</div>
-
 <div class="pagination text-center mt-4">
     {{ knp_pagination_render(resources) }}
 </div>
 {% endblock %}
 
-
 {% block javascripts %}
 
     <script>
+        /*SET RESOURCE CARD BACKGROUND IMAGE*/
+        var allResourceCards = document.querySelectorAll('.resource-card');
+        allResourceCards.forEach(setBackgroundImage);
+        function setBackgroundImage(item) {
+            item.style.backgroundImage="url(" + item.getAttribute('data-bg') + ")";
+        }
 
         var collapseElementList = [].slice.call(document.querySelectorAll('.collapse'))
         var collapseList = collapseElementList.map(function (collapseEl) {
         return new bootstrap.Collapse(collapseEl)
         })
-        $('#myCollapsible').collapse({
-            toggle: true
-        });
+        // $('#myCollapsible').collapse({
+        //     toggle: true
+        // });
     </script>
     <script>
     function toggleClass(elem,className){
