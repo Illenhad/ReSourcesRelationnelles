@@ -1,9 +1,6 @@
 {% extends 'base.html.twig' %}
 {% block title 'toutes nos ressources' %}
 
-
-
-
 {% block stylesheets %}
     <style>
         .btn-primary {
@@ -73,67 +70,39 @@
                     </div>
                 </div>
             </div>
+
             <hr>
+
             <div class="filter">
                 <div id="filter">
                     <h2>Filtrer</h2>
                     {{ form_start(filter) }}
 
-                    <div class="filter_menu  ">
-                        <div class="filter_header dropdown">
-                            <label>Type de Ressources</label>
-                            <div class="filter_fa_down">
-                                <i class="fa_down"></i>
+                    {% set filters = {
+                        'Type de Ressources': filter.type,
+                        'Type de relation': filter.relation,
+                        'gorie d\'âge': filter.age
+                    } %}
+                    {% for key, filter in filters %}
+                        <div class="filter_menu  ">
+                            <div class="filter_header dropdown">
+                                <label>{{ key }}</label>
+                                <div class="filter_fa_down">
+                                    <i class="fa_down"></i>
+                                </div>
+                            </div>
+                            <div class="filter_items_list">
+                                <ul>
+                                    {% for item in filter %}
+                                        <li class="filter_items">
+                                            {{ form_widget(item) }} {{ form_label(item) }}
+                                        </li>
+                                    {% endfor %}
+                                </ul>
                             </div>
                         </div>
-                        <div class="filter_items_list">
-                            <ul>
-                                {% for item in filter.type %}
-                                    <li class="filter_items">
-                                        {{ form_widget(item) }} {{ form_label(item) }}
-                                    </li>
-                                {% endfor %}
-                            </ul>
-                        </div>
-                    </div>
+                    {% endfor %}
 
-                    <div class="filter_menu ">
-                        <div class="filter_header dropdown">
-                            <label>Type de relation</label>
-                            <div class="filter_fa_down">
-                                <i class="fa_down">
-                                </i>
-                            </div>
-                        </div>
-                        <div class="filter_items_list">
-                            <ul>
-                                {% for item in filter.relation %}
-                                    <li class="filter_items">
-                                        {{ form_widget(item) }} {{ form_label(item) }}
-                                    </li>
-                                {% endfor %}
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="filter_menu">
-                        <div class="filter_header dropdown">
-                            <label>Catégorie d'âge</label>
-                            <div class="filter_fa_down">
-                                <i class="fa_down">
-                                </i>
-                            </div>
-                        </div>
-                        <div class="filter_items_list">
-                            <ul>
-                                {% for item in filter.age  %}
-                                    <li class="filter_items">
-                                        {{ form_widget(item) }} {{ form_label(item) }}
-                                    </li>
-                                {% endfor %}
-                            </ul>
-                        </div>
-                    </div>
                     <div class="filter_button">
                         <button class="btn btn-primary ">Filtrer</button>
                     </div>

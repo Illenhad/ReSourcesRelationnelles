@@ -38,10 +38,15 @@
                 <tbody>
                         {% for resource in resources %}
                             <tr class="align-middle">
-                                <td><a href="{{ path('comment.show', {id: resource.id, slug: resource.slug}) }}"><span>{{ resource.title }}</span></a></td>
-                                <td><a href="{{ path('comment.show', {id: resource.id, slug: resource.slug}) }}"><span>{{ resource.resourceType }}</span></a></td>
-                                <td><a href="{{ path('comment.show', {id: resource.id, slug: resource.slug}) }}"><span>{{ resource.category }}</span></a></td>
-                                <td><a href="{{ path('comment.show', {id: resource.id, slug: resource.slug}) }}"><span>{{ resource.ageCategory }}</span></a></td>
+                                {% set columns = {
+                                    'Titre': resource.title,
+                                    'Type': resource.resourceType,
+                                    'Catégorie': resource.category,
+                                    'Catégorie d\'âge': resource.ageCategory
+                                } %}
+                                {% for column in columns %}
+                                    <td><a href="{{ path('comment.show', {id: resource.id, slug: resource.slug}) }}"><span>{{ column }}</span></a></td>
+                                {% endfor %}
                             </tr>
                         {% endfor %}
                 </tbody>
