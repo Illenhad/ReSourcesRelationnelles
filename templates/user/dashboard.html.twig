@@ -13,30 +13,44 @@
             <form>
                 <h1>Mon profile</h1>
                 <hr>
-                <div>
-                    <label for="lastname" class="form-input-label">Nom</label>
-                    <input type="text" name="lastname" value="{{ app.user.lastname }}" class="charte-input" disabled>
-                </div>
-                <div>
-                    <label for="firstname" class="form-input-label">Prénom</label>
-                    <input type="text" name="firstname" value="{{ app.user.firstname }}" class="charte-input" disabled>
-                </div>
-                <div>
-                    <label for="username" class="form-input-label">Pseudonyme</label>
-                    <input type="text" name="username" value="{{ app.user.username }}" class="charte-input" disabled>
-                </div>
-                <div>
-                    <label for="email" class="form-input-label">Email</label>
-                    <input type="text" name="email" value="{{ app.user.email }}" class="charte-input" disabled>
-                </div>
-                <div>
-                    <label for="department" class="form-input-label">Département</label>
-                    <input type="text" name="department" value="{{ app.user.department }}" class="charte-input" disabled>
-                </div>
-                <div>
-                    <label for="agecategory" class="form-input-label">Catégorie d'âge</label>
-                    <input type="text" name="agecategory" value="{{ app.user.agecategory }}" class="charte-input" disabled>
-                </div>
+                {% set profileInfos = [
+                    {
+                        name: 'lastname',
+                        text: 'Nom',
+                        field: app.user.lastname
+                    },
+                    {
+                        name: 'firstname',
+                        text: 'Prénom',
+                        field: app.user.firstname
+                    },
+                    {
+                        name: 'username',
+                        text: 'Pseudonyme',
+                        field: app.user.username
+                    },
+                    {
+                        name: 'email',
+                        text: 'Email',
+                        field: app.user.email
+                    },
+                    {
+                        name: 'department',
+                        text: 'Département',
+                        field: app.user.department
+                    },
+                    {
+                        name: 'agecategory',
+                        text: 'Catégorie d\'âge',
+                        field: app.user.agecategory
+                    }
+                ]%}
+                {% for profileInfo in profileInfos %}
+                    <div>
+                        <label for="{{ profileInfo['name'] }}" class="form-input-label">{{ profileInfo['text'] }}</label>
+                        <input id="{{ profileInfo['name'] }}" type="text" name="{{ profileInfo['name'] }}" value="{{ profileInfo['field'] }}" class="charte-input" disabled>
+                    </div>
+                {% endfor %}
             </form>
 
             <div id="user-action">

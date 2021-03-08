@@ -3,48 +3,57 @@
         <span class="icone-stat icone-user"></span>
         <p>Mon profile</p>
     </a>
-    {% set rGestions = [
-        'favoris',
-        'putAside',
-        'exploited',
-        'shared',
-        'consulted',
-        'created'
-    ]
-    %}
-    {% set numbers = [
-        favoris,
-        putAside,
-        exploited,
-        shared,
-        consulted,
-        created
-    ]
-    %}
-    {% set colors = [
-        'pink',
-        'turquoise',
-        'yellow',
-        'purple',
-        'blue',
-        'green'
-    ]
-    %}
-    {% set titles = [
-        'Favories',
-        'Mises de côté',
-        'Exploitées',
-        'Partagées',
-        'Consultées',
-        'Crées'
-    ]
-    %}
-    {% for i in range(0, rGestions|length - 1) %}
-        <a href="{{ path('user_resource', {resourceGestion: rGestions[i]}) }}" class="stat-card stat-card-{{ colors[i] }} {{ (resourceGestion is defined and resourceGestion == rGestions[i]) ? 'active' : '' }}">
-            <span class="icone-stat icone-heart"></span>
-            <p>{{ titles[i] }} {{ numbers[i] }}</p>
+    {% set statsMenu = [
+        {
+            rGestion : 'favoris',
+            number : favoris,
+            color : 'pink',
+            title : 'Favories',
+            icon : 'heart'
+        },
+        {
+            rGestion : 'putAside',
+            number : putAside,
+            color : 'turquoise',
+            title : 'Mises de côté',
+            icon : 'folder'
+        },
+        {
+            rGestion : 'exploited',
+            number : exploited,
+            color : 'yellow',
+            title : 'Exploitées',
+            icon : 'checked'
+        },
+        {
+            rGestion : 'shared',
+            number : shared,
+            color : 'purple',
+            title : 'Partagées',
+            icon : 'share'
+        },
+        {
+            rGestion : 'consulted',
+            number : consulted,
+            color : 'blue',
+            title : 'Consultées',
+            icon : 'eye'
+        },
+        {
+            rGestion : 'created',
+            number : created,
+            color : 'green',
+            title : 'Crées',
+            icon : 'add'
+        }
+    ]%}
+    {% for statMenu in statsMenu %}
+        <a href="{{ path('user_resource', {resourceGestion: statMenu['rGestion']}) }}" class="stat-card stat-card-{{ statMenu['color'] }} {{ (resourceGestion is defined and resourceGestion == statMenu['rGestion']) ? 'active' : '' }}">
+            <span class="icone-stat icone-{{ statMenu['icon'] }}"></span>
+            <p>{{ statMenu['title'] }} {{ statMenu['number'] }}</p>
         </a>
     {% endfor %}
+
     <div class="stat-card stat-card-red">
         <span class="icone-stat icone-chat"></span>
         <p>Commentées {{ commented }}</p>

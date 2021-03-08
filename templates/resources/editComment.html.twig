@@ -10,11 +10,9 @@
         {{ form_start(form) }}
             <h2>Editer l'évaluation</h2>
             <ul class="rating">
-                <li class="rating-item" data-rate="1"></li>
-                <li class="rating-item" data-rate="2"></li>
-                <li class="rating-item" data-rate="3"></li>
-                <li class="rating-item" data-rate="4"></li>
-                <li class="rating-item" data-rate="5"></li>
+                {% for i in range(0,4) %}
+                    <li class="rating-item" data-rate="{{ i }}"></li>
+                {% endfor %}
             </ul>
             {{ form_widget(form.title) }}
             {{ form_widget(form.content) }}

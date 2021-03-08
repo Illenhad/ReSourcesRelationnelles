@@ -36,33 +36,37 @@
                         </div>
                         <div class="filter_items_list">
                             <ul>
-                                {% set sortTitle = [
-                                    'Ordre Alphabetique A->Z',
-                                    'Ordre Alphabetique Z->A',
-                                    'Les plus récents',
-                                    'Les plus commentées',
-                                    'Les meilleurs notes'
+                                {% set sorts = [
+                                    {
+                                        title : 'Ordre Alphabetique A->Z',
+                                        target : 'r.title',
+                                        direction : 'asc'
+                                    },
+                                    {
+                                        title : 'Ordre Alphabetique Z->A',
+                                        target : 'r.title',
+                                        direction : 'desc'
+                                    },
+                                    {
+                                        title : 'Les plus récents',
+                                        target : 'r.dateCreation',
+                                        direction : 'desc'
+                                    },
+                                    {
+                                        title : 'Les plus commentées',
+                                        target : 'nb_coms',
+                                        direction : 'desc'
+                                    },
+                                    {
+                                        title : 'Les meilleurs notes',
+                                        target : 'note',
+                                        direction : 'desc'
+                                    }
                                 ]
                                 %}
-                                {% set sortTarget = [
-                                    'r.title',
-                                    'r.title',
-                                    'r.dateCreation',
-                                    'nb_coms',
-                                    'note'
-                                ]
-                                %}
-                                {% set sortDirection = [
-                                    'asc',
-                                    'desc',
-                                    'desc',
-                                    'desc',
-                                    'desc'
-                                ]
-                                %}
-                                {% for i in range(0, sortTitle|length - 1) %}
-                                    <li class="sort_items {% if resources.isSorted(sortTarget[i]) and resources.direction == sortDirection[i] %}sorted{% endif %}">
-                                        {{ knp_pagination_sortable(resources, sortTitle[i], sortTarget[i],{}, {'direction': sortDirection[i]}) }}
+                                {% for sort in sorts %}
+                                    <li class="sort_items {% if resources.isSorted(sort['target']) and resources.direction == sort['direction'] %}sorted{% endif %}">
+                                        {{ knp_pagination_sortable(resources, sort['title'], sort['target'],{}, {'direction': sort['direction']}) }}
                                     </li>
                                 {% endfor %}
                             </ul>
@@ -81,7 +85,7 @@
                     {% set filters = {
                         'Type de Ressources': filter.type,
                         'Type de relation': filter.relation,
-                        'gorie d\'âge': filter.age
+                        'Catégorie d\'âge': filter.age
                     } %}
                     {% for key, filter in filters %}
                         <div class="filter_menu  ">
