@@ -20,3 +20,7 @@
     padding-top: 5%;
     padding-bottom: 5%;
 }
+.bg-danger{background-color: #ff5715 !important}
+.bg-primary{background-color: #49aafa !important}
+.bg-success{background-color: #10c152  !important}
+a.bg-danger:hover{background-color: #d9440a  !important}
