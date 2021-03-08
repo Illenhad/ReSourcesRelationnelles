@@ -13,7 +13,7 @@
 
         <div class="card-img">
         {% if resource.imageName %}
-            <img class="imgRes" src="{{ vich_uploader_asset(resource,'imageFile') }}"  style="width: 300px" alt=""/>
+            <img class="imgRes" src="{{ vich_uploader_asset(resource,'imageFile') }}" alt=""/>
         {% else %}
             {% if resource.relationShip.label == 'Soi' %}
                 <img class="imgRes" src="{{ asset('image/1.jpg') }}" alt=""/>
