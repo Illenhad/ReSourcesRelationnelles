@@ -21,12 +21,12 @@
 }
 
 .resource-card p {
-    color: white;
+    color: black;
     margin: 0;
 }
 
 .resource-card .resource-hidden {
-    background-color: rgba(0,0,0,0.9);
+    background-color: rgba(255,255,255,0.9);
     height: 0;
     overflow: hidden;
 }
@@ -43,7 +43,7 @@
 .resource-meta {
     position: absolute;
     bottom: 0;
-    background-image: linear-gradient(to top, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.9) 80%, rgba(0, 0, 0, 0) 120%);
+    background-image: linear-gradient(to top, rgba(255,255,255, 0.9), rgba(255,255,255, 0.9) 80%, rgba(255,255,255, 0) 120%);
     width: 100%;
     padding:  7px 12px;
 }
