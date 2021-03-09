@@ -35,9 +35,7 @@ class ResourceCrudController extends AbstractCrudController
         return [
             IdField::new('id')->hideOnForm(),
             TextField::new('title'),
-            TextEditorField::new('link'),
-            TextEditorField::new('imageFile')->setFormType(VichImageType::class)->setTranslationParameters(['form.label.delete'=>'Supprimer/modifier']),
-            TextareaField::new('contentFile')->setFormType(VichFileType::class)->setTranslationParameters(['form.label.delete'=>'Supprimer/modifier']),
+            TextEditorField::new('imageFile')->setFormType(VichImageType::class)->setTranslationParameters(['form.label.delete'=>'Supprimer/modifier'])->hideOnIndex(),
             TextEditorField::new('description'),
             BooleanField::new('public'),
             DateField::new('dateCreation')->setFormat('dd/MM/yyyy H:mm')->hideOnForm(),
