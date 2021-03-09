@@ -29,6 +29,26 @@
     margin: 0;
 }
 
+.resource-types {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    color: var(--charte-dark);
+}
+.resource-types .fa-icon {
+    padding: 10px;
+    background-color: rgba(255,255,255,0.9);
+}
+.resource-types .fa-icon:first-of-type {
+    border-radius: 0 0 10px 0;
+}
+.resource-types .fa-icon:last-of-type {
+    border-radius: 0 0 0 10px;
+}
+
 .resource-card .resource-hidden {
     background-color: rgba(255,255,255,0.9);
     height: 0;
@@ -38,7 +58,7 @@
     font-size: 1.4rem;
     width: max-content;
     margin: auto;
-    margin-top: 25%;
+    margin-top: 33%;
 }
 .resource-card:hover .resource-hidden {
     height: 100%;
@@ -52,13 +72,8 @@
     padding:  7px 12px;
 }
 .resource-card .resource-meta .resource-title {
-    margin-bottom: 10px;
     font-weight: bold;
     font-size: 1.1rem;
     max-height: 52px;
     overflow: hidden;
-}
-.resource-types {
-}
-.resource-types p {
 }

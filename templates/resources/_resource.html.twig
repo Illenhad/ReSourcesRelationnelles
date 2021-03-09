@@ -1,5 +1,6 @@
 {% block stylesheets %}
     <link rel="stylesheet" href="{{ asset('css/resource.css') }}" type="text/css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css">
 {% endblock %}
     {% set relation = {
         'Soi': asset('image/1.jpg'),
@@ -13,14 +14,45 @@
     }%}
 
 <a class="resource-card" href="{{ path('comment.show', {id: resource.id, slug: resource.slug}) }}" data-id="{{ resource.id }}" data-bg="{{ (resource.imageName) ? vich_uploader_asset(resource,'imageFile') : ((resource.relationShip.label in relation|keys) ? relation[resource.relationShip.label] : 'https://picsum.photos/300/300') }}">
+
+    {% set typeIcons = [
+        {label: 'Activité / Jeu à réaliser', icon: 'fas fa-dice-five'},
+        {label: 'Article', icon: 'fas fa-newspaper'},
+        {label: 'Carte Défi', icon: 'fas fa-dumbbell'},
+        {label: 'Cours au format PDF', icon: 'far fa-file-pdf'},
+        {label: 'Exercice / Atelier', icon: 'fas fa-tools'},
+        {label: 'Fiche de lecture', icon: 'far fa-file-alt'},
+        {label: 'Jeu en ligne', icon: 'fas fa-gamepad'},
+        {label: 'Vidéo', icon: 'fas fa-video'}
+    ]%}
+    {% set relationIcons = [
+        {label: 'Soi', icon: 'fas fa-user'},
+        {label: 'Conjoints', icon: 'fas fa-heart'},
+        {label: 'Famille - enfants', icon: 'fas fa-baby'},
+        {label: 'Famille - parents', icon: 'fas fa-home'},
+        {label: 'Famille - fratrie', icon: 'fas fa-child'},
+        {label: 'Professionnel - collègues', icon: 'fas fa-briefcase'},
+        {label: 'Professionnel - collaborateurs', icon: 'fas fa-hands-helping'},
+        {label: 'Professionnel - manager', icon: 'fas fa-user-tie'}
+    ]%}
+
+    <div class="resource-types">
+        {% for typeIcon in typeIcons %}
+            {% if typeIcon['label'] == resource.resourceType %}
+                <i class="fa-icon {{ typeIcon['icon'] }} fa-lg" title="{{ typeIcon['label'] }}"></i>
+            {% endif %}
+        {% endfor %}
+        {% for relationIcon in relationIcons %}
+            {% if relationIcon['label'] == resource.relationShip.label %}
+                <i class="fa-icon {{ relationIcon['icon'] }} fa-lg" title="{{ relationIcon['label'] }}"></i>
+            {% endif %}
+        {% endfor %}
+        {#            <p>relation : {{ resource.relationShip.label }}</p>#}
+    </div>
     <div class="resource-hidden">
         <p>Voir</p>
     </div>
     <div class="resource-meta">
         <p class="resource-title">{{ resource.title }}</p>
-        <div class="resource-types">
-            <p>type : {{ resource.resourceType }}</p>
-            <p>relation : {{ resource.relationShip.label }}</p>
-        </div>
     </div>
 </a>

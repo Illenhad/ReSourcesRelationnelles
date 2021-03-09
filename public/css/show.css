@@ -34,8 +34,7 @@
     align-items: center;
     width: max-content;
     padding: 10px 20px;
-    border: 1px solid var(--charte-dark-light);
-    border-radius: 5px;
+    box-shadow: 0 0 5px var(--charte-grey);
 }
 .is-useful p {
     margin: 0;
