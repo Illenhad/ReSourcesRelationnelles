@@ -23,16 +23,8 @@ class ResourceType extends AbstractType
                 'download_uri' => true,
                 'image_uri' => true,
                 'imagine_pattern' => 'RessourceIMG',
-              ])
-            ->add('contentFile', VichFileType::class, [
-                'required' => false,
-                'allow_delete' => true,
-                'asset_helper' => true,
+                'label'=>'Illustration'
             ])
-            ->add('link', TextareaType::class, [
-                'required' => false,
-            ])
-            ->add('public')
             ->add('ageCategory')
             ->add('resourceType')
             ->add('relationShip')
