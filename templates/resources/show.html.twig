@@ -36,7 +36,7 @@
             </h1>
             <p class="author-date">posté par {{ resource.user.username }} le {{ resource.dateCreation|date("d/m/Y à H:i", "Europe/Paris") }}</p>
             <hr>
-            <p class="resource-description-description">{{ resource.description }}</p>
+            <p class="resource-description-description">{{ resource.description |raw }}</p>
         </div>
         <div>
             <h2 class="resource-informations-title">Informations</h2>
