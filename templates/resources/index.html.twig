@@ -122,9 +122,14 @@
             {% endfor %}
         </div>
     </div>
+
 <div class="pagination text-center mt-4">
     {{ knp_pagination_render(resources) }}
 </div>
+
+    <span class="btn-addResource" href="{{ path('add_resource') }}" title="Créer une ressource"><i class="fa-plus"></i></span>
+
+
 {% endblock %}
 
 {% block javascripts %}
