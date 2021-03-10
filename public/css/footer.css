@@ -45,6 +45,9 @@ footer {
 #socials-footer {
     grid-area: socials;
 }
+.footer-content h5 {
+    color: var(--charte-white);
+}
 .socials-content {
     display: flex;
     flex-direction: row;
