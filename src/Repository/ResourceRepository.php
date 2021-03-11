@@ -52,11 +52,11 @@ class ResourceRepository extends ServiceEntityRepository
     {
         $query = $this->createQueryBuilder('r')
             ->select( 'r as resource','avg(comments.valuation) as note','count(commentaries.id) as nb_coms' )
-            ->join('r.resourceType', 't')
-            ->join('r.ageCategory', 'a')
-            ->join('r.relationShip', 'rel')
-            ->join('r.comments','comments')
-            ->join('r.commentaries','commentaries')
+            ->leftjoin('r.resourceType', 't')
+            ->leftjoin('r.ageCategory', 'a')
+            ->leftjoin('r.relationShip', 'rel')
+            ->leftjoin('r.comments','comments')
+            ->leftjoin('r.commentaries','commentaries')
             ->andWhere('r.public = 1')
             ->groupBy('r')
         ;
