@@ -32,6 +32,7 @@ p {
 .content {
     max-width: 1320px;
     margin: 30px auto;
+    min-height: 53.4vh;
 }
 
 .content > * {
