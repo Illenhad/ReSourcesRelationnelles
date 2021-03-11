@@ -19,14 +19,28 @@
 
 @media screen and (max-width: 1294px) {
     .index-content {
+        max-width: 975px;
         grid-template-columns: 1fr 2fr;
+        margin: auto;
     }
 }
-
+@media screen and (max-width: 974px) and (min-width: 691px) {
+    .index-content {
+        max-width: 570px;
+    }
+}
 @media screen and (max-width: 690px) {
     .content .index-content {
+        max-width: 320px;
         grid-template-columns: auto;
         grid-template-areas: 'filters' 'cards';
-        grid-row-gap: 15px;
+        grid-row-gap: 30px;
+    }
+    .content .index-content .filters {
+        padding-bottom: 15px;
+        border-bottom: 1px solid var(--charte-grey-light);
+    }
+    .content .index-content .filters .filter_button button {
+        width: 100%;
     }
 }

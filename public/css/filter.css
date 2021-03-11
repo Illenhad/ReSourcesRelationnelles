@@ -13,15 +13,6 @@
     text-decoration: none;
     color: var(--charte-dark);
 }
-
-#filter {
-    /*cursor: pointer;*/
-    /*position: -webkit-sticky  ;*/
-    /*position:sticky;*/
-    /*top: 150px;*/
-    /*float:left;*/
-    /*margin: 20px;*/
-}
 .filter_menu{
     background-color: #f7f7f7;
     border-radius: 5px;
@@ -105,13 +96,8 @@
 }
 
 @media (max-width: 768px) {
-    #filter {
-        cursor: pointer;
-        top: 20px;
-        width: 95%;
-        margin: 20px;
+    .index-content .filters {
         position: relative;
-        float:none;
     }
 
 }

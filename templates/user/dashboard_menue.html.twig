@@ -1,14 +1,14 @@
 <div class="user-stats">
     <a href="{{ path('user_dashboard') }}" class="stat-card stat-card-orange {{ (resourceGestion is defined) ? '' : 'active' }}">
         <span class="icone-stat icone-user"></span>
-        <p>Mon profile</p>
+        <p>Mon profil</p>
     </a>
     {% set statsMenu = [
         {
             rGestion : 'favoris',
             number : favoris,
             color : 'pink',
-            title : 'Favories',
+            title : 'Favoris',
             icon : 'heart'
         },
         {

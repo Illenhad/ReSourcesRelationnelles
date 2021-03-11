@@ -17,6 +17,11 @@
                         <a class="btn btn-icon" href="mailto:adresse@mail.fr?body=http://localhost{{ path('comment.show', {id: resource.id, slug: resource.slug}) }}" title="Partager">
                             <span class="icon-share"></span>
                         </a>
+                        {% if app.user== resource.user %}
+                        <a class="btn btn-icon" href="{{ path('edit_resource', {id: resource.id}) }}" title="Editer">
+                            <span class="icon-editresource"></span>
+                        </a>
+                        {% endif %}
                         <a class="btn btn-icon" href="{{ path('addRemoveSide', {id: resource.id,url:app.request.requestUri }) }}" title="Mettre de côté">
                             {% if isSide %}
                                 <span class="icon-aside-remove"></span>
