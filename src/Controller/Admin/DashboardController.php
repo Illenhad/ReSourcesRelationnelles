@@ -123,6 +123,8 @@ class DashboardController extends AbstractDashboardController
             );
     }
 
+
+
     public function configureMenuItems(): iterable
     {
         return [
@@ -140,7 +142,10 @@ class DashboardController extends AbstractDashboardController
             MenuItem::linkToCrud('Type d\'actions', 'fa fa-hand-point-up', ActionType::class)->setPermission('ROLE_SUPER_ADMIN','ROLE_ADMIN'),
             MenuItem::section('Statistiques', 'fa fa-chart-pie'),
             MenuItem::linktoRoute('Utilisateurs', 'fa fa-users', 'users-stats')->setPermission('ROLE_SUPER_ADMIN','ROLE_ADMIN'),
-            MenuItem::linktoRoute('Ressources', 'fa fa-book', 'resources-stats')->setPermission('ROLE_SUPER_ADMIN','ROLE_ADMIN'),
+            MenuItem::section('Documentation', 'fa fa-book'),
+            MenuItem::linktoRoute('Faq', 'fa fa-book-open', 'faq')->setPermission('ROLE_SUPER_ADMIN','ROLE_ADMIN'),
+
+
         ];
     }
 }
