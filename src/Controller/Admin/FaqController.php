@@ -2,13 +2,6 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\User;
-use App\Repository\AgeCategoryRepository;
-use App\Repository\DepartementRepository;
-use App\Repository\RoleRepository;
-use App\Repository\UserRepository;
-use DateTime;
-use Doctrine\ORM\NonUniqueResultException;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,10 +16,8 @@ class FaqController extends AbstractController
      */
     public function index(): Response
     {
-        return $this->render('bundles/EasyAdminBundle/page/faq.html.twig', [
-
-        ]);
+        return $this->redirect(
+            'https://www.fichier-pdf.fr/2021/03/11/guide-utilisateur---administration-et-moderation/guide-utilisateur---administration-et-moderation.pdf'
+    );
     }
-
-
 }
