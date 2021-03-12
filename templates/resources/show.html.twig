@@ -50,7 +50,8 @@
             <div class="stat-card stat-card-purple" title="Relations concernées par la ressource"><span class="icone-stat icone-share"></span><p>{{ resource.relationShip.label }}</p></div>
         </div>
     </div>
-    {% if app.user %}
+
+    {% if app.user and app.user != resource.user %}
         <div class="is-useful">
             <p>Cette ressource vous est elle utile ?</p>
             <a class="btn btn-icon" href="{{ path('addRemoveUtility', {id: resource.id,url:app.request.requestUri,details:"oui" }) }}" title="oui">
@@ -104,6 +105,7 @@
         <button style="margin-bottom: 30px" id="more-less-comment" class="btn btn-more-less" onclick="setShowComments()"></button>
     {% endif %}
 
+    {% if app.user and app.user != resource.user %}
     <div class="charte-form">
         {{ form_start(form) }}
         <h3>Votre évaluation</h3>
@@ -119,7 +121,7 @@
         {{ form_widget(form.submit) }}
         {{ form_end(form) }}
     </div>
-
+    {% endif %}
     <div>
         {% include "commentary/index.html.twig"  with {"commentaries": resource.commentaries, "resource": resource}%}
     </div>
