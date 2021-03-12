@@ -20,117 +20,133 @@
 
 </head>
 <body>
-{#{% block header %}#}
+{# {% block header %} #}
 
-    <header>
-        <div class="header-content">
-            <a id="logo" href="{{ path('resources') }}"></a>
-            <ul id="nav">
-                <li class="nav-item">
-                    <a class="nav-link home" aria-current="page" href="{{ path('resources') }}">Accueil</a>
-                </li>
+<header>
+    <div class="header-content">
+        <a id="logo" href="{{ path('resources') }}"></a>
+        <ul id="nav">
+            <li class="nav-item">
+                <a class="nav-link home" aria-current="page" href="{{ path('resources') }}">Accueil</a>
+            </li>
+            {% if app.user %}
                 <li class="nav-item">
                     <a class="nav-link" href="{{ path('user_dashboard') }}">Espace personnel</a>
                 </li>
-                {% if is_granted('ROLE_SUPER_ADMIN') or is_granted('ROLE_ADMIN') or is_granted('ROLE_MODERATEUR') %}
+            {% elseif not app.user %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('subscribe') }}" target="_blank">Inscription</a>
+                </li>
+            {% endif %}
+            {% if is_granted('ROLE_SUPER_ADMIN') or is_granted('ROLE_ADMIN') or is_granted('ROLE_MODERATEUR') %}
                 <li class="nav-item">
                     <a class="nav-link" href="{{ path('admin') }}" target="_blank">Administration</a>
                 </li>
-                {% endif %}
-            </ul>
-            <div id="search">
-                <form class="search" method="get" action="{{ path('resources') }}">
-                    <div class="search__wrapper" >
-                        <input type="text" name="search" placeholder="Rechercher..." class="search__field">
-                        <button type="submit" class="fa fa-search search__icon"></button>
-                    </div>
-                </form>
-            </div>
-            <div id="connexion">
-                {% if app.user %}
-                    <a class="btn btn-primary btn-log" href="{{ path('logout') }}"><span class="log-icon"></span><span class="log-text">Deconnexion</span></a>
-                {% else %}
-                <a class="btn btn-primary btn-log" href="{{ path('login') }}"><span class="log-icon"></span><span class="log-text">Connexion</span></a>
-                {% endif %}
-            </div>
+
+            {% endif %}
+        </ul>
+        <div id="search">
+            <form class="search" method="get" action="{{ path('resources') }}">
+                <div class="search__wrapper">
+                    <input type="text" name="search" placeholder="Rechercher..." class="search__field">
+                    <button type="submit" class="fa fa-search search__icon"></button>
+                </div>
+            </form>
         </div>
-        <div id="responsive-header">
-            <button id="responsive-nav-btn" class="btn btn-dark-light" onclick="setNav()">&#9776;</button>
-            <div id="responsive-nav">
-                {% if app.user %}
-                    <a class="btn btn-primary btn-log" href="{{ path('logout') }}"><span class="log-icon"></span><span class="log-text">Deconnexion</span></a>
-                {% else %}
-                <a class="btn btn-primary btn-log" href="{{ path('login') }}"><span class="log-icon"></span><span class="log-text">Connexion</span></a>
-                {% endif %}
-                <form class="search" method="get" action="{{ path('resources') }}">
-                    <div class="search__wrapper">
-                        <input type="text" name="search" placeholder="Rechercher..." class="search__field">
-                        <button type="submit" class="fa fa-search search__icon"></button>
-                    </div>
-                </form>
-                <a class="nav-link home {#btn-full-width#}" aria-current="page" href="{{ path('resources') }}">Accueil</a>
-                <a class="nav-link {#btn-full-width#}" href="{{ path('user_dashboard') }}">Espace personnel</a>
-            </div>
+        <div id="connexion">
+            {% if app.user %}
+                <a class="btn btn-primary btn-log" href="{{ path('logout') }}"><span class="log-icon"></span><span
+                            class="log-text">Deconnexion</span></a>
+            {% else %}
+                <a class="btn btn-primary btn-log" href="{{ path('login') }}"><span class="log-icon"></span><span
+                            class="log-text">Connexion</span></a>
+            {% endif %}
         </div>
-    </header>
-{#{% endblock %}#}
+    </div>
+    <div id="responsive-header">
+        <button id="responsive-nav-btn" class="btn btn-dark-light" onclick="setNav()">&#9776;</button>
+        <div id="responsive-nav">
+            {% if app.user %}
+                <a class="btn btn-primary btn-log" href="{{ path('logout') }}"><span class="log-icon"></span><span
+                            class="log-text">Deconnexion</span></a>
+            {% else %}
+                <a class="btn btn-primary btn-log" href="{{ path('login') }}"><span class="log-icon"></span><span
+                            class="log-text">Connexion</span></a>
+            {% endif %}
+            <form class="search" method="get" action="{{ path('resources') }}">
+                <div class="search__wrapper">
+                    <input type="text" name="search" placeholder="Rechercher..." class="search__field">
+                    <button type="submit" class="fa fa-search search__icon"></button>
+                </div>
+            </form>
+            <a class="nav-link home {# btn-full-width #}" aria-current="page" href="{{ path('resources') }}">Accueil</a>
+            <a class="nav-link {# btn-full-width #}" href="{{ path('user_dashboard') }}">Espace personnel</a>
+        </div>
+    </div>
+</header>
+{# {% endblock %} #}
 
 <div class="content">
-{% block body %}{% endblock %}
+    {% block body %}{% endblock %}
 </div>
 {# BandeauCookies #}
 {{ render_esi(path('ch_cookie_consent.show_if_cookie_consent_not_set')) }}
 
-{#{% block footer %}#}
-    <footer>
-        <div class="footer-content">
-            <div id="logo-footer"></div>
-            <div id="links-footer" class="footer-list-links">
-                <ul>
-                    <li>
-                        <a href="{{ path('accessibilite') }}">Accesibilité</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('legal') }}">Mention légale</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('RGPD') }}/">Données et RGPD</a>
-                    </li>
-                </ul>
-            </div>
-            <div id="usables-footer" class="footer-list-links">
+{# {% block footer %} #}
+<footer>
+    <div class="footer-content">
+        <div id="logo-footer"></div>
+        <div id="links-footer" class="footer-list-links">
+            <ul>
+                <li>
+                    <a href="{{ path('accessibilite') }}">Accesibilité</a>
+                </li>
+                <li>
+                    <a href="{{ path('legal') }}">Mention légale</a>
+                </li>
+                <li>
+                    <a href="{{ path('RGPD') }}/">Données et RGPD</a>
+                </li>
+            </ul>
+        </div>
+        <div id="usables-footer" class="footer-list-links">
 
-                <ul>
-                    <li>
-                        <a href="https://solidarites-sante.gouv.fr/">Site du gouvernement</a>
-                    </li>
-                    <li>
-                        <a href="https://gouvernement-et-citoyens.consultation.etalab.gouv.fr/">Participation citoyenne</a>
-                    </li>
-                    <li>
-                        <a href="https://www.fichier-pdf.fr/2021/03/11/guide-utilisateur---site-utilisateur/guide-utilisateur---site-utilisateur.pdf"/>FAQ</a>
-                    </li>
+            <ul>
+                <li>
+                    <a href="https://solidarites-sante.gouv.fr/">Site du gouvernement</a>
+                </li>
+                <li>
+                    <a href="https://gouvernement-et-citoyens.consultation.etalab.gouv.fr/">Participation citoyenne</a>
+                </li>
+                <li>
+                    <a href="https://www.fichier-pdf.fr/2021/03/11/guide-utilisateur---site-utilisateur/guide-utilisateur---site-utilisateur.pdf"/>FAQ</a>
+                </li>
 
-                </ul>
-            </div>
-            <div id="socials-footer">
-                <h5 class="text-uppercase">Suivez-nous</h5>
-                <div class="socials-content">
+            </ul>
+        </div>
+        <div id="socials-footer">
+            <h5 class="text-uppercase">Suivez-nous</h5>
+            <div class="socials-content">
 
-                    <a href="https://www.facebook.com/MinSoliSante" class="social-facebook" target="_blank"></a>
-                    <a href="https://twitter.com/MinSoliSante?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor" target="_blank" class="social-twitter"></a>
-                    <a href="https://www.linkedin.com/company/minist%C3%A8re-des-solidarites-de-la-sant%C3%A9/" target="_blank" class="social-linkedin"></a>
-                    <a href="https://www.instagram.com/explore/locations/584326962/ministere-des-solidarites-et-de-la-sante/?hl=fr" target="_blank" class="social-insta"></a>
-                    <a href="https://www.youtube.com/channel/UCApzB6X-04YRPq9SZ0WfEsg" target="_blank" class="social-youtube"></a>
-                </div>
+                <a href="https://www.facebook.com/MinSoliSante" class="social-facebook" target="_blank"></a>
+                <a href="https://twitter.com/MinSoliSante?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor"
+                   target="_blank" class="social-twitter"></a>
+                <a href="https://www.linkedin.com/company/minist%C3%A8re-des-solidarites-de-la-sant%C3%A9/"
+                   target="_blank" class="social-linkedin"></a>
+                <a href="https://www.instagram.com/explore/locations/584326962/ministere-des-solidarites-et-de-la-sante/?hl=fr"
+                   target="_blank" class="social-insta"></a>
+                <a href="https://www.youtube.com/channel/UCApzB6X-04YRPq9SZ0WfEsg" target="_blank"
+                   class="social-youtube"></a>
             </div>
         </div>
-        <div class="sub-footer">
-            <span>© 2021 Copyright:</span>
-            <a href="https://les-semi-croustillants.atlassian.net/jira/software/projects/SP/boards/3">Les semis croustillants</a>
-        </div>
-    </footer>
-{#{% endblock %}#}
+    </div>
+    <div class="sub-footer">
+        <span>© 2021 Copyright:</span>
+        <a href="https://les-semi-croustillants.atlassian.net/jira/software/projects/SP/boards/3">Les semis
+            croustillants</a>
+    </div>
+</footer>
+{# {% endblock %} #}
 
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"
         integrity="sha384-q2kxQ16AaE6UbzuKqyBE9/u/KzioAlnx2maXQHiDX9d4/zp8Ok3f+M7DPm+Ib6IU"
@@ -145,6 +161,7 @@
 
     /*Responsive nav menu burger*/
     var showResponsiveNav = false;
+
     function setNav() {
         showResponsiveNav = !showResponsiveNav;
         var nav = document.getElementById("responsive-nav");
@@ -158,7 +175,8 @@
 
 {% block javascripts %}
     <script src="{{ asset('js/jquery-3.5.1.min.js') }}"></script>
-{#    <script type="text/javascript">console.log(window.pathname);</script>#}
+    {# <script type="text/javascript">console.log(window.pathname);</script> #}
 {% endblock %}
+
 </body>
 </html>
