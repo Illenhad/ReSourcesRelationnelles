@@ -58,6 +58,7 @@ class ResourceRepository extends ServiceEntityRepository
             ->leftjoin('r.comments','comments')
             ->leftjoin('r.commentaries','commentaries')
             ->andWhere('r.public = 1')
+            ->andWhere('r.active = 1')
             ->groupBy('r')
         ;
 
