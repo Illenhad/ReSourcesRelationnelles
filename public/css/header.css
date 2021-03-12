@@ -3,6 +3,7 @@ header {
     box-shadow: 0 0 15px rgba(50,50,50, 0.5);
 }
 .header-content {
+    position: relative;
     padding-top: 30px;
     margin: auto;
     max-width: 1320px;
@@ -77,6 +78,7 @@ header {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
+    align-items: center;
 }
 
 #responsive-nav > * {
@@ -88,12 +90,21 @@ header {
     flex-direction: row;
 }
 
+#responsive-nav .nav-link {
+    width: max-content;
+}
+
 @media (max-width: 900px) {
     .header-content {
         grid-template-columns: min-content auto;
         grid-template-areas: 'logo connexion'
         'logo search'
         'nav nav';
+    }
+    #connexion {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
     }
 }
 
@@ -114,6 +125,11 @@ header {
         display: flex;
         flex-direction: column;
         align-items: center;
-        max-width: 500px;
+        max-width: 520px;
+    }
+
+    #responsive-nav a.btn-log,
+    #responsive-nav form.search {
+        margin-bottom: 15px;
     }
 }

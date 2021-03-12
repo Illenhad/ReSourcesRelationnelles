@@ -68,8 +68,8 @@
                         <button type="submit" class="fa fa-search search__icon"></button>
                     </div>
                 </form>
-                <a class="nav-link home btn-full-width" aria-current="page" href="{{ path('resources') }}">Accueil</a>
-                <a class="nav-link btn-full-width" href="{{ path('user_dashboard') }}">Espace personnel</a>
+                <a class="nav-link home {#btn-full-width#}" aria-current="page" href="{{ path('resources') }}">Accueil</a>
+                <a class="nav-link {#btn-full-width#}" href="{{ path('user_dashboard') }}">Espace personnel</a>
             </div>
         </div>
     </header>
@@ -148,7 +148,7 @@
         showResponsiveNav = !showResponsiveNav;
         var nav = document.getElementById("responsive-nav");
         if (showResponsiveNav) {
-            nav.style.height = "230px"
+            nav.style.height = "245px"
         } else {
             nav.style.height = "0";
         }
