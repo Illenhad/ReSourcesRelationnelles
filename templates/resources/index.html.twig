@@ -18,6 +18,9 @@
     <link href="{{ asset('css/sort.css') }}" rel="stylesheet"/>
     <link href="{{ asset('css/filter.css') }}" rel="stylesheet"/>
     <link href="{{ asset('css/index.css') }}" rel="stylesheet"/>
+    <link href="{{ asset('css/resource.css') }}" rel="stylesheet"/>
+    <link rel="stylesheet" href="{{ asset('css/resource.css') }}" type="text/css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css">
 {% endblock %}
 
 {% block body %}
@@ -120,6 +123,9 @@
                 {% set resource = values.resource %}
                 {% include'resources/_resource.html.twig' %}
             {% endfor %}
+            {% if resources is empty%}
+                Désolé, aucune ressources ne correspondent à votre recherche
+            {% endif %}
             <div class="pagination text-center mt-4">
                 {{ knp_pagination_render(resources) }}
             </div>
