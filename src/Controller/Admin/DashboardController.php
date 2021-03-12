@@ -127,26 +127,38 @@ class DashboardController extends AbstractDashboardController
 
     public function configureMenuItems(): iterable
     {
+        if( $this->isGranted('ROLE_SUPER_ADMIN')||$this->isGranted('ROLE_ADMIN')){
         return [
             MenuItem::linktoDashboard('Accueil', 'fa fa-home'),
             MenuItem::section('Administration', 'fa fa-users-cog'),
-            MenuItem::linkToCrud('Utilisateurs', 'fa fa-users', User::class)->setPermission('ROLE_SUPER_ADMIN')->setPermission('ROLE_ADMIN'),
-            MenuItem::linkToCrud('Catégories d\'ages', 'fa fa-hourglass', AgeCategory::class)->setPermission('ROLE_SUPER_ADMIN')->setPermission('ROLE_ADMIN'),
-            MenuItem::linkToCrud('Rôles', 'fa fa-user-tag', Role::class)->setPermission('ROLE_SUPER_ADMIN')->setPermission('ROLE_ADMIN'),
-            MenuItem::linkToCrud('Départements', 'fa fa-map-marker-alt', Department::class)->setPermission('ROLE_SUPER_ADMIN')->setPermission('ROLE_ADMIN'),
+            MenuItem::linkToCrud('Utilisateurs', 'fa fa-users', User::class),
+            MenuItem::linkToCrud('Catégories d\'ages', 'fa fa-hourglass', AgeCategory::class),
+            MenuItem::linkToCrud('Rôles', 'fa fa-user-tag', Role::class),
+            MenuItem::linkToCrud('Départements', 'fa fa-map-marker-alt', Department::class),
             MenuItem::section('Ressources', 'fa fa-book'),
             MenuItem::linkToCrud('Ressources', 'fa fa-book-open', Resource::class),
-            MenuItem::linkToCrud('Catégorie', 'fa fa-bookmark', Category::class)->setPermission('ROLE_SUPER_ADMIN')->setPermission('ROLE_ADMIN'),
-            MenuItem::linkToCrud('Type de relations', 'fa fa-people-arrows', RelationshipType::class)->setPermission('ROLE_SUPER_ADMIN')->setPermission('ROLE_ADMIN'),
-            MenuItem::linkToCrud('Type de gestion', 'fa fa-star', ManagementType::class)->setPermission('ROLE_SUPER_ADMIN')->setPermission('ROLE_ADMIN'),
-            MenuItem::linkToCrud('Type d\'actions', 'fa fa-hand-point-up', ActionType::class)->setPermission('ROLE_SUPER_ADMIN')->setPermission('ROLE_ADMIN'),
+            MenuItem::linkToCrud('Catégorie', 'fa fa-bookmark', Category::class),
+            MenuItem::linkToCrud('Type de relations', 'fa fa-people-arrows', RelationshipType::class),
+            MenuItem::linkToCrud('Type de gestion', 'fa fa-star', ManagementType::class),
+            MenuItem::linkToCrud('Type d\'actions', 'fa fa-hand-point-up', ActionType::class),
             MenuItem::section('Statistiques', 'fa fa-chart-pie'),
-            MenuItem::linktoRoute('Utilisateurs', 'fa fa-users', 'users-stats')->setPermission('ROLE_SUPER_ADMIN')->setPermission('ROLE_ADMIN'),
-            MenuItem::linktoRoute('Resources', 'fa fa-book', 'resources-stats')->setPermission('ROLE_SUPER_ADMIN')->setPermission('ROLE_ADMIN'),
+            MenuItem::linktoRoute('Utilisateurs', 'fa fa-users', 'users-stats'),
+            MenuItem::linktoRoute('Resources', 'fa fa-book', 'resources-stats'),
             MenuItem::section('Documentation', 'fa fa-book'),
-            MenuItem::linktoRoute('Faq', 'fa fa-book-open', 'faq')->setPermission('ROLE_SUPER_ADMIN')->setPermission('ROLE_ADMIN'),
+            MenuItem::linktoRoute('Faq', 'fa fa-book-open', 'faq'),
 
 
+        ];}
+        else {
+        return [
+            MenuItem::linktoDashboard('Accueil', 'fa fa-home'),
+            MenuItem::section('Administration', 'fa fa-users-cog'),
+            MenuItem::section('Ressources', 'fa fa-book'),
+            MenuItem::linkToCrud('Ressources', 'fa fa-book-open', Resource::class),
+            MenuItem::section('Statistiques', 'fa fa-chart-pie'),
+            MenuItem::section('Documentation', 'fa fa-book'),
+            MenuItem::linktoRoute('Faq', 'fa fa-book-open', 'faq'),
         ];
+    }
     }
 }
