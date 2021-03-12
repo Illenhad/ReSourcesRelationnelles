@@ -53,7 +53,7 @@
     {% if app.user %}
         <div class="is-useful">
             <p>Cette ressource vous est elle utile ?</p>
-            <a class="btn btn-icon" href="{{ path('addRemoveUtility', {id: resource.id,url:app.request.requestUri,details:"oui" }) }}" title="Non">
+            <a class="btn btn-icon" href="{{ path('addRemoveUtility', {id: resource.id,url:app.request.requestUri,details:"oui" }) }}" title="oui">
                 {% if isUtility and isUtility.details=="oui" %}
                     <span class="icon-like active"></span>
                 {% else %}
