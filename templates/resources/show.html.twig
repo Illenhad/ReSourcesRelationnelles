@@ -10,7 +10,7 @@
 {% block body %}
     <div class="resource-content">
         <div class="resource-description">
-            <h1 class="resource-title">
+            <h1 class="resource-title" id="top">
                 {{ resource.title }}
                 {% if app.user %}
                     <div class="actions">
@@ -128,6 +128,10 @@
 
     <a class="btn btn-primary" href="{{ path('resources') }}">Retour</a>
 
+
+    <div id="ToTop" class="cInvisible"><a id="cRetour" href="#top" title="Retourner au début"></a></div>
+
+{% endblock %}
     {% block javascripts %}
         <script>
             $(document).ready(function () {
@@ -171,6 +175,11 @@
                 item.style.display = showComments ? 'block' : 'none';
             }
         </script>
-
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                window.onscroll = function(ev) {
+                    document.getElementById("ToTop").className = (window.pageYOffset > 100) ? "cVisible" : "cInvisible";
+                };
+            });
+        </script>
     {% endblock %}
-{% endblock %}
