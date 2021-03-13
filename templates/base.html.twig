@@ -55,10 +55,10 @@
         </div>
         <div id="connexion">
             {% if app.user %}
-                <a class="btn btn-primary btn-log" href="{{ path('logout') }}"><span class="log-icon"></span><span
+                <a class="btn btn-primary btn-log" href="{{ path('logout') }}"><span class="log-icon log-icon-logout"></span><span
                             class="log-text">Deconnexion</span></a>
             {% else %}
-                <a class="btn btn-primary btn-log" href="{{ path('login') }}"><span class="log-icon"></span><span
+                <a class="btn btn-primary btn-log" href="{{ path('login') }}"><span class="log-icon log-icon-login"></span><span
                             class="log-text">Connexion</span></a>
             {% endif %}
         </div>
@@ -67,10 +67,10 @@
         <button id="responsive-nav-btn" class="btn btn-dark-light" onclick="setNav()">&#9776;</button>
         <div id="responsive-nav">
             {% if app.user %}
-                <a class="btn btn-primary btn-log" href="{{ path('logout') }}"><span class="log-icon"></span><span
+                <a class="btn btn-primary btn-log" href="{{ path('logout') }}"><span class="log-icon log-icon-logout"></span><span
                             class="log-text">Deconnexion</span></a>
             {% else %}
-                <a class="btn btn-primary btn-log" href="{{ path('login') }}"><span class="log-icon"></span><span
+                <a class="btn btn-primary btn-log" href="{{ path('login') }}"><span class="log-icon log-icon-login"></span><span
                             class="log-text">Connexion</span></a>
             {% endif %}
             <form class="search" method="get" action="{{ path('resources') }}">
