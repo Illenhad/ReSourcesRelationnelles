@@ -49,16 +49,16 @@
                         <label>{{ form_label(form.category) }}</label>
                         <div>{{ form_widget(form.category, {'attr': {'class': 'form-control'}}) }}</div>
                     </div>
-                </div>
-                <div class="row justify-content-around mb-3">
-                    <button class="btn btn-success col-3">
-                        {% if type == 'creation' %}
-                            Créer
-                        {% else %}
-                            Modifier
-                        {% endif %}
-                    </button>
-                    <a href="{{ path('user_resource', {resourceGestion: 'created'}) }}" class="btn btn-danger col-3">Annuler</a>
+                    <div class="form-action">
+                        <button class="btn btn-green">
+                            {% if type == 'creation' %}
+                                Créer
+                            {% else %}
+                                Modifier
+                            {% endif %}
+                        </button>
+                        <a href="{{ path('user_resource', {resourceGestion: 'created'}) }}" class="btn btn-red">Annuler</a>
+                    </div>
                 </div>
             </div>
             {{ form_end(form) }}

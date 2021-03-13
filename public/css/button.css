@@ -344,3 +344,15 @@ a.stat-card-orange:hover,
 a.stat-card-orange.active {
     border: 2px solid var(--charte-orange);
 }
+
+.form-action {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: flex-start;
+}
+
+.form-action > *:not(:last-child) {
+    margin-right: 10px;
+}
