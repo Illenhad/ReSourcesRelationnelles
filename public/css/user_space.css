@@ -29,3 +29,23 @@
 #user-action > a:not(:last-child) {
     margin-right: 10px;
 }
+
+@media (max-width: 800px) {
+    .dashboard-content {
+        grid-template-columns: auto;
+        grid-template-areas: 'menue'
+        'main';
+        align-self: flex-start;
+        grid-template-rows: auto auto;
+    }
+    .user-stats {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+}
+@media (max-width: 600px) {
+    .dashboard-responsive-hidden {
+        display: none;
+    }
+}

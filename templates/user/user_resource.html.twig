@@ -32,8 +32,8 @@
                 <thead>
                     <th>Titre</th>
                     <th>Type</th>
-                    <th>Catégorie</th>
-                    <th>Catégorie d'âge</th>
+                    <th class="dashboard-responsive-hidden">Catégorie</th>
+                    <th class="dashboard-responsive-hidden">Catégorie d'âge</th>
                 </thead>
                 <tbody>
                         {% for resource in resources %}
@@ -45,7 +45,7 @@
                                     'Catégorie d\'âge': resource.ageCategory
                                 } %}
                                 {% for column in columns %}
-                                    <td><a href="{{ path('comment.show', {id: resource.id, slug: resource.slug}) }}"><span>{{ column }}</span></a></td>
+                                    <td {{ column in [resource.category, resource.ageCategory] ? 'class="dashboard-responsive-hidden"' : '' }}><a href="{{ path('comment.show', {id: resource.id, slug: resource.slug}) }}"><span>{{ column }}</span></a></td>
                                 {% endfor %}
                             </tr>
                         {% endfor %}
