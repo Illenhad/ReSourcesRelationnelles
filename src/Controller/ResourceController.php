@@ -93,7 +93,7 @@ class ResourceController extends AbstractController
         $resources = $paginator->paginate(
             $resourceRepository->findPublicQuery($filter, $search, 'DESC'),
             $request->query->getInt('page', 1),
-            12,
+            11,
             ['defaultSortFieldName' => 'r.dateCreation', 'defaultSortDirection' => 'desc']
         );
 

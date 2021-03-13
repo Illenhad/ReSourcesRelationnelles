@@ -19,6 +19,11 @@
 .resource-card:hover {
     box-shadow: 0 0 10px var(--charte-dark);
 }
+.btn-addresource {
+    width: 296px;
+    height: 296px;
+    border: 2px solid var(--charte-dark);
+}
 
 .resource-card p {
     color: black;
@@ -50,13 +55,22 @@
     height: 0;
     overflow: hidden;
 }
-.resource-card .resource-hidden p {
+.resource-card .resource-hidden p,
+.btn-addresource .resource-hidden i{
     font-size: 1.4rem;
     width: max-content;
     margin: auto;
     margin-top: 33%;
 }
+.btn-addresource .resource-hidden i {
+    display: block;
+    font-size: 4.4rem;
+color: var(--charte-dark)
+}
 .resource-card:hover .resource-hidden {
+    height: 100%;
+}
+.btn-addresource .resource-hidden {
     height: 100%;
 }
 
@@ -73,6 +87,9 @@
     max-height: 52px;
     overflow: hidden;
 }
+.btn-addresource .resource-meta .resource-title {
+    text-align: center;
+}
 .resource-types {
 }
 .resource-types p {
@@ -80,6 +97,7 @@
 .pagination{width: 80%;
 margin-bottom: 0}
 
+/*
 .btn-addResource{
     display: block;
     position: -webkit-sticky;
@@ -122,3 +140,4 @@ margin-bottom: 0}
     width: 100%;
     padding-bottom: 15px;
 }
+ */

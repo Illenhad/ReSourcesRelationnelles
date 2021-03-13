@@ -126,6 +126,17 @@
             {% if resources is empty%}
                 Désolé, aucune ressources ne correspondent à votre recherche
             {% endif %}
+
+
+            <a class="resource-card btn-addresource" href="{{ path('add_resource') }}">
+                <div class="resource-hidden">
+                    <i class="fas fa-plus"></i>
+                </div>
+                <div class="resource-meta">
+                    <p class="resource-title">Ajouter une ressource</p>
+                </div>
+            </a>
+
             <div class="pagination text-center mt-4">
                 {{ knp_pagination_render(resources) }}
             </div>
@@ -133,7 +144,7 @@
     </div>
 
 
-    <a class="btn-addResource" href="{{ path('add_resource') }}" title="Créer une ressource"><i class="fa-plus"></i></a>
+{#    <a class="btn-addResource" href="{{ path('add_resource') }}" title="Créer une ressource"><i class="fa-plus"></i></a>#}
 
 
 {% endblock %}
