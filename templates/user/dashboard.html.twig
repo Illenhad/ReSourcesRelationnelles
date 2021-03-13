@@ -46,9 +46,11 @@
                     }
                 ]%}
                 {% for profileInfo in profileInfos %}
-                    <div>
-                        <label for="{{ profileInfo['name'] }}" class="form-input-label">{{ profileInfo['text'] }}</label>
-                        <input id="{{ profileInfo['name'] }}" type="text" name="{{ profileInfo['name'] }}" value="{{ profileInfo['field'] }}" class="charte-input" disabled>
+                    <div class="user-info">
+                        <div class="user-info-title">{{ profileInfo['text'] }}</div>
+                        <div class="user-info-info">{{ profileInfo['field'] }}</div>
+{#                        <label for="{{ profileInfo['name'] }}" class="form-input-label">{{ profileInfo['text'] }}</label>#}
+{#                        <input id="{{ profileInfo['name'] }}" type="text" name="{{ profileInfo['name'] }}" value="{{ profileInfo['field'] }}" class="charte-input" disabled>#}
                     </div>
                 {% endfor %}
             </form>
