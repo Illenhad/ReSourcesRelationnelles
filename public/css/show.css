@@ -31,13 +31,20 @@
 .is-useful {
     display: flex;
     flex-direction: row;
+    justify-content: center;
     align-items: center;
-    width: max-content;
+    flex-wrap: wrap;
+    max-width: max-content;
     padding: 10px 20px;
     box-shadow: 0 0 5px var(--charte-grey);
 }
 .is-useful p {
     margin: 0;
+    display: block;
+}
+.is-useful div {
+    display: flex;
+    flex-direction: row;
 }
 .is-useful *:not(:last-child) {
     margin-right: 15px;
@@ -134,4 +141,29 @@ a#cRetour:hover{
 #ToTop.cVisible{
     bottom: 40px;
     opacity:1;
+}
+
+
+
+@media (max-width: 800px) {
+    .resource-content {
+        display: grid;
+        grid-template-columns: auto;
+        grid-template-rows: auto auto;
+        grid-template-areas: 'description'
+        'information';
+    }
+    .resource-information {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+    .resource-information .resource-informations-title {
+        display: none;
+    }
+}
+@media (max-width: 509px) {
+    .resource-information .stat-card {
+        display: none;
+    }
 }

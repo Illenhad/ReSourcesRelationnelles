@@ -43,7 +43,7 @@
             <hr>
             <p class="resource-description-description">{{ resource.description |raw }}</p>
         </div>
-        <div>
+        <div class="resource-information">
             <h2 class="resource-informations-title">Informations</h2>
             <div class="stat-card stat-card-blue" title="Type de la ressource"><span class="icone-stat icone-info"></span><p>{{ resource.resourceType }}</p></div>
             <div class="stat-card stat-card-green" title="Ages concernés par la ressource"><span class="icone-stat icone-user"></span><p>{{ resource.ageCategory }}</p></div>
@@ -54,20 +54,22 @@
     {% if app.user and app.user != resource.user %}
         <div class="is-useful">
             <p>Cette ressource vous est elle utile ?</p>
-            <a class="btn btn-icon" href="{{ path('addRemoveUtility', {id: resource.id,url:app.request.requestUri,details:"oui" }) }}" title="oui">
-                {% if isUtility and isUtility.details=="oui" %}
-                    <span class="icon-like active"></span>
-                {% else %}
-                    <span class="icon-like"></span>
-                {% endif %}
-            </a>
-            <a class="btn btn-icon" href="{{ path('addRemoveUtility', {id: resource.id,url:app.request.requestUri,details:"non" }) }}" title="Non">
-                {% if isUtility and isUtility.details=="non" %}
-                    <span class="icon-dislike active"></span>
-                {% else %}
-                    <span class="icon-dislike"></span>
-                {% endif %}
-            </a>
+            <div>
+                <a class="btn btn-icon" href="{{ path('addRemoveUtility', {id: resource.id,url:app.request.requestUri,details:"oui" }) }}" title="oui">
+                    {% if isUtility and isUtility.details=="oui" %}
+                        <span class="icon-like active"></span>
+                    {% else %}
+                        <span class="icon-like"></span>
+                    {% endif %}
+                </a>
+                <a class="btn btn-icon" href="{{ path('addRemoveUtility', {id: resource.id,url:app.request.requestUri,details:"non" }) }}" title="Non">
+                    {% if isUtility and isUtility.details=="non" %}
+                        <span class="icon-dislike active"></span>
+                    {% else %}
+                        <span class="icon-dislike"></span>
+                    {% endif %}
+                </a>
+            </div>
         </div>
     {% endif %}
 
