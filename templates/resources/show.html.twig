@@ -13,21 +13,12 @@
             <h1 class="resource-title" id="top">
                 {{ resource.title }}
                 {% if app.user %}
+                <a class="btn btn-icon"
+                   href="mailto:adresse@mail.fr?body=http://localhost{{ path('comment.show', {id: resource.id, slug: resource.slug}) }}"
+                   title="Partager">
+                    <span class="icon-share"></span>
                     <div class="actions">
-
-
-                        <a class="btn btn-icon" href="
-
-
-
-
-
-" title="Ajouter aux consultations">
-
-                        </a>
-
-
-
+                        <a class="btn btn-icon" href="" title="Ajouter aux consultations"></a>
                         {% if app.user== resource.user %}
                         <a class="btn btn-icon" href="{{ path('edit_resource', {id: resource.id}) }}" title="Editer">
                             <span class="icon-editresource"></span>
