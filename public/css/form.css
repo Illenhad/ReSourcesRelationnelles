@@ -78,6 +78,17 @@ label {
 .form-action > *:not(:last-child) {
     margin-right: 30px;
 }
+@media (max-width: 900px) {
+    .form-twoColumn-grid {
+        grid-template-columns: auto;
+        grid-template-areas: 'firstColumn'
+        'secondColumn';
+    }
+    .gridColumn-one,
+    .gridColumn-two {
+        width: 100%;
+    }
+}
 @media (max-width: 600px) {
     .charte-form form .charte-input {
         width: auto;
