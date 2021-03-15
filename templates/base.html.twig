@@ -33,6 +33,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ path('user_dashboard') }}">Espace personnel</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('user_resource', {resourceGestion: 'favoris'}) }}">Mes favoris</a>
+                </li>
             {% elseif not app.user %}
                 <li class="nav-item">
                     <a class="nav-link" href="{{ path('subscribe') }}" target="_blank">Inscription</a>

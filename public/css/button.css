@@ -54,6 +54,28 @@
     color: var(--charte-orange);
     background-color: white;
 }
+
+
+
+.btn-pink {
+    background-color: var(--charte-pink);
+    border-color: var(--charte-pink);
+}
+.btn-pink:hover {
+    color: var(--charte-pink);
+    background-color: white;
+}
+
+.btn-purple {
+    background-color: var(--charte-purple);
+    border-color: var(--charte-purple);
+}
+.btn-purple:hover {
+    color: var(--charte-purple);
+    background-color: white;
+}
+
+
 .btn-dark-light {
     background-color: var(--charte-dark-light);
     border-color: var(--charte-dark-light);
