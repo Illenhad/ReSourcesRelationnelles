@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\RelUserActionResource;
+use App\Entity\User;
 use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\DBAL\Exception;
@@ -58,6 +59,27 @@ class RelUserActionResourceRepository extends ServiceEntityRepository
         ->setParameter('date2', new DateTime('now'));
 
         return $query->getScalarResult()[0][1];
+    }
+
+    public function getConsult(User $user, ManagerRegistry $registry)
+    {
+        $actionTypeRepository = new ActionTypeRepository($registry);
+        $consultType = $actionTypeRepository->findOneBy(['label' => 'Consultation']);
+        $query = $this->createQueryBuilder('rel')
+            ->select('res.id')
+            ->join('rel.resource', 'res')
+            ->andWhere('rel.user = :user')
+            ->setParameter('user', $user->getId())
+            ->andWhere('rel.actionType = :consultType')
+            ->setParameter('consultType', $consultType->getId())
+        ;
+        $rawlistConsult = $query->getQuery()->getArrayResult();
+        $listConsult = [];
+        foreach ($rawlistConsult as $consult) {
+            array_push($listConsult, $consult['id']);
+        }
+
+        return $listConsult;
     }
 
     // /**

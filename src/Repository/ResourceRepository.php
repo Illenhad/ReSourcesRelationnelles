@@ -43,27 +43,24 @@ class ResourceRepository extends ServiceEntityRepository
     /**
      * Cette méthode retourne les ressources qui ne necessitent  pas d'être authentifié.
      *
-     * @param FilterData $filterData
-     * @param string|null $search
      * @param string $dateCreationSorting
-     * @return Query
      */
     public function findPublicQuery(FilterData $filterData, ?string $search, $dateCreationSorting = 'ASC'): Query
     {
         $query = $this->createQueryBuilder('r')
-            ->select( 'r as resource','avg(comments.valuation) as note','count(commentaries.id) as nb_coms' )
+            ->select('r as resource', 'avg(comments.valuation) as note', 'count(commentaries.id) as nb_coms')
             ->leftjoin('r.resourceType', 't')
             ->leftjoin('r.ageCategory', 'a')
             ->leftjoin('r.relationShip', 'rel')
-            ->leftjoin('r.comments','comments')
-            ->leftjoin('r.commentaries','commentaries')
+            ->leftjoin('r.comments', 'comments')
+            ->leftjoin('r.commentaries', 'commentaries')
             ->andWhere('r.public = 1')
             ->andWhere('r.active = 1')
             ->groupBy('r')
         ;
 
         if ($search) {
-            $query->andWhere('r.title LIKE :search OR r.description LIKE :search' )
+            $query->andWhere('r.title LIKE :search OR r.description LIKE :search')
                 ->setParameter('search', '%'.$search.'%');
         }
 
@@ -90,8 +87,8 @@ class ResourceRepository extends ServiceEntityRepository
         return $query->getQuery();
     }
 
-    public function getMostCommentedResources() {
-
+    public function getMostCommentedResources()
+    {
         $connexion = $this->getEntityManager()->getConnection();
 
         $sql = '
@@ -112,19 +109,19 @@ class ResourceRepository extends ServiceEntityRepository
             $i = 0;
             foreach ($statement->fetchAllAssociative() as $row) {
                 $tabResources[$i] = $this->getEntityManager()->getRepository(Resource::class)->find($row['id']);
-                $i++;
+                ++$i;
             }
+
             return $tabResources;
         } catch (Exception $e) {
             return [];
         } catch (\Doctrine\DBAL\Driver\Exception $e) {
             return [];
         }
-
     }
 
-    public function getCurrentDayConsultedResources() {
-
+    public function getCurrentDayConsultedResources()
+    {
         $connexion = $this->getEntityManager()->getConnection();
 
         $sql = '
@@ -141,8 +138,8 @@ class ResourceRepository extends ServiceEntityRepository
         try {
             $statement = $connexion->prepare($sql);
             $actionTypeId = 2;
-            $date1 = date_format(new \DateTime('today'), "Y-m-d H:i:s");
-            $date2 = date_format(new \DateTime('now'), "Y-m-d H:i:s");
+            $date1 = date_format(new \DateTime('today'), 'Y-m-d H:i:s');
+            $date2 = date_format(new \DateTime('now'), 'Y-m-d H:i:s');
             $statement->bindValue(':actionTypeId', $actionTypeId);
             $statement->bindValue(':date1', $date1);
             $statement->bindValue(':date2', $date2);
@@ -152,7 +149,7 @@ class ResourceRepository extends ServiceEntityRepository
 
             foreach ($statement->fetchAllAssociative() as $row) {
                 $tabResources[$i] = $this->getEntityManager()->getRepository(Resource::class)->find($row['resource_id']);
-                $i++;
+                ++$i;
             }
 
             return $tabResources;
@@ -161,11 +158,10 @@ class ResourceRepository extends ServiceEntityRepository
         } catch (\Doctrine\DBAL\Driver\Exception $e) {
             return [];
         }
-
     }
 
-    public function getCurrentDaySharedResources() {
-
+    public function getCurrentDaySharedResources()
+    {
         $connexion = $this->getEntityManager()->getConnection();
 
         $sql = '
@@ -180,8 +176,8 @@ class ResourceRepository extends ServiceEntityRepository
 
         try {
             $statement = $connexion->prepare($sql);
-            $date1 = date_format(new \DateTime('today'), "Y-m-d H:i:s");
-            $date2 = date_format(new \DateTime('now'), "Y-m-d H:i:s");
+            $date1 = date_format(new \DateTime('today'), 'Y-m-d H:i:s');
+            $date2 = date_format(new \DateTime('now'), 'Y-m-d H:i:s');
             $statement->bindValue(':date1', $date1);
             $statement->bindValue(':date2', $date2);
             $statement->execute();
@@ -190,7 +186,7 @@ class ResourceRepository extends ServiceEntityRepository
 
             foreach ($statement->fetchAllAssociative() as $row) {
                 $tabResources[$i] = $this->getEntityManager()->getRepository(Resource::class)->find($row['resource_id']);
-                $i++;
+                ++$i;
             }
 
             return $tabResources;
@@ -201,9 +197,9 @@ class ResourceRepository extends ServiceEntityRepository
         }
     }
 
-    public function getLastWeekResourcesByValuation($bestvaluation) {
-
-        if($bestvaluation) {
+    public function getLastWeekResourcesByValuation($bestvaluation)
+    {
+        if ($bestvaluation) {
             $order = 'DESC';
         } else {
             $order = 'ASC';
@@ -237,7 +233,7 @@ class ResourceRepository extends ServiceEntityRepository
                 $resource = $this->getEntityManager()->getRepository(Resource::class)->find($row['resource_id']);
                 $resource->setValuation(round($row['valuation'], 1));
                 $tabResources[$i] = $resource;
-                $i++;
+                ++$i;
             }
 
             return $tabResources;
@@ -248,8 +244,8 @@ class ResourceRepository extends ServiceEntityRepository
         }
     }
 
-    public function getLastWeekMostSharedResources() {
-
+    public function getLastWeekMostSharedResources()
+    {
         $connexion = $this->getEntityManager()->getConnection();
 
         $sql = '
@@ -271,7 +267,7 @@ class ResourceRepository extends ServiceEntityRepository
                 $resource = $this->getEntityManager()->getRepository(Resource::class)->find($row['resource_id']);
                 $resource->setShareNb($row['resource_nb']);
                 $tabResources[$i] = $resource;
-                $i++;
+                ++$i;
             }
 
             return $tabResources;
@@ -280,12 +276,9 @@ class ResourceRepository extends ServiceEntityRepository
         } catch (\Doctrine\DBAL\Driver\Exception $e) {
             return [];
         }
-
     }
 
     /**
-     * @param int $managementTypeId
-     * @param User $user
      * @return int
      */
     public function getNumberOfResourceByManagementType(int $managementTypeId, User $user)
@@ -304,7 +297,6 @@ class ResourceRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param User $user
      * @return mixed
      */
     public function getNumberOfSharedResource(User $user)
@@ -320,8 +312,6 @@ class ResourceRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param int $actionTypeId
-     * @param User $user
      * @return mixed
      */
     public function getNumberOfResourceByActionType(int $actionTypeId, User $user)
@@ -340,8 +330,6 @@ class ResourceRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param int $managementTypeId
-     * @param User $user
      * @return int|mixed|string
      */
     public function getResourcesByManagementType(int $managementTypeId, User $user)
@@ -360,7 +348,6 @@ class ResourceRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param User $user
      * @return array
      */
     public function getSharedResources(User $user)
@@ -376,8 +363,6 @@ class ResourceRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param int $actionTypeId
-     * @param User $user
      * @return array
      */
     public function getResourcesByActionType(int $actionTypeId, User $user)
@@ -397,6 +382,7 @@ class ResourceRepository extends ServiceEntityRepository
 
     /**
      * @param $result
+     *
      * @return array
      */
     private function putResourcesInTab($result)
