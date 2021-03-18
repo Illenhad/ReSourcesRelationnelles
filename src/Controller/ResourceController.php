@@ -67,7 +67,7 @@ class ResourceController extends AbstractController
         $formfilter = $this->createFormBuilder($filter, [
             'method' => 'GET',
             'csrf_protection' => false,
-            'block_prefix' => null,])
+            'block_prefix' => null, ])
             ->add('search', HiddenType::class, [
                 'data' => $search,
             ])
@@ -100,7 +100,7 @@ class ResourceController extends AbstractController
         );
 
         return $this->render(
-            self::ROUTE_PREFIX . '/index.html.twig',
+            self::ROUTE_PREFIX.'/index.html.twig',
             [
                 'resources' => $resources,
                 'filter' => $formfilter->CreateView(),
@@ -122,8 +122,7 @@ class ResourceController extends AbstractController
                          ActionTypeRepository $actionTypeRepository,
                          RelUserActionResourceRepository $actionResourceRepository,
                          EntityManagerInterface $entityManager
-    ): Response
-    {
+    ): Response {
         $resource = $resourceRepository->find($id);
 
         //Management Type Favoris
@@ -140,18 +139,20 @@ class ResourceController extends AbstractController
         }
 
         //consultation
-        $date = new \DateTime('now');
-        $consultActionType = $actionTypeRepository->findOneBy(['label' => 'Consultation']);
-
         if ($this->getUser()) {
-            $isConsult = $actionResourceRepository->findOneBy([
-                'user' => $this->getUser()->getId(),
-                'resource' => $id,
-                'actionType' => $consultActionType->getId(),
-                'actionDate' => $date,
-            ]);
-        } else {
-            $isConsult = null;
+            $date = new \DateTime('now');
+            $consultActionType = $actionTypeRepository->findOneBy(['label' => 'Consultation']);
+
+            if ($this->getUser()) {
+                $isConsult = $actionResourceRepository->findOneBy([
+                    'user' => $this->getUser()->getId(),
+                    'resource' => $id,
+                    'actionType' => $consultActionType->getId(),
+                    'actionDate' => $date,
+                ]);
+            } else {
+                $isConsult = null;
+            }
         }
 
         //Management Type mis de côte
@@ -209,27 +210,28 @@ class ResourceController extends AbstractController
             $entityManager->flush();
         }
 
+        $isConsult = null;
         // Add consultation action
-
-        $consultActionType = $actionTypeRepository->findOneBy(['label' => 'Consultation']);
-        $existingConsult = $actionResourceRepository->findOneBy([
-            'user' => $this->getUser()->getId(),
-            'resource' => $id,
-            'actionType' => $consultActionType->getId(),
-        ]);
-        if ($existingConsult) {
-            $entityManager->remove($existingConsult);
-        } else {
-            $newConsult = new RelUserActionResource();
-            $newConsult->setUser($this->getUser())
-                ->setActionType($consultActionType)
-                ->setResource($resource);
-            $entityManager->persist($newConsult);
+        if ($this->getUser()) {
+            $consultActionType = $actionTypeRepository->findOneBy(['label' => 'Consultation']);
+            $existingConsult = $actionResourceRepository->findOneBy([
+                'user' => $this->getUser()->getId(),
+                'resource' => $id,
+                'actionType' => $consultActionType->getId(),
+            ]);
+            if ($existingConsult) {
+                $entityManager->remove($existingConsult);
+            } else {
+                $newConsult = new RelUserActionResource();
+                $newConsult->setUser($this->getUser())
+                    ->setActionType($consultActionType)
+                    ->setResource($resource);
+                $entityManager->persist($newConsult);
+            }
+            $entityManager->flush();
         }
-        $entityManager->flush();
 
-
-        return $this->render(self::ROUTE_PREFIX . '/show.html.twig', [
+        return $this->render(self::ROUTE_PREFIX.'/show.html.twig', [
             'resource' => $resource,
             'current_menu' => 'resources',
             'form' => $this->createForm(CommentType::class, new Comment())->createView(),
@@ -262,7 +264,7 @@ class ResourceController extends AbstractController
             ]);
         }
 
-        return $this->render(self::ROUTE_PREFIX . '/editComment.html.twig', [
+        return $this->render(self::ROUTE_PREFIX.'/editComment.html.twig', [
             'comment' => $comment,
             'current_menu' => 'resources',
             'resource' => $comment->getResource(),
