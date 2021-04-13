@@ -17,6 +17,15 @@
     flex-wrap: wrap;
 }
 
+/*PAGINATION*/
+.index-pagination.pagination {
+    margin: auto;
+    width: max-content;
+}
+.index-pagination nav pagination {
+    width: max-content;
+}
+
 @media screen and (max-width: 1294px) {
     .index-content {
         max-width: 975px;
@@ -24,11 +33,17 @@
         margin: auto;
     }
 }
-@media screen and (max-width: 974px) and (min-width: 691px) {
+@media screen and (max-width: 984px) {
     .index-content {
-        max-width: 570px;
+        max-width: 640px;
+        grid-template-columns: 1fr 1fr;
+        margin: auto;
+    }
+    .cards-content {
+        width: 320px;
     }
 }
+
 @media screen and (max-width: 690px) {
     .content .index-content {
         max-width: 320px;

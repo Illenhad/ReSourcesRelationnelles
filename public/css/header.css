@@ -48,7 +48,7 @@ header {
     flex-direction: column;
 }
 #connexion .btn {
-    width: 100%;
+    width: 158px;
 }
 #connexion .btn:not(:last-of-type) {
     margin-bottom: 5px;
@@ -130,6 +130,20 @@ header {
         display: flex;
         flex-direction: row;
         justify-content: flex-end;
+    }
+
+    #connexion .btn {
+        width: 56px;
+    }
+    #connexion .btn:not(:last-of-type) {
+        margin-bottom: 0;
+        margin-right: 5px;
+     }
+    #connexion .btn .log-text {
+        display: none;
+    }
+    #connexion .btn .log-icon {
+        margin-right: 0;
     }
 }
 

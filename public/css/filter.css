@@ -2,7 +2,7 @@
     position: sticky;
     top: 15px;
     width: auto;
-    height: fit-content;
+    max-height: 338px;
 }
 .index-content .filters .sort_items:hover {
     background-color: #cfcfcf;
@@ -95,7 +95,7 @@
     right: 0;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 690px) {
     .index-content .filters {
         position: relative;
     }
