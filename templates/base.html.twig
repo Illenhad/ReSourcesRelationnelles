@@ -17,6 +17,7 @@
     <link href="{{ asset('css/form.css') }}" rel="stylesheet"/>
     <link href="{{ asset('css/button.css') }}" rel="stylesheet"/>
     <link href="{{ asset('css/search.css') }}" rel="stylesheet"/>
+    <link href="{{ asset('css/burger.css') }}" rel="stylesheet"/>
 
 </head>
 <body>
@@ -72,7 +73,14 @@
         </div>
     </div>
     <div id="responsive-header">
-        <button id="responsive-nav-btn" class="btn btn-dark-light" onclick="setNav()">&#9776;</button>
+        <button id="responsive-nav-btn" class="burger_box b"  onclick="setNav()">
+            <div class="container-rows">
+                <div class="row-bugger"></div>
+                <div class="row-bugger"></div>
+                <div class="row-bugger"></div>
+            </div>
+        </button>
+        <script src="{{ asset('js/burger.js') }}"></script>
         <div id="responsive-nav">
             {% if app.user %}
                 <a class="btn btn-primary btn-log" href="{{ path('logout') }}"><span class="log-icon log-icon-logout"></span><span
