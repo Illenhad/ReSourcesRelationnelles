@@ -14,7 +14,9 @@ thead {
     /*border: 1px solid var(--charte-grey-light);*/
 }
 
-th, td a span {
+th,
+td a span,
+td span {
     padding: 10px;
 }
 
@@ -22,11 +24,14 @@ th {
     font-weight: bold;
 }
 
-td a, td a span {
+td a,
+td a span,
+td span {
     display: block;
 }
 
-td a, td a:hover {
+td a,
+td a:hover {
     text-decoration: none;
     color: var(--charte-dark-light);
 }
@@ -35,6 +40,6 @@ tr:not(:last-of-type) td {
     border-bottom: 1px solid var(--charte-grey-light);
 }
 
-tbody > tr:hover {
+tbody > tr.table-link:hover {
     box-shadow: 0 0 10px var(--charte-grey);
 }

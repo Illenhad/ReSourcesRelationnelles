@@ -10,7 +10,7 @@
         'Professionnel - manager': asset('image/8.jpg')
     }%}
 
-<a class="resource-card" href="{{ path('comment.show', {id: resource.id, slug: resource.slug}) }}" data-id="{{ resource.id }}" data-bg="{{ (resource.imageName) ? vich_uploader_asset(resource,'imageFile') : ((resource.relationShip.label in relation|keys) ? relation[resource.relationShip.label] : 'https://picsum.photos/300/300') }}">
+<a class="resource-card" href="{{ path('comment.show', {slug: resource.slug, id: resource.id}) }}" data-id="{{ resource.id }}" data-bg="{{ (resource.imageName) ? vich_uploader_asset(resource,'imageFile') : ((resource.relationShip.label in relation|keys) ? relation[resource.relationShip.label] : 'https://picsum.photos/300/300') }}">
 
     {% set typeIcons = [
         {label: 'Activité / Jeu à réaliser', icon: 'fas fa-dice-five'},

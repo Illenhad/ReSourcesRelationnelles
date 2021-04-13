@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+
+{% block title 'Espace group' %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/dashboard.css') }}" type="text/css">
+    <link rel="stylesheet" href="{{ asset('css/stats.css') }}" type="text/css">
+    <link rel="stylesheet" href="{{ asset('css/table.css') }}" type="text/css">
+{% endblock %}
+
+{% block body %}
+    <div class="dashboard-content">
+        <div class="dashboard-main">
+            <h1>Mes Groupes</h1>
+            <hr>
+            {% for message in app.flashes('success') %}
+                <div class="alert alert-success mt-4 text-center">
+                    {{ message }}
+                </div>
+            {% endfor %}
+            {% if gatherings %}
+                <table class="">
+                    <thead>
+                    <th>Groupe</th>
+                    <th>Gérant</th>
+                    <th>Membres</th>
+                    <th>Rôle</th>
+                    </thead>
+                    <tbody>
+                    {% for gathering in gatherings %}
+                        <tr class="align-middle table-link">
+                            {% set columns = {
+                                'Groupe': gathering[0].name,
+                                'Gérant': gathering[0].admin,
+                                'Membres': gathering[0].num_members,
+                                'Role': gathering[0].role
+                            } %}
+                            {% for column in columns %}
+                                <td><a href="{{ path('gathering.show', {id: gathering[0].gathering_id}) }}"><span>{{ column }}</span></a></td>
+                            {% endfor %}
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <tr>
+                    <td colspan="7" class="text-center">Pas de groupe</td>
+                </tr>
+            {% endif %}
+        </div>
+
+        <div class="user-stats">
+            <a href="{{ path('gatherings') }}" class="stat-card stat-card-turquoise {{ (gatheringGestion is defined) ? (gatheringGestion == 'gatherings') ? 'active' : '' : 'active' }}">
+                <span class="icone-stat icone-gathering"></span>
+                <p>Mes groupes</p>
+            </a>
+            <a href="{{ path('gathering_invites') }}" class="stat-card stat-card-orange {{ (gatheringGestion == 'invites') ? 'active' : '' }}">
+                <span class="icone-stat icone-hourglass"></span>
+                <p>Invitations en attente</p>
+            </a>
+            <a href="{{ path('gathering-add')}}" class="stat-card stat-card-green">
+                <span class="icone-stat icone-add"></span>
+                <p>Créer un groupe</p>
+            </a>
+        </div>
+
+    </div>
+{% endblock %}

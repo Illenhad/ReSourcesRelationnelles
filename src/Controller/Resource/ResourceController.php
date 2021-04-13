@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Resource;
 
 use App\Entity\ActionType;
 use App\Entity\AgeCategory;
@@ -10,6 +10,9 @@ use App\Entity\RelationshipType;
 use App\Entity\RelUserActionResource;
 use App\Entity\RelUserManagementResource;
 use App\Entity\Resource;
+use App\Entity\ResourceShareUser;
+use App\Entity\ResourceUser;
+use App\Entity\User;
 use App\Form\CommentType;
 use App\Form\ResourceType;
 use App\Repository\ActionTypeRepository;
@@ -233,6 +236,7 @@ class ResourceController extends AbstractController
 
         return $this->render(self::ROUTE_PREFIX.'/show.html.twig', [
             'resource' => $resource,
+            'is_public' => $resource->isPublic(),
             'current_menu' => 'resources',
             'form' => $this->createForm(CommentType::class, new Comment())->createView(),
             'isFavorite' => $isfav,
@@ -303,7 +307,7 @@ class ResourceController extends AbstractController
                 $this->manager->flush();
                 $this->addFlash('success', 'Les modifications ont été enregistrées');
 
-                return $this->redirectToRoute('user_resource', [
+                return $this->redirectToRoute('resources_dashboard', [
                     'resourceGestion' => 'created',
                 ]);
             }
@@ -350,7 +354,7 @@ class ResourceController extends AbstractController
                 $this->manager->flush();
                 $this->addFlash('success', 'La ressource a été créée');
 
-                return $this->redirectToRoute('user_resource', [
+                return $this->redirectToRoute('resources_dashboard', [
                     'resourceGestion' => 'created',
                 ]);
             }
@@ -464,5 +468,95 @@ class ResourceController extends AbstractController
         }
 
         return $this->redirect($url);
+    }
+
+    /**
+     * @Route("/dashboard/{resourceGestion}", name="resources_dashboard")
+     * @param string $resourceGestion
+     * @return Response
+     */
+    public function userResources(string $resourceGestion): Response
+    {
+        $user = $this->getUser();
+
+        if (isset($user)) {
+            $favoris = $this->manager->getRepository(Resource::class)->getNumberOfResourceByManagementType(1, $user);
+            $putAside = $this->manager->getRepository(Resource::class)->getNumberOfResourceByManagementType(2, $user);
+            $exploited = $this->manager->getRepository(Resource::class)->getNumberOfResourceByManagementType(3, $user);
+            $shared = $this->manager->getRepository(ResourceUser::class)->getNumberOfShareResource($user->getId());
+            $waiting = $this->manager->getRepository(ResourceShareUser::class)->getNumberOfWaitingResource($user->getId());
+            $consulted = $this->manager->getRepository(Resource::class)->getNumberOfResourceByActionType(2, $user);
+            $created = $this->manager->getRepository(Resource::class)->getNumberOfResourceByActionType(1, $user);
+            $commented = $this->manager->getRepository(Comment::class)->getNumberOfComments($user);
+
+            switch ($resourceGestion) {
+                case 'favoris':
+                    $resources = $this->manager->getRepository(Resource::class)->getResourcesByManagementType(1, $user);
+                    break;
+                case 'putAside':
+                    $resources = $this->manager->getRepository(Resource::class)->getResourcesByManagementType(2, $user);
+                    break;
+                case 'exploited':
+                    $resources = $this->manager->getRepository(Resource::class)->getResourcesByManagementType(3, $user);
+                    break;
+                case 'shared':
+                    $shared_resources = $this->manager->getRepository(ResourceUser::class)->getShareResources($user->getId());
+                    $resources = [];
+                    foreach ($shared_resources as $shared_resource) {
+                        $r = $this->manager->getRepository(Resource::class)->findOneBy(['id' => $shared_resource->getResource()]);
+                        $r_shared = $this->manager->getRepository(User::class)->findOneBy(['id' => $shared_resource->getSharedUser()]);
+                        $r_sharing = $this->manager->getRepository(User::class)->findOneBy(['id' => $shared_resource->getSharingUser()]);
+                        $share = [
+                            'resource_title' => $r->getTitle(),
+                            'shared_name' => $r_shared->getUsername(),
+                            'sharing_name' => $r_sharing->getUsername(),
+                            'id' => $shared_resource->getId()
+                        ];
+                        $resources[] = $share;
+                    }
+                    break;
+                case 'waiting':
+                    $waiting_resources = $this->manager->getRepository(ResourceShareUser::class)->getWaitingResources($user->getId());
+                    $resources = [];
+                    foreach ($waiting_resources as $waiting_resource) {
+                        $r = $this->manager->getRepository(Resource::class)->findOneBy(['id' => $waiting_resource->getResource()]);
+                        $r_shared = $this->manager->getRepository(User::class)->findOneBy(['id' => $waiting_resource->getShared()]);
+                        $r_sharing = $this->manager->getRepository(User::class)->findOneBy(['id' => $waiting_resource->getSharing()]);
+                        $share = [
+                            'resource_title' => $r->getTitle(),
+                            'shared_name' => $r_shared->getUsername(),
+                            'sharing_name' => $r_sharing->getUsername(),
+                            'id' => $waiting_resource->getId()
+                        ];
+                        $resources[] = $share;
+                    }
+                    break;
+                case 'consulted':
+                    $resources = $this->manager->getRepository(Resource::class)->getResourcesByActionType(2, $user);
+                    break;
+                case 'created':
+                    $resources = $this->manager->getRepository(Resource::class)->getResourcesByActionType(1, $user);
+                    break;
+                default:
+                    $resources = [];
+            }
+
+            return $this->render('resources/dashboard/dashboard.html.twig', [
+                'resources' => $resources,
+                'resourceGestion' => $resourceGestion,
+                'resourceStats' => [
+                    'favoris' => $favoris,
+                    'putAside' => $putAside,
+                    'exploited' => $exploited,
+                    'shared' => $shared,
+                    'waiting' => $waiting,
+                    'consulted' => $consulted,
+                    'created' => $created,
+                    'commented' => $commented,
+                ]
+            ]);
+        } else {
+            return $this->redirectToRoute('login');
+        }
     }
 }

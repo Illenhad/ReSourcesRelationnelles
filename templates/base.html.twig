@@ -30,11 +30,14 @@
                 <a class="nav-link home" aria-current="page" href="{{ path('resources') }}">Accueil</a>
             </li>
             {% if app.user %}
+{#                <li class="nav-item">#}
+{#                    <a class="nav-link" href="{{ path('user_dashboard') }}">Espace personnel</a>#}
+{#                </li>#}
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ path('user_dashboard') }}">Espace personnel</a>
+                    <a class="nav-link" href="{{ path('resources_dashboard', {resourceGestion: 'favoris'}) }}">Mes ressources</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ path('user_resource', {resourceGestion: 'favoris'}) }}">Mes favoris</a>
+                    <a class="nav-link" href="{{ path('gatherings')}}">Mes groupes</a>
                 </li>
             {% elseif not app.user %}
                 <li class="nav-item">
@@ -58,10 +61,12 @@
         </div>
         <div id="connexion">
             {% if app.user %}
-                <a class="btn btn-primary btn-log" href="{{ path('logout') }}"><span class="log-icon log-icon-logout"></span><span
+                <a class="btn btn-red btn-log" href="{{ path('logout') }}"><span class="log-icon log-icon-logout"></span><span
                             class="log-text">Deconnexion</span></a>
+                <a class="btn btn-primary btn-log" href="{{ path('account') }}"><span class="log-icon log-icon-user"></span><span
+                            class="log-text">Mon compte</span></a>
             {% else %}
-                <a class="btn btn-primary btn-log" href="{{ path('login') }}"><span class="log-icon log-icon-login"></span><span
+                <a class="btn btn-green btn-log" href="{{ path('login') }}"><span class="log-icon log-icon-login"></span><span
                             class="log-text">Connexion</span></a>
             {% endif %}
         </div>
@@ -71,6 +76,8 @@
         <div id="responsive-nav">
             {% if app.user %}
                 <a class="btn btn-primary btn-log" href="{{ path('logout') }}"><span class="log-icon log-icon-logout"></span><span
+                            class="log-text">Deconnexion</span></a>
+                <a class="btn btn-primary" href="{{ path('logout') }}"><span class="log-icon log-icon-logout"></span><span
                             class="log-text">Deconnexion</span></a>
             {% else %}
                 <a class="btn btn-primary btn-log" href="{{ path('login') }}"><span class="log-icon log-icon-login"></span><span
@@ -83,7 +90,7 @@
                 </div>
             </form>
             <a class="nav-link home {# btn-full-width #}" aria-current="page" href="{{ path('resources') }}">Accueil</a>
-            <a class="nav-link {# btn-full-width #}" href="{{ path('user_dashboard') }}">Espace personnel</a>
+            <a class="nav-link home {# btn-full-width #}" aria-current="page" href="{{ path('resources_dashboard', {'resourceGestion': 'favoris'}) }}">Mes ressources</a>
         </div>
     </div>
 </header>

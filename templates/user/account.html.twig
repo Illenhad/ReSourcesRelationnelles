@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title 'Mon compte' %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/account.css') }}" type="text/css">
+{% endblock %}
+
+{% block body %}
+    <div class="content">
+        <form>
+            <h1>Mon profil</h1>
+            <hr>
+            {% set profileInfos = [
+                {
+                    name: 'lastname',
+                    text: 'Nom',
+                    field: app.user.lastname
+                },
+                {
+                    name: 'firstname',
+                    text: 'Prénom',
+                    field: app.user.firstname
+                },
+                {
+                    name: 'username',
+                    text: 'Pseudonyme',
+                    field: app.user.username
+                },
+                {
+                    name: 'email',
+                    text: 'Email',
+                    field: app.user.email
+                },
+                {
+                    name: 'department',
+                    text: 'Département',
+                    field: app.user.department
+                },
+                {
+                    name: 'agecategory',
+                    text: 'Catégorie d\'âge',
+                    field: app.user.agecategory
+                }
+            ]%}
+            {% for profileInfo in profileInfos %}
+                <div class="user-info">
+                    <div class="user-info-title">{{ profileInfo['text'] }}</div>
+                    <div class="user-info-info">{{ profileInfo['field'] }}</div>
+{#                        <label for="{{ profileInfo['name'] }}" class="form-input-label">{{ profileInfo['text'] }}</label>#}
+{#                        <input id="{{ profileInfo['name'] }}" type="text" name="{{ profileInfo['name'] }}" value="{{ profileInfo['field'] }}" class="charte-input" disabled>#}
+                </div>
+            {% endfor %}
+        </form>
+
+        <div id="user-action">
+                            <a href="{{ path('account_edit') }}" class="btn btn-yellow">Modifier</a>
+                            <a href="{{ path('change_password') }}" class="btn btn-yellow">Changer mot de passe</a>
+        </div>
+    </div>
+{% endblock %}

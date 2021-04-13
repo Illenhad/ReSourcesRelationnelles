@@ -1,23 +1,5 @@
-.dashboard-content {
-    display: grid;
-    grid-template-columns: auto min-content;
-    grid-template-rows: auto;
-    grid-column-gap: 30px;
-    grid-row-gap: 15px;
-    grid-template-areas: 'main menue';
-}
-
-.dashboard-main {
-    grid-area: main;
-}
-
-.dashboard-main form > * {
+.content form > * {
     margin-bottom: 20px;
-}
-
-
-.user-stats {
-    grid-area: menue;
 }
 
 #user-action {
