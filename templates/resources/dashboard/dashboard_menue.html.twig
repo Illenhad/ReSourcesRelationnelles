@@ -1,0 +1,64 @@
+<div class="user-stats">
+    {% set statsMenu = [
+        {
+            rGestion : 'favoris',
+            number : resourceStats['favoris'],
+            color : 'pink',
+            title : 'Favoris',
+            icon : 'heart'
+        },
+        {
+            rGestion : 'putAside',
+            number : resourceStats['putAside'],
+            color : 'turquoise',
+            title : 'Mises de côté',
+            icon : 'folder'
+        },
+        {
+            rGestion : 'exploited',
+            number : resourceStats['exploited'],
+            color : 'yellow',
+            title : 'Exploitées',
+            icon : 'checked'
+        },
+        {
+            rGestion : 'shared',
+            number : resourceStats['shared'],
+            color : 'purple',
+            title : 'Partagées',
+            icon : 'share'
+        },
+        {
+            rGestion : 'waiting',
+            number : resourceStats['waiting'],
+            color : 'orange',
+            title : 'En attente',
+            icon : 'hourglass'
+        },
+        {
+            rGestion : 'consulted',
+            number : resourceStats['consulted'],
+            color : 'blue',
+            title : 'Consultées',
+            icon : 'eye'
+        },
+        {
+            rGestion : 'created',
+            number : resourceStats['created'],
+            color : 'green',
+            title : 'Crées',
+            icon : 'add'
+        }
+    ]%}
+    {% for statMenu in statsMenu %}
+        <a href="{{ path('resources_dashboard', {resourceGestion: statMenu['rGestion']}) }}" class="stat-card stat-card-{{ statMenu['color'] }} {{ (resourceGestion is defined and resourceGestion == statMenu['rGestion']) ? 'active' : '' }}">
+            <span class="icone-stat icone-{{ statMenu['icon'] }}"></span>
+            <p>{{ statMenu['title'] }} {{ statMenu['number'] }}</p>
+        </a>
+    {% endfor %}
+
+    <div class="stat-card stat-card-red">
+        <span class="icone-stat icone-chat"></span>
+        <p>Commentées {{ resourceStats['commented'] }}</p>
+    </div>
+</div>

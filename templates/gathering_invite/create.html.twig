@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title 'Inviter un utilisateur' %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/form.css') }}" type="text/css">
+{% endblock %}
+
+{% block body %}
+
+    <div class="charte-form">
+        <h2>Inviter un utilisateur</h2>
+        <hr>
+        {{ form_start(form) }}
+        <div>
+            {{ form_label(form.mail) }}
+            {{ form_widget(form.mail) }}
+        </div>
+        <div class="form-action form-action-centred">
+            <button class="btn btn-green">Inviter</button>
+            <a href="{{ path('gathering.show', {'id': gathering_id})}}" class="btn btn-red">Annuler</a>
+        </div>
+        {{ form_end(form) }}
+    </div>
+
+{% endblock %}

@@ -1,0 +1,82 @@
+{% extends 'base.html.twig' %}
+
+{% block title 'Espace group' %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/dashboard.css') }}" type="text/css">
+    <link rel="stylesheet" href="{{ asset('css/stats.css') }}" type="text/css">
+    <link rel="stylesheet" href="{{ asset('css/table.css') }}" type="text/css">
+{% endblock %}
+
+{% block body %}
+    <div class="dashboard-content">
+        <div class="dashboard-main">
+            <h1>Ressources partagées</h1>
+            <hr>
+            {% for message in app.flashes('success') %}
+                <div class="alert alert-success mt-4 text-center">
+                    {{ message }}
+                </div>
+            {% endfor %}
+            {% if resources %}
+                <table class="">
+                    <thead>
+                    <th>Titre</th>
+                    <th class="dashboard-responsive-hidden">Partagée par</th>
+                    <th>Actions</th>
+                    </thead>
+                    <tbody>
+                    {% for resource in resources %}
+                        <tr class="align-middle table-link">
+                            <td><a href="{{ path('comment.show', {id: resource.id, slug: resource.slug}) }}"><span>{{ resource.title }}</span></a></td>
+                            <td><a href="{{ path('comment.show', {id: resource.id, slug: resource.slug}) }}"><span>{{ resource.sharing }}</span></a></td>
+                            <td>
+                                {% if is_admin or resource.is_sharing %}
+                                <span class="actions-buttons">
+                                    <a class="btn btn-icon" href="{{ path('gathering-remove-resource', {'id': gathering_id, 'resource_id': resource.id}) }}" title="Supprimer"><span class="icon-refuse"></span></a>
+                                </span>
+                                {% endif  %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <tr>
+                    <td colspan="7" class="text-center">Pas de resources partagées</td>
+                </tr>
+            {% endif %}
+        </div>
+
+        <div class="user-stats">
+            <a href="{{ path('gatherings') }}" class="stat-card stat-card-turquoise {{ (gatheringGestion is defined) ? (gatheringGestion == 'gatherings') ? 'active' : '' : 'active' }}">
+                <span class="icone-stat icone-gathering"></span>
+                <p>Mes groupes</p>
+            </a>
+            <a href="{{ path('gathering_invites') }}" class="stat-card stat-card-orange {{ (gatheringGestion == 'invites') ? 'active' : '' }}">
+                <span class="icone-stat icone-hourglass"></span>
+                <p>Invitations en attente</p>
+            </a>
+            <a href="{{ path('gathering-invit-user', {'id': gathering_id}) }}" class="stat-card stat-card-green {{ (gatheringGestion == 'invite') ? 'active' : '' }}">
+                <span class="icone-stat icone-add"></span>
+                <p>Inviter</p>
+            </a>
+            <a href="{{ path('gathering-resources', {'id': gathering_id}) }}" class="stat-card stat-card-purple {{ (gatheringGestion == 'resources') ? 'active' : '' }}">
+                <span class="icone-stat icone-resources"></span>
+                <p>Resources</p>
+            </a>
+            {% if is_admin %}
+                <a href="{{ path('gathering-remove', {'id': gathering_id}) }}" class="stat-card stat-card-red">
+                    <span class="icone-stat icone-quit"></span>
+                    <p>Fermer le groupe</p>
+                </a>
+            {% else %}
+                <a href="{{ path('gathering-remove-member', {'gathering_id': gathering_id, 'member_id': app.user.id}) }}" class="stat-card stat-card-red">
+                    <span class="icone-stat icone-quit"></span>
+                    <p>Quitter</p>
+                </a>
+            {% endif %}
+        </div>
+
+    </div>
+{% endblock %}
