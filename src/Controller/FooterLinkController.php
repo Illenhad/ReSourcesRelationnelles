@@ -23,7 +23,7 @@ class FooterLinkController extends AbstractController
      */
     public function legal(): Response
     {
-        return $this->render('footer_link/legal.html.twig', [
+        return $this->render('footer_link/Legal.html.twig', [
             'controller_name' => 'FooterLinkController',
         ]);
     }

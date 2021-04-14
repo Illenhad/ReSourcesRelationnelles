@@ -1,127 +1,210 @@
 {% extends 'base.html.twig' %}
 
 {% block stylesheets %}
-    <link rel="stylesheet" href="{{ asset('css/rating.css') }}" type="text/css">
+    <link rel="stylesheet" href="{{ asset('css/rating.css') }}" type="text/css" xmlns="http://www.w3.org/1999/html">
+    <link rel="stylesheet" href="{{ asset('css/show.css') }}" type="text/css">
+    <link rel="stylesheet" href="{{ asset('css/stats.css') }}" type="text/css">
+    <link rel="stylesheet" href="{{ asset('css/popup.css') }}" type="text/css">
     <script src="{{ asset('js/jquery-3.5.1.min.js') }}"></script>
 {% endblock %}
+
 {% block body %}
+    <div class="resource-content">
+        <div class="resource-description">
+            <h1 class="resource-title" id="top">
+                {{ resource.title }}
+                {% if app.user %}
 
-    <div class="container text-center" style="border: 1px solid silver;height:60px;">
-        {{ resource.title }}
+                    <div class="actions">
+                        <a class="btn btn-icon" href="" title="Ajouter aux consultations"></a>
 
-        <!--Gestion Favoris-->
-        {% if app.user %}
-            <a style="display:block;text-align: right"
-               href="{{ path('addRemoveFav', {id: resource.id,url:app.request.requestUri }) }}">
-                {% if isFavorite %}
-                    <img src="https://img.icons8.com/cotton/64/000000/like--v1.png" title="Retirer des Favoris"
-                         style="width: 30px;height: 30px;"/>
-                {% else %}
-                    <img src="https://img.icons8.com/plasticine/100/000000/like--v3.png" title="Ajouter aux favoris"
-                         style="width: 30px;height: 30px;"/>
+                        <button class="btn btn-icon" onclick="displaySharePopup()"><span class="icon-share"></span></button>
+
+                        {% if app.user== resource.user %}
+                        <a class="btn btn-icon" href="{{ path('edit_resource', {id: resource.id}) }}" title="Editer">
+                            <span class="icon-editresource"></span>
+                        </a>
+                        {% endif %}
+                        <a class="btn btn-icon" href="{{ path('addRemoveSide', {id: resource.id,url:app.request.requestUri }) }}" title="Mettre de côté">
+                            {% if isSide %}
+                                <span class="icon-aside-remove"></span>
+                            {% else %}
+                                <span class="icon-aside-add"></span>
+                            {% endif %}
+                        </a>
+                        <a class="btn btn-icon" href="{{ path('addRemoveFav', {id: resource.id,url:app.request.requestUri }) }}" title="Ajouter aux favoris">
+                            {% if isFavorite %}
+                                <span class="icon-favourite-remove"></span>
+                            {% else %}
+                                <span class="icon-favourite-add"></span>
+                            {% endif %}
+                        </a>
+                    </div>
                 {% endif %}
-            </a>
-        {% endif %}
-
+            </h1>
+            <p class="author-date">posté par {{ resource.user.username }} le {{ resource.dateCreation|date("d/m/Y à H:i", "Europe/Paris") }}</p>
+            <hr>
+            <p class="resource-description-description">{{ resource.description |raw }}</p>
+        </div>
+        <div class="resource-information">
+            <h2 class="resource-informations-title">Informations</h2>
+            <div class="stat-card stat-card-blue" title="Type de la ressource"><span class="icone-stat icone-info"></span><p>{{ resource.resourceType }}</p></div>
+            <div class="stat-card stat-card-green" title="Ages concernés par la ressource"><span class="icone-stat icone-user"></span><p>{{ resource.ageCategory }}</p></div>
+            <div class="stat-card stat-card-purple" title="Relations concernées par la ressource"><span class="icone-stat icone-share"></span><p>{{ resource.relationShip.label }}</p></div>
+            {% if resource.public == 0 %}
+                <div class="stat-card stat-card-dark-light" title="La ressource est accessible en partage uniquement"><span class="icone-stat icone-private"></span><p>Privée</p></div>
+            {% endif %}
+        </div>
     </div>
 
-    posté le {{ resource.dateCreation|date("d.m.Y à H:i", "Europe/Paris") }}
-
-    <div class="container" style="border: 1px solid silver;height:60px;">
-        {{ resource.description }}
-    </div>
-
-    <div class="container">
-        <span class="card">
-            Informations
-            <span class="card-header ">  {{ resource.resourceType }} </span>
-            <span class="card-header">  {{ resource.ageCategory }} </span>
-            <span class="card-header">  {{ resource.relationShip.label }} </span>
-        </span>
-
-    </div>
-
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <h4 class="text-center text-secondary">Evaluation </h4>
-
-    <div class="container">
-
-    {% for comment in resource.comments %}
-
-        <div class="card  mt-4 w-50 text-center mx-auto ">
-            <div class="card-header text-secondary  ">
-                De {{ comment.user.username }}
-            </div>
-            <div class="card-body ">
-                <h5 class="card-title">{{ comment.title }}</h5>
-                <p class="card-text">{{ comment.content }}</p>
-                <div class="rating-show">
-                    {% for i in  1..comment.valuation %}
-                        <input type="radio" name="rating-show" value="{{ i }}" id="{{ i }}">
-                        <label for="{{ i }}">☆</label>
-                    {% endfor %}
-                </div>
-
-                {% if app.user== comment.user %}
-
-                    <a href="{{ path('comment.edit', {id: comment.id} ) }}" class="btn btn-secondary">Modifier</a>
-
-                {% endif %}
-
-                {% if app.user== comment.user or is_granted('ROLE_MODERATEUR') %}
-                    <a href="{{ path('comment.delete', {id: comment.id}) }}" class=" btn btn-danger">Supprimer </a>
-                {% endif %}
-
-            </div>
-            <div class="card-footer text-muted">
-                posté le {{ comment.commentDate|date }}
+    {% if app.user and app.user != resource.user %}
+        <div class="is-useful">
+            <p>Cette ressource vous est elle utile ?</p>
+            <div>
+                <a class="btn btn-icon" href="{{ path('addRemoveUtility', {id: resource.id,url:app.request.requestUri,details:"oui" }) }}" title="oui">
+                    {% if isUtility and isUtility.details=="oui" %}
+                        <span class="icon-like active"></span>
+                    {% else %}
+                        <span class="icon-like"></span>
+                    {% endif %}
+                </a>
+                <a class="btn btn-icon" href="{{ path('addRemoveUtility', {id: resource.id,url:app.request.requestUri,details:"non" }) }}" title="Non">
+                    {% if isUtility and isUtility.details=="non" %}
+                        <span class="icon-dislike active"></span>
+                    {% else %}
+                        <span class="icon-dislike"></span>
+                    {% endif %}
+                </a>
             </div>
         </div>
+    {% endif %}
 
-    {% endfor %}
-    {% include "commentary/index.html.twig"  with {"commentaries": resource.commentaries, "resource": resource}%}
-    <div class="card  mt-4 w-50 text-center mx-auto ">
-        <h4 class="text-secondary"> Notez cette ressource </h4>
+    {% if resource.comments is defined and resource.comments is not empty%}
+        <div class="resource-comments">
+            <h2 class="resource-comments-title">Evaluations</h2>
+            {% for comment in resource.comments %}
+                <div class="comment-content">
+                    <hr>
+                    {% if app.user== comment.user or is_granted('ROLE_MODERATEUR') %}
+                        <div class="actions comment-actions">
+                            {% if app.user== comment.user %}
+                                <a href="{{ path('comment.edit', {id: comment.id} ) }}" class="btn btn-icon"><span class="icon-edit"></span></a>
+                            {% endif %}
+                            {% if app.user== comment.user or is_granted('ROLE_MODERATEUR') %}
+                                <a href="{{ path('comment.delete', {id: comment.id}) }}" class="btn btn-icon"><span class="icon-delete"></span></a>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                    <div class="comment-title-content">
+                        <h4 class="comment-title">{{ comment.title }}</h4>
+                        <div class="rating-show">
+                            {% for i in  1..comment.valuation %}
+                                <input type="radio" name="rating-show" value="{{ i }}" id="{{ i }}">
+                                <label for="{{ i }}">☆</label>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <p><span class="commentary-author">{{ comment.user.username }}</span><span class="author-date"> le {{ comment.commentDate|date("d/m/Y à H:i", "Europe/Paris") }}</span></p>
+{#                    <p class="author-date">De {{ comment.user.username }} le {{ comment.commentDate|date("d/m/Y à H:i", "Europe/Paris") }}</p>#}
+                    <p class="comment-text">{{ comment.content }}</p>
+                </div>
+            {% endfor %}
+        </div>
+        <button style="margin-bottom: 30px" id="more-less-comment" class="btn btn-more-less" onclick="setShowComments()"></button>
+    {% endif %}
 
+    {% if app.user and app.user != resource.user %}
+    <div class="charte-form">
         {{ form_start(form) }}
+        <h3>Votre évaluation</h3>
+        <ul class="rating">
+            {% for i in range(1, 5) %}
+                <li class="rating-item {{ (i == 5) ? 'active' : '' }}" data-rate="{{ i }}"></li>
+            {% endfor %}
+        </ul>
+
         {{ form_widget(form.title) }}
         {{ form_widget(form.content) }}
         {{ form_widget(form.valuation) }}
-
-        <ul class="rating">
-            <li class="rating-item active " data-rate="1"></li>
-            <li class="rating-item" data-rate="2"></li>
-            <li class="rating-item" data-rate="3"></li>
-            <li class="rating-item" data-rate="4"></li>
-            <li class="rating-item" data-rate="5"></li>
-        </ul>
-
-
         {{ form_widget(form.submit) }}
         {{ form_end(form) }}
-
-        {% block javascripts %}
-            <script>
-                $(document).ready(function () {
-                    const container = document.querySelector('.rating');
-                    const items = container.querySelectorAll('.rating-item');
-                    container.onclick = e => {
-                        const elClass = e.target.classList;
-                        if (!elClass.contains('active')) {
-                            items.forEach(
-                                item => item.classList.remove('active')
-                            );
-                            $("#comment_valuation").val(e.target.getAttribute("data-rate"));
-                            elClass.add('active');
-                        }
-                    };
-                });
-            </script>
-
-        {% endblock %}
     </div>
-    <div class="text-center mt-4 mb-4">
+    {% endif %}
+    <div>
+        {% include "commentary/index.html.twig"  with {"commentaries": resource.commentaries, "resource": resource}%}
+    </div>
+
     <a class="btn btn-primary" href="{{ path('resources') }}">Retour</a>
+
+
+    <div id="ToTop" class="cInvisible"><a id="cRetour" href="#top" title="Retourner au début"></a></div>
+
+    <div id="share-popup" class="popup">
+        <div class="popup-content">
+            <button id="popup-cancel" class="btn btn-icon" onclick="displaySharePopup()"><span class="icon-cancel"></span></button>
+            <a class="btn btn-primary" href="{{ path('resource-share-gathering', {'id': resource.id}) }}">Partager à un groupe</a>
+            <a class="btn btn-primary" href="{{ path('resource-share-user', {'id': resource.id}) }}">Partager à un utilisateur</a>
+            <a class="btn btn-primary" href="mailto:adresse@mail.fr?body=http://localhost{{ path('comment.show', {id: resource.id, slug: resource.slug}) }}">Partager par mail</a>
+        </div>
     </div>
+
 {% endblock %}
+    {% block javascripts %}
+        <script>
+            $(document).ready(function () {
+                const container = document.querySelector('.rating');
+                const items = container.querySelectorAll('.rating-item');
+                container.onclick = e => {
+                    const elClass = e.target.classList;
+                    if (!elClass.contains('active')) {
+                        items.forEach(
+                            item => item.classList.remove('active')
+                        );
+                        $("#comment_valuation").val(e.target.getAttribute("data-rate"));
+                        elClass.add('active');
+                    }
+                };
+            });
+
+            /*SHARE DISPLAY*/
+            var shareDisplay = false;
+            var sharePopup = document.getElementById('share-popup');
+            displaySharePopup();
+            function displaySharePopup() {
+                shareDisplay = !shareDisplay;
+                sharePopup.hidden = shareDisplay;
+            }
+
+            /*COMMENTS MANAGING*/
+            var showComments = true;
+            var allComments = document.getElementsByClassName('comment-content');
+            var button = document.querySelector('#more-less-comment');
+            comments = Array.prototype.slice.call(allComments);
+            if(comments.length > 5) {
+                comments = comments.splice(5, comments.length - 5);
+                setShowComments();
+            } else {
+                button.style.display = 'none';
+            }
+            function setShowComments() {
+                showComments = !showComments;
+                if (showComments) {
+                    comments.forEach(showHideComments);
+                    button.innerHTML = '<span class="icon-upper-arrow"></span> Voir moins';
+                } else {
+                    comments.forEach(showHideComments);
+                    button.innerHTML = '<span class="icon-lower-arrow"></span> Voir plus (' + comments.length + ')';
+                }
+            }
+            function showHideComments(item) {
+                item.style.display = showComments ? 'block' : 'none';
+            }
+        </script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                window.onscroll = function(ev) {
+                    document.getElementById("ToTop").className = (window.pageYOffset > 100) ? "cVisible" : "cInvisible";
+                };
+            });
+        </script>
+    {% endblock %}

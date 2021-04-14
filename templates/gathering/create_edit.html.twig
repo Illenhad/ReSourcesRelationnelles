@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title 'Ajouter/modifier un groupe' %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/form.css') }}" type="text/css">
+{% endblock %}
+
+{% block body %}
+
+    <div class="charte-form">
+        <h2>{{ (type == 'creation') ? 'Créer un groupe' : 'Modifier un groupe' }}</h2>
+        <hr>
+        {{ form_start(form) }}
+        <div>
+            {{ form_label(form.name) }}
+            {{ form_widget(form.name) }}
+        </div>
+        <div class="form-action form-action-centred">
+            <button class="btn btn-green">
+                {% if type == 'creation' %}
+                    Créer
+                {% else %}
+                    Modifier
+                {% endif %}
+            </button>
+            <a href="{{ path('gatherings')}}" class="btn btn-red">Annuler</a>
+        </div>
+        {{ form_end(form) }}
+    </div>
+
+{% endblock %}

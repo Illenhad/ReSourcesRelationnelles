@@ -123,8 +123,11 @@ class DashboardController extends AbstractDashboardController
             );
     }
 
+
+
     public function configureMenuItems(): iterable
     {
+        if( $this->isGranted('ROLE_SUPER_ADMIN')||$this->isGranted('ROLE_ADMIN')){
         return [
             MenuItem::linktoDashboard('Accueil', 'fa fa-home'),
             MenuItem::section('Administration', 'fa fa-users-cog'),
@@ -140,7 +143,22 @@ class DashboardController extends AbstractDashboardController
             MenuItem::linkToCrud('Type d\'actions', 'fa fa-hand-point-up', ActionType::class),
             MenuItem::section('Statistiques', 'fa fa-chart-pie'),
             MenuItem::linktoRoute('Utilisateurs', 'fa fa-users', 'users-stats'),
-            MenuItem::linktoRoute('Ressources', 'fa fa-book', 'resources-stats'),
+            MenuItem::linktoRoute('Resources', 'fa fa-book', 'resources-stats'),
+            MenuItem::section('Documentation', 'fa fa-book'),
+            MenuItem::linktoRoute('Faq', 'fa fa-book-open', 'faq'),
+
+
+        ];}
+        else {
+        return [
+            MenuItem::linktoDashboard('Accueil', 'fa fa-home'),
+            MenuItem::section('Administration', 'fa fa-users-cog'),
+            MenuItem::section('Ressources', 'fa fa-book'),
+            MenuItem::linkToCrud('Ressources', 'fa fa-book-open', Resource::class),
+            MenuItem::section('Statistiques', 'fa fa-chart-pie'),
+            MenuItem::section('Documentation', 'fa fa-book'),
+            MenuItem::linktoRoute('Faq', 'fa fa-book-open', 'faq'),
         ];
+    }
     }
 }

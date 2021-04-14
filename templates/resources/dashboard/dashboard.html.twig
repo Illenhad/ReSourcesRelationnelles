@@ -1,0 +1,108 @@
+{% extends 'base.html.twig' %}
+
+{% block title 'Espace utilisateur' %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/dashboard.css') }}" type="text/css">
+    <link rel="stylesheet" href="{{ asset('css/stats.css') }}" type="text/css">
+    <link rel="stylesheet" href="{{ asset('css/table.css') }}" type="text/css">
+{% endblock %}
+
+{% block body %}
+
+    <div class="dashboard-content">
+        <div class="dashboard-main">
+            {% set title = {
+                'favoris': 'Favoris',
+                'putAside': 'Mises de côté',
+                'exploited': 'Exploitées',
+                'shared': 'Partagées',
+                'waiting': 'En attente',
+                'consulted': 'Consultées',
+                'created': 'Créées'
+            } %}
+            <h1>{{ title[resourceGestion] }}</h1>
+            <hr>
+            {% for message in app.flashes('success') %}
+                <div class="alert alert-success mt-4 text-center">
+                    {{ message }}
+                </div>
+            {% endfor %}
+            <table class="">
+                <thead>
+                    {% if resourceGestion in ['favoris','putAside','exploited','consulted','created'] %}
+                        <th>Titre</th>
+                        <th>Type</th>
+                        <th class="dashboard-responsive-hidden">Catégorie</th>
+                        <th class="dashboard-responsive-hidden">Catégorie d'âge</th>
+                    {% else %}
+                        <th>Titre</th>
+                        <th class="dashboard-responsive-hidden">Partagée par</th>
+                        <th class="dashboard-responsive-hidden">Partagée à</th>
+                        <th>Actions</th>
+                    {% endif %}
+                </thead>
+                <tbody>
+                    {% if resources is defined and resources is not empty %}
+                        {% for resource in resources %}
+                            {% if resourceGestion in ['favoris','putAside','exploited','consulted','created'] %}
+                                <tr class="align-middle table-link">
+                                    {% set columns = {
+                                        'Titre': resource.title,
+                                        'Type': resource.resourceType,
+                                        'Catégorie': resource.category,
+                                        'Catégorie d\'âge': resource.ageCategory
+                                    } %}
+                                    {% for column in columns %}
+                                        <td {{ column in [resource.category, resource.ageCategory] ? 'class="dashboard-responsive-hidden"' : '' }}>
+                                            <a href="{{ path('comment.show', {id: resource.id, slug: resource.slug}) }}"><span>{{ column }}</span></a>
+                                        </td>
+                                    {% endfor %}
+                                </tr>
+                            {% else %}
+                                <tr class="align-middle table-link">
+                                    <td>
+                                        <a href="{{ path('comment.show', {id: resource.id, slug: resource.slug}) }}">
+                                            <span>{{ resource.resource_title }}</span>
+                                        </a>
+                                    </td>
+                                    <td class="dashboard-responsive-hidden">
+                                        <a href="{{ path('comment.show', {id: resource.id, slug: resource.slug}) }}">
+                                            <span>{{ resource.sharing_name }}</span>
+                                        </a>
+                                    </td>
+                                    <td class="dashboard-responsive-hidden">
+                                        <a href="{{ path('comment.show', {id: resource.id, slug: resource.slug}) }}">
+                                            <span>{{ resource.shared_name }}</span>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <span class="actions-buttons">
+                                            <a href="{{ path('comment.show', {id: resource.id, slug: resource.slug}) }}">
+                                                {% if resourceGestion == 'waiting' %}
+                                                    <a class="btn btn-icon" href="{{ path('accept_resource_share', {'id': resource.id, 'agree': 'agree'}) }}" title="Accepter"><span class="icon-accept"></span></a>
+                                                    <a class="btn btn-icon" href="{{ path('accept_resource_share', {'id': resource.id, 'agree': 'refuse'}) }}" title="Refuser"><span class="icon-refuse"></span></a>
+                                                {% else %}
+                                                    <a class="btn btn-icon" href="{{ path('remove_user_resource', {'id': resource.id}) }}" title="Supprimer"><span class="icon-refuse"></span></a>
+                                                {% endif %}
+                                            </a>
+                                        </span>
+                                    </td>
+                                </tr>
+                            {% endif %}
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td colspan="7" class="text-center">Pas de ressources trouvées</td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+            {% if resourceGestion == 'created' %}
+                <a class="btn btn-primary" href="{{ path('add_resource') }}" class="btn btn-perso col-2">Créer une nouvelle ressource</a>
+            {% endif %}
+        </div>
+
+        {% include'resources/dashboard/dashboard_menue.html.twig' %}
+    </div>
+{% endblock %}

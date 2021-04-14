@@ -8,8 +8,8 @@
 }
 
 .search__field {
-    width: 50px;
-    height: 50px;
+    width: 36px;
+    height: 36px;
     color: transparent;
     font-size: 1em;
     padding: 0.35em 50px 0.35em 0;
@@ -19,61 +19,63 @@
     transition: all 0.3s ease-in-out;
 }
 
-@media screen and (min-width: 700px){
+.search__icon {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 36px;
+    height: 36px;
+    font-size: 1.35em;
+    text-align: center;
+    border-color: transparent;
+    display: inline-block;
+    outline: none;
+}
+
+@media screen and (min-width: 701px){
     .search__field:focus {
-        border-bottom-color: #ccc;
-        width: 35vw;
-        color: #2b2b2b;
+        border-bottom-color: var(--charte-dark);
+        width:20vw;
+        color: var(--charte-dark);
         cursor: default;
     }
 
     .search__icon {
-        position: absolute;
-        top: 0;
-        right: 0;
-        color: #FFF;
-        background-color: #333333;
-        width: 50px;
-        height: 50px;
-        font-size: 1.35em;
-        text-align: center;
-        border-color: transparent;
-        border-radius: 50%;
+        background-color: var(--charte-white);
+        color: var(--charte-dark);
+        border-radius: 5px;
         pointer-events: none;
-        display: inline-block;
         transition: background-color 0.2s ease-in-out;
     }
 
     .search__field:focus~.search__icon {
-        color: #000;
-        background-color: transparent;
+        color: var(--charte-white);
+        background-color: var(--charte-dark);
         cursor: pointer;
         pointer-events: auto;
+        border-radius: 5px 5px 0 0;
     }
 }
 
 @media screen and (max-width: 700px){
+
+    #responsive-nav form.search .search__wrapper .search__field {
+        border-bottom: 1px solid var(--charte-grey-light);
+    }
     .search__field {
-        width: 75vw;
-        border-bottom-color: #ccc;
-        color: #2b2b2b;
+        width: 100%;
+        color: var(--charte-dark);
         cursor: default;
+        padding: 0.35em 50px;
+        text-align: center;
     }
 
     .search__icon {
-        width: 50px;
-        height: 50px;
-        background-color: transparent;
+        color: var(--charte-white);
+        background-color: var(--charte-dark);
         cursor: pointer;
-        pointer-events: auto;
-        position: absolute;
-        top: 0;
-        right: 0;
-        font-size: 1.35em;
-        text-align: center;
-        border-color: transparent;
-        border-radius: 50%;
-        display: inline-block;
+        pointer-events: none;
+        border-radius: 5px 5px 0 0;
     }
 
 }

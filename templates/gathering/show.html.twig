@@ -1,0 +1,83 @@
+{% extends 'base.html.twig' %}
+
+{% block title 'Group' %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/dashboard.css') }}" type="text/css">
+    <link rel="stylesheet" href="{{ asset('css/stats.css') }}" type="text/css">
+    <link rel="stylesheet" href="{{ asset('css/table.css') }}" type="text/css">
+{% endblock %}
+
+{% block body %}
+    <div class="dashboard-content">
+        <div class="dashboard-main">
+            <h1>{{ gathering.name }}</h1>
+            <hr>
+            {% for message in app.flashes('success') %}
+                <div class="alert alert-success mt-4 text-center">
+                    {{ message }}
+                </div>
+            {% endfor %}
+            <table class="">
+                <thead>
+                <th>Rôle</th>
+                <th>Nom</th>
+                {% if is_admin %}
+                    <th>Actions</th>
+                {% endif  %}
+                </thead>
+                <tbody>
+                    {% for member in members %}
+                        <tr class="align-middle">
+                            {% set columns = {
+                                'Rôle': member.user_role,
+                                'Nom': member.user_name
+                            } %}
+                            {% for column in columns %}
+                                <td><span>{{ column }}</span></td>
+                            {% endfor %}
+                            {% if is_admin %}
+                                <td>
+                                    {% if member.user_id != app.user.id%}
+                                        <a class="btn btn-icon" href="{{ path('gathering-remove-member', {'gathering_id': gathering.id, 'member_id': member.user_id}) }}" title="Supprimer"><span class="icon-refuse"></span></a>
+                                    {% endif  %}
+                                </td>
+                            {% endif  %}
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="user-stats">
+            <a href="{{ path('gatherings') }}" class="stat-card stat-card-turquoise {{ (gatheringGestion is defined) ? (gatheringGestion == 'gatherings') ? 'active' : '' : 'active' }}">
+                <span class="icone-stat icone-gathering"></span>
+                <p>Mes groupes {{ (dashboardMenue['gatherings'] is defined and dashboardMenue['gatherings'] is not null) ?  dashboardMenue['gatherings'] : 0 }}</p>
+            </a>
+            <a href="{{ path('gathering_invites') }}" class="stat-card stat-card-orange {{ (gatheringGestion == 'invites') ? 'active' : '' }}">
+                <span class="icone-stat icone-hourglass"></span>
+                <p>Invitations en attente {{ (dashboardMenue['invites'] is defined and dashboardMenue['invites'] is not null) ?  dashboardMenue['invites'] : 0 }}</p>
+            </a>
+            <a href="{{ path('gathering-invit-user', {'id': gathering.id}) }}" class="stat-card stat-card-green {{ (gatheringGestion == 'invite') ? 'active' : '' }}">
+                <span class="icone-stat icone-add"></span>
+                <p>Inviter</p>
+            </a>
+            <a href="{{ path('gathering-resources', {'id': gathering.id}) }}" class="stat-card stat-card-purple {{ (gatheringGestion == 'resources') ? 'active' : '' }}">
+                <span class="icone-stat icone-resources"></span>
+                <p>Resources {{ (dashboardMenue['resources'] is defined and dashboardMenue['resources'] is not null) ?  dashboardMenue['resources'] : 0 }}</p>
+            </a>
+            {% if is_admin %}
+                <a href="{{ path('gathering-remove', {'id': gathering.id}) }}" class="stat-card stat-card-red">
+                    <span class="icone-stat icone-quit"></span>
+                    <p>Fermer le groupe</p>
+                </a>
+            {% else %}
+                <a href="{{ path('gathering-remove-member', {'gathering_id': gathering.id, 'member_id': app.user.id}) }}" class="stat-card stat-card-red">
+                    <span class="icone-stat icone-quit"></span>
+                    <p>Quitter</p>
+                </a>
+            {% endif %}
+        </div>
+
+    </div>
+{% endblock %}

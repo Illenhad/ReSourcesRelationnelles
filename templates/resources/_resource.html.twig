@@ -1,104 +1,55 @@
-{% block stylesheets %}
-    <link rel="stylesheet" href="{{ asset('css/resource.css') }}" type="text/css">
-{% endblock %}
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+    {% set relation = {
+        'Soi': asset('image/1.jpg'),
+        'Conjoints': asset('image/2.jpg'),
+        'Famille - enfants': asset('image/3.jpg'),
+        'Famille - parents': asset('image/4.jpg'),
+        'Famille - fratrie': asset('image/5.jpg'),
+        'Professionnel - collègues': asset('image/6.jpg'),
+        'Professionnel - collaborateurs': asset('image/7.jpg'),
+        'Professionnel - manager': asset('image/8.jpg')
+    }%}
 
-<div class="card-group ">
-    <div class="card mb-4 mx-auto" style="width: 18rem;">
-        <div class="card-header">
-            De {{ resource.user.username }} <br>
-            posté le {{ resource.dateCreation|date("d.m.Y à H:i", "Europe/Paris") }}
-        </div>
-        {% if resource.imageName %}
-            <img src="{{ vich_uploader_asset(resource,'imageFile') }}", style="width: 300px" alt=""/>
-        {% else %}
-            {% if resource.relationShip.label == 'Soi' %}
-                <img src="{{ asset('image/1.jpg') }}" alt=""/>
+<a class="resource-card" href="{{ path('comment.show', {slug: resource.slug, id: resource.id}) }}" data-id="{{ resource.id }}" data-bg="{{ (resource.imageName) ? vich_uploader_asset(resource,'imageFile') : ((resource.relationShip.label in relation|keys) ? relation[resource.relationShip.label] : 'https://picsum.photos/300/300') }}">
 
-            {% elseif resource.relationShip.label == 'Conjoints' %}
+    {% set typeIcons = [
+        {label: 'Activité / Jeu à réaliser', icon: 'fas fa-dice-five'},
+        {label: 'Article', icon: 'fas fa-newspaper'},
+        {label: 'Carte Défi', icon: 'fas fa-dumbbell'},
+        {label: 'Cours au format PDF', icon: 'far fa-file-pdf'},
+        {label: 'Exercice / Atelier', icon: 'fas fa-tools'},
+        {label: 'Fiche de lecture', icon: 'far fa-file-alt'},
+        {label: 'Jeu en ligne', icon: 'fas fa-gamepad'},
+        {label: 'Vidéo', icon: 'fas fa-video'}
+    ]%}
+    {% set relationIcons = [
+        {label: 'Soi', icon: 'fas fa-user'},
+        {label: 'Conjoints', icon: 'fas fa-heart'},
+        {label: 'Famille - enfants', icon: 'fas fa-baby'},
+        {label: 'Famille - parents', icon: 'fas fa-home'},
+        {label: 'Famille - fratrie', icon: 'fas fa-child'},
+        {label: 'Professionnel - collègues', icon: 'fas fa-briefcase'},
+        {label: 'Professionnel - collaborateurs', icon: 'fas fa-hands-helping'},
+        {label: 'Professionnel - manager', icon: 'fas fa-user-tie'}
+    ]%}
 
-                <img src="{{ asset('image/2.jpg') }}" alt=""/>
-
-            {% elseif resource.relationShip.label == 'Famille - enfants' %}
-
-                <img src="{{ asset('image/3.jpg') }}" alt=""/>
-
-            {% elseif resource.relationShip.label == 'Famille - parents' %}
-
-                <img src="{{ asset('image/4.jpg') }}" alt=""/>
-
-            {% elseif resource.relationShip.label == 'Famille - fratrie' %}
-
-                <img src="{{ asset('image/5.jpg') }}" alt=""/>
-
-
-            {% elseif resource.relationShip.label == 'Professionnel - collègues' %}
-
-                <img src="{{ asset('image/6.jpg') }}" alt=""/>
-
-            {% elseif resource.relationShip.label == 'Professionnel - collaborateurs' %}
-
-                <img src="{{ asset('image/7.jpg') }}" alt=""/>
-
-            {% elseif resource.relationShip.label == 'Professionnel - manager' %}
-
-                <img src="{{ asset('image/8.jpg') }}" alt=""/>
-
-            {% else %}
-                <img class="card-img-top" src="https://picsum.photos/300/300" alt="">
+    <div class="resource-types">
+        {% for typeIcon in typeIcons %}
+            {% if typeIcon['label'] == resource.resourceType %}
+                <i class="fa-icon {{ typeIcon['icon'] }} fa-lg" title="{{ typeIcon['label'] }}"></i>
             {% endif %}
-        {% endif %}
-
-        <div class="card-body ">
-            <h5 class="card-title text-truncate text-center "><a
-                        href="{{ path('comment.show', {id: resource.id, slug: resource.slug}) }}">
-                    {{ resource.title }}
-                </a></h5>
-            <div class="card-text text-center">
-                <p class="text-center">{{ resource.resourceType }}</p>
-                <p class="text-center">{{ resource.relationShip.label }}</p>
-                <span class="text-center mb-4">
-            <a href="{{ path('comment.show', {id: resource.id, slug: resource.slug}) }}"
-               class="btn btn-primary "> Consulter la ressource
-            </a>
-        </span>
-            </div>
-        </div>
-        <div class="card-footer" style="color:dodgerblue">
-            {% if resource.comments|length > 0 %}
-                {% set valuation_average = 0 %}
-                {% for comment in resource.comments %}
-                    {% set valuation_average = valuation_average + comment.valuation %}
-                {% endfor %}
-                {% set valuation_average = valuation_average / resource.comments|length %}
-                Note {{ valuation_average|number_format(1) }} / 5
-            {% else %}
-                Il n'y a pas encore d'évaluation.
+        {% endfor %}
+        {% for relationIcon in relationIcons %}
+            {% if relationIcon['label'] == resource.relationShip.label %}
+                <i class="fa-icon {{ relationIcon['icon'] }} fa-lg" title="{{ relationIcon['label'] }}"></i>
             {% endif %}
-            <br>
-            <div class="row">
-                <div class="col">
-                    <img src="https://img.icons8.com/color/30/000000/chat--v1.png"/> {{ resource.comments | length }}
-                </div>
-                <!--Gestion Favoris-->
-                {% if app.user %}
-                    <div class="col">
-                        <a style="display:block;text-align: right"
-                           href="{{ path('addRemoveFav', {id: resource.id,url:app.request.requestUri }) }}">
-                            {% if resource.id in resourceFav %}
-                                <img src="https://img.icons8.com/cotton/64/000000/like--v1.png"
-                                     title="Retirer des Favoris" style="width: 30px;height: 30px;"/>
-                            {% else %}
-                                <img src="https://img.icons8.com/plasticine/100/000000/like--v3.png"
-                                     title="Ajouter aux favoris" style="width: 30px;height: 30px;"/>
-                            {% endif %}
-                        </a>
-                    </div>
-                {% endif %}
-            </div>
-        </div>
+        {% endfor %}
+        {#            <p>relation : {{ resource.relationShip.label }}</p>#}
     </div>
-</div>
-
-
+    <div class="resource-hidden">
+        <p>Voir</p>
+    </div>
+    <div class="resource-meta">
+        <p class="resource-title">{{ resource.title }}</p>
+    </div>
+</a>

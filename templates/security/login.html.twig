@@ -8,52 +8,43 @@
 {% endblock %}
 
 {% block body %}
-<div class="form">
-<form method="post">
-    {% if error is defined %}
-        {% if error %}
-            <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-        {% endif %}
-    {% endif %}
+    <div class="charte-form form-log">
+        <form method="post">
+            {% if error is defined %}
+                {% if error %}
+                    <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                {% endif %}
+            {% endif %}
 
-    {% if app.user %}
-    <!-- Check si connecté-->
-        <div class="mb-3">
-            Vous êtes déjà connecté avec le compte :  {{ app.user.username }}, <a href="{{ path('logout') }}">Se déconnecter</a>
-        </div>
-    {% else %}
+            {% if app.user %}
+            <!-- Check si connecté-->
+                <div class="mb-3">
+                    Vous êtes déjà connecté avec le compte :  {{ app.user.username }}, <a href="{{ path('logout') }}">Se déconnecter</a>
+                </div>
+            {% else %}
+                <h3>Connexion</h3>
 
-    <h1 >Connexion</h1>
-    <div class="row">
-    <label for="inputUsername">Username</label>
-    <input type="text" value="" name="username" id="inputUsername" class="form-control" required autofocus>
-    </div>
-    <div class="row">
-    <label for="inputPassword">Password</label>
-    <input type="password" name="password" id="inputPassword" class="form-control" required>
-    </div>
-    <input type="hidden" name="_csrf_token"
-           value="{{ csrf_token('authenticate') }}"
-    >
-    <div class="forgotPass">
-        <!-- TODO Form forgot password -->
-        <a class="link" href="{{ path('forgotPassword') }}"> Mot de passe oublié? </a>
-    </div>
+                <div class="form-input-label">
+                    <label for="inputUsername">Username</label>
+                    <input type="text" value="" name="username" id="inputUsername" class="charte-input" required autofocus>
+                </div>
 
-    <div class="remember">
-        <label>
-            <input type="checkbox" name="_remember_me">  Se souvenir de moi
-        </label>
+                <div class="form-input-label">
+                    <label for="inputPassword">Password</label>
+                    <input type="password" name="password" id="inputPassword" class="charte-input" required>
+                    <a class="link" href="{{ path('forgotPassword') }}">Mot de passe oublié ?</a>
+                </div>
+
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+                <!-- TODO Form forgot password -->
+
+                <p><input type="checkbox" name="_remember_me">  Se souvenir de moi</p>
+
+                <p>Pas encore connecté ?<a class="link" href="{{ path('subscribe') }}"> Inscription </a></p>
+
+                <button class="btn btn-lg btn-primary" type="submit">Se connecter</button>
+            {% endif %}
+        </form>
     </div>
-    <div class="row1">
-    Pas encore connecté ?<a class="link" href="{{ path('subscribe') }}"> Inscription </a>
-    </div>
-    <div class="row">
-    <button class="btn btn-lg btn-primary" type="submit">
-        Se connecter
-    </button>
-    </div>
-</form>
-</div>
-    {% endif %}
 {% endblock %}

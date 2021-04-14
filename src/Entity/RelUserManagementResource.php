@@ -43,6 +43,11 @@ class RelUserManagementResource
      */
     private $managementType;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $details;
+
     public function getId(): int
     {
         return $this->id;
@@ -80,6 +85,18 @@ class RelUserManagementResource
     public function setManagementType(ManagementType $managementType): RelUserManagementResource
     {
         $this->managementType = $managementType;
+
+        return $this;
+    }
+
+    public function getDetails(): ?string
+    {
+        return $this->details;
+    }
+
+    public function setDetails(?string $details): self
+    {
+        $this->details = $details;
 
         return $this;
     }

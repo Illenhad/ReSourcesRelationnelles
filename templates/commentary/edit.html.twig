@@ -3,7 +3,5 @@
 {% block title %}Editer le commentaire{% endblock %}
 
 {% block body %}
-   Modification
-
-    {{ include('commentary/_form.html.twig', {'button_label': 'envoyer'}) }}
+    {{ include('commentary/_form.html.twig', {'form_title': '<h2>Modifier le commentaire</h2>', 'button_label': 'envoyer'}) }}
 {% endblock %}

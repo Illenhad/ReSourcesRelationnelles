@@ -50,7 +50,7 @@ class RelModerationUser
     private $moderator;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="userModerations")
+     * @ORM\ManyToOne(targetEntity="App\Entity\ModerationType", inversedBy="userModerations")
      * @ORM\JoinColumn(name="moderation_type_id", referencedColumnName="id", nullable=false)
      *
      * @var ModerationType

@@ -19,22 +19,40 @@ class SubscribeType extends AbstractType
         //TODO gestion entity departement (need link User/dep)
         $builder
             ->add('lastname', TextType::class, [
-                'attr' => ['placeholder' => 'Nom de famille...'],
+                'attr' => [
+                    'placeholder' => 'Nom de famille...',
+                    'class' => 'charte-input',
+                ],
                 'label' => 'Nom', ])
             ->add('firstname', TextType::class, [
-                'attr' => ['placeholder' => 'Prenom...'],
+                'attr' => [
+                    'placeholder' => 'Prenom...',
+                    'class' => 'charte-input',
+                ],
                 'label' => 'Prenom', ])
             ->add('username', TextType::class, [
-                'attr' => ['placeholder' => 'Pseudo...'],
+                'attr' => [
+                    'placeholder' => 'Pseudo...',
+                    'class' => 'charte-input',
+                ],
                 'label' => 'Pseudo', ])
             ->add('email', TextType::class, [
-                'attr' => ['placeholder' => 'Adresse mail..'],
+                'attr' => [
+                    'placeholder' => 'Adresse mail..',
+                    'class' => 'charte-input',
+                ],
                 'label' => 'Adresse mail', ])
             ->add('password', PasswordType::class, [
-                'attr' => ['placeholder' => 'Mot de passe...'],
+                'attr' => [
+                    'placeholder' => 'Mot de passe...',
+                    'class' => 'charte-input',
+                ],
                 'label' => 'Mot de passe', ])
             ->add('confirm_password', PasswordType::class, [
-                'attr' => ['placeholder' => 'Comfirmer votre mot de passe!'],
+                'attr' => [
+                    'placeholder' => 'Comfirmer votre mot de passe!',
+                    'class' => 'charte-input',
+                ],
                 'label' => 'Comfirmation du mot de passe', ])
             ->add('age_category', EntityType::class, [
                 'class' => AgeCategory::class,
@@ -42,6 +60,9 @@ class SubscribeType extends AbstractType
                     return $ageCat->getLabel();
                 },
                 'choice_value' => 'label',
+                'attr' => [
+                    'class' => 'charte-input form-select',
+                ],
                 'label' => 'Catégorie d\'âge', ])
             ->add('department', EntityType::class, [
                 'class' => Department::class,
@@ -49,7 +70,10 @@ class SubscribeType extends AbstractType
                     return $dep->getnumber().' | '.$dep->getLabel();
                 },
                 'choice_value' => 'label',
-                'attr' => ['placeholder' => 'Departement...'],
+                'attr' => [
+                    'placeholder' => 'Departement...',
+                    'class' => 'charte-input form-select',
+                ],
                 'label' => 'Departement', ])
         ;
     }

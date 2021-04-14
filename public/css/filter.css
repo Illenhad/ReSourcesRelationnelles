@@ -1,26 +1,36 @@
-#filter {
+.index-content .filters {
+    position: sticky;
+    top: 15px;
+    width: auto;
+    max-height: 338px;
+    z-index: 999;
+}
+.index-content .filters .sort_items:hover {
+    background-color: #cfcfcf;
     cursor: pointer;
-    position: -webkit-sticky  ;
-    position:sticky;
-    top: 150px;
-    float:left;
-    margin: 20px;
+}
+.index-content .filters .sort_items a {
+    margin: 0 5px;
+    text-decoration: none;
+    color: var(--charte-dark);
 }
 .filter_menu{
-    background-color: #f7f7f7;
-    border-radius: 10px;
+    /*background-color: #f7f7f7;*/
+    background-color: var(--charte-white);
+    border-radius: 5px;
     border: 1px solid #dfdfdf;
     box-sizing: border-box;
     font-size: 16px;
     margin-bottom: 10px}
 
 .filter_header{
-    padding: 13px 16px;
+    padding: 5px 8px;
     align-items: center;
     display: flex;
     justify-content: space-between;
     position: relative;
     width: 100%;
+    cursor: pointer;
 }
 
 .filter_title label{
@@ -28,28 +38,31 @@
     font-size: 16px;
     font-weight: 500;
 }
-.fa_down{
-    transition-duration: .2s;
-    transition-property: transform,-webkit-transform,-o-transform;
-}
-.fa_down:before{
-    content:"\F063";
-    font-family: FontAwesome;
-    font-style: normal;
-    font-weight: normal;
-    text-decoration: inherit;
-}
+/*.filter_fa_down .fa_down{*/
+/*    transition-duration: .2s;*/
+/*    transition-property: transform,-webkit-transform,-o-transform;*/
+/*}*/
+/*.filter_fa_down .fa_down:before{*/
+/*    content:"\F063";*/
+/*    font-family: FontAwesome;*/
+/*    font-style: normal;*/
+/*    font-weight: normal;*/
+/*    text-decoration: inherit;*/
+/*}*/
 
 .filter_items_list{
-    display: none;
-    transition: display .3s;
+    /*display: none;*/
+    /*transition: display .3s;*/
+    overflow: hidden;
+    transition: height 0.5s ease;
 }
 
 .filter_items_list ul{
-    border-top: 1px solid #d8d8d8;
+    /*border-top: 1px solid #d8d8d8;*/
     list-style: none;
     overflow: auto;
     padding: 0;
+    margin: 0;
 }
 
 .filter_items{
@@ -57,6 +70,7 @@
     align-items: center;
     font-size: 14px !important;
     font-weight: 300;
+    cursor: pointer;
 }
 
 .filter_items:hover{
@@ -85,14 +99,10 @@
     right: 0;
 }
 
-@media (max-width: 768px) {
-    #filter {
-        cursor: pointer;
-        top: 20px;
-        width: 95%;
-        margin: 20px;
+@media (max-width: 690px) {
+    .index-content .filters {
         position: relative;
-        float:none;
+        max-height: none;
     }
 
 }

@@ -3,3 +3,94 @@
     font-size: small;
 }
 
+.resource-card {
+    position: relative;
+    box-shadow: inset 0 0 10px var(--charte-dark);
+    border-radius: 5px;
+    overflow: hidden;
+    width: 300px;
+    height: 300px;
+    margin: 10px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    text-decoration: none;
+}
+.resource-card:hover {
+    box-shadow: 0 0 10px var(--charte-dark);
+}
+.btn-addresource {
+    width: 300px;
+    height: 300px;
+    border: 2px solid var(--charte-dark);
+}
+
+.resource-card p {
+    color: black;
+    margin: 0;
+}
+
+.resource-types {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    color: var(--charte-dark);
+}
+.resource-types .fa-icon {
+    padding: 10px;
+    background-color: rgba(255,255,255,0.75);
+}
+.resource-types .fa-icon:first-of-type {
+    border-radius: 0 0 10px 0;
+}
+.resource-types .fa-icon:last-of-type {
+    border-radius: 0 0 0 10px;
+}
+
+.resource-card .resource-hidden {
+    background-color: rgba(255,255,255,0.9);
+    height: 0;
+    overflow: hidden;
+}
+.resource-card .resource-hidden p,
+.btn-addresource .resource-hidden i{
+    font-size: 1.4rem;
+    width: max-content;
+    margin: auto;
+    margin-top: 33%;
+}
+.btn-addresource .resource-hidden i {
+    display: block;
+    font-size: 4.4rem;
+color: var(--charte-dark)
+}
+.resource-card:hover .resource-hidden {
+    height: 100%;
+}
+.btn-addresource .resource-hidden {
+    height: 100%;
+}
+
+.resource-meta {
+    position: absolute;
+    bottom: 0;
+    background-image: linear-gradient(to top, rgba(255,255,255, 0.9), rgba(255,255,255, 0.9) 80%, rgba(255,255,255, 0) 120%);
+    width: 100%;
+    padding:  7px 12px;
+}
+.resource-card .resource-meta .resource-title {
+    font-weight: bold;
+    font-size: 1.1rem;
+    max-height: 52px;
+    overflow: hidden;
+}
+.btn-addresource .resource-meta .resource-title {
+    text-align: center;
+}
+.pagination{
+    width: 80%;
+    margin-bottom: 0
+}

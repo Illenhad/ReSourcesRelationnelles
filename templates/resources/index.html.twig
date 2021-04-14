@@ -1,8 +1,6 @@
 {% extends 'base.html.twig' %}
 {% block title 'toutes nos ressources' %}
 
-
-
 {% block stylesheets %}
     <style>
         .btn-primary {
@@ -17,103 +15,151 @@
         }
     </style>
 
+    <link href="{{ asset('css/sort.css') }}" rel="stylesheet"/>
     <link href="{{ asset('css/filter.css') }}" rel="stylesheet"/>
+    <link href="{{ asset('css/index.css') }}" rel="stylesheet"/>
+    <link href="{{ asset('css/resource.css') }}" rel="stylesheet"/>
+    <link rel="stylesheet" href="{{ asset('css/resource.css') }}" type="text/css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css">
+    <script src="{{ asset('js/jquery-3.5.1.min.js') }}"></script>
 {% endblock %}
 
 {% block body %}
 
-    <div id="filter">
-        <h2>Filtre</h2>
-        {{ form_start(filter) }}
-        <div class="filter_menu  ">
-            <div class="filter_header dropdown">
-                <label>Type de Ressources</label>
-                <div class="filter_fa_down">
-                    <i class="fa_down">
-                    </i>
+    <div class="index-content">
+        <div class="filters">
+            <div class="sort">
+                <div id="sort">
+                    <h2>Trier</h2>
+                    <div class="filter_menu ">
+                        <div class="filter_header dropdown btn-dropdown form-select" onclick="setShowDropdown(this)" data-id="dropdown-filter">
+                            <label>Trier par</label>
+{#                            <div class="filter_fa_down">#}
+{#                                <i class="fa_down"></i>#}
+{#                            </div>#}
+                        </div>
+                        <div id="dropdown-filter" class="filter_items_list" data-height="">
+                            <ul>
+                                {% set sorts = [
+                                    {
+                                        title : 'Ordre Alphabetique A->Z',
+                                        target : 'r.title',
+                                        direction : 'asc'
+                                    },
+                                    {
+                                        title : 'Ordre Alphabetique Z->A',
+                                        target : 'r.title',
+                                        direction : 'desc'
+                                    },
+                                    {
+                                        title : 'Les plus récents',
+                                        target : 'r.dateCreation',
+                                        direction : 'desc'
+                                    },
+                                    {
+                                        title : 'Les plus commentées',
+                                        target : 'nb_coms',
+                                        direction : 'desc'
+                                    },
+                                    {
+                                        title : 'Les meilleurs notes',
+                                        target : 'note',
+                                        direction : 'desc'
+                                    }
+                                ]
+                                %}
+                                {% for sort in sorts %}
+                                    <li class="sort_items {% if resources.isSorted(sort['target']) and resources.direction == sort['direction'] %}sorted{% endif %}">
+                                        {{ knp_pagination_sortable(resources, sort['title'], sort['target'],{}, {'direction': sort['direction']}) }}
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="filter_items_list">
-                <ul>
-                    {% for item in filter.type %}
 
-                        <li class="filter_items">
-                            {{ form_widget(item) }} {{ form_label(item) }}
-                        </li>
-                    {% endfor %}
-                </ul>
-            </div>
-        </div>
-        <div class="filter_menu ">
-            <div class="filter_header dropdown">
-                <label>Type de relation</label>
-                <div class="filter_fa_down">
-                    <i class="fa_down">
-                    </i>
-                </div>
-            </div>
-            <div class="filter_items_list">
-                <ul>
-                    {% for item in filter.relation %}
-                        <li class="filter_items">
-                            {{ form_widget(item) }} {{ form_label(item) }}
-                        </li>
-                    {% endfor %}
-                </ul>
-            </div>
-        </div>
-        <div class="filter_menu">
-            <div class="filter_header dropdown">
-                <label>Catégorie d'âge</label>
-                <div class="filter_fa_down">
-                    <i class="fa_down">
-                    </i>
-                </div>
-            </div>
-            <div class="filter_items_list">
-                <ul>
-                    {% for item in filter.age  %}
-                        <li class="filter_items">
-                            {{ form_widget(item) }} {{ form_label(item) }}
-                        </li>
-                    {% endfor %}
-                </ul>
-            </div>
-        </div>
-        <div class="filter_button">
-            <button class="btn btn-primary ">Filtrer</button>
-        </div>
-        {{ form_end(filter) }}
-    </div>
+            <hr>
 
-    <div class="container mt-4">
-        <h3 style="color:dodgerblue"> Dernières ressources </h3>
-        <div class="row">
-            {% for resource in resources %}
-            <div class="col-md-4">
+            <div class="filter">
+                <div id="filter">
+                    <h2>Filtrer</h2>
+                    {{ form_start(filter) }}
+
+                    {% set filters = [
+                        {key:'Type de Ressources', filter: filter.type, id: 'dropdown-type'},
+                        {key:'Type de relation', filter: filter.relation, id: 'dropdown-relation'},
+                        {key:'Catégorie d\'âge', filter: filter.age, id: 'dropdown-age'}
+                    ] %}
+                    {% for filter in filters %}
+                        <div class="filter_menu  ">
+                            <div class="filter_header dropdown btn-dropdown form-select" onclick="setShowDropdown(this)" data-id="{{ filter.id }}">
+                                <label>{{ filter.key }}</label>
+                            </div>
+                            <div class="filter_items_list" id="{{ filter.id }}" data-height="">
+                                <ul>
+                                    {% for item in filter.filter %}
+                                        <li class="filter_items">
+                                            {{ form_widget(item) }} {{ form_label(item) }}
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    {% endfor %}
+
+                    <div class="filter_button">
+                        <button class="btn btn-primary ">Filtrer</button>
+                    </div>
+                    {{ form_end(filter) }}
+                </div>
+            </div>
+        </div>
+
+        <div class="cards-content">
+            {% for values in resources %}
+                {% set resource = values.resource %}
                 {% include'resources/_resource.html.twig' %}
-            </div>
             {% endfor %}
+            {% if resources is empty%}
+                Désolé, aucune ressources ne correspondent à votre recherche
+            {% endif %}
+
+
+            <a class="resource-card btn-addresource" href="{{ path('add_resource') }}">
+                <div class="resource-hidden">
+                    <i class="fas fa-plus"></i>
+                </div>
+                <div class="resource-meta">
+                    <p class="resource-title">Ajouter une ressource</p>
+                </div>
+            </a>
         </div>
     </div>
-
-    <div class="pagination text-center mt-4">
+    <div class="index-pagination pagination text-center mt-4">
         {{ knp_pagination_render(resources) }}
     </div>
-{% endblock %}
 
+
+{% endblock %}
 
 {% block javascripts %}
 
     <script>
+        /*SET RESOURCE CARD BACKGROUND IMAGE*/
+        var allResourceCards = document.querySelectorAll('.resource-card');
+        allResourceCards.forEach(setBackgroundImage);
+        function setBackgroundImage(item) {
+            item.style.backgroundImage="url(" + item.getAttribute('data-bg') + ")";
+        }
 
         var collapseElementList = [].slice.call(document.querySelectorAll('.collapse'))
         var collapseList = collapseElementList.map(function (collapseEl) {
         return new bootstrap.Collapse(collapseEl)
         })
-        $('#myCollapsible').collapse({
-            toggle: true
-        });
+        // $('#myCollapsible').collapse({
+        //     toggle: true
+        // });
     </script>
     <script>
     function toggleClass(elem,className){
@@ -127,20 +173,48 @@
         return elem;
     }
 
-    var dropdown = document.getElementsByClassName("dropdown");
-    var i;
+    $('.filter_items_list').each(function() {
+        $(this).height = "max-content";
+        height = $(this).height();
+        $(this).attr('data-height', height);
+        $(this).height = "0px";
+    });
 
-    for (i = 0; i < dropdown.length; i++) {
-        dropdown[i].onclick = function() {
+    buttonsDropdown = document.querySelectorAll('.btn-dropdown');
+    buttonsDropdown.forEach(setShowDropdown);
 
-            var dropdownContent = this.nextElementSibling;
-            if (dropdownContent.style.display === "block") {
-                dropdownContent.style.display = "none";
-            } else {
-                dropdownContent.style.display = "block";
-            }
+    function setShowDropdown(button) {
+        dropdownId = button.getAttribute('data-id');
+        content = $('#'+dropdownId);
+        console.log(content.data('height'));
+        if (content.height() == 0) {
+            // $(this).height = $(this).data('height');
+            content.height(content.data('height'));
+            // content.style.height = "50px";
+        } else {
+            content.height(0);
         }
     }
+
+    // var dropdown = document.getElementsByClassName("dropdown");
+    // var i;
+    // for (i = 0; i < dropdown.length; i++) {
+    //     var showDropdown = false;
+    //     dropdown[i].onclick = function() {
+    //         showDropdown = !showDropdown;
+    //         if (showDropdown) {
+    //             nav.style.height = "300px";
+    //         } else {
+    //             nav.style.height = "0";
+    //         }
+    //         // var dropdownContent = this.nextElementSibling;
+    //         // if (dropdownContent.style.display === "block") {
+    //         //     dropdownContent.style.display = "none";
+    //         // } else {
+    //         //     dropdownContent.style.display = "block";
+    //         // }
+    //     }
+    // }
     </script>
 
 {% endblock %}

@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+
+{% block title 'Espace group' %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/dashboard.css') }}" type="text/css">
+    <link rel="stylesheet" href="{{ asset('css/stats.css') }}" type="text/css">
+    <link rel="stylesheet" href="{{ asset('css/table.css') }}" type="text/css">
+{% endblock %}
+
+{% block body %}
+    <div class="dashboard-content">
+        <div class="dashboard-main">
+            <h1>Invitations en attente</h1>
+            <hr>
+            {% for message in app.flashes('success') %}
+                <div class="alert alert-success mt-4 text-center">
+                    {{ message }}
+                </div>
+            {% endfor %}
+            {% if invites %}
+                <table class="">
+                    <thead>
+                    <th>Groupe</th>
+                    <th>Invité par</th>
+                    <th>Actions</th>
+                    </thead>
+                    <tbody>
+                    {% for invite in invites %}
+                        <tr class="align-middle">
+                            <td><span>{{ invite.gathering.name }}</span></td>
+                            <td><span>{{ invite.inviting.username }}</span></td>
+                            <td>
+                                <span class="actions-buttons">
+                                    <a class="btn btn-icon" href="{{ path('accept_invite', {'id': invite.id, 'agree': 'agree'}) }}"><span class="icon-accept"></span></a>
+                                    <a class="btn btn-icon" href="{{ path('accept_invite', {'id': invite.id, 'agree': 'refuse'}) }}"><span class="icon-refuse"></span></a>
+                                </span>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <tr>
+                    <td colspan="7" class="text-center">Pas d'invitations</td>
+                </tr>
+            {% endif %}
+        </div>
+
+        <div class="user-stats">
+            <a href="{{ path('gatherings') }}" class="stat-card stat-card-turquoise {{ (gatheringGestion is defined) ? (gatheringGestion == 'gatherings') ? 'active' : '' : 'active' }}">
+                <span class="icone-stat icone-gathering"></span>
+                <p>Mes groupes {{ (dashboardMenue['gatherings'] is defined and dashboardMenue['gatherings'] is not null) ?  dashboardMenue['gatherings'] : 0 }}</p>
+            </a>
+            <a href="{{ path('gathering_invites') }}" class="stat-card stat-card-orange {{ (gatheringGestion == 'invites') ? 'active' : '' }}">
+                <span class="icone-stat icone-hourglass"></span>
+                <p>Invitations en attente {{ (dashboardMenue['invites'] is defined and dashboardMenue['invites'] is not null) ?  dashboardMenue['invites'] : 0 }}</p>
+            </a>
+            <a href="{{ path('gathering-add')}}" class="stat-card stat-card-green">
+                <span class="icone-stat icone-add"></span>
+                <p>Créer un groupe</p>
+            </a>
+        </div>
+
+    </div>
+{% endblock %}

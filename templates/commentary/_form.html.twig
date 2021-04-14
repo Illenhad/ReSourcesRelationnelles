@@ -1,4 +1,12 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn btn-primary">{{ button_label|default('envoyer') }}</button>
-{{ form_end(form) }}
+<div class="charte-form">
+    {% for message in app.flashes('error') %}
+        <div class="alert alert-danger mt-4 text-center">
+            {{ message }}
+        </div>
+    {% endfor %}
+    {{ form_start(form) }}
+    {{ form_title|raw }}
+    {{ form_widget(form.content) }}
+    {{ form_widget(form.submit) }}
+    {{ form_end(form) }}
+</div>

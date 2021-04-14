@@ -1,0 +1,75 @@
+.burger_box {
+    width: 45px;
+    height: 35px;
+    border-radius: 5px;
+    border: none;
+    position: absolute;
+    top:48px;
+    right:20px;
+    cursor: pointer;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background-color: var(--charte-dark-light);
+}
+
+.container-rows {
+    width: 15px;
+    height: 10px;
+    position: absolute;
+    top: 17px;
+    left: 23px;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+
+.row-bugger {
+    position: absolute;
+    height: 2px;
+    width: 100%;
+    left:0px;
+    border-radius: 1px;
+    background-color: white;
+}
+
+.row-bugger:nth-child(1) {
+    top: 0;
+}
+
+.row-bugger:nth-child(2) {
+    top: 50%;
+}
+
+.row-bugger:nth-child(3) {
+    top: 100%;
+}
+
+.burger_box .row-bugger:nth-child(1), .burger_box .row-bugger:nth-child(3) {
+    transform: rotate(0deg);
+    transition: transform 0.4s ease-in-out, top 0.4s 0.4s ease-in-out;
+}
+
+
+.burger_box .row-bugger:nth-child(2) {
+    transition: opacity 0.4s 0.4s ease-in-out;
+}
+
+.burger_box.active .row-bugger:nth-child(1) {
+    top: 4px!important;
+    transform: rotate(45deg);
+    transition: top 0.4s ease-in-out, transform 0.4s 0.4s ease-in-out;
+}
+
+.burger_box.active .row-bugger:nth-child(2) {
+    transition: opacity 0.4s ease-in-out;
+    opacity: 0;
+}
+
+.burger_box.active .row-bugger:nth-child(3) {
+    top: 4px !important;
+    transform: rotate(-45deg);
+    transition: top 0.4s ease-in-out, transform 0.4s 0.4s ease-in-out;
+}
