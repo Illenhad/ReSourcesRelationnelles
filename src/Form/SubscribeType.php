@@ -61,7 +61,7 @@ class SubscribeType extends AbstractType
                 },
                 'choice_value' => 'label',
                 'attr' => [
-                    'class' => 'charte-input',
+                    'class' => 'charte-input form-select',
                 ],
                 'label' => 'Catégorie d\'âge', ])
             ->add('department', EntityType::class, [
@@ -72,7 +72,7 @@ class SubscribeType extends AbstractType
                 'choice_value' => 'label',
                 'attr' => [
                     'placeholder' => 'Departement...',
-                    'class' => 'charte-input',
+                    'class' => 'charte-input form-select',
                 ],
                 'label' => 'Departement', ])
         ;

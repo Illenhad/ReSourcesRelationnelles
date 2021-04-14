@@ -21,6 +21,7 @@
     <link href="{{ asset('css/resource.css') }}" rel="stylesheet"/>
     <link rel="stylesheet" href="{{ asset('css/resource.css') }}" type="text/css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css">
+    <script src="{{ asset('js/jquery-3.5.1.min.js') }}"></script>
 {% endblock %}
 
 {% block body %}
@@ -31,13 +32,13 @@
                 <div id="sort">
                     <h2>Trier</h2>
                     <div class="filter_menu ">
-                        <div class="filter_header dropdown">
+                        <div class="filter_header dropdown btn-dropdown form-select" onclick="setShowDropdown(this)" data-id="dropdown-filter">
                             <label>Trier par</label>
-                            <div class="filter_fa_down">
-                                <i class="fa_down"></i>
-                            </div>
+{#                            <div class="filter_fa_down">#}
+{#                                <i class="fa_down"></i>#}
+{#                            </div>#}
                         </div>
-                        <div class="filter_items_list">
+                        <div id="dropdown-filter" class="filter_items_list" data-height="">
                             <ul>
                                 {% set sorts = [
                                     {
@@ -85,22 +86,19 @@
                     <h2>Filtrer</h2>
                     {{ form_start(filter) }}
 
-                    {% set filters = {
-                        'Type de Ressources': filter.type,
-                        'Type de relation': filter.relation,
-                        'Catégorie d\'âge': filter.age
-                    } %}
-                    {% for key, filter in filters %}
+                    {% set filters = [
+                        {key:'Type de Ressources', filter: filter.type, id: 'dropdown-type'},
+                        {key:'Type de relation', filter: filter.relation, id: 'dropdown-relation'},
+                        {key:'Catégorie d\'âge', filter: filter.age, id: 'dropdown-age'}
+                    ] %}
+                    {% for filter in filters %}
                         <div class="filter_menu  ">
-                            <div class="filter_header dropdown">
-                                <label>{{ key }}</label>
-                                <div class="filter_fa_down">
-                                    <i class="fa_down"></i>
-                                </div>
+                            <div class="filter_header dropdown btn-dropdown form-select" onclick="setShowDropdown(this)" data-id="{{ filter.id }}">
+                                <label>{{ filter.key }}</label>
                             </div>
-                            <div class="filter_items_list">
+                            <div class="filter_items_list" id="{{ filter.id }}" data-height="">
                                 <ul>
-                                    {% for item in filter %}
+                                    {% for item in filter.filter %}
                                         <li class="filter_items">
                                             {{ form_widget(item) }} {{ form_label(item) }}
                                         </li>
@@ -143,9 +141,6 @@
     </div>
 
 
-{#    <a class="btn-addResource" href="{{ path('add_resource') }}" title="Créer une ressource"><i class="fa-plus"></i></a>#}
-
-
 {% endblock %}
 
 {% block javascripts %}
@@ -178,20 +173,48 @@
         return elem;
     }
 
-    var dropdown = document.getElementsByClassName("dropdown");
-    var i;
+    $('.filter_items_list').each(function() {
+        $(this).height = "max-content";
+        height = $(this).height();
+        $(this).attr('data-height', height);
+        $(this).height = "0px";
+    });
 
-    for (i = 0; i < dropdown.length; i++) {
-        dropdown[i].onclick = function() {
+    buttonsDropdown = document.querySelectorAll('.btn-dropdown');
+    buttonsDropdown.forEach(setShowDropdown);
 
-            var dropdownContent = this.nextElementSibling;
-            if (dropdownContent.style.display === "block") {
-                dropdownContent.style.display = "none";
-            } else {
-                dropdownContent.style.display = "block";
-            }
+    function setShowDropdown(button) {
+        dropdownId = button.getAttribute('data-id');
+        content = $('#'+dropdownId);
+        console.log(content.data('height'));
+        if (content.height() == 0) {
+            // $(this).height = $(this).data('height');
+            content.height(content.data('height'));
+            // content.style.height = "50px";
+        } else {
+            content.height(0);
         }
     }
+
+    // var dropdown = document.getElementsByClassName("dropdown");
+    // var i;
+    // for (i = 0; i < dropdown.length; i++) {
+    //     var showDropdown = false;
+    //     dropdown[i].onclick = function() {
+    //         showDropdown = !showDropdown;
+    //         if (showDropdown) {
+    //             nav.style.height = "300px";
+    //         } else {
+    //             nav.style.height = "0";
+    //         }
+    //         // var dropdownContent = this.nextElementSibling;
+    //         // if (dropdownContent.style.display === "block") {
+    //         //     dropdownContent.style.display = "none";
+    //         // } else {
+    //         //     dropdownContent.style.display = "block";
+    //         // }
+    //     }
+    // }
     </script>
 
 {% endblock %}

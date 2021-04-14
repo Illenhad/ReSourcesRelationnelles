@@ -17,12 +17,21 @@
             </div>
         {% endfor %}
         {{ form_start(form) }}
+
+        {% set selects = [ form_label(form.department), form_label(form.ageCategory)] %}
                 {% for field in form %}
                     {% if form_label(field) != form_label(form._token) %}
-                        <div>
-                        {{ form_label(field) }}
-                        {{ form_widget(field) }}
-                        </div>
+{#                        {% if form_label(field) in selects %}#}
+{#                            <div class="form-select">#}
+{#                                {{ form_label(field) }}#}
+{#                                {{ form_widget(field) }}#}
+{#                            </div>#}
+{#                        {% else %}#}
+                            <div>
+                                {{ form_label(field) }}
+                                {{ form_widget(field) }}
+                            </div>
+{#                        {% endif %}#}
                     {% endif %}
                 {% endfor %}
         {{ form_end(form) }}

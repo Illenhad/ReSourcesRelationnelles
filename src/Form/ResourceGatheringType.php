@@ -21,7 +21,7 @@ class ResourceGatheringType extends AbstractType
             ->add('gathering_id', ChoiceType::class, [
                 'choices' => $this->traitChoices,
                 'attr' => [
-                    'class' => 'charte-input',
+                    'class' => 'charte-input form-select',
                 ],
                 'label' => 'Groupe', ])
         ;

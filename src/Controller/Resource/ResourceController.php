@@ -510,7 +510,8 @@ class ResourceController extends AbstractController
                             'resource_title' => $r->getTitle(),
                             'shared_name' => $r_shared->getUsername(),
                             'sharing_name' => $r_sharing->getUsername(),
-                            'id' => $shared_resource->getId()
+                            'id' => $shared_resource->getId(),
+                            'slug' => $r->getSlug()
                         ];
                         $resources[] = $share;
                     }
@@ -526,7 +527,8 @@ class ResourceController extends AbstractController
                             'resource_title' => $r->getTitle(),
                             'shared_name' => $r_shared->getUsername(),
                             'sharing_name' => $r_sharing->getUsername(),
-                            'id' => $waiting_resource->getId()
+                            'id' => $waiting_resource->getId(),
+                            'slug' => $r->getSlug()
                         ];
                         $resources[] = $share;
                     }

@@ -50,7 +50,7 @@ class ResourceType extends AbstractType
                 },
                 'choice_value' => 'label',
                 'attr' => [
-                    'class' => 'charte-input',
+                    'class' => 'charte-input form-select',
                 ],
                 'label' => 'Catégorie d\'âge', ])
             ->add('resourceType', EntityType::class, [
@@ -60,7 +60,7 @@ class ResourceType extends AbstractType
                 },
                 'choice_value' => 'label',
                 'attr' => [
-                    'class' => 'charte-input',
+                    'class' => 'charte-input form-select',
                 ],
                 'label' => 'Type', ])
             ->add('relationShip', EntityType::class, [
@@ -70,7 +70,7 @@ class ResourceType extends AbstractType
                 },
                 'choice_value' => 'label',
                 'attr' => [
-                    'class' => 'charte-input',
+                    'class' => 'charte-input form-select',
                 ],
                 'label' => 'Type de relation', ])
             ->add('category', EntityType::class, [
@@ -80,7 +80,7 @@ class ResourceType extends AbstractType
                 },
                 'choice_value' => 'label',
                 'attr' => [
-                    'class' => 'charte-input',
+                    'class' => 'charte-input form-select',
                 ],
                 'label' => 'Catégorie', ])
         ;

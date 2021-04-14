@@ -2,6 +2,7 @@
 
 namespace App\Controller\Gathering;
 
+use App\Controller\DashboardController;
 use App\Entity\GatheringInvite;
 use App\Entity\Resource;
 use App\Entity\ResourceGathering;
@@ -21,17 +22,13 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class GatheringController extends AbstractController
+class GatheringController extends DashboardController
 {
-    /**
-     * @var ObjectManager
-     */
-    private $manager;
     public const ROUTE_PREFIX = 'gathering';
 
     public function __construct(EntityManagerInterface $manager)
     {
-        $this->manager = $manager;
+        parent::__construct($manager);
     }
 
     /**
@@ -40,6 +37,7 @@ class GatheringController extends AbstractController
     public function index(ManagerRegistry $registry): Response
     {
         $user = $this->getUser();
+        $gatheringGestion = 'gatherings';
 
         if (isset($user)) {
             $user_gatherings = $this->manager->getRepository(GatheringUser::class)->findBy(['User' => $user->getId()]);//getGroupsUserByUserId($user->getId(), $registry);
@@ -59,7 +57,8 @@ class GatheringController extends AbstractController
                 $gatherings[] = $gathering;
             }
             return $this->render('gathering/dashboard.html.twig', [
-                'gatheringGestion' => 'gatherings',
+                'dashboardMenue' => $this->setDashboardMenu($gatheringGestion),
+                'gatheringGestion' => $gatheringGestion,
                 'gatherings' => $gatherings,
             ]);
         } else {
@@ -106,7 +105,7 @@ class GatheringController extends AbstractController
             return $this->redirectToRoute('gathering.show', ['id' => $id]);
         }
 
-        return $this->render('gathering_invite/create.html.twig', [
+        return $this->render('gathering/gathering_invite/create.html.twig', [
             'gatheringGestion' => 'invite',
             'gathering_id' => $id,
             'form' => $form->createView()
@@ -118,6 +117,7 @@ class GatheringController extends AbstractController
      */
     public function show(int $id, ManagerRegistry $registry): Response {
         $user = $this->getUser();
+        $gatheringGestion = 'show';
         $gathering = $this->manager->getRepository(Gathering::class)->find($id);
         $gathering_users = $this->manager->getRepository(GatheringUser::class)->findBy(['Gathering' => $id]);
         $user_role = $this->manager->getRepository(GatheringUser::class)->findOneBy(['Gathering' => $id, 'User' => $user->getId()])->getRole();
@@ -132,7 +132,8 @@ class GatheringController extends AbstractController
         }
 
         return $this->render(self::ROUTE_PREFIX.'/show.html.twig', [
-            'gatheringGestion' => 'show',
+            'dashboardMenue' => $this->setDashboardMenu($gatheringGestion, $gathering),
+            'gatheringGestion' => $gatheringGestion,
             'is_admin' => ($user_role == 'ADMIN') ? true : false,
             'gathering' => $gathering,
             'current_menu' => '$gathering',
@@ -177,8 +178,8 @@ class GatheringController extends AbstractController
      */
     public function resources(int $id, ManagerRegistry $registry): Response {
         $user = $this->getUser();
+        $gatheringGestion = 'resources';
         $gathering = $this->manager->getRepository(Gathering::class)->find($id);
-
 
         $gathering_resources = $this->manager->getRepository(ResourceGathering::class)->findBy(['gathering' => $id]);
         $user_role = $this->manager->getRepository(GatheringUser::class)->findOneBy(['Gathering' => $id, 'User' => $user->getId()])->getRole();
@@ -189,7 +190,6 @@ class GatheringController extends AbstractController
             $sharing = $this->manager->getRepository(User::class)->findOneBy(['id' => $gathering_resource->getSharingUser()]);
             ($sharing == $user) ? $isSharing = true : $isSharing = false;
             $resource = [
-                'gatheringGestion' => 'resources',
                 'title' => $resourceG->getTitle(),
                 'id' => $resourceG->getId(),
                 'slug' => $resourceG->getSlug(),
@@ -200,7 +200,8 @@ class GatheringController extends AbstractController
         }
 
         return $this->render(self::ROUTE_PREFIX.'/resources.html.twig', [
-            'gatheringGestion' => 'resources',
+            'dashboardMenue' => $this->setDashboardMenu($gatheringGestion, $gathering),
+            'gatheringGestion' => $gatheringGestion,
             'resources' => $resources,
             'gathering_id' => $gathering->getId(),
             'is_admin' => $isAdmin

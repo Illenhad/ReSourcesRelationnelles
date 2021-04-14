@@ -2,6 +2,7 @@
 
 namespace App\Controller\Gathering;
 
+use App\Controller\DashboardController;
 use App\Entity\GatheringInvite;
 use App\Entity\User;
 use App\Entity\Gathering;
@@ -19,16 +20,11 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class GatheringInviteController extends AbstractController
+class GatheringInviteController extends DashboardController
 {
-    /**
-     * @var ObjectManager
-     */
-    private $manager;
-
     public function __construct(EntityManagerInterface $manager)
     {
-        $this->manager = $manager;
+        parent::__construct($manager);
     }
 
     /**
@@ -37,12 +33,14 @@ class GatheringInviteController extends AbstractController
     public function index(ManagerRegistry $registry): Response
     {
         $user = $this->getUser();
+        $gatheringGestion = 'invites';
 
         if (isset($user)) {
             $invites = $this->manager->getRepository(GatheringInvite::class)->findBy(['invited' => $user->getId()]);
 
-            return $this->render('gathering_invite/dashboard.html.twig', [
-                'gatheringGestion' => 'invites',
+            return $this->render('gathering/gathering_invite/dashboard.html.twig', [
+                'dashboardMenue' => $this->setDashboardMenu($gatheringGestion),
+                'gatheringGestion' => $gatheringGestion,
                 'invites' => $invites,
             ]);
         } else {

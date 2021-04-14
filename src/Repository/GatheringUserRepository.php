@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\GatheringUser;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -17,6 +18,18 @@ class GatheringUserRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, GatheringUser::class);
+    }
+
+    /**
+     * @return int
+     */
+    public function getNumberOfGatheringUserByUser(User $user)
+    {
+        $query = $this->createQueryBuilder('gu')
+            ->select('count(gu.id)')
+            ->andWhere('gu.User = :user')
+            ->setParameter('user', $user);
+        return $query->getQuery()->getSingleScalarResult();
     }
 
     public function getGatheringNumMembersByGatheringId(int $gatheringId, ManagerRegistry $registry) {

@@ -54,7 +54,7 @@ class EditPersonalInformationType extends AbstractType
                 },
                 'choice_value' => 'label',
                 'attr' => [
-                    'class' => 'charte-input',
+                    'class' => 'charte-input form-select',
                 ],
                 'label' => 'Departement',
                 ])
@@ -65,7 +65,7 @@ class EditPersonalInformationType extends AbstractType
                 },
                 'choice_value' => 'label',
                 'attr' => [
-                    'class' => 'charte-input',
+                    'class' => 'charte-input form-select',
                 ], ])
             ->add(
                 'submit',

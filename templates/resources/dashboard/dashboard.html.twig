@@ -61,17 +61,31 @@
                                 </tr>
                             {% else %}
                                 <tr class="align-middle table-link">
-                                    <td><span>{{ resource.resource_title }}</span></td>
-                                    <td class="dashboard-responsive-hidden"><span>{{ resource.sharing_name }}</span></td>
-                                    <td class="dashboard-responsive-hidden"><span>{{ resource.shared_name }}</span></td>
+                                    <td>
+                                        <a href="{{ path('comment.show', {id: resource.id, slug: resource.slug}) }}">
+                                            <span>{{ resource.resource_title }}</span>
+                                        </a>
+                                    </td>
+                                    <td class="dashboard-responsive-hidden">
+                                        <a href="{{ path('comment.show', {id: resource.id, slug: resource.slug}) }}">
+                                            <span>{{ resource.sharing_name }}</span>
+                                        </a>
+                                    </td>
+                                    <td class="dashboard-responsive-hidden">
+                                        <a href="{{ path('comment.show', {id: resource.id, slug: resource.slug}) }}">
+                                            <span>{{ resource.shared_name }}</span>
+                                        </a>
+                                    </td>
                                     <td>
                                         <span class="actions-buttons">
-                                            {% if resourceGestion == 'waiting' %}
-                                                <a class="btn btn-icon" href="{{ path('accept_resource_share', {'id': resource.id, 'agree': 'agree'}) }}" title="Accepter"><span class="icon-accept"></span></a>
-                                                <a class="btn btn-icon" href="{{ path('accept_resource_share', {'id': resource.id, 'agree': 'refuse'}) }}" title="Refuser"><span class="icon-refuse"></span></a>
-                                            {% else %}
-                                                <a class="btn btn-icon" href="{{ path('remove_user_resource', {'id': resource.id}) }}" title="Supprimer"><span class="icon-refuse"></span></a>
-                                            {% endif %}
+                                            <a href="{{ path('comment.show', {id: resource.id, slug: resource.slug}) }}">
+                                                {% if resourceGestion == 'waiting' %}
+                                                    <a class="btn btn-icon" href="{{ path('accept_resource_share', {'id': resource.id, 'agree': 'agree'}) }}" title="Accepter"><span class="icon-accept"></span></a>
+                                                    <a class="btn btn-icon" href="{{ path('accept_resource_share', {'id': resource.id, 'agree': 'refuse'}) }}" title="Refuser"><span class="icon-refuse"></span></a>
+                                                {% else %}
+                                                    <a class="btn btn-icon" href="{{ path('remove_user_resource', {'id': resource.id}) }}" title="Supprimer"><span class="icon-refuse"></span></a>
+                                                {% endif %}
+                                            </a>
                                         </span>
                                     </td>
                                 </tr>

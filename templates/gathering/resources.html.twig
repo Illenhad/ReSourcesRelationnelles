@@ -51,11 +51,11 @@
         <div class="user-stats">
             <a href="{{ path('gatherings') }}" class="stat-card stat-card-turquoise {{ (gatheringGestion is defined) ? (gatheringGestion == 'gatherings') ? 'active' : '' : 'active' }}">
                 <span class="icone-stat icone-gathering"></span>
-                <p>Mes groupes</p>
+                <p>Mes groupes {{ (dashboardMenue['gatherings'] is defined and dashboardMenue['gatherings'] is not null) ?  dashboardMenue['gatherings'] : 0 }}</p>
             </a>
             <a href="{{ path('gathering_invites') }}" class="stat-card stat-card-orange {{ (gatheringGestion == 'invites') ? 'active' : '' }}">
                 <span class="icone-stat icone-hourglass"></span>
-                <p>Invitations en attente</p>
+                <p>Invitations en attente {{ (dashboardMenue['invites'] is defined and dashboardMenue['invites'] is not null) ?  dashboardMenue['invites'] : 0 }}</p>
             </a>
             <a href="{{ path('gathering-invit-user', {'id': gathering_id}) }}" class="stat-card stat-card-green {{ (gatheringGestion == 'invite') ? 'active' : '' }}">
                 <span class="icone-stat icone-add"></span>
@@ -63,7 +63,7 @@
             </a>
             <a href="{{ path('gathering-resources', {'id': gathering_id}) }}" class="stat-card stat-card-purple {{ (gatheringGestion == 'resources') ? 'active' : '' }}">
                 <span class="icone-stat icone-resources"></span>
-                <p>Resources</p>
+                <p>Resources {{ (dashboardMenue['resources'] is defined and dashboardMenue['resources'] is not null) ?  dashboardMenue['resources'] : 0 }}</p>
             </a>
             {% if is_admin %}
                 <a href="{{ path('gathering-remove', {'id': gathering_id}) }}" class="stat-card stat-card-red">
