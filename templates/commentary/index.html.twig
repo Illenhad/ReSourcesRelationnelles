@@ -25,11 +25,11 @@
                 {% for answer in commentary.answers %}
                     <div class="answer">
                         <div class="actions comment-actions">
-                            {% if app.user == commentary.user %}
-                                <a href="{{ path('commentary_edit', {id: commentary.id}) }}" class=" btn btn-icon"><span class="icon-edit"></span></a>
+                            {% if app.user == answer.user %}
+                                <a href="{{ path('answer_edit', {id: answer.id}) }}" class=" btn btn-icon"><span class="icon-edit"></span></a>
                             {% endif %}
-                            {% if app.user == commentary.user or is_granted('ROLE_MODERATEUR') %}
-                                <a href="{{ path('commentary_delete', {id: commentary.id}) }}" class=" btn btn-icon"><span class="icon-delete"></span></a>
+                            {% if app.user == answer.user or is_granted('ROLE_MODERATEUR') %}
+                                <a href="{{ path('answer_delete', {id: answer.id}) }}" class=" btn btn-icon"><span class="icon-delete"></span></a>
                             {% endif %}
                         </div>
                         <p><span class="commentary-author">{{ answer.user }}</span><span class="author-date"> le {{ answer.answerDate|date("d/m/Y à H:i", "Europe/Paris") }}</span></p>

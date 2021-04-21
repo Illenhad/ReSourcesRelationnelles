@@ -82,7 +82,7 @@ class AnswerController extends AbstractController
     /**
      * @Route("/answer/{id}", name="answer_delete")
      */
-    public function delete(Request $request, int $id, Answer $answer): Response
+    public function delete(Request $request, int $id): Response
     {
         $entityManager = $this->getDoctrine()->getManager();
         $answer = $entityManager->getRepository(Answer::class)->find($id);

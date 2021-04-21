@@ -10,7 +10,9 @@
         'Professionnel - manager': asset('image/8.jpg')
     }%}
 
-<a class="resource-card" href="{{ path('comment.show', {slug: resource.slug, id: resource.id}) }}" data-id="{{ resource.id }}" data-bg="{{ (resource.imageName) ? vich_uploader_asset(resource,'imageFile') : ((resource.relationShip.label in relation|keys) ? relation[resource.relationShip.label] : 'https://picsum.photos/300/300') }}">
+<a class="resource-card" href="{{ path('comment.show', {slug: resource.slug, id: resource.id}) }}"
+   data-id="{{ resource.id }}" data-bg="{{ (resource.imageName) ? vich_uploader_asset(resource,'imageFile')
+: ((resource.relationShip.label in relation|keys) ? relation[resource.relationShip.label] : 'https://picsum.photos/300/300') }}">
 
     {% set typeIcons = [
         {label: 'Activité / Jeu à réaliser', icon: 'fas fa-dice-five'},
@@ -32,7 +34,6 @@
         {label: 'Professionnel - collaborateurs', icon: 'fas fa-hands-helping'},
         {label: 'Professionnel - manager', icon: 'fas fa-user-tie'}
     ]%}
-
     <div class="resource-types">
         {% for typeIcon in typeIcons %}
             {% if typeIcon['label'] == resource.resourceType %}
