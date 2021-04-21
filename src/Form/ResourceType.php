@@ -2,7 +2,6 @@
 
 namespace App\Form;
 
-use App\Entity\ActionType;
 use App\Entity\AgeCategory;
 use App\Entity\Category;
 //use App\Entity\ResourceType as type;
@@ -12,11 +11,9 @@ use App\Entity\ResourceType as Type;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Vich\UploaderBundle\Form\Type\VichFileType;
 use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class ResourceType extends AbstractType
@@ -41,7 +38,7 @@ class ResourceType extends AbstractType
                 'download_uri' => true,
                 'image_uri' => true,
                 'imagine_pattern' => 'RessourceIMG',
-                'label'=>'Illustration'
+                'label' => 'Illustration',
             ])
             ->add('ageCategory', EntityType::class, [
                 'class' => AgeCategory::class,
